@@ -323,31 +323,10 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
   margin-top:2px;
 }
 
-
-/* ══ WEEK MANAGER ══ */
-#weekManagerPanel{background:linear-gradient(135deg,#0d3b6e,#1a5f9e);border-radius:16px;padding:16px 20px;margin-bottom:16px;color:#fff;}
-.wmp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
-.wmp-title{font-size:15px;font-weight:900;color:#fff;display:flex;align-items:center;gap:8px;}
-.wmp-actions{display:flex;gap:6px;flex-wrap:wrap;}
-.wmp-btn{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);border-radius:20px;padding:6px 14px;font-family:"Cairo",sans-serif;font-size:12px;font-weight:700;cursor:pointer;color:#fff;transition:all .18s;}
-.wmp-btn:hover{background:rgba(255,255,255,.28);}
-.wmp-btn.new-wk{background:rgba(240,165,0,.4);border-color:var(--amber);}
-.weeks-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;}
-.weeks-scroll::-webkit-scrollbar{height:4px;}
-.weeks-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:2px;}
-.wk-chip{flex-shrink:0;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);border-radius:12px;padding:9px 14px;cursor:pointer;transition:all .18s;min-width:130px;text-align:center;}
-.wk-chip:hover{background:rgba(255,255,255,.22);transform:translateY(-2px);}
-.wk-chip.active-wk{background:rgba(255,255,255,.25);border-color:#ffe07a;box-shadow:0 0 0 2px rgba(255,224,122,.4);}
-.wk-chip .wc-num{font-size:17px;font-weight:900;color:#ffe07a;}
-.wk-chip .wc-dates{font-size:10px;color:rgba(255,255,255,.8);margin-top:2px;}
-.wk-chip .wc-status{font-size:10px;margin-top:3px;font-weight:700;}
-.wk-chip .wc-del{background:rgba(220,38,38,.5);border:none;border-radius:6px;padding:2px 7px;font-size:10px;color:#fff;cursor:pointer;margin-top:4px;display:none;}
-.wk-chip:hover .wc-del{display:inline-block;}
-.wk-current-label{background:rgba(255,255,255,.15);border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;color:rgba(255,255,255,.9);margin-top:8px;text-align:center;}
-
 </style>
 </head>
 <body>
+<a class="home-return-btn" href="../index.html" aria-label="الرجوع للصفحة الرئيسية">🏠 الرئيسية</a><style>.home-return-btn{position:fixed;top:14px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;background:linear-gradient(135deg,#0c447c,#185fa5,#0f9d8a);color:#fff!important;text-decoration:none;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;font-size:13px;box-shadow:0 6px 18px rgba(12,68,124,.28);border:1px solid rgba(255,255,255,.45)}.home-return-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(12,68,124,.36)}@media(max-width:700px){.home-return-btn{top:auto;bottom:16px;right:16px;padding:10px 16px;font-size:13px}}@media print{.home-return-btn{display:none!important}}</style>
 <div id="toast"></div>
 
 <div class="email-panel" id="emailPanel">
@@ -364,23 +343,6 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
 </div>
 
 <input type="file" id="impF" accept=".json" multiple>
-
-
-<!-- ══════ WEEK MANAGER PANEL ══════ -->
-<div id="weekManagerPanel">
-  <div class="wmp-header">
-    <div class="wmp-title">📅 سجل الأسابيع — كل أسبوع محفوظ منفصلاً</div>
-    <div class="wmp-actions">
-      <button class="wmp-btn new-wk" onclick="createNewWeek()">➕ أسبوع جديد</button>
-      <button class="wmp-btn" onclick="saveCurrentWeek()">💾 حفظ الأسبوع الحالي</button>
-      <button class="wmp-btn" onclick="toggleWeekManager()">⚙️ إدارة</button>
-    </div>
-  </div>
-  <div class="weeks-scroll" id="weeksScroll">
-    <div style="color:rgba(255,255,255,.6);font-size:13px;padding:10px">جاري التحميل...</div>
-  </div>
-  <div class="wk-current-label" id="currentWeekLabel">الأسبوع الحالي: —</div>
-</div>
 
 <div class="wrap">
 
@@ -455,6 +417,7 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
     <div class="sc-head"><div class="sc-num">1</div><div><div class="sc-title">بيانات الأسبوع</div></div></div>
     <div class="g2">
       <div class="fld"><label>رقم الأسبوع</label><input id="wnum" name="wnum" placeholder="مثال: 1"></div>
+      <div class="fld"><label>إجراء الأسبوع</label><button type="button" class="btn btn-teal" id="btn-new-week" style="justify-content:center">➕ أسبوع جديد / فتح سجل فارغ</button><small id="week-save-state" style="color:var(--muted);font-weight:700;margin-top:4px">غيّر رقم الأسبوع لفتح سجل مستقل.</small></div>
       <div class="fld"><label>حالة الأسبوع</label>
         <select name="wstatus">
           <option>دوام كامل</option><option>دوام جزئي</option>
@@ -837,6 +800,8 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../supabase-config.js"></script>
 <script>
 // ══════════════════════════════════════════════════
 // DATA
@@ -870,236 +835,7 @@ var PILL_GROUPS = [
   {t:"📞 التواصل والإداري",items:["تواصل مع الإدارة التعليمية","تواصل مع الرئاسة","تواصل مع إدارات المدارس","اجتماع مع الإدارة التعليمية","مراسلات رسمية","إعداد ورفع التقرير الأسبوعي","شراكات أولياء الأمور"]}
 ];
 var PILL_IDS = [];
-var LSK = "falah_wp_final"; // legacy - kept for backward compat
-var WK_PREFIX = "falah_week_"; // each week stored as falah_week_N
-var currentWeekKey = null; // key of week being edited
-var currentWeekNum = 1; // week number being edited
-
-// ══════════════════════════════════════════════
-// WEEK MANAGEMENT SYSTEM
-// ══════════════════════════════════════════════
-
-function getAllWeekKeys() {
-  var keys = [];
-  for(var i=0; i<localStorage.length; i++) {
-    var k = localStorage.key(i);
-    if(k && k.startsWith(WK_PREFIX)) keys.push(k);
-  }
-  return keys.sort(function(a,b){
-    var na=parseInt(a.replace(WK_PREFIX,'')), nb=parseInt(b.replace(WK_PREFIX,''));
-    return na-nb;
-  });
-}
-
-function getWeekData(key) {
-  try { return JSON.parse(localStorage.getItem(key)||'null'); }
-  catch(e) { return null; }
-}
-
-function renderWeeksBar() {
-  var scroll = document.getElementById('weeksScroll');
-  if(!scroll) return;
-  var keys = getAllWeekKeys();
-
-  if(keys.length === 0) {
-    scroll.innerHTML = '<div style="color:rgba(255,255,255,.6);font-size:12px;padding:10px">لا توجد أسابيع محفوظة بعد — اضغط ➕ لبدء الأسبوع الأول</div>';
-    return;
-  }
-
-  scroll.innerHTML = keys.map(function(k) {
-    var d = getWeekData(k);
-    var wn = d && d.wnum ? d.wnum : k.replace(WK_PREFIX,'');
-    var start = d && d.wstart ? d.wstart : '—';
-    var end   = d && d.wend   ? d.wend   : '—';
-    var status = d && d.wstatus ? d.wstatus : 'دوام كامل';
-    var isActive = (k === currentWeekKey);
-    var statusColor = status.includes('إجازة') ? '#fca5a5' : status.includes('جزئي') ? '#fcd34d' : '#86efac';
-    return '<div class="wk-chip'+(isActive?' active-wk':'')+'" onclick="loadWeek(''+k+'')">'+
-      '<div class="wc-num">الأسبوع '+wn+'</div>'+
-      '<div class="wc-dates">'+start+' → '+end+'</div>'+
-      '<div class="wc-status" style="color:'+statusColor+'">'+status+'</div>'+
-      '<button class="wc-del" onclick="deleteWeek(event,''+k+'')">🗑️ حذف</button>'+
-    '</div>';
-  }).join('');
-
-  // Update current label
-  var lbl = document.getElementById('currentWeekLabel');
-  if(lbl) {
-    if(currentWeekKey) {
-      var d = getWeekData(currentWeekKey);
-      var wn = d && d.wnum ? d.wnum : currentWeekKey.replace(WK_PREFIX,'');
-      var start = d && d.wstart ? d.wstart : '—';
-      var end   = d && d.wend   ? d.wend   : '—';
-      lbl.textContent = 'الأسبوع الحالي: الأسبوع ' + wn + ' | ' + start + ' — ' + end;
-      lbl.style.borderRight = '3px solid #ffe07a';
-    } else {
-      lbl.textContent = 'لم يتم اختيار أسبوع — اضغط ➕ لإنشاء أسبوع جديد';
-    }
-  }
-}
-
-function saveCurrentWeek() {
-  var data = getFormData();
-  data._savedAt = new Date().toISOString();
-  data._savedAtAr = new Date().toLocaleString('ar-AE');
-
-  // Determine key from week number field
-  var wn = (data.wnum || '').toString().replace(/\D/g,'');
-  if(!wn) { toast('⚠️ أدخل رقم الأسبوع أولاً في حقل "رقم الأسبوع"'); return; }
-
-  var key = WK_PREFIX + wn;
-  currentWeekKey = key;
-  currentWeekNum = parseInt(wn);
-
-  localStorage.setItem(key, JSON.stringify(data));
-  localStorage.setItem(LSK, JSON.stringify(data)); // keep legacy key too
-
-  renderWeeksBar();
-  toast('✅ تم حفظ الأسبوع ' + wn + ' بنجاح');
-}
-
-function loadWeek(key) {
-  // First save current week if there's unsaved data
-  var wn = (document.getElementById('wnum') && document.getElementById('wnum').value)||'';
-  if(wn && currentWeekKey && currentWeekKey !== key) {
-    if(confirm('هل تريد حفظ الأسبوع الحالي ('+wn+') قبل الانتقال؟')) {
-      saveCurrentWeek();
-    }
-  }
-
-  var data = getWeekData(key);
-  if(!data) { toast('⚠️ لا توجد بيانات لهذا الأسبوع'); return; }
-
-  currentWeekKey = key;
-  currentWeekNum = parseInt(key.replace(WK_PREFIX,''));
-  setFormData(data);
-  setTimeout(syncToReport, 100);
-  renderWeeksBar();
-
-  var wn = data.wnum || key.replace(WK_PREFIX,'');
-  toast('📂 تم تحميل الأسبوع ' + wn);
-
-  // Scroll to top of week form
-  var weekPg = document.getElementById('pg-week');
-  if(weekPg) {
-    showPage('pg-week', '📋 الأسبوع والحضور', 'nav-week');
-    weekPg.scrollTop = 0;
-    window.scrollTo(0,0);
-  }
-}
-
-function createNewWeek() {
-  // Save current first
-  var wn = (document.getElementById('wnum') && document.getElementById('wnum').value)||'';
-  if(wn) {
-    if(confirm('هل تريد حفظ الأسبوع الحالي ('+wn+') قبل إنشاء أسبوع جديد؟')) {
-      saveCurrentWeek();
-    }
-  }
-
-  // Find next week number
-  var keys = getAllWeekKeys();
-  var maxWk = 0;
-  keys.forEach(function(k){
-    var n = parseInt(k.replace(WK_PREFIX,''));
-    if(n > maxWk) maxWk = n;
-  });
-  var newWkNum = maxWk + 1;
-
-  // Clear form for new week
-  document.getElementById('wForm').reset();
-  document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('sel'); });
-  PILL_GROUPS.forEach(function(_,gi){
-    var res=document.getElementById('pr'+gi);
-    if(res){ res.textContent='— لم يُختر بعد —'; res.style.color='#94a3b8'; res.style.fontStyle='italic'; }
-  });
-  DAYS.forEach(function(_,i){ calcHrs(i); styleRow(i); });
-  updateAttSumm && updateAttSumm();
-
-  // Set new week number
-  var wnumEl = document.getElementById('wnum');
-  if(wnumEl) wnumEl.value = newWkNum;
-
-  // Calculate dates based on previous week
-  if(maxWk > 0) {
-    var prevData = getWeekData(WK_PREFIX + maxWk);
-    if(prevData && prevData.wend) {
-      try {
-        var prevEnd = new Date(prevData.wend);
-        var newStart = new Date(prevEnd);
-        newStart.setDate(newStart.getDate() + 3); // skip weekend (Fri+Sat in UAE = +3 days to Monday)
-        var newEnd = new Date(newStart);
-        newEnd.setDate(newEnd.getDate() + 4); // Mon to Fri
-        var fmtDate = function(d){ return d.toISOString().split('T')[0]; };
-        var startEl = document.getElementById('wstart');
-        var endEl   = document.getElementById('wend');
-        if(startEl) startEl.value = fmtDate(newStart);
-        if(endEl)   endEl.value   = fmtDate(newEnd);
-      } catch(e) {}
-    }
-  }
-
-  currentWeekKey = WK_PREFIX + newWkNum;
-  currentWeekNum = newWkNum;
-
-  renderWeeksBar();
-  showPage('pg-week', '📋 الأسبوع والحضور', 'nav-week');
-  toast('📝 أسبوع جديد: الأسبوع ' + newWkNum + ' — ابدأ التعبئة');
-}
-
-function deleteWeek(e, key) {
-  e.stopPropagation();
-  var wn = key.replace(WK_PREFIX,'');
-  if(!confirm('هل تريد حذف بيانات الأسبوع ' + wn + ' نهائياً؟')) return;
-  localStorage.removeItem(key);
-  if(currentWeekKey === key) {
-    currentWeekKey = null;
-    document.getElementById('wForm').reset();
-  }
-  renderWeeksBar();
-  toast('🗑️ تم حذف الأسبوع ' + wn);
-}
-
-function toggleWeekManager() {
-  var panel = document.getElementById('weekManagerPanel');
-  if(!panel) return;
-  panel.style.display = panel.style.display === 'none' ? 'block' : 'block';
-  // Instead show all saved weeks list
-  var keys = getAllWeekKeys();
-  var msg = keys.length === 0 ? 'لا توجد أسابيع محفوظة' :
-    'الأسابيع المحفوظة (' + keys.length + '):
-' +
-    keys.map(function(k){
-      var d=getWeekData(k);
-      return '• الأسبوع '+(d&&d.wnum||k.replace(WK_PREFIX,''))+': '+(d&&d.wstart||'—')+' → '+(d&&d.wend||'—')+(d&&d._savedAtAr?' | حُفظ: '+d._savedAtAr:'');
-    }).join('
-');
-  alert(msg);
-}
-
-// Migrate old single-week data
-function migrateOldData() {
-  var old = localStorage.getItem(LSK);
-  if(!old) return;
-  try {
-    var d = JSON.parse(old);
-    var wn = (d.wnum||'1').toString().replace(/\D/g,'')||'1';
-    var key = WK_PREFIX + wn;
-    if(!localStorage.getItem(key)) {
-      localStorage.setItem(key, old);
-      toast('✅ تم استيراد بيانات الأسبوع ' + wn + ' من الحفظ القديم');
-    }
-  } catch(e) {}
-}
-
-// Override saveDraft to use per-week storage
-function saveDraft() { saveCurrentWeek(); }
-function loadDraft() {
-  var keys = getAllWeekKeys();
-  if(keys.length === 0) { toast('⚠️ لا يوجد حفظ — اضغط ➕ لإنشاء أسبوع جديد'); return; }
-  loadWeek(keys[keys.length-1]); // load last week
-}
-
+var LSK = "falah_wp_final";
 var charts = {};
 
 // ══════════════════════════════════════════════════
@@ -1114,20 +850,6 @@ var PAGES = [
   {id:"pg-report",t:"📄 التقرير",n:"nav-report"},
   {id:"pg-import",t:"📂 الاستيراد",n:"nav-import"}
 ];
-
-function initWeekManager() {
-  migrateOldData();
-  // Auto-load last saved week
-  var keys = getAllWeekKeys();
-  if(keys.length > 0) {
-    var lastKey = keys[keys.length-1];
-    currentWeekKey = lastKey;
-    currentWeekNum = parseInt(lastKey.replace(WK_PREFIX,''));
-    var data = getWeekData(lastKey);
-    if(data) { setFormData(data); setTimeout(syncToReport, 200); }
-  }
-  renderWeeksBar();
-}
 
 function buildNav() {
   var nav = document.getElementById("hdrNav");
@@ -1349,10 +1071,42 @@ function setFormData(d) {
 }
 
 // ══════════════════════════════════════════════════
+// SUPABASE SAVE
+// ══════════════════════════════════════════════════
+function supaReady(){return !!(window.alfalahSupabase && window.ALFALAH_SUPABASE_KEY && !String(window.ALFALAH_SUPABASE_KEY).includes("PUT_PUBLISHABLE_KEY_HERE"));}
+async function saveDailyWorkToSupabase(d){
+  if(!supaReady())return {ok:false,skipped:true};
+  try{
+    const payload={
+      work_date:d.wstart||new Date().toISOString().split('T')[0],
+      week_number: parseInt(d.wnum || 0, 10) || null,
+      task_type: d.wstatus || null,
+      task_details: (d.achievements || d.other_work || null),
+      check_in:d.ain0||null,
+      check_out:d.aout0||null,
+      tasks:JSON.stringify(d._pills||[],null,0),
+      notes:d.notes||d.summary||null,
+      full_data:d
+    };
+    const {error}=await window.alfalahSupabase.from('daily_work_logs').insert([payload]);
+    if(error)return {ok:false,error};
+    return {ok:true};
+  }catch(e){return {ok:false,error:e};}
+}
+
+// ══════════════════════════════════════════════════
 // SAVE / LOAD
 // ══════════════════════════════════════════════════
-function saveDraft() {
-  try{ localStorage.setItem(LSK, JSON.stringify(getFormData())); toast("📌 تم الحفظ المؤقت"); }
+async function saveDraft() {
+  try{
+    const d=getFormData();
+    localStorage.setItem(LSK, JSON.stringify(d));
+    if(d.wnum) localStorage.setItem(LSK + "_week_" + d.wnum, JSON.stringify(d));
+    const r=await saveDailyWorkToSupabase(d);
+    if(r.ok) toast("📌 تم الحفظ محلياً وفي Supabase");
+    else if(r.skipped) toast("📌 تم الحفظ محلياً — مفتاح Supabase غير مفعّل بعد");
+    else toast("📌 تم الحفظ محلياً — لم ينجح حفظ Supabase");
+  }
   catch(e){ alert("خطأ في الحفظ!"); }
 }
 function loadDraft() {
@@ -2010,13 +1764,96 @@ function attachSync() {
 }
 
 // ══════════════════════════════════════════════════
+// INDEPENDENT WEEK RECORDS — every week has its own draft/data
+// ══════════════════════════════════════════════════
+var _loadingWeekRecord = false;
+function setWeekStatus(msg, type){
+  var el=document.getElementById("week-save-state");
+  if(!el) return;
+  el.textContent=msg;
+  el.style.color = type==="ok" ? "#0f6e56" : type==="warn" ? "#b8860b" : type==="bad" ? "#991b1b" : "var(--muted)";
+}
+function clearWeekFormKeepWeek(){
+  var keep = document.getElementById("wnum") ? document.getElementById("wnum").value : "";
+  var form = document.getElementById("wForm");
+  if(form) form.reset();
+  if(document.getElementById("wnum")) document.getElementById("wnum").value = keep;
+  // reset attendance defaults
+  DAYS.forEach(function(_,i){
+    var ain=document.getElementById("ain"+i), aout=document.getElementById("aout"+i), atype=document.getElementById("atype"+i), anote=document.getElementById("anote"+i);
+    if(ain) ain.value="08:00";
+    if(aout) aout.value=(i===4?"11:30":"14:00");
+    if(atype) atype.value="دوام رسمي";
+    if(anote) anote.value="";
+    styleRow(i); calcHrs(i);
+  });
+  document.querySelectorAll(".pill").forEach(function(p){p.classList.remove("sel")});
+  PILL_GROUPS.forEach(function(_,gi){
+    var res=document.getElementById("pr"+gi);
+    if(res){res.textContent="— لم يُختر بعد —";res.style.color="#94a3b8";res.style.fontStyle="italic";}
+  });
+  updateAttSumm();
+  setTimeout(syncToReport,50);
+}
+async function loadWeekRecordByNumber(week){
+  if(!week) return;
+  _loadingWeekRecord = true;
+  clearWeekFormKeepWeek();
+  setWeekStatus("جاري البحث عن سجل الأسبوع " + week + "...", "warn");
+  var local = localStorage.getItem(LSK + "_week_" + week);
+  if(local){
+    try{ setFormData(JSON.parse(local)); setWeekStatus("تم فتح مسودة محلية للأسبوع " + week, "ok"); }
+    catch(e){}
+  } else {
+    setWeekStatus("أسبوع جديد: النموذج فارغ وجاهز للإدخال.", "ok");
+  }
+  if(supaReady()){
+    try{
+      var r = await window.alfalahSupabase
+        .from('daily_work_logs')
+        .select('id, week_number, full_data, created_at')
+        .eq('week_number', parseInt(week,10))
+        .order('created_at', {ascending:false})
+        .limit(1);
+      if(r && r.data && r.data.length && r.data[0].full_data){
+        setFormData(r.data[0].full_data);
+        localStorage.setItem(LSK + "_week_" + week, JSON.stringify(r.data[0].full_data));
+        setWeekStatus("تم فتح آخر سجل محفوظ للأسبوع " + week + " من القاعدة.", "ok");
+      } else if(!local){
+        setWeekStatus("أسبوع جديد: لا توجد بيانات سابقة لهذا الرقم.", "ok");
+      }
+    }catch(e){
+      setWeekStatus("تعذر جلب الأسبوع من القاعدة، ويمكنك البدء محلياً.", "warn");
+    }
+  }
+  _loadingWeekRecord = false;
+  setTimeout(syncToReport,100);
+}
+function initIndependentWeeks(){
+  var w=document.getElementById("wnum");
+  if(w){
+    w.addEventListener("change", function(){ loadWeekRecordByNumber(this.value); });
+  }
+  var b=document.getElementById("btn-new-week");
+  if(b){
+    b.addEventListener("click", function(){
+      var w=document.getElementById("wnum");
+      if(!w || !w.value){ alert("اكتب رقم الأسبوع أولاً، مثل 2 أو 3."); return; }
+      clearWeekFormKeepWeek();
+      localStorage.removeItem(LSK + "_week_" + w.value);
+      setWeekStatus("تم فتح سجل فارغ للأسبوع " + w.value + ".", "ok");
+    });
+  }
+}
+
+// ══════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════
 buildNav();
-  initWeekManager();
 buildAtt();
 buildWeekCards();
 buildPills();
+initIndependentWeeks();
 loadDraft();
 attachSync();
 syncToReport();
