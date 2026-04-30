@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>واجهة تقييم الذكاء الاصطناعي — منصة الفلاح</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../js/styles.css">
+<style>
+.ai-hero{background:var(--grad);border-radius:22px;padding:26px 32px;margin-bottom:24px;color:#fff;text-align:center;position:relative;overflow:hidden;}
+.ai-hero::before{content:"";position:absolute;top:-60px;left:-60px;width:250px;height:250px;background:rgba(255,255,255,.05);border-radius:50%;}
+.ah-icon{font-size:56px;margin-bottom:10px;position:relative;z-index:1;}
+.ah-title{font-size:24px;font-weight:900;position:relative;z-index:1;}
+.ah-sub{font-size:14px;opacity:.88;margin-top:8px;position:relative;z-index:1;line-height:1.7;}
+.school-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+.sp-card{background:#fff;border:2px solid var(--border);border-radius:16px;padding:16px;cursor:pointer;transition:all .2s;text-align:center;}
+.sp-card:hover,.sp-card.sel{border-color:var(--blue);background:#e6f1fb;transform:translateY(-2px);}
+.sp-card.sel{border-color:var(--navy);background:var(--navy);color:#fff;}
+.sp-card.sel .sp-score{color:#ffe07a;}
+.sp-name{font-size:13px;font-weight:900;color:inherit;}
+.sp-score{font-size:22px;font-weight:900;color:var(--navy);}
+.sp-city{font-size:11px;color:var(--muted);margin-top:2px;}
+.report-type-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:18px;}
+.rt-card{background:#fff;border:2px solid var(--border);border-radius:14px;padding:16px;cursor:pointer;transition:all .2s;}
+.rt-card:hover,.rt-card.sel{border-color:var(--blue);background:#e6f1fb;}
+.rt-card.sel{border-color:var(--navy);background:var(--navy);color:#fff;}
+.rt-icon{font-size:26px;margin-bottom:6px;}
+.rt-title{font-size:14px;font-weight:900;}
+.rt-desc{font-size:11px;opacity:.8;margin-top:4px;}
+.gen-btn{background:var(--grad);color:#fff;border:none;border-radius:14px;padding:16px 32px;font-family:"Cairo",sans-serif;font-size:16px;font-weight:900;cursor:pointer;width:100%;margin-bottom:18px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;}
+.gen-btn:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 8px 24px rgba(12,68,124,.3);}
+.gen-btn:disabled{opacity:.5;transform:none;cursor:not-allowed;}
+.ai-result{background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px;min-height:100px;white-space:pre-wrap;font-size:14px;line-height:1.95;color:var(--text);margin-top:14px;}
+.ai-loading{text-align:center;padding:40px;color:var(--muted);}
+.ai-loading .spin{font-size:36px;animation:spin 1s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.copy-btn{background:#e6f1fb;border:1.5px solid var(--border);border-radius:10px;padding:8px 16px;font-family:"Cairo",sans-serif;font-size:13px;font-weight:700;cursor:pointer;color:var(--navy);margin-top:10px;display:inline-flex;align-items:center;gap:6px;}
+@media(max-width:700px){.school-picker,.report-type-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="ai-hero">
+    <div class="ah-icon">🤖</div>
+    <div class="ah-title">واجهة تقييم الذكاء الاصطناعي</div>
+    <div class="ah-sub">اختر مدرسة ونوع التقرير — سيُنشئ لك Claude Sonnet 4 تقريراً مهنياً احترافياً دقيقاً<br>لا تشوبه أي شائبة في الصياغة أو التحليل</div>
+  </div>
+
+  <!-- STEP 1: SELECT SCHOOL -->
+  <div class="card">
+    <div class="cardh"><div class="cnum">١</div><div><div class="ctitle">اختر المدرسة</div><div class="csub">اختر مدرسة واحدة أو "جميع المدارس" للتقرير المقارن</div></div></div>
+    <div class="school-picker" id="schoolPicker"></div>
+  </div>
+
+  <!-- STEP 2: REPORT TYPE -->
+  <div class="card">
+    <div class="cardh"><div class="cnum">٢</div><div><div class="ctitle">نوع التقرير</div></div></div>
+    <div class="report-type-grid">
+      <div class="rt-card sel" onclick="selType(this,'eval')" id="rt-eval">
+        <div class="rt-icon">📋</div><div class="rt-title">تقرير تقييم شامل</div>
+        <div class="rt-desc">تحليل كامل للمجموعات والبيئة والتقنية والكادر والخدمات</div>
+      </div>
+      <div class="rt-card" onclick="selType(this,'strengths')" id="rt-strengths">
+        <div class="rt-icon">💪</div><div class="rt-title">تقرير نقاط القوة</div>
+        <div class="rt-desc">إبراز ما تتميز به المكتبة واقتراح بناء عليه</div>
+      </div>
+      <div class="rt-card" onclick="selType(this,'dev')" id="rt-dev">
+        <div class="rt-icon">🔧</div><div class="rt-title">خطة التطوير</div>
+        <div class="rt-desc">توصيات تطوير مرتبة بالأولوية مع جداول زمنية</div>
+      </div>
+      <div class="rt-card" onclick="selType(this,'staff')" id="rt-staff">
+        <div class="rt-icon">👨‍💼</div><div class="rt-title">تقرير الكادر المهني</div>
+        <div class="rt-desc">تحليل مستوى الكادر واحتياجات التدريب والتطوير</div>
+      </div>
+      <div class="rt-card" onclick="selType(this,'compare')" id="rt-compare">
+        <div class="rt-icon">📊</div><div class="rt-title">التقرير المقارن الشامل</div>
+        <div class="rt-desc">مقارنة بين جميع المدارس المُقيَّمة مع التوصيات الاستراتيجية</div>
+      </div>
+      <div class="rt-card" onclick="selType(this,'exec')" id="rt-exec">
+        <div class="rt-icon">🏛️</div><div class="rt-title">التقرير التنفيذي للإدارة</div>
+        <div class="rt-desc">ملخص رسمي مُوجَّه للمدير وصانع القرار</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: GENERATE -->
+  <button class="gen-btn" id="genBtn" onclick="generateReport()">
+    🤖 إنشاء التقرير بالذكاء الاصطناعي
+  </button>
+
+  <!-- RESULT -->
+  <div class="card" id="resultCard" style="display:none">
+    <div class="cardh">
+      <div class="cnum">🤖</div>
+      <div><div class="ctitle">التقرير المُنشأ</div><div class="csub" id="resultMeta">—</div></div>
+      <button class="copy-btn" onclick="copyReport()">📋 نسخ</button>
+    </div>
+    <div class="ai-loading" id="aiLoading" style="display:none"><div class="spin">⏳</div><div style="margin-top:10px;font-size:15px;font-weight:700;color:var(--navy)">جاري الإعداد...</div></div>
+    <div class="ai-result" id="aiOutput"></div>
+    <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+      <button class="btn bp" onclick="window.print()">🖨️ طباعة</button>
+      <button class="btn bo" onclick="copyReport()">📋 نسخ النص</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="../js/nav.js"></script>
+<script>
+const SCHOOLS=[
+  {id:'khubaisi',code:'KHB',name:'الخبيصي',city:'العين'},
+  {id:'jeemi',code:'JMI',name:'الجيمي',city:'العين'},
+  {id:'dakhilat',code:'DKH',name:'الدخيلات',city:'الشارقة'},
+  {id:'baniyas',code:'BYS',name:'بني ياس',city:'أبوظبي'},
+  {id:'mbz',code:'MBZ',name:'محمد بن زايد',city:'أبوظبي'},
+  {id:'dana',code:'DNA',name:'الدانة',city:'أبوظبي'},
+];
+
+let selSchools=[], selType_='eval';
+injectNav('ai-eval');
+
+function loadSchoolData(id){
+  try{ const r=localStorage.getItem('eval_'+id)||localStorage.getItem('ls_schools/'+id+'.json'); return r?JSON.parse(r):null; }
+  catch(e){ return null; }
+}
+
+function renderPicker(){
+  const picker=document.getElementById('schoolPicker');
+  const rows=SCHOOLS.map(s=>{
+    const d=loadSchoolData(s.id);
+    const score=d?.totalScore||'—';
+    const done=!!d?.totalScore;
+    return `<div class="sp-card ${done?'':'opacity-60'}" onclick="toggleSchool('${s.id}',this)" data-id="${s.id}">
+      <div class="sp-score" style="${!done?'color:#ccc':''}">${score}</div>
+      <div class="sp-name">${s.name}</div>
+      <div class="sp-city">${s.city} ${done?'✅':'⏳'}</div>
+    </div>`;
+  });
+  rows.push(`<div class="sp-card" onclick="toggleSchool('ALL',this)" data-id="ALL" style="border-color:var(--gold)">
+    <div class="sp-score" style="color:var(--gold)">6</div>
+    <div class="sp-name">جميع المدارس</div>
+    <div class="sp-city">تقرير مقارن شامل</div>
+  </div>`);
+  picker.innerHTML=rows.join('');
+}
+renderPicker();
+
+function toggleSchool(id, el){
+  document.querySelectorAll('.sp-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  selSchools=[id==='ALL'?'ALL':id];
+}
+
+function selType(el, type){
+  document.querySelectorAll('.rt-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  selType_=type;
+}
+
+async function generateReport(){
+  if(selSchools.length===0){ alert('اختر مدرسة أولاً'); return; }
+  const btn=document.getElementById('genBtn');
+  btn.disabled=true; btn.textContent='⏳ جاري الإعداد...';
+  document.getElementById('resultCard').style.display='block';
+  document.getElementById('aiLoading').style.display='block';
+  document.getElementById('aiOutput').textContent='';
+  document.getElementById('resultCard').scrollIntoView({behavior:'smooth'});
+
+  let prompt='', metaText='';
+
+  if(selSchools[0]==='ALL' || selType_==='compare'){
+    const all=SCHOOLS.map(s=>({ s, d:loadSchoolData(s.id) })).filter(x=>x.d);
+    if(all.length===0){ alert('لا توجد بيانات تقييم بعد'); btn.disabled=false; btn.textContent='🤖 إنشاء التقرير'; return; }
+    const summary=all.map(x=>`\n• ${x.s.name} (${x.s.city}): ${x.d.totalScore}/100 [مجموعات ${x.d.scores?.col||'—'} | بيئة ${x.d.scores?.env||'—'} | تقنية ${x.d.scores?.tech||'—'} | كادر ${x.d.scores?.staff||'—'} | خدمات ${x.d.scores?.svc||'—'}]`).join('');
+    metaText='تقرير مقارن — '+all.length+' مدارس';
+    prompt=buildComparePrompt(summary, selType_);
+  } else {
+    const sid=selSchools[0];
+    const d=loadSchoolData(sid);
+    if(!d){ alert('لا توجد بيانات تقييم لهذه المدرسة. أكمل التقييم أولاً.'); btn.disabled=false; btn.textContent='🤖 إنشاء التقرير'; return; }
+    const s=SCHOOLS.find(x=>x.id===sid);
+    metaText=`${s.name} — ${selType_}`;
+    prompt=buildSchoolPrompt(d, s, selType_);
+  }
+
+  document.getElementById('resultMeta').textContent=metaText;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    const text=data.content?.map(c=>c.text||'').join('')||'حدث خطأ';
+    document.getElementById('aiLoading').style.display='none';
+    document.getElementById('aiOutput').textContent=text;
+  }catch(e){
+    document.getElementById('aiLoading').style.display='none';
+    document.getElementById('aiOutput').textContent='⚠️ تعذّر الاتصال. تحقق من الإنترنت وحاول مجدداً.';
+  }
+  btn.disabled=false; btn.innerHTML='🤖 إنشاء تقرير آخر';
+}
+
+function buildSchoolPrompt(d, s, type){
+  const base=`المدرسة: ${s.name} — ${s.city}\nالمجموع: ${d.totalScore}/100\nمجموعات: ${d.scores?.col||'—'}/25 | بيئة: ${d.scores?.env||'—'}/20 | تقنية: ${d.scores?.tech||'—'}/20 | كادر: ${d.scores?.staff||'—'}/20 | خدمات: ${d.scores?.svc||'—'}/15\nملاحظات: ${d.fields?.colNotes||''} ${d.fields?.envNotes||''} ${d.fields?.techNotes||''}\nالكادر: مؤهل ${d.fields?.stEdu||'—'} | خبرة ${d.fields?.stExp||'—'} | نظام ${d.fields?.stIlsSys||'—'}\nنقاط القوة: ${d.fields?.ovStr||'—'} | الضعف: ${d.fields?.ovGap||'—'} | التوصيات: ${d.fields?.ovRec||'—'}`;
+  const prompts={
+    eval:`أنت خبير مكتبات مدرسية. أنشئ تقريراً تقييمياً شاملاً باللغة العربية الفصحى الرسمية:\n${base}\nالبنية: 1-مقدمة 2-ملخص الدرجة والتصنيف 3-تحليل المحاور الخمسة 4-نقاط القوة 5-أولويات التطوير مع جداول زمنية 6-إجراءات فورية 7-خاتمة`,
+    strengths:`أنشئ تقريراً متخصصاً في إبراز نقاط القوة:\n${base}\nركّز على: ما يتميز به، كيف يمكن الاستفادة منه، كيف يصبح نموذجاً للآخرين`,
+    dev:`أنشئ خطة تطوير متكاملة:\n${base}\nتشمل: الأولويات العاجلة، المتوسطة، البعيدة المدى، مع الموارد المطلوبة والجداول الزمنية`,
+    staff:`أنشئ تقريراً متخصصاً في الكادر المهني:\n${base}\nيشمل: تحليل المستوى، نقاط القوة التقنية، خطة التدريب المقترحة، توصيات الاحتراف`,
+    exec:`أنشئ تقريراً تنفيذياً رسمياً مُوجَّهاً للإدارة:\n${base}\nموجز، رسمي، يبرز الإنجازات، ويطرح قرارات تحتاج دعم الإدارة`
+  };
+  return prompts[type]||prompts.eval;
+}
+
+function buildComparePrompt(summary, type){
+  return `أنت خبير مكتبات مدرسية. أنشئ تقريراً مقارناً شاملاً للمدارس التالية:\n${summary}\n\nالبنية: 1-ملخص تنفيذي 2-ترتيب المدارس مع المبررات 3-أقوى المحاور وأضعفها على مستوى المنظومة 4-توصيات استراتيجية للمنظومة 5-أولويات التدخل الفوري 6-خارطة طريق التطوير للعام`;
+}
+
+function copyReport(){
+  const text=document.getElementById('aiOutput').textContent;
+  navigator.clipboard.writeText(text).then(()=>showSaveStatus('✅ تم نسخ التقرير'));
+}
+</script>
+</body>
+</html>

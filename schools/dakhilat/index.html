@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تقييم مدرسة الفلاح الخاصة الدخيلات — 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../js/styles.css">
+<style>
+.school-hero{background:var(--grad);border-radius:20px;padding:22px 28px;margin-bottom:22px;color:#fff;display:flex;align-items:center;gap:20px;}
+.sh-badge{background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);border-radius:50%;width:80px;height:80px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.sh-code{font-size:18px;font-weight:900;}
+.sh-score{font-size:28px;font-weight:900;color:#ffe07a;}
+.sh-max{font-size:11px;opacity:.8;}
+.sh-info .sn{font-size:20px;font-weight:900;}
+.sh-info .sc{font-size:13px;opacity:.85;margin-top:4px;}
+.sh-grade{display:inline-block;padding:4px 14px;border-radius:20px;background:rgba(255,255,255,.2);font-size:12px;font-weight:700;margin-top:8px;}
+.action-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;background:#fff;border-radius:14px;padding:12px;border:1px solid var(--border);}
+.abtn{border:1.5px solid var(--border);border-radius:20px;padding:7px 14px;font-family:"Cairo",sans-serif;font-size:12px;font-weight:700;cursor:pointer;color:var(--navy);background:#f5faff;display:inline-flex;align-items:center;gap:5px;transition:all .2s;}
+.abtn:hover{background:var(--navy);color:#fff;}
+.abtn-ai{background:var(--grad);color:#fff;border:none;}
+.tab-bar{display:flex;gap:4px;margin-bottom:18px;background:#fff;border-radius:14px;padding:8px;border:1px solid var(--border);overflow-x:auto;}
+.tab{padding:9px 16px;border-radius:10px;font-family:"Cairo",sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--muted);white-space:nowrap;transition:all .2s;}
+.tab.active{background:var(--grad);color:#fff;}
+.tab-pane{display:none;}.tab-pane.active{display:block;}
+.score-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;}
+.sbd{background:#f5faff;border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;}
+.sbd .sn{font-size:22px;font-weight:900;color:var(--navy);}
+.sbd .sl{font-size:11px;color:var(--muted);margin-top:4px;font-weight:700;}
+.upload-section{background:linear-gradient(135deg,#f0f7ff,#f0fbf6);border:2px solid var(--border);border-radius:18px;padding:20px;margin-bottom:18px;}
+.us-title{font-size:16px;font-weight:900;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.json-upload-box{background:#fff;border:2px dashed var(--gold);border-radius:14px;padding:20px;text-align:center;margin-bottom:16px;}
+.ju-title{font-size:15px;font-weight:900;color:var(--gold);margin-bottom:8px;}
+.ju-steps{text-align:right;font-size:13px;color:var(--muted);line-height:2;margin-bottom:12px;}
+.ju-step{display:flex;align-items:center;gap:8px;padding:4px 0;}
+.ju-num{width:22px;height:22px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;flex-shrink:0;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- SCHOOL HERO -->
+  <div class="school-hero">
+    <div class="sh-badge">
+      <div class="sh-code" id="schoolCode">KHB</div>
+      <div class="sh-score" id="totalScore">—</div>
+      <div class="sh-max">/100</div>
+    </div>
+    <div class="sh-info">
+      <div class="sn" id="schoolName">أكاديمية الفلاح فرع الخبيصي</div>
+      <div class="sc" id="schoolCity">📍 العين &nbsp;|&nbsp; 🗓️ 28 أبريل 2026</div>
+      <div class="sh-grade" id="gradeLabel">—</div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="action-row">
+    <button class="abtn abtn-ai" onclick="generateReport()">🤖 تقرير AI</button>
+    <button class="abtn" onclick="saveData()">💾 حفظ</button>
+    <button class="abtn" onclick="exportJSON()">📤 تصدير JSON</button>
+    <button class="abtn" onclick="document.getElementById('importFile').click()">📥 استيراد JSON</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)">
+    <button class="abtn" onclick="window.print()">🖨️ طباعة</button>
+    <a href="../../" class="abtn" style="margin-right:auto;background:var(--navy);color:#fff;border-color:var(--navy)">🏠 الرئيسية</a>
+  </div>
+
+  <!-- JSON IMPORT GUIDE -->
+  <div class="json-upload-box" id="jsonGuide" style="display:none">
+    <div class="ju-title">📥 كيفية استيراد ملف JSON</div>
+    <div class="ju-steps">
+      <div class="ju-step"><div class="ju-num">١</div> اضغط زر "📥 استيراد JSON" أعلاه</div>
+      <div class="ju-step"><div class="ju-num">٢</div> اختر ملف JSON الخاص بهذه المدرسة من جهازك</div>
+      <div class="ju-step"><div class="ju-num">٣</div> ستظهر رسالة تأكيد ✅ وتُحمَّل البيانات تلقائياً</div>
+      <div class="ju-step"><div class="ju-num">٤</div> اضغط "💾 حفظ" لحفظ البيانات على GitHub</div>
+    </div>
+    <button class="abtn" onclick="document.getElementById('jsonGuide').style.display='none'">✕ إغلاق</button>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab active" onclick="showTab('general',this)">📝 البيانات العامة</button>
+    <button class="tab" onclick="showTab('collections',this)">📚 المجموعات</button>
+    <button class="tab" onclick="showTab('environment',this)">🏛️ البيئة</button>
+    <button class="tab" onclick="showTab('technology',this)">💻 التقنية</button>
+    <button class="tab" onclick="showTab('staff',this)">👨‍💼 الكادر</button>
+    <button class="tab" onclick="showTab('services',this)">🎯 الخدمات</button>
+    <button class="tab" onclick="showTab('files',this)">📁 ملفات المكتبة</button>
+    <button class="tab" onclick="showTab('report',this)">🤖 التقرير</button>
+  </div>
+
+  <!-- ══ TAB: GENERAL ══ -->
+  <div class="tab-pane active" id="tab-general">
+    <div class="card">
+      <div class="cardh"><div class="cnum">1</div><div><div class="ctitle">البيانات العامة</div></div></div>
+      <div class="g2">
+        <div class="fld"><label>اسم أخصائي / أمين المكتبة</label><input id="f-lib" placeholder="الاسم الكامل..."></div>
+        <div class="fld"><label>تاريخ الزيارة</label><input type="date" id="f-date"></div>
+        <div class="fld"><label>المرحلة الدراسية</label>
+          <select id="f-stg">
+            <option>KG — رياض الأطفال</option><option>حلقة أولى (1-4)</option>
+            <option>حلقة ثانية (5-8)</option><option>حلقة ثالثة (9-12)</option>
+            <option selected>متعددة المراحل</option>
+          </select></div>
+        <div class="fld"><label>عدد الطلاب</label><input type="number" id="f-stu" placeholder="العدد التقريبي..."></div>
+        <div class="fld"><label>عدد العاملين في المكتبة</label><input type="number" id="f-stf" placeholder="العدد..."></div>
+        <div class="fld full"><label>وصف مختصر للمكتبة</label><textarea id="f-desc" placeholder="الموقع، التقسيمات، ما يميزها..."></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: COLLECTIONS ══ -->
+  <div class="tab-pane" id="tab-collections">
+    <div class="card">
+      <div class="cardh"><div class="cnum">2</div><div><div class="ctitle">المجموعات والمصادر</div><div class="csub">الوزن: 25 درجة</div></div></div>
+      <div class="rgrp"><div class="rlbl">الرصيد الكلي للكتب <small>1=أقل من 500 | 6=أكثر من 7000</small></div>
+        <div class="rp">
+          <button class="rpill r1" onclick="rate('col-books',1,this)">1<br><small>أقل من 500</small></button>
+          <button class="rpill r2" onclick="rate('col-books',2,this)">2<br><small>500-1000</small></button>
+          <button class="rpill r3" onclick="rate('col-books',3,this)">3<br><small>1000-3000</small></button>
+          <button class="rpill r4" onclick="rate('col-books',4,this)">4<br><small>3000-5000</small></button>
+          <button class="rpill r5" onclick="rate('col-books',5,this)">5<br><small>5000-7000</small></button>
+          <button class="rpill r6" onclick="rate('col-books',6,this)">6<br><small>أكثر من 7000</small></button>
+        </div></div>
+      <div class="rgrp"><div class="rlbl">تنوع المواضيع وشمولية المجموعة</div>
+        <div class="rp">
+          <button class="rpill r1" onclick="rate('col-div',1,this)">1<br><small>ضعيف جداً</small></button>
+          <button class="rpill r2" onclick="rate('col-div',2,this)">2<br><small>ضعيف</small></button>
+          <button class="rpill r3" onclick="rate('col-div',3,this)">3<br><small>مقبول</small></button>
+          <button class="rpill r4" onclick="rate('col-div',4,this)">4<br><small>جيد</small></button>
+          <button class="rpill r5" onclick="rate('col-div',5,this)">5<br><small>جيد جداً</small></button>
+          <button class="rpill r6" onclick="rate('col-div',6,this)">6<br><small>ممتاز</small></button>
+        </div></div>
+      <div class="rgrp"><div class="rlbl">حداثة المجموعة</div>
+        <div class="rp">
+          <button class="rpill r1" onclick="rate('col-upd',1,this)">1<br><small>ما قبل 2000</small></button>
+          <button class="rpill r2" onclick="rate('col-upd',2,this)">2<br><small>2000-2010</small></button>
+          <button class="rpill r3" onclick="rate('col-upd',3,this)">3<br><small>2010-2015</small></button>
+          <button class="rpill r4" onclick="rate('col-upd',4,this)">4<br><small>2015-2020</small></button>
+          <button class="rpill r5" onclick="rate('col-upd',5,this)">5<br><small>2020-2023</small></button>
+          <button class="rpill r6" onclick="rate('col-upd',6,this)">6<br><small>2024+</small></button>
+        </div></div>
+      <div style="background:#e6f7f0;border:1.5px solid var(--teal);border-radius:12px;padding:14px;margin-top:12px">
+        <div style="font-size:14px;font-weight:900;color:#085041;margin-bottom:10px">🇦🇪 مجموعات الإمارات</div>
+        <div class="rgrp"><div class="rlbl">تقييم مجموعات الإمارات <small>1=غير موجودة | 6=متميزة</small></div>
+          <div class="rp">
+            <button class="rpill r1" onclick="rate('uae-col',1,this)">1<br><small>غير موجودة</small></button>
+            <button class="rpill r2" onclick="rate('uae-col',2,this)">2<br><small>شحيحة</small></button>
+            <button class="rpill r3" onclick="rate('uae-col',3,this)">3<br><small>محدودة</small></button>
+            <button class="rpill r4" onclick="rate('uae-col',4,this)">4<br><small>جيدة</small></button>
+            <button class="rpill r5" onclick="rate('uae-col',5,this)">5<br><small>وافرة</small></button>
+            <button class="rpill r6" onclick="rate('uae-col',6,this)">6<br><small>متميزة</small></button>
+          </div></div>
+        <div class="cg4" style="margin-top:8px">
+          <label class="chk"><input type="checkbox" id="uae-hist"> تاريخ الإمارات</label>
+          <label class="chk"><input type="checkbox" id="uae-cult"> ثقافة وتراث</label>
+          <label class="chk"><input type="checkbox" id="uae-poet"> شعر وأدب</label>
+          <label class="chk"><input type="checkbox" id="uae-stor"> قصص وروايات</label>
+          <label class="chk"><input type="checkbox" id="uae-lead"> قيادة وشخصيات</label>
+          <label class="chk"><input type="checkbox" id="uae-geo"> جغرافيا وبيئة</label>
+          <label class="chk"><input type="checkbox" id="uae-eco"> اقتصاد وتنمية</label>
+          <label class="chk"><input type="checkbox" id="uae-vis"> رؤية الإمارات</label>
+        </div>
+      </div>
+      <div class="g2" style="margin-top:12px">
+        <div class="fld full"><label>📝 ملاحظات المجموعات</label><textarea id="col-notes" placeholder="ملاحظاتك على المجموعات والمصادر..."></textarea></div>
+        <div class="fld full"><label>⭐ توصيات التطوير</label><textarea id="col-rec" placeholder="ما الكتب المقترح اقتناؤها؟"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: ENVIRONMENT ══ -->
+  <div class="tab-pane" id="tab-environment">
+    <div class="card">
+      <div class="cardh"><div class="cnum">3</div><div><div class="ctitle">البيئة والمرافق</div><div class="csub">الوزن: 20 درجة</div></div></div>
+      <div class="rgrp"><div class="rlbl">المساحة والسعة الاستيعابية</div>
+        <div class="rp">
+          <button class="rpill r1" onclick="rate('env-space',1,this)">1<br><small>ضيقة جداً</small></button>
+          <button class="rpill r2" onclick="rate('env-space',2,this)">2<br><small>ضيقة</small></button>
+          <button class="rpill r3" onclick="rate('env-space',3,this)">3<br><small>مقبولة</small></button>
+          <button class="rpill r4" onclick="rate('env-space',4,this)">4<br><small>جيدة</small></button>
+          <button class="rpill r5" onclick="rate('env-space',5,this)">5<br><small>واسعة</small></button>
+          <button class="rpill r6" onclick="rate('env-space',6,this)">6<br><small>ممتازة</small></button>
+        </div></div>
+      <div class="rgrp"><div class="rlbl">الإضاءة والتهوية والنظافة</div>
+        <div class="rp">
+          <button class="rpill r1" onclick="rate('env-light',1,this)">1<br><small>سيئ</small></button>
+          <button class="rpill r2" onclick="rate('env-light',2,this)">2<br><small>ضعيف</small></button>
+          <button class="rpill r3" onclick="rate('env-light',3,this)">3<br><small>مقبول</small></button>
+          <button class="rpill r4" onclick="rate('env-light',4,this)">4<br><small>جيد</small></button>
+          <button class="rpill r5" onclick="rate('env-light',5,this)">5<br><small>جيد جداً</small></button>
+          <button class="rpill r6" onclick="rate('env-light',6,this)">6<br><small>ممتاز</small></button>
+        </div></div>
+      <div class="rgrp"><div class="rlbl">التصميم الداخلي وجاذبية البيئة</div>
+        <div class="rp">
+          <button class="rpill r1" onclick="rate('env-des',1,this)">1<br><small>غير جذاب</small></button>
+          <button class="rpill r2" onclick="rate('env-des',2,this)">2<br><small>ضعيف</small></button>
+          <button class="rpill r3" onclick="rate('env-des',3,this)">3<br><small>مقبول</small></button>
+          <button class="rpill r4" onclick="rate('env-des',4,this)">4<br><small>جيد</small></button>
+          <button class="rpill r5" onclick="rate('env-des',5,this)">5<br><small>جذاب</small></button>
+          <button class="rpill r6" onclick="rate('env-des',6,this)">6<br><small>إبداعي</small></button>
+        </div></div>
+      <div class="cg3" style="margin-top:12px">
+        <label class="chk"><input type="checkbox" id="env-read"> منطقة قراءة هادئة</label>
+        <label class="chk"><input type="checkbox" id="env-grp"> عمل جماعي</label>
+        <label class="chk"><input type="checkbox" id="env-story"> ركن القصة</label>
+        <label class="chk"><input type="checkbox" id="env-disp"> عروض ولوحات</label>
+        <label class="chk"><input type="checkbox" id="env-make"> ركن إبداعي</label>
+        <label class="chk"><input type="checkbox" id="env-stor"> تخزين منظم</label>
+      </div>
+      <div class="fld" style="margin-top:12px"><label>📝 ملاحظات البيئة</label><textarea id="env-notes" placeholder="ملاحظاتك على البيئة والمرافق..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: TECHNOLOGY ══ -->
+  <div class="tab-pane" id="tab-technology">
+    <div class="card">
+      <div class="cardh"><div class="cnum">4</div><div><div class="ctitle">التقنية والرقمنة</div><div class="csub">الوزن: 20 درجة</div></div></div>
+      <div class="rgrp"><div class="rlbl">نظام إدارة المكتبة ILS</div>
+        <div class="rp">
+          <button class="rpill r1" onclick="rate('tech-ils',1,this)">1<br><small>لا يوجد</small></button>
+          <button class="rpill r2" onclick="rate('tech-ils',2,this)">2<br><small>جزئي</small></button>
+          <button class="rpill r3" onclick="rate('tech-ils',3,this)">3<br><small>مثبت</small></button>
+          <button class="rpill r4" onclick="rate('tech-ils',4,this)">4<br><small>مفعّل</small></button>
+          <button class="rpill r5" onclick="rate('tech-ils',5,this)">5<br><small>مُستخدم</small></button>
+          <button class="rpill r6" onclick="rate('tech-ils',6,this)">6<br><small>متكامل</small></button>
+        </div></div>
+      <div class="rgrp"><div class="rlbl">أجهزة الحاسوب والشاشات</div>
+        <div class="rp">
+          <button class="rpill r1" onclick="rate('tech-hw',1,this)">1<br><small>لا توجد</small></button>
+          <button class="rpill r2" onclick="rate('tech-hw',2,this)">2<br><small>1-2</small></button>
+          <button class="rpill r3" onclick="rate('tech-hw',3,this)">3<br><small>3-5</small></button>
+          <button class="rpill r4" onclick="rate('tech-hw',4,this)">4<br><small>6-10</small></button>
+          <button class="rpill r5" onclick="rate('tech-hw',5,this)">5<br><small>10-20</small></button>
+          <button class="rpill r6" onclick="rate('tech-hw',6,this)">6<br><small>+20</small></button>
+        </div></div>
+      <div class="rgrp"><div class="rlbl">المصادر الرقمية والإلكترونية</div>
+        <div class="rp">
+          <button class="rpill r1" onclick="rate('tech-dig',1,this)">1<br><small>لا توجد</small></button>
+          <button class="rpill r2" onclick="rate('tech-dig',2,this)">2<br><small>محدودة</small></button>
+          <button class="rpill r3" onclick="rate('tech-dig',3,this)">3<br><small>جزئية</small></button>
+          <button class="rpill r4" onclick="rate('tech-dig',4,this)">4<br><small>جيدة</small></button>
+          <button class="rpill r5" onclick="rate('tech-dig',5,this)">5<br><small>متنوعة</small></button>
+          <button class="rpill r6" onclick="rate('tech-dig',6,this)">6<br><small>ممتازة</small></button>
+        </div></div>
+      <div class="fld" style="margin-top:12px"><label>📝 ملاحظات التقنية</label><textarea id="tech-notes" placeholder="نوع النظام، الأجهزة، احتياجات التطوير..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: STAFF ══ -->
+  <div class="tab-pane" id="tab-staff">
+    <div class="card">
+      <div class="cardh"><div class="cnum">5</div><div><div class="ctitle">الكادر المهني والمؤهلات</div><div class="csub">الوزن: 20 درجة</div></div></div>
+      <div class="g2" style="gap:18px">
+        <div>
+          <div class="rlbl">معرفة أساسيات المكتبات</div>
+          <div class="rp"><button class="rpill r1" onclick="rate('st-bas',1,this)">1</button><button class="rpill r2" onclick="rate('st-bas',2,this)">2</button><button class="rpill r3" onclick="rate('st-bas',3,this)">3</button><button class="rpill r4" onclick="rate('st-bas',4,this)">4</button><button class="rpill r5" onclick="rate('st-bas',5,this)">5</button><button class="rpill r6" onclick="rate('st-bas',6,this)">6</button></div>
+        </div>
+        <div>
+          <div class="rlbl">التصنيف والتنظيم</div>
+          <div class="rp"><button class="rpill r1" onclick="rate('st-cls',1,this)">1</button><button class="rpill r2" onclick="rate('st-cls',2,this)">2</button><button class="rpill r3" onclick="rate('st-cls',3,this)">3</button><button class="rpill r4" onclick="rate('st-cls',4,this)">4</button><button class="rpill r5" onclick="rate('st-cls',5,this)">5</button><button class="rpill r6" onclick="rate('st-cls',6,this)">6</button></div>
+        </div>
+        <div>
+          <div class="rlbl">التعامل مع الطلبة</div>
+          <div class="rp"><button class="rpill r1" onclick="rate('st-stu',1,this)">1</button><button class="rpill r2" onclick="rate('st-stu',2,this)">2</button><button class="rpill r3" onclick="rate('st-stu',3,this)">3</button><button class="rpill r4" onclick="rate('st-stu',4,this)">4</button><button class="rpill r5" onclick="rate('st-stu',5,this)">5</button><button class="rpill r6" onclick="rate('st-stu',6,this)">6</button></div>
+        </div>
+        <div>
+          <div class="rlbl">المبادرة والتطوير</div>
+          <div class="rp"><button class="rpill r1" onclick="rate('st-mot',1,this)">1</button><button class="rpill r2" onclick="rate('st-mot',2,this)">2</button><button class="rpill r3" onclick="rate('st-mot',3,this)">3</button><button class="rpill r4" onclick="rate('st-mot',4,this)">4</button><button class="rpill r5" onclick="rate('st-mot',5,this)">5</button><button class="rpill r6" onclick="rate('st-mot',6,this)">6</button></div>
+        </div>
+      </div>
+      <div style="background:#e6f7f5;border:1.5px solid var(--teal);border-radius:12px;padding:14px;margin-top:14px">
+        <div style="font-size:14px;font-weight:900;color:#085041;margin-bottom:12px">💻 المعرفة التقنية وأنظمة الفهرسة</div>
+        <div class="g2" style="gap:14px;margin-bottom:12px">
+          <div><div class="rlbl" style="font-size:12px">معرفة MARC21</div>
+            <div class="rp"><button class="rpill r1" onclick="rate('st-marc',1,this)">1</button><button class="rpill r2" onclick="rate('st-marc',2,this)">2</button><button class="rpill r3" onclick="rate('st-marc',3,this)">3</button><button class="rpill r4" onclick="rate('st-marc',4,this)">4</button><button class="rpill r5" onclick="rate('st-marc',5,this)">5</button><button class="rpill r6" onclick="rate('st-marc',6,this)">6</button></div></div>
+          <div><div class="rlbl" style="font-size:12px">معرفة أنظمة ILS</div>
+            <div class="rp"><button class="rpill r1" onclick="rate('st-ils',1,this)">1</button><button class="rpill r2" onclick="rate('st-ils',2,this)">2</button><button class="rpill r3" onclick="rate('st-ils',3,this)">3</button><button class="rpill r4" onclick="rate('st-ils',4,this)">4</button><button class="rpill r5" onclick="rate('st-ils',5,this)">5</button><button class="rpill r6" onclick="rate('st-ils',6,this)">6</button></div></div>
+        </div>
+        <div class="g2"><div class="fld"><label style="font-size:12px">النظام المستخدم حالياً</label>
+          <div class="qp" id="qils">
+            <div class="pill" onclick="qp('st-ils-sys',this,'qils')">Destiny</div>
+            <div class="pill" onclick="qp('st-ils-sys',this,'qils')">Koha</div>
+            <div class="pill" onclick="qp('st-ils-sys',this,'qils')">Alexandria</div>
+            <div class="pill" onclick="qp('st-ils-sys',this,'qils')">Excel/ورقي</div>
+            <div class="pill" onclick="qp('st-ils-sys',this,'qils')">لا يوجد</div>
+          </div>
+          <input id="st-ils-sys" placeholder="اسم النظام..."></div>
+        <div class="fld"><label style="font-size:12px">الفهرسة العربية</label>
+          <div class="qp" id="qarab">
+            <div class="pill" onclick="qp('st-arab',this,'qarab')">لا توجد</div>
+            <div class="pill" onclick="qp('st-arab',this,'qarab')">أساسية</div>
+            <div class="pill" onclick="qp('st-arab',this,'qarab')">جيدة</div>
+            <div class="pill" onclick="qp('st-arab',this,'qarab')">متخصصة</div>
+          </div>
+          <input id="st-arab" placeholder="التقييم..."></div></div>
+        <div class="cg4" style="margin-top:10px">
+          <label class="chk"><input type="checkbox" id="sk-marc"> MARC21</label>
+          <label class="chk"><input type="checkbox" id="sk-ils"> نظام ILS</label>
+          <label class="chk"><input type="checkbox" id="sk-opac"> OPAC</label>
+          <label class="chk"><input type="checkbox" id="sk-dew"> ديوي العشري</label>
+          <label class="chk"><input type="checkbox" id="sk-dig"> مصادر رقمية</label>
+          <label class="chk"><input type="checkbox" id="sk-db"> قواعد بيانات</label>
+          <label class="chk"><input type="checkbox" id="sk-rfid"> RFID/باركود</label>
+          <label class="chk"><input type="checkbox" id="sk-rep"> تقارير النظام</label>
+        </div>
+        <div class="fld" style="margin-top:10px"><label>ملاحظات تقنية</label><textarea id="st-tech-n" placeholder="ملاحظات المعرفة التقنية للكادر..."></textarea></div>
+      </div>
+      <div style="background:#fffbee;border:1.5px solid var(--amber);border-radius:12px;padding:14px;margin-top:14px">
+        <div style="font-size:14px;font-weight:900;color:var(--gold);margin-bottom:12px">🎓 الشهادات والخبرة</div>
+        <div class="g2">
+          <div class="fld"><label style="font-size:12px">المؤهل العلمي</label>
+            <div class="qp" id="qedu">
+              <div class="pill" onclick="qp('st-edu',this,'qedu')">ثانوية</div>
+              <div class="pill" onclick="qp('st-edu',this,'qedu')">دبلوم</div>
+              <div class="pill" onclick="qp('st-edu',this,'qedu')">بكالوريوس</div>
+              <div class="pill" onclick="qp('st-edu',this,'qedu')">ماجستير</div>
+              <div class="pill" onclick="qp('st-edu',this,'qedu')">دكتوراه</div>
+            </div>
+            <input id="st-edu" placeholder="أو التخصص..."></div>
+          <div class="fld"><label style="font-size:12px">سنوات الخبرة</label>
+            <div class="qp" id="qexp">
+              <div class="pill" onclick="qp('st-exp',this,'qexp')">أقل من سنة</div>
+              <div class="pill" onclick="qp('st-exp',this,'qexp')">1-3 سنوات</div>
+              <div class="pill" onclick="qp('st-exp',this,'qexp')">3-7 سنوات</div>
+              <div class="pill" onclick="qp('st-exp',this,'qexp')">7-15 سنة</div>
+              <div class="pill" onclick="qp('st-exp',this,'qexp')">+15 سنة</div>
+            </div>
+            <input id="st-exp" placeholder="العدد الدقيق..."></div>
+        </div>
+        <div class="cg4" style="margin-top:10px">
+          <label class="chk"><input type="checkbox" id="tr-cat"> التصنيف</label>
+          <label class="chk"><input type="checkbox" id="tr-mgmt"> إدارة مكتبات</label>
+          <label class="chk"><input type="checkbox" id="tr-dig"> مكتبات رقمية</label>
+          <label class="chk"><input type="checkbox" id="tr-rd"> تشجيع القراءة</label>
+          <label class="chk"><input type="checkbox" id="tr-ch"> خدمات أطفال</label>
+          <label class="chk"><input type="checkbox" id="tr-ils"> أنظمة مكتبات</label>
+          <label class="chk"><input type="checkbox" id="tr-uae"> التراث الإماراتي</label>
+          <label class="chk"><input type="checkbox" id="tr-ai"> الذكاء الاصطناعي</label>
+        </div>
+        <div class="g2" style="margin-top:10px">
+          <div class="fld full"><label>أبرز الشهادات والدورات</label><textarea id="st-certs" placeholder="اذكر الشهادات والدورات مع الجهة والسنة..."></textarea></div>
+          <div class="fld full"><label>احتياجات التطوير المهني</label><textarea id="st-devn" placeholder="الدورات أو المهارات المطلوبة للتطوير..."></textarea></div>
+        </div>
+      </div>
+      <div class="fld" style="margin-top:12px"><label>📝 ملاحظات عامة على الكادر</label><textarea id="st-notes" placeholder="ملاحظاتك العامة..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: SERVICES ══ -->
+  <div class="tab-pane" id="tab-services">
+    <div class="card">
+      <div class="cardh"><div class="cnum">6</div><div><div class="ctitle">الخدمات والأنشطة</div><div class="csub">الوزن: 15 درجة</div></div></div>
+      <div class="rgrp"><div class="rlbl">خدمات الإعارة</div>
+        <div class="rp"><button class="rpill r1" onclick="rate('svc-len',1,this)">1<br><small>لا توجد</small></button><button class="rpill r2" onclick="rate('svc-len',2,this)">2<br><small>ضعيفة</small></button><button class="rpill r3" onclick="rate('svc-len',3,this)">3<br><small>مقبولة</small></button><button class="rpill r4" onclick="rate('svc-len',4,this)">4<br><small>جيدة</small></button><button class="rpill r5" onclick="rate('svc-len',5,this)">5<br><small>نشطة</small></button><button class="rpill r6" onclick="rate('svc-len',6,this)">6<br><small>ممتازة</small></button></div></div>
+      <div class="rgrp"><div class="rlbl">الأنشطة والفعاليات القرائية</div>
+        <div class="rp"><button class="rpill r1" onclick="rate('svc-ev',1,this)">1<br><small>لا توجد</small></button><button class="rpill r2" onclick="rate('svc-ev',2,this)">2<br><small>نادرة</small></button><button class="rpill r3" onclick="rate('svc-ev',3,this)">3<br><small>موسمية</small></button><button class="rpill r4" onclick="rate('svc-ev',4,this)">4<br><small>شهرية</small></button><button class="rpill r5" onclick="rate('svc-ev',5,this)">5<br><small>أسبوعية</small></button><button class="rpill r6" onclick="rate('svc-ev',6,this)">6<br><small>يومية</small></button></div></div>
+      <div class="g2" style="margin-top:14px">
+        <div class="fld full"><label>نقاط القوة الرئيسية</label><textarea id="ov-str" placeholder="أبرز ما تتميز به هذه المكتبة..."></textarea></div>
+        <div class="fld full"><label>أبرز نقاط الضعف والثغرات</label><textarea id="ov-gap" placeholder="أبرز التحديات والمناطق التي تحتاج تطوير..."></textarea></div>
+        <div class="fld full"><label>التوصيات الأولية</label><textarea id="ov-rec" placeholder="التوصيات المقترحة مرتبة بالأولوية..."></textarea></div>
+        <div class="fld full"><label>📝 ملاحظات الخدمات</label><textarea id="svc-notes" placeholder="ملاحظاتك على الخدمات المقدمة..."></textarea></div>
+      </div>
+    </div>
+
+    <!-- SCORE BREAKDOWN -->
+    <div class="card">
+      <div class="cardh"><div class="cnum">7</div><div><div class="ctitle">ملخص الدرجات</div></div></div>
+      <div class="score-breakdown">
+        <div class="sbd"><div class="sn" id="s-col">—</div><div class="sl">المجموعات /25</div></div>
+        <div class="sbd"><div class="sn" id="s-env">—</div><div class="sl">البيئة /20</div></div>
+        <div class="sbd"><div class="sn" id="s-tech">—</div><div class="sl">التقنية /20</div></div>
+        <div class="sbd"><div class="sn" id="s-staff">—</div><div class="sl">الكادر /20</div></div>
+        <div class="sbd"><div class="sn" id="s-svc">—</div><div class="sl">الخدمات /15</div></div>
+        <div class="sbd" style="border:2px solid var(--navy)"><div class="sn" id="s-total" style="font-size:28px">—</div><div class="sl">المجموع /100</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TAB: FILES ══ -->
+  <div class="tab-pane" id="tab-files">
+
+    <!-- Photos -->
+    <div class="upload-section">
+      <div class="us-title">📸 صور المكتبة (حتى 10 صور)</div>
+      <div id="photos-uploader"></div>
+    </div>
+
+    <!-- Documents -->
+    <div class="upload-section">
+      <div class="us-title">📄 نماذج وقوائم العمل (حتى 10 ملفات)</div>
+      <div id="docs-uploader"></div>
+    </div>
+
+    <!-- Certificates -->
+    <div class="upload-section">
+      <div class="us-title">🎓 شهادات الأخصائي والدورات التدريبية (حتى 10 ملفات)</div>
+      <div id="certs-uploader"></div>
+    </div>
+
+    <!-- JSON Guide -->
+    <div class="card" style="background:linear-gradient(135deg,#fffbee,#fff);border-color:var(--gold)">
+      <div class="cardh"><div class="cnum" style="background:linear-gradient(135deg,var(--gold),var(--amber))">📥</div><div><div class="ctitle">استيراد ملف بيانات JSON</div><div class="csub">خطوات واضحة لاستيراد بيانات التقييم</div></div></div>
+      <div style="background:#f5faff;border-radius:12px;padding:16px;margin-bottom:14px">
+        <div class="ju-step" style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bg)">
+          <div class="ju-num">١</div>
+          <div><strong>ابحث عن ملف JSON</strong> — يكون اسمه مثل <code style="background:#e8f0fa;padding:2px 8px;border-radius:5px;font-size:12px">تقييم_KHB_2026.json</code></div>
+        </div>
+        <div class="ju-step" style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bg)">
+          <div class="ju-num">٢</div>
+          <div><strong>اضغط زر "📥 استيراد JSON"</strong> في شريط الأدوات أعلى الصفحة</div>
+        </div>
+        <div class="ju-step" style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bg)">
+          <div class="ju-num">٣</div>
+          <div><strong>اختر الملف</strong> من جهازك — ستظهر رسالة ✅ وتُحمَّل كل البيانات فوراً</div>
+        </div>
+        <div class="ju-step" style="display:flex;align-items:center;gap:10px;padding:8px 0">
+          <div class="ju-num">٤</div>
+          <div><strong>اضغط "💾 حفظ"</strong> لحفظ البيانات على GitHub بشكل دائم</div>
+        </div>
+      </div>
+      <button class="btn bp" onclick="document.getElementById('importFile').click()">📥 استيراد ملف JSON الآن</button>
+    </div>
+
+  </div>
+
+  <!-- ══ TAB: REPORT ══ -->
+  <div class="tab-pane" id="tab-report">
+    <div class="ai-box">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+        <span style="font-size:30px">🤖</span>
+        <div><div style="font-size:17px;font-weight:900;color:var(--navy)">التقرير المهني بالذكاء الاصطناعي</div>
+          <div style="font-size:12px;color:var(--muted)">يُحلل كل بيانات التقييم المُدخلة ويُنشئ تقريراً احترافياً دقيقاً</div></div>
+        <button class="btn bt" style="margin-right:auto" onclick="generateReport()">🤖 إنشاء التقرير</button>
+      </div>
+      <div class="ai-loading" id="aiLoading">⏳ جاري إعداد التقرير المهني...</div>
+      <div class="ai-output" id="aiOutput"></div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<div class="save-bar">
+  <button class="btn bp" onclick="saveData()">💾 حفظ التقييم</button>
+  <button class="btn bt" onclick="generateReport()">🤖 تقرير AI</button>
+  <button class="btn bg" onclick="exportJSON()">📤 تصدير JSON</button>
+  <button class="btn bo" onclick="clearData()">🗑️ مسح</button>
+</div>
+
+<script src="../../js/nav.js"></script>
+<script>
+const SCHOOL = { id:'dakhilat', code:'DKH', name:'مدرسة الفلاح الخاصة الدخيلات', city:'الشارقة', visitDate:'2026-05-05' };
+const ratings = {};
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  injectNav('evaluation');
+  document.getElementById('schoolCode').textContent = SCHOOL.code;
+  document.getElementById('schoolName').textContent = SCHOOL.name;
+  document.getElementById('schoolCity').textContent = '📍 ' + SCHOOL.city + ' | 🗓️ ' + SCHOOL.visitDate;
+  document.title = 'تقييم ' + SCHOOL.name + ' — 2026';
+
+  // Init file uploaders
+  createFileUploader('photos-uploader', 'schools/'+SCHOOL.id+'/photos', { accept:'image/*', maxFiles:10, label:'صور المكتبة', icon:'📸' });
+  createFileUploader('docs-uploader',   'schools/'+SCHOOL.id+'/docs',   { maxFiles:10, label:'نماذج وقوائم العمل', icon:'📄' });
+  createFileUploader('certs-uploader',  'schools/'+SCHOOL.id+'/certs',  { maxFiles:10, label:'شهادات الأخصائي', icon:'🎓' });
+
+  loadData();
+  calcScore();
+});
+
+function showTab(id, btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
+function rate(key, val, btn){
+  ratings[key]=val;
+  btn.parentElement.querySelectorAll('.rpill').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  calcScore(); saveData();
+}
+
+function qp(inputId, pillEl, groupId){
+  document.querySelectorAll('#'+groupId+' .pill').forEach(p=>p.classList.remove('sel'));
+  pillEl.classList.add('sel');
+  const inp=document.getElementById(inputId);
+  if(inp) inp.value=pillEl.textContent.trim();
+  saveData();
+}
+
+function avg(keys){ const v=keys.map(k=>ratings[k]||0); return v.reduce((a,b)=>a+b,0)/keys.length; }
+function setText(id,v){ const el=document.getElementById(id); if(el) el.textContent=v; }
+function val(id){ const el=document.getElementById(id); return el?el.value:''; }
+function setVal(id,v){ const el=document.getElementById(id); if(el&&v!=null&&v!==undefined) el.value=v; }
+
+function calcScore(){
+  const col = Math.round(avg(['col-books','col-div','col-upd'])/6*19 + (ratings['uae-col']||0)/6*6);
+  const env = Math.round(avg(['env-space','env-light','env-des'])/6*20);
+  const tech = Math.round(avg(['tech-ils','tech-hw','tech-dig'])/6*20);
+  const staff = Math.round(avg(['st-bas','st-cls','st-stu','st-mot','st-marc','st-ils'])/6*20);
+  const svc = Math.round(avg(['svc-len','svc-ev'])/6*15);
+  const total = col+env+tech+staff+svc;
+
+  setText('s-col',col||'—'); setText('s-env',env||'—'); setText('s-tech',tech||'—');
+  setText('s-staff',staff||'—'); setText('s-svc',svc||'—');
+  setText('s-total',total||'—'); setText('totalScore',total||'—');
+
+  let grade='—';
+  if(total>=90) grade='ممتاز 🌟';
+  else if(total>=80) grade='جيد جداً ✅';
+  else if(total>=70) grade='جيد 👍';
+  else if(total>=60) grade='مقبول ⚠️';
+  else if(total>0) grade='يحتاج تطوير 🔧';
+  setText('gradeLabel', grade);
+
+  return {col,env,tech,staff,svc,total};
+}
+
+function collectData(){
+  const scores=calcScore();
+  const checks={};
+  ['uae-hist','uae-cult','uae-poet','uae-stor','uae-lead','uae-geo','uae-eco','uae-vis',
+   'env-read','env-grp','env-story','env-disp','env-make','env-stor',
+   'sk-marc','sk-ils','sk-opac','sk-dew','sk-dig','sk-db','sk-rfid','sk-rep',
+   'tr-cat','tr-mgmt','tr-dig','tr-rd','tr-ch','tr-ils','tr-uae','tr-ai'
+  ].forEach(id=>{ const el=document.getElementById(id); if(el) checks[id]=el.checked; });
+  return {
+    school:SCHOOL, ratings:{...ratings}, checks,
+    fields:{
+      lib:val('f-lib'),date:val('f-date'),stg:val('f-stg'),stu:val('f-stu'),stf:val('f-stf'),desc:val('f-desc'),
+      colNotes:val('col-notes'),colRec:val('col-rec'),envNotes:val('env-notes'),
+      techNotes:val('tech-notes'),stIlsSys:val('st-ils-sys'),stArab:val('st-arab'),
+      stTechN:val('st-tech-n'),stEdu:val('st-edu'),stExp:val('st-exp'),
+      stCerts:val('st-certs'),stDevN:val('st-devn'),stNotes:val('st-notes'),
+      svcNotes:val('svc-notes'),ovStr:val('ov-str'),ovGap:val('ov-gap'),ovRec:val('ov-rec')
+    },
+    scores, totalScore:scores.total,
+    savedAt:new Date().toLocaleString('ar-AE')
+  };
+}
+
+async function saveData(){
+  const data=collectData();
+  localStorage.setItem('eval_'+SCHOOL.id, JSON.stringify(data));
+  const result=await FalahStorage.save('schools/'+SCHOOL.id+'.json', data);
+  showSaveStatus(result.ok ? '✅ محفوظ على GitHub' : '💾 محفوظ محلياً');
+}
+
+async function loadData(){
+  let d=await FalahStorage.load('schools/'+SCHOOL.id+'.json');
+  if(!d){ const r=localStorage.getItem('eval_'+SCHOOL.id); if(r) try{d=JSON.parse(r);}catch(e){} }
+  if(!d){ showSaveStatus('📋 لا توجد بيانات سابقة','warn'); return; }
+  if(d.ratings) Object.keys(d.ratings).forEach(k=>{
+    const v=d.ratings[k]; ratings[k]=v;
+    const btn=document.querySelector(`[onclick="rate('${k}',${v},this)"]`);
+    if(btn) btn.classList.add('sel');
+  });
+  if(d.fields){ const f=d.fields;
+    setVal('f-lib',f.lib);setVal('f-date',f.date);setVal('f-stg',f.stg);setVal('f-stu',f.stu);setVal('f-stf',f.stf);setVal('f-desc',f.desc);
+    setVal('col-notes',f.colNotes);setVal('col-rec',f.colRec);setVal('env-notes',f.envNotes);
+    setVal('tech-notes',f.techNotes);setVal('st-ils-sys',f.stIlsSys);setVal('st-arab',f.stArab);
+    setVal('st-tech-n',f.stTechN);setVal('st-edu',f.stEdu);setVal('st-exp',f.stExp);
+    setVal('st-certs',f.stCerts);setVal('st-devn',f.stDevN);setVal('st-notes',f.stNotes);
+    setVal('svc-notes',f.svcNotes);setVal('ov-str',f.ovStr);setVal('ov-gap',f.ovGap);setVal('ov-rec',f.ovRec);
+  }
+  if(d.checks) Object.keys(d.checks).forEach(id=>{ const el=document.getElementById(id); if(el) el.checked=d.checks[id]; });
+  calcScore();
+  showSaveStatus('✅ تم تحميل البيانات');
+}
+
+function clearData(){ if(!confirm('مسح جميع البيانات؟')) return; localStorage.removeItem('eval_'+SCHOOL.id); location.reload(); }
+function exportJSON(){ const d=collectData(); const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`تقييم_${SCHOOL.code}_2026.json`; a.click(); }
+async function importJSON(e){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=async ev=>{ try{ const d=JSON.parse(ev.target.result); localStorage.setItem('eval_'+SCHOOL.id,JSON.stringify(d)); await FalahStorage.save('schools/'+SCHOOL.id+'.json',d); location.reload(); }catch(err){ alert('خطأ في الملف'); } }; r.readAsText(f); e.target.value=''; }
+
+async function generateReport(){
+  const d=collectData();
+  if(!d.totalScore){ showTab('report',null); document.querySelector('[onclick*="report"]').click(); alert('أكمل التقييم أولاً'); return; }
+  showTab('report',null); document.querySelectorAll('.tab').forEach(t=>{ if(t.textContent.includes('التقرير')) t.click(); });
+  document.getElementById('aiLoading').style.display='block';
+  document.getElementById('aiOutput').style.display='none';
+
+  const prompt=`أنت خبير في تطوير المكتبات المدرسية. أنشئ تقريراً مهنياً احترافياً دقيقاً باللغة العربية الفصحى:
+
+المدرسة: ${d.school.name} — ${d.school.city}
+تاريخ الزيارة: ${d.fields.date} | الأخصائي: ${d.fields.lib||'غير محدد'}
+
+الدرجات (من 100):
+• المجموعات: ${d.scores.col}/25 | البيئة: ${d.scores.env}/20 | التقنية: ${d.scores.tech}/20
+• الكادر: ${d.scores.staff}/20 | الخدمات: ${d.scores.svc}/15 | المجموع: ${d.scores.total}/100
+
+بيانات الكادر: المؤهل: ${d.fields.stEdu||'—'} | الخبرة: ${d.fields.stExp||'—'} | النظام: ${d.fields.stIlsSys||'—'}
+ملاحظات المجموعات: ${d.fields.colNotes||'—'}
+ملاحظات البيئة: ${d.fields.envNotes||'—'}
+ملاحظات التقنية: ${d.fields.techNotes||'—'}
+نقاط القوة: ${d.fields.ovStr||'—'} | نقاط الضعف: ${d.fields.ovGap||'—'}
+التوصيات: ${d.fields.ovRec||'—'}
+
+أنشئ تقريراً شاملاً يتضمن:
+1. مقدمة التقرير (سطران)
+2. ملخص التقييم الإجمالي (الدرجة والتصنيف)
+3. تحليل تفصيلي للمحاور الخمسة
+4. أبرز 3 نقاط قوة
+5. 3-5 أولويات تطوير مرتبة مع جدول زمني
+6. إجراءات فورية مقترحة (3 إجراءات)
+7. خاتمة مهنية
+
+اجعل التقرير بأسلوب أكاديمي رسمي دقيق لا تشوبه أي شائبة.`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    const text=data.content?.map(c=>c.text||'').join('')||'حدث خطأ';
+    document.getElementById('aiLoading').style.display='none';
+    document.getElementById('aiOutput').style.display='block';
+    document.getElementById('aiOutput').textContent=text;
+  }catch(e){
+    document.getElementById('aiLoading').style.display='none';
+    document.getElementById('aiOutput').style.display='block';
+    document.getElementById('aiOutput').textContent='⚠️ تعذّر الاتصال. تحقق من الإنترنت وحاول مجدداً.';
+  }
+}
+
+let _st=null;
+document.addEventListener('change', ()=>{ clearTimeout(_st); _st=setTimeout(saveData,1000); });
+document.addEventListener('input',  ()=>{ clearTimeout(_st); _st=setTimeout(saveData,1200); });
+</script>
+</body>
+</html>

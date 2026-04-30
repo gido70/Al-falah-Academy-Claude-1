@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة مكتبات أكاديمية الفلاح 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="js/styles.css">
+<style>
+/* ── HERO ── */
+.hero{background:var(--grad);border-radius:22px;padding:30px 36px;margin-bottom:28px;color:#fff;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-70px;right:-70px;width:280px;height:280px;background:rgba(255,255,255,.05);border-radius:50%;}
+.hero::after{content:"";position:absolute;bottom:-50px;left:-50px;width:200px;height:200px;background:rgba(255,255,255,.04);border-radius:50%;}
+.hero-inner{display:flex;align-items:center;gap:26px;position:relative;z-index:1;}
+.hero-logo img{height:90px;width:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35));}
+.hero-text .t1{font-size:26px;font-weight:900;line-height:1.2;}
+.hero-text .t2{font-size:14px;opacity:.88;margin-top:8px;line-height:1.7;}
+.hero-days{flex-shrink:0;background:rgba(255,255,255,.18);border:2.5px solid rgba(255,255,255,.35);border-radius:20px;padding:18px 24px;text-align:center;}
+.hd-n{font-size:36px;font-weight:900;color:#ffe07a;}
+.hd-l{font-size:12px;opacity:.85;margin-top:2px;font-weight:700;}
+
+/* ── MISSION BAR ── */
+.mission-bar{background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:var(--card-shadow);padding:20px 26px;margin-bottom:24px;}
+.mb-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.mb-title{font-size:15px;font-weight:900;color:var(--navy);}
+.mb-pct{font-size:22px;font-weight:900;color:var(--navy);}
+.mb-bar{height:14px;background:#dceefb;border-radius:7px;overflow:hidden;margin-bottom:10px;}
+.mb-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--navy),var(--teal));transition:width 1s ease;}
+.mb-stats{display:flex;gap:20px;flex-wrap:wrap;}
+.mbs{font-size:13px;color:var(--muted);font-weight:600;}
+.mbs strong{color:var(--navy);}
+
+/* ── 5 MAIN CARDS ── */
+.main-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:28px;}
+.main-card{background:#fff;border:2.5px solid var(--border);border-radius:22px;padding:26px 22px;cursor:pointer;transition:all .22s;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:flex-start;position:relative;overflow:hidden;}
+.main-card::before{content:"";position:absolute;top:0;right:0;width:5px;height:100%;background:var(--border);transition:background .2s;}
+.main-card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(12,68,124,.14);}
+.main-card:hover::before{background:var(--card-accent,var(--blue));}
+.main-card:hover .mc-arrow{opacity:1;transform:translateX(-4px);}
+.mc-icon{font-size:44px;margin-bottom:14px;}
+.mc-num{position:absolute;top:14px;left:16px;font-size:11px;font-weight:900;color:var(--muted);letter-spacing:1px;background:var(--bg);padding:2px 9px;border-radius:20px;border:1px solid var(--border);}
+.mc-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:8px;line-height:1.3;}
+.mc-desc{font-size:13px;color:var(--muted);line-height:1.7;flex:1;}
+.mc-arrow{margin-top:16px;font-size:13px;font-weight:700;color:var(--blue);opacity:.6;transition:all .2s;}
+.mc-tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:10px;}
+
+/* card colors */
+.card-eval   {--card-accent:#185fa5; border-color:#b8d4f0; background:linear-gradient(145deg,#f0f7ff,#fff);}
+.card-sched  {--card-accent:#0f9d8a; border-color:#b5e5db; background:linear-gradient(145deg,#f0fbf8,#fff);}
+.card-admin  {--card-accent:#ba7517; border-color:#f5d88a; background:linear-gradient(145deg,#fffbee,#fff);}
+.card-compare{--card-accent:#5b21b6; border-color:#d8c5f5; background:linear-gradient(145deg,#f5f0ff,#fff);}
+.card-ai     {--card-accent:#0f6e56; border-color:#9fe0c9; background:linear-gradient(145deg,#f0fbf6,#fff);}
+.card-admin{grid-column:1/-1;}
+
+/* ── SCHOOLS STRIP ── */
+.school-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:24px;}
+.ss-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px 10px;text-align:center;text-decoration:none;color:var(--text);transition:all .2s;}
+.ss-card:hover{border-color:var(--blue);transform:translateY(-2px);}
+.ss-card.done{border-color:var(--teal);background:#f0fbf6;}
+.ss-icon{font-size:22px;margin-bottom:5px;}
+.ss-name{font-size:11px;font-weight:900;color:var(--navy);line-height:1.3;}
+.ss-score{font-size:18px;font-weight:900;color:var(--navy);margin-top:4px;}
+.ss-status{font-size:10px;font-weight:700;margin-top:3px;}
+
+@media(max-width:900px){.main-grid{grid-template-columns:1fr 1fr;} .card-admin{grid-column:auto;} .school-strip{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.main-grid{grid-template-columns:1fr;} .card-admin{grid-column:auto;} .hero-inner{flex-direction:column;text-align:center;} .school-strip{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-logo">
+        <img id="mainLogo" src="" alt="أكاديمية الفلاح" onerror="this.style.display='none'">
+      </div>
+      <div class="hero-text">
+        <div class="t1">🌟 منصة مكتبات أكاديمية الفلاح<br>Library Excellence Platform 2026</div>
+        <div class="t2">منصة متكاملة لإدارة مهمة تطوير مراكز مصادر التعلم<br>التقييم الميداني • الدوام والمهام • التقارير الإدارية • الذكاء الاصطناعي</div>
+      </div>
+      <div class="hero-days">
+        <div class="hd-n" id="heroDay">—</div>
+        <div class="hd-l">يوم منجز من المهمة</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MISSION PROGRESS -->
+  <div class="mission-bar">
+    <div class="mb-top">
+      <div class="mb-title">📈 تقدم المهمة — أبريل ← ديسمبر 2026</div>
+      <div class="mb-pct" id="mbPct">—%</div>
+    </div>
+    <div class="mb-bar"><div class="mb-fill" id="mbFill" style="width:0%"></div></div>
+    <div class="mb-stats">
+      <div class="mbs">📅 أيام منجزة: <strong id="mbElapsed">—</strong></div>
+      <div class="mbs">⏳ متبقية: <strong id="mbLeft">—</strong></div>
+      <div class="mbs">✅ تقييمات مكتملة: <strong id="mbEvals">—/6</strong></div>
+      <div class="mbs">📍 المرحلة: <strong id="mbPhase">—</strong></div>
+    </div>
+  </div>
+
+  <!-- 5 MAIN SECTIONS -->
+  <div class="sec-title">🗂️ الأقسام الرئيسية الخمسة</div>
+  <div class="main-grid">
+
+    <a href="evaluation/" class="main-card card-eval">
+      <div class="mc-num">01</div>
+      <div class="mc-icon">📋</div>
+      <div class="mc-title">نظام تقييم المكتبات</div>
+      <div class="mc-desc">تقييم شامل لمكتبات المدارس الست بمعايير احترافية — المجموعات، البيئة، التقنية، الكادر، الخدمات</div>
+      <div class="mc-tag" style="background:#e6f1fb;color:#0c447c">6 مكتبات + تقرير AI</div>
+      <div class="mc-arrow">فتح نظام التقييم ←</div>
+    </a>
+
+    <a href="schedule/" class="main-card card-sched">
+      <div class="mc-num">02</div>
+      <div class="mc-icon">🗓️</div>
+      <div class="mc-title">جدول الدوام والمهام اليومية</div>
+      <div class="mc-desc">تسجيل الحضور والانصراف، المهام اليومية، الزيارات الميدانية، الاجتماعات، والمتابعة الأسبوعية</div>
+      <div class="mc-tag" style="background:#e1f5ee;color:#085041">حضور + مهام + زيارات</div>
+      <div class="mc-arrow">فتح جدول الدوام ←</div>
+    </a>
+
+    <a href="ai-eval/" class="main-card card-ai">
+      <div class="mc-num">05</div>
+      <div class="mc-icon">🤖</div>
+      <div class="mc-title">تقييم وتحليل الذكاء الاصطناعي</div>
+      <div class="mc-desc">واجهة متخصصة لإنشاء تقارير AI احترافية لكل مكتبة — تحليل عميق، توصيات دقيقة، صياغة مهنية</div>
+      <div class="mc-tag" style="background:#e1f5ee;color:#085041">Claude Sonnet 4</div>
+      <div class="mc-arrow">فتح واجهة AI ←</div>
+    </a>
+
+    <a href="admin-report/" class="main-card card-admin">
+      <div class="mc-num">03</div>
+      <div class="mc-icon">📤</div>
+      <div class="mc-title">صفحة تقارير الإدارة — المشاركة الأسبوعية</div>
+      <div class="mc-desc">لوحة احترافية مخصصة للمدير المباشر ومدير الإدارة — تقرير شامل يُرسَل كل جمعة يتضمن الإنجازات والزيارات والأرقام والتحليل الذكي. رابط قابل للمشاركة عبر واتساب أو بريد إلكتروني — يُبهر من يراه بدقته ومهنيته</div>
+      <div class="mc-tag" style="background:#faeeda;color:#633806">🔗 رابط مشاركة + تقرير AI أسبوعي</div>
+      <div class="mc-arrow">فتح صفحة الإدارة ←</div>
+    </a>
+
+    <a href="compare/" class="main-card card-compare" style="grid-column:span 2">
+      <div class="mc-num">04</div>
+      <div class="mc-icon">📊</div>
+      <div class="mc-title">صفحة المقارنة والتقارير النهائية</div>
+      <div class="mc-desc">مقارنة شاملة بين المدارس الست — مخططات تفاعلية، جداول نقاط، ترتيب المدارس، وتقرير نهائي مقارن بالذكاء الاصطناعي لرفعه للإدارة التعليمية</div>
+      <div class="mc-tag" style="background:#f0ecff;color:#5b21b6">مقارنة + تقارير ختامية</div>
+      <div class="mc-arrow">فتح المقارنة ←</div>
+    </a>
+
+  </div>
+
+  <!-- SCHOOLS QUICK ACCESS -->
+  <div class="sec-title">🏫 الوصول السريع لمكتبات المدارس الست</div>
+  <div class="school-strip" id="schoolStrip"></div>
+
+  <!-- SETTINGS LINK -->
+  <div style="text-align:center;padding:16px;background:#fff;border-radius:14px;border:1px solid var(--border);">
+    <a href="settings/" style="color:var(--muted);font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+      ⚙️ إعدادات الحفظ الدائم على GitHub &nbsp;←
+    </a>
+  </div>
+
+</div>
+
+<script src="js/nav.js"></script>
+<script>
+// Load logo from evaluation page (base64)
+(async()=>{
+  try{
+    const r = localStorage.getItem('ls_schools/khubaisi.json');
+    // Logo stored separately
+    const logo = localStorage.getItem('falah_logo');
+    if(logo){ document.getElementById('mainLogo').src=logo; document.getElementById('mainLogo').style.display='block'; }
+  }catch(e){}
+})();
+
+// Mission progress
+function calcMission(){
+  const start=new Date('2026-04-13'), end=new Date('2026-12-31'), now=new Date();
+  const total=Math.round((end-start)/86400000);
+  const elapsed=Math.max(0,Math.round((now-start)/86400000));
+  const left=Math.max(0,total-elapsed);
+  const pct=Math.min(100,Math.round(elapsed/total*100));
+  let phase='التأسيس والتخطيط';
+  if(elapsed>17) phase='الزيارات التقييمية';
+  if(elapsed>60) phase='التحليل ورفع التقارير';
+  if(elapsed>120) phase='التطوير والتنفيذ';
+  if(elapsed>210) phase='التقييم الختامي';
+  document.getElementById('heroDay').textContent=elapsed;
+  document.getElementById('mbPct').textContent=pct+'%';
+  document.getElementById('mbElapsed').textContent=elapsed+' يوم';
+  document.getElementById('mbLeft').textContent=left+' يوم';
+  document.getElementById('mbPhase').textContent=phase;
+  setTimeout(()=>{ document.getElementById('mbFill').style.width=pct+'%'; },400);
+}
+calcMission();
+
+// Schools strip
+const SCHOOLS=[
+  {id:'khubaisi',code:'KHB',name:'الخبيصي',city:'العين'},
+  {id:'jeemi',code:'JMI',name:'الجيمي',city:'العين'},
+  {id:'dakhilat',code:'DKH',name:'الدخيلات',city:'الشارجة'},
+  {id:'baniyas',code:'BYS',name:'بني ياس',city:'أبوظبي'},
+  {id:'mbz',code:'MBZ',name:'محمد بن زايد',city:'أبوظبي'},
+  {id:'dana',code:'DNA',name:'الدانة',city:'أبوظبي'},
+];
+
+function renderStrip(){
+  const strip=document.getElementById('schoolStrip');
+  let doneCount=0;
+  strip.innerHTML=SCHOOLS.map(s=>{
+    const raw=localStorage.getItem('ls_schools/'+s.id+'.json')||localStorage.getItem('eval_'+s.id);
+    let score='—', done=false;
+    if(raw){ try{ const d=JSON.parse(raw); score=d.totalScore||'—'; done=!!d.totalScore; doneCount++; }catch(e){} }
+    return `<a href="schools/${s.id}/" class="ss-card ${done?'done':''}">
+      <div class="ss-icon">${done?'✅':'🏫'}</div>
+      <div class="ss-name">${s.name}</div>
+      <div class="ss-score" style="color:${done?'#0f6e56':'#aaa'}">${score}</div>
+      <div class="ss-status" style="color:${done?'#0f6e56':'#aaa'}">${done?'مكتمل':'لم يُقيَّم'}</div>
+    </a>`;
+  }).join('');
+  document.getElementById('mbEvals').textContent=doneCount+'/6';
+}
+renderStrip();
+
+// Inject nav (home page = 'home')
+injectNav('home');
+</script>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة المتابعة الإدارية — مكتبات أكاديمية الفلاح 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0c447c;--blue:#185fa5;--teal:#0f9d8a;--gold:#ba7517;--amber:#f0a500;
+  --bg:#e8f0fa;--text:#0c2a4a;--muted:#5a7fa8;--border:#b8d4f0;--green:#0f6e56;
+  --grad:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56);
+}
+body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direction:rtl;min-height:100vh;}
+
+/* ═══ HEADER ═══ */
+.site-header{background:var(--grad);box-shadow:0 6px 28px rgba(12,68,124,.4);position:relative;overflow:hidden;}
+.site-header::before{content:"";position:absolute;top:-60px;left:-60px;width:300px;height:300px;background:rgba(255,255,255,.04);border-radius:50%;}
+.hdr-inner{max-width:1100px;margin:0 auto;padding:22px 28px;position:relative;z-index:1;}
+.hdr-top{display:flex;align-items:center;gap:20px;}
+.hdr-logo img{height:80px;width:auto;filter:drop-shadow(0 5px 15px rgba(0,0,0,.35));}
+.hdr-text .title{font-size:22px;font-weight:900;color:#fff;line-height:1.2;}
+.hdr-text .sub{font-size:13px;color:rgba(255,255,255,.8);margin-top:4px;}
+.hdr-badge{margin-right:auto;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);border-radius:12px;padding:8px 16px;text-align:center;flex-shrink:0;}
+.hdr-badge .num{font-size:26px;font-weight:900;color:#ffe07a;}
+.hdr-badge .lbl{font-size:11px;color:rgba(255,255,255,.8);font-weight:700;}
+.gold-bar{height:4px;background:linear-gradient(90deg,transparent,var(--amber),#ffe066,var(--amber),transparent);margin-top:0;}
+.readonly-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:4px 14px;font-size:12px;color:rgba(255,255,255,.9);margin-top:10px;}
+
+/* ═══ ACTIONS BAR ═══ */
+.action-bar{background:rgba(12,68,124,.08);border-bottom:1px solid var(--border);padding:10px 28px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;max-width:1100px;margin:0 auto;}
+.abtn{border:1.5px solid var(--border);border-radius:20px;padding:7px 16px;font-family:"Cairo",sans-serif;font-size:13px;font-weight:700;cursor:pointer;color:var(--navy);background:#fff;display:inline-flex;align-items:center;gap:5px;transition:all .2s;}
+.abtn:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+.abtn-ai{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;border-color:transparent;}
+.abtn-ai:hover{opacity:.9;}
+
+/* ═══ CONTENT ═══ */
+.wrap{max-width:1100px;margin:0 auto;padding:24px 28px;}
+
+/* ═══ LOADING ═══ */
+.loading{text-align:center;padding:60px;color:var(--muted);}
+.loading .spin{font-size:40px;animation:spin 1s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══ MISSION PROGRESS ═══ */
+.mission-card{background:var(--grad);border-radius:22px;padding:24px 30px;margin-bottom:22px;color:#fff;position:relative;overflow:hidden;}
+.mission-card::before{content:"";position:absolute;top:-50px;right:-50px;width:220px;height:220px;background:rgba(255,255,255,.05);border-radius:50%;}
+.mc-inner{position:relative;z-index:1;}
+.mc-title{font-size:18px;font-weight:900;margin-bottom:4px;}
+.mc-sub{font-size:13px;opacity:.85;margin-bottom:18px;}
+.mc-bar{height:16px;background:rgba(255,255,255,.2);border-radius:8px;overflow:hidden;margin-bottom:10px;}
+.mc-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#ffe07a,#f0a500);transition:width 1s ease;}
+.mc-stats{display:flex;gap:24px;flex-wrap:wrap;}
+.mc-stat{font-size:13px;opacity:.9;font-weight:700;}
+.mc-stat strong{font-size:18px;font-weight:900;}
+.mc-pct{font-size:32px;font-weight:900;color:#ffe07a;margin-right:auto;}
+
+/* ═══ KPI CARDS ═══ */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.kpi{background:#fff;border-radius:18px;border:1px solid var(--border);padding:20px;text-align:center;box-shadow:0 4px 18px rgba(12,68,124,.07);}
+.kpi-icon{font-size:32px;margin-bottom:8px;}
+.kpi-num{font-size:34px;font-weight:900;color:var(--navy);line-height:1;}
+.kpi-label{font-size:12px;color:var(--muted);margin-top:6px;font-weight:700;}
+.kpi-sub{font-size:11px;color:var(--teal);margin-top:3px;font-weight:600;}
+
+/* ═══ SECTION HEADER ═══ */
+.sec-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.sec-title::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,var(--border),transparent);}
+
+/* ═══ SCHOOL GRID ═══ */
+.school-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+.school-card{background:#fff;border:2px solid var(--border);border-radius:18px;padding:18px;position:relative;overflow:hidden;transition:transform .2s;}
+.school-card:hover{transform:translateY(-3px);}
+.school-card.evaluated{border-color:var(--teal);}
+.school-card.pending{border-color:var(--border);}
+.sc-rank{position:absolute;top:12px;left:14px;font-size:20px;}
+.sc-code{font-size:11px;font-weight:900;color:var(--muted);letter-spacing:1.5px;margin-bottom:4px;}
+.sc-name{font-size:14px;font-weight:900;color:var(--navy);line-height:1.3;margin-bottom:4px;}
+.sc-city{font-size:12px;color:var(--muted);margin-bottom:10px;}
+.sc-score-big{font-size:36px;font-weight:900;color:var(--navy);line-height:1;}
+.sc-score-max{font-size:13px;color:var(--muted);}
+.sc-bar{height:8px;background:#e8f0fa;border-radius:4px;overflow:hidden;margin:10px 0 6px;}
+.sc-bar-fill{height:100%;border-radius:4px;}
+.sc-grade{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;margin-top:6px;}
+.g-ex{background:#e1f5ee;color:#085041;}
+.g-vg{background:#e6f1fb;color:#0c447c;}
+.g-gd{background:#faeeda;color:#633806;}
+.g-ac{background:#faeeda;color:#633806;}
+.g-nd{background:#f0f0f0;color:#555;border:1px dashed #ccc;}
+.sc-date{font-size:11px;color:var(--gold);font-weight:700;margin-top:6px;}
+
+/* ═══ CHARTS ═══ */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px;}
+.chart-box{background:#fff;border-radius:18px;border:1px solid var(--border);padding:20px;box-shadow:0 4px 14px rgba(12,68,124,.06);}
+.chart-box h4{font-size:14px;font-weight:900;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--bg);}
+.chart-full{grid-column:1/-1;}
+
+/* ═══ ACTIVITY TIMELINE ═══ */
+.timeline-card{background:#fff;border-radius:18px;border:1px solid var(--border);padding:22px;margin-bottom:22px;box-shadow:0 4px 14px rgba(12,68,124,.06);}
+.tl-item{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--bg);}
+.tl-item:last-child{border-bottom:none;}
+.tl-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.tl-done{background:#e1f5ee;border:2px solid var(--teal);}
+.tl-active{background:#e6f1fb;border:2px solid var(--blue);}
+.tl-coming{background:#f8fbff;border:2px dashed var(--border);}
+.tl-content .tt{font-size:14px;font-weight:700;color:var(--navy);}
+.tl-content .td{font-size:12px;color:var(--gold);font-weight:700;margin-top:2px;}
+.tl-content .ts{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.6;}
+
+/* ═══ AI REPORT ═══ */
+.ai-section{background:linear-gradient(135deg,#e8f4fd,#e6f7f0);border:2px solid var(--blue);border-radius:18px;padding:22px;margin-bottom:22px;}
+.ai-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.ai-output{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;font-size:14px;line-height:1.9;white-space:pre-wrap;display:none;}
+.ai-loading{text-align:center;padding:24px;color:var(--muted);display:none;}
+
+/* ═══ ATTENDANCE SUMMARY ═══ */
+.att-summary{background:#fff;border-radius:18px;border:1px solid var(--border);padding:22px;margin-bottom:22px;box-shadow:0 4px 14px rgba(12,68,124,.06);}
+.att-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px;}
+.att-item{background:#f5faff;border-radius:12px;padding:14px;text-align:center;border:1px solid var(--border);}
+.att-num{font-size:26px;font-weight:900;color:var(--navy);}
+.att-lbl{font-size:11px;color:var(--muted);font-weight:700;margin-top:4px;}
+
+/* ═══ QR / SHARE ═══ */
+.share-box{background:#fff;border-radius:18px;border:1px solid var(--border);padding:22px;margin-bottom:22px;text-align:center;}
+.share-url{background:#f5faff;border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-family:monospace;font-size:13px;color:var(--navy);word-break:break-all;margin:12px 0;direction:ltr;text-align:left;}
+
+/* ═══ FOOTER ═══ */
+.footer{text-align:center;padding:24px;color:var(--muted);font-size:12px;font-weight:600;border-top:1px solid var(--border);}
+.stamp{display:inline-flex;align-items:center;gap:6px;background:#e1f5ee;border:1px solid var(--teal);border-radius:20px;padding:6px 16px;font-size:12px;color:#085041;font-weight:700;margin-bottom:8px;}
+
+/* ═══ PRINT ═══ */
+@media print{
+  .action-bar,.abtn,.share-box,.ai-section button{display:none!important;}
+  body{background:#fff;}
+  .kpi,.school-card,.chart-box,.timeline-card,.att-summary{box-shadow:none!important;break-inside:avoid;}
+  .site-header{box-shadow:none!important;}
+}
+
+@media(max-width:900px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .school-grid{grid-template-columns:1fr 1fr;}
+  .chart-grid{grid-template-columns:1fr;}
+  .att-grid{grid-template-columns:repeat(2,1fr);}
+  .wrap{padding:14px;}
+  .hdr-inner{padding:16px;}
+}
+@media(max-width:600px){
+  .school-grid{grid-template-columns:1fr;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <div class="hdr-inner">
+    <div class="hdr-top">
+      <div class="hdr-logo">
+        <img src="../evaluation/index.html" alt="" id="logoImg" style="height:80px;display:none">
+        <svg viewBox="0 0 90 103" fill="none" style="height:80px;width:auto;filter:drop-shadow(0 5px 15px rgba(0,0,0,.35))">
+          <rect width="90" height="103" rx="14" fill="rgba(255,255,255,0.15)"/>
+          <path d="M45 12L72 26L72 58Q72 80 45 90Q18 80 18 58L18 26Z" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
+          <text x="45" y="62" text-anchor="middle" font-family="Cairo,Arial" font-size="30" font-weight="900" fill="white">ف</text>
+          <text x="45" y="88" text-anchor="middle" font-family="Cairo,Arial" font-size="9" font-weight="700" fill="rgba(255,255,255,0.85)">FALAH</text>
+        </svg>
+      </div>
+      <div class="hdr-text">
+        <div class="title">لوحة المتابعة الإدارية — مكتبات أكاديمية الفلاح</div>
+        <div class="sub">تقرير شامل لمجريات مهمة تطوير مراكز مصادر التعلم | 2026</div>
+        <div class="readonly-tag">🔒 عرض للمراجعة الإدارية — للاطلاع فقط</div>
+      </div>
+      <div class="hdr-badge">
+        <div class="num" id="h-days">—</div>
+        <div class="lbl">يوم منجز</div>
+      </div>
+    </div>
+  </div>
+  <div class="gold-bar"></div>
+</header>
+
+<!-- ══ ACTION BAR ══ -->
+<div style="background:#fff;border-bottom:1px solid var(--border);padding:10px 0;">
+<div class="action-bar">
+  <button class="abtn abtn-ai" onclick="generateExecutiveSummary()">🤖 تقرير تنفيذي بالذكاء الاصطناعي</button>
+  <button class="abtn" onclick="window.print()">🖨️ طباعة / PDF</button>
+  <button class="abtn" onclick="copyLink()">🔗 نسخ رابط المتابعة</button>
+  <button class="abtn" onclick="location.reload()">🔄 تحديث</button>
+  <span style="margin-right:auto;font-size:12px;color:var(--muted);font-weight:700;" id="lastUpdate">آخر تحديث: —</span>
+</div>
+</div>
+
+<div class="wrap">
+
+  <!-- LOADING STATE -->
+  <div class="loading" id="loadingState">
+    <div class="spin">⏳</div>
+    <div style="margin-top:12px;font-size:16px;font-weight:700;color:var(--navy)">جاري تحميل البيانات...</div>
+    <div style="font-size:13px;color:var(--muted);margin-top:6px">يتم جلب البيانات من المنصة</div>
+  </div>
+
+  <!-- MAIN CONTENT (hidden until loaded) -->
+  <div id="mainContent" style="display:none">
+
+    <!-- MISSION PROGRESS -->
+    <div class="mission-card">
+      <div class="mc-inner">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div class="mc-title">📊 تقدم مهمة تطوير المكتبات — أبريل إلى ديسمبر 2026</div>
+            <div class="mc-sub">مدة المهمة: 13 أبريل 2026 — 31 ديسمبر 2026 | إجمالي 263 يوماً</div>
+          </div>
+          <div class="mc-pct" id="mc-pct">—%</div>
+        </div>
+        <div class="mc-bar"><div class="mc-fill" id="mc-fill" style="width:0%"></div></div>
+        <div class="mc-stats">
+          <div class="mc-stat">📅 أيام منجزة: <strong id="mc-elapsed">—</strong></div>
+          <div class="mc-stat">⏳ أيام متبقية: <strong id="mc-left">—</strong></div>
+          <div class="mc-stat">📍 المرحلة الحالية: <strong id="mc-phase">—</strong></div>
+          <div class="mc-stat">✅ تقييمات مكتملة: <strong id="mc-evals">— / 6</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-icon">🏫</div>
+        <div class="kpi-num" id="k-visited">—</div>
+        <div class="kpi-label">مدارس زُرت وقُيّمت</div>
+        <div class="kpi-sub">من أصل 6 مدارس</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">⭐</div>
+        <div class="kpi-num" id="k-avg">—</div>
+        <div class="kpi-label">متوسط درجة التقييم</div>
+        <div class="kpi-sub">من 100 درجة</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">🏆</div>
+        <div class="kpi-num" id="k-best">—</div>
+        <div class="kpi-label">أعلى تقييم</div>
+        <div class="kpi-sub" id="k-best-name">—</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-icon">📋</div>
+        <div class="kpi-num" id="k-pending">—</div>
+        <div class="kpi-label">مدارس قيد التقييم</div>
+        <div class="kpi-sub">مجدولة خلال الفترة</div>
+      </div>
+    </div>
+
+    <!-- SCHOOLS GRID -->
+    <div class="sec-title">🏫 حالة تقييم المكتبات الست</div>
+    <div class="school-grid" id="schoolsGrid"></div>
+
+    <!-- CHARTS -->
+    <div class="sec-title">📊 المقارنة والتحليل</div>
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h4>🏆 ترتيب المدارس حسب الدرجة الكلية</h4>
+        <canvas id="barChart" height="220"></canvas>
+      </div>
+      <div class="chart-box">
+        <h4>🕸️ مقارنة المحاور الخمسة</h4>
+        <canvas id="radarChart" height="220"></canvas>
+      </div>
+      <div class="chart-box chart-full" id="stackedChartBox" style="display:none">
+        <h4>📈 تفصيل درجات المحاور</h4>
+        <canvas id="stackedChart" height="160"></canvas>
+      </div>
+    </div>
+
+    <!-- MISSION TIMELINE -->
+    <div class="sec-title">📅 خطة المهمة ومراحلها</div>
+    <div class="timeline-card">
+      <div class="tl-item">
+        <div class="tl-dot tl-done">✓</div>
+        <div class="tl-content">
+          <div class="tt">المرحلة الأولى — التأسيس والتخطيط</div>
+          <div class="td">13 — 30 أبريل 2026</div>
+          <div class="ts">استلام المهمة الرسمية، التعرف على المنظومة المدرسية، إعداد أدوات التقييم، وضع خطة الزيارات الميدانية</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot tl-active" style="animation:pulse2 2s infinite">📍</div>
+        <div class="tl-content">
+          <div class="tt">المرحلة الثانية — الزيارات التقييمية للمدارس الست ✦ جارية الآن</div>
+          <div class="td">28 أبريل — 12 مايو 2026</div>
+          <div class="ts">
+            ✅ الثلاثاء 28/4 — الخبيصي (العين) &nbsp;|&nbsp; ✅ الأربعاء 29/4 — الجيمي (العين)<br>
+            🔜 الثلاثاء 5/5 — الدخيلات (الشارجة) &nbsp;|&nbsp; 🔜 الخميس 7/5 — بني ياس (أبوظبي)<br>
+            🔜 الاثنين 11/5 — محمد بن زايد &nbsp;|&nbsp; 🔜 الثلاثاء 12/5 — الدانة (أبوظبي)
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot tl-coming">3</div>
+        <div class="tl-content">
+          <div class="tt">المرحلة الثالثة — التحليل ورفع التقارير</div>
+          <div class="td">مايو — يونيو 2026</div>
+          <div class="ts">تحليل نتائج التقييم، رفع التقارير للإدارة، وضع خطط التطوير لكل مكتبة، بحث أنظمة ILS الموحدة</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot tl-coming">4</div>
+        <div class="tl-content">
+          <div class="tt">المرحلة الرابعة — التطوير والتنفيذ</div>
+          <div class="td">أغسطس — أكتوبر 2026</div>
+          <div class="ts">متابعة تنفيذ خطط التطوير، دعم المدارس، تدريب الكوادر، تجهيز نظام المكتبات الموحد</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot tl-coming">5</div>
+        <div class="tl-content">
+          <div class="tt">المرحلة الخامسة — التقييم الختامي والتوثيق</div>
+          <div class="td">نوفمبر — ديسمبر 2026</div>
+          <div class="ts">زيارات ختامية، قياس الأثر، التقرير السنوي الشامل، رفع التوصيات للعام القادم</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI EXECUTIVE REPORT -->
+    <div class="ai-section">
+      <div class="ai-header">
+        <span style="font-size:30px">🤖</span>
+        <div>
+          <div style="font-size:17px;font-weight:900;color:var(--navy)">التقرير التنفيذي الآلي — بالذكاء الاصطناعي</div>
+          <div style="font-size:12px;color:var(--muted)">تحليل شامل لمجريات المهمة يُولَّد تلقائياً من البيانات الفعلية المُدخلة</div>
+        </div>
+        <button class="abtn abtn-ai" style="margin-right:auto;padding:10px 20px" onclick="generateExecutiveSummary()">
+          🤖 إنشاء التقرير التنفيذي
+        </button>
+      </div>
+      <div class="ai-loading" id="aiLoading">⏳ جاري إعداد التقرير التنفيذي...</div>
+      <div class="ai-output" id="aiOutput"></div>
+    </div>
+
+    <!-- SHARE BOX -->
+    <div class="share-box">
+      <div style="font-size:16px;font-weight:900;color:var(--navy);margin-bottom:8px">🔗 مشاركة لوحة المتابعة</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px">شارك هذا الرابط مع المسؤولين لمتابعة مجريات العمل في أي وقت</div>
+      <div class="share-url" id="shareUrl">—</div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+        <button class="abtn" onclick="copyLink()">📋 نسخ الرابط</button>
+        <button class="abtn" onclick="shareWhatsApp()">📱 مشاركة واتساب</button>
+        <button class="abtn" onclick="shareEmail()">📧 مشاركة بريد</button>
+      </div>
+      <div style="margin-top:16px">
+        <img id="qrCode" src="" alt="QR Code" style="width:150px;height:150px;border-radius:12px;border:2px solid var(--border);">
+      </div>
+    </div>
+
+    <!-- FOOTER STAMP -->
+    <div class="footer">
+      <div class="stamp">✅ بيانات حقيقية — مُحدَّثة تلقائياً من المنصة الميدانية</div>
+      <div>أُعدَّت هذه اللوحة لمتابعة مهمة تطوير مراكز مصادر التعلم — أكاديمية الفلاح 2026</div>
+      <div style="margin-top:4px;color:var(--teal);font-weight:700" id="footerTime"></div>
+    </div>
+
+  </div><!-- /mainContent -->
+</div><!-- /wrap -->
+
+<style>
+@keyframes pulse2{0%,100%{box-shadow:0 0 0 0 rgba(24,95,165,.3)}50%{box-shadow:0 0 0 8px rgba(24,95,165,0)}}
+</style>
+
+<script>
+const SCHOOLS = [
+  { id:'khubaisi', code:'KHB', name:'أكاديمية الفلاح فرع الخبيصي', short:'الخبيصي', city:'العين', visitDate:'28 أبريل 2026', color:'#0c447c' },
+  { id:'jeemi',    code:'JMI', name:'أكاديمية الفلاح فرع الجيمي',   short:'الجيمي',  city:'العين', visitDate:'29 أبريل 2026', color:'#185fa5' },
+  { id:'dakhilat', code:'DKH', name:'مدرسة الفلاح الخاصة (الدخيلات)', short:'الدخيلات', city:'الشارجة', visitDate:'5 مايو 2026', color:'#0f9d8a' },
+  { id:'baniyas',  code:'BYS', name:'أكاديمية الفلاح فرع بني ياس',  short:'بني ياس',  city:'أبوظبي', visitDate:'7 مايو 2026', color:'#ba7517' },
+  { id:'mbz',      code:'MBZ', name:'أكاديمية الفلاح فرع محمد بن زايد', short:'محمد بن زايد', city:'أبوظبي', visitDate:'11 مايو 2026', color:'#5b21b6' },
+  { id:'dana',     code:'DNA', name:'أكاديمية الفلاح فرع الدانة',   short:'الدانة',  city:'أبوظبي', visitDate:'12 مايو 2026', color:'#0f6e56' },
+];
+
+// ══ AUTO-DETECT REPO FROM URL ══
+function getRepoInfo(){
+  const h = window.location.hostname;
+  const p = window.location.pathname.split('/').filter(Boolean);
+  if(h.includes('github.io') && p.length >= 1){
+    return { owner: h.split('.')[0], repo: p[0] };
+  }
+  return null;
+}
+
+// ══ FETCH DATA (Public GitHub API — no auth needed!) ══
+async function fetchSchoolData(schoolId){
+  const repo = getRepoInfo();
+  // Try GitHub public API first
+  if(repo){
+    try{
+      const url = `https://api.github.com/repos/${repo.owner}/${repo.repo}/contents/data/schools/${schoolId}.json`;
+      const res = await fetch(url);
+      if(res.ok){
+        const file = await res.json();
+        return JSON.parse(atob(file.content.replace(/\n/g,'')));
+      }
+    }catch(e){}
+  }
+  // Fallback: localStorage
+  try{
+    const raw = localStorage.getItem('eval_'+schoolId) || localStorage.getItem('gh_file_schools/'+schoolId+'.json');
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+
+// ══ MISSION PROGRESS ══
+function calcMission(){
+  const start = new Date('2026-04-13');
+  const end   = new Date('2026-12-31');
+  const now   = new Date();
+  const total = Math.round((end-start)/86400000);
+  const elapsed = Math.max(0, Math.round((now-start)/86400000));
+  const left = Math.max(0, total-elapsed);
+  const pct = Math.min(100, Math.round(elapsed/total*100));
+
+  let phase = 'التأسيس والتخطيط';
+  if(elapsed > 30) phase = 'الزيارات التقييمية';
+  if(elapsed > 60) phase = 'التحليل ورفع التقارير';
+  if(elapsed > 120) phase = 'التطوير والتنفيذ';
+  if(elapsed > 210) phase = 'التقييم الختامي';
+
+  setText('mc-pct', pct+'%');
+  setText('mc-elapsed', elapsed+' يوم');
+  setText('mc-left', left+' يوم');
+  setText('mc-phase', phase);
+  setText('h-days', elapsed);
+
+  const fill = document.getElementById('mc-fill');
+  if(fill) setTimeout(()=>{ fill.style.width = pct+'%'; }, 300);
+  return { elapsed, left, pct, phase };
+}
+
+// ══ GRADE HELPER ══
+function getGrade(score){
+  if(!score || score===0) return { label:'لم يُقيَّم بعد', cls:'g-nd', color:'#888' };
+  if(score>=90) return { label:'ممتاز 🌟', cls:'g-ex', color:'#0f6e56' };
+  if(score>=80) return { label:'جيد جداً ✅', cls:'g-vg', color:'#0c447c' };
+  if(score>=70) return { label:'جيد 👍', cls:'g-gd', color:'#ba7517' };
+  if(score>=60) return { label:'مقبول ⚠️', cls:'g-ac', color:'#ba7517' };
+  return { label:'يحتاج تطوير 🔧', cls:'g-ac', color:'#c0392b' };
+}
+
+function getRank(i){ return ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'][i] || ''; }
+
+// ══ RENDER SCHOOLS ══
+function renderSchools(allData){
+  const withData = allData.filter(x=>x.data);
+  const sorted = [...withData].sort((a,b)=>(b.data.totalScore||0)-(a.data.totalScore||0));
+
+  // Update KPIs
+  setText('k-visited', withData.length);
+  setText('k-pending', 6-withData.length);
+  if(withData.length>0){
+    const avg = Math.round(withData.reduce((s,x)=>s+(x.data.totalScore||0),0)/withData.length);
+    setText('k-avg', avg);
+    if(sorted[0]){
+      setText('k-best', sorted[0].data.totalScore||'—');
+      setText('k-best-name', sorted[0].school.short);
+    }
+  }
+  setText('mc-evals', withData.length+' / 6');
+
+  const grid = document.getElementById('schoolsGrid');
+  if(!grid) return;
+
+  const rankMap = {};
+  sorted.forEach((x,i) => rankMap[x.school.id] = i);
+
+  grid.innerHTML = allData.map(x => {
+    const d = x.data;
+    const s = x.school;
+    const score = d?.totalScore || 0;
+    const g = getGrade(score);
+    const pct = score ? Math.round(score/100*100) : 0;
+    const rank = rankMap[s.id];
+    const evaluated = !!d;
+
+    return `<div class="school-card ${evaluated?'evaluated':'pending'}">
+      ${evaluated && rank!==undefined ? `<div class="sc-rank">${getRank(rank)}</div>` : ''}
+      <div class="sc-code" style="padding-right:${evaluated?'28px':'0'}">${s.code}</div>
+      <div class="sc-name">${s.name}</div>
+      <div class="sc-city">📍 ${s.city}</div>
+      ${evaluated ? `
+        <div style="display:flex;align-items:baseline;gap:4px">
+          <div class="sc-score-big" style="color:${g.color}">${score}</div>
+          <div class="sc-score-max">/100</div>
+        </div>
+        <div class="sc-bar"><div class="sc-bar-fill" style="width:${pct}%;background:${s.color}"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)">
+          <span>المجموعات: ${d.scores?.colScore||'—'}</span>
+          <span>البيئة: ${d.scores?.envScore||'—'}</span>
+          <span>التقنية: ${d.scores?.techScore||'—'}</span>
+        </div>
+        <div class="sc-grade ${g.cls}">${g.label}</div>
+        <div class="sc-date">🗓️ ${s.visitDate}</div>
+      ` : `
+        <div style="font-size:13px;color:var(--muted);padding:10px 0">⏳ لم يتم التقييم بعد</div>
+        <div class="sc-date" style="color:var(--muted)">🗓️ مجدول: ${s.visitDate}</div>
+      `}
+    </div>`;
+  }).join('');
+}
+
+// ══ RENDER CHARTS ══
+let barChartInst, radarChartInst, stackedChartInst;
+function renderCharts(allData){
+  const withData = allData.filter(x=>x.data);
+  if(withData.length === 0) return;
+
+  const sorted = [...withData].sort((a,b)=>(b.data.totalScore||0)-(a.data.totalScore||0));
+  const names = sorted.map(x=>x.school.short);
+  const scores = sorted.map(x=>x.data.totalScore||0);
+  const colors = sorted.map(x=>x.school.color);
+
+  // Bar Chart
+  const barCtx = document.getElementById('barChart');
+  if(barCtx){
+    if(barChartInst) barChartInst.destroy();
+    barChartInst = new Chart(barCtx, {
+      type:'bar',
+      data:{ labels:names, datasets:[{ label:'الدرجة الكلية', data:scores, backgroundColor:colors, borderRadius:8, borderSkipped:false }]},
+      options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{max:100,min:0,ticks:{font:{family:'Cairo'}}}, x:{ticks:{font:{family:'Cairo'}}}}}
+    });
+  }
+
+  // Radar Chart (up to 4 schools)
+  const radarCtx = document.getElementById('radarChart');
+  if(radarCtx && sorted.length > 0){
+    if(radarChartInst) radarChartInst.destroy();
+    const axes = ['المجموعات','البيئة','التقنية','الكادر','الخدمات'];
+    radarChartInst = new Chart(radarCtx, {
+      type:'radar',
+      data:{
+        labels: axes,
+        datasets: sorted.slice(0,4).map(x=>({
+          label: x.school.short,
+          data:[
+            x.data.scores?.colScore ? Math.round(x.data.scores.colScore/25*100) : 0,
+            x.data.scores?.envScore ? Math.round(x.data.scores.envScore/20*100) : 0,
+            x.data.scores?.techScore ? Math.round(x.data.scores.techScore/20*100) : 0,
+            x.data.scores?.staffScore ? Math.round(x.data.scores.staffScore/20*100) : 0,
+            x.data.scores?.svcScore ? Math.round(x.data.scores.svcScore/15*100) : 0,
+          ],
+          borderColor: x.school.color, backgroundColor: x.school.color+'22', pointBackgroundColor: x.school.color,
+        }))
+      },
+      options:{ responsive:true, scales:{r:{min:0,max:100,ticks:{font:{family:'Cairo'}}}}, plugins:{legend:{labels:{font:{family:'Cairo'}}}}}
+    });
+  }
+
+  // Stacked if 2+ schools
+  if(sorted.length >= 2){
+    document.getElementById('stackedChartBox').style.display='block';
+    const stCtx = document.getElementById('stackedChart');
+    if(stCtx){
+      if(stackedChartInst) stackedChartInst.destroy();
+      stackedChartInst = new Chart(stCtx, {
+        type:'bar',
+        data:{
+          labels: sorted.map(x=>x.school.short),
+          datasets:[
+            {label:'المجموعات', data:sorted.map(x=>x.data.scores?.colScore||0), backgroundColor:'#0c447c'},
+            {label:'البيئة',    data:sorted.map(x=>x.data.scores?.envScore||0), backgroundColor:'#185fa5'},
+            {label:'التقنية',   data:sorted.map(x=>x.data.scores?.techScore||0), backgroundColor:'#0f9d8a'},
+            {label:'الكادر',    data:sorted.map(x=>x.data.scores?.staffScore||0), backgroundColor:'#ba7517'},
+            {label:'الخدمات',   data:sorted.map(x=>x.data.scores?.svcScore||0), backgroundColor:'#0f6e56'},
+          ]
+        },
+        options:{responsive:true,scales:{x:{stacked:true,ticks:{font:{family:'Cairo'}}},y:{stacked:true,max:100,ticks:{font:{family:'Cairo'}}}},plugins:{legend:{labels:{font:{family:'Cairo'}}}}}
+      });
+    }
+  }
+}
+
+// ══ AI EXECUTIVE SUMMARY ══
+async function generateExecutiveSummary(){
+  const allData = window._allSchoolData || [];
+  const withData = allData.filter(x=>x.data);
+  if(withData.length===0){ alert('لا توجد بيانات تقييم حتى الآن'); return; }
+
+  document.getElementById('aiLoading').style.display='block';
+  document.getElementById('aiOutput').style.display='none';
+  document.getElementById('aiSection')?.scrollIntoView({behavior:'smooth'});
+
+  const mission = calcMission();
+  const summary = withData.map(x=>`
+- ${x.school.name} (${x.school.city}): ${x.data.totalScore}/100
+  مجموعات ${x.data.scores?.colScore}/25 | بيئة ${x.data.scores?.envScore}/20 | تقنية ${x.data.scores?.techScore}/20 | كادر ${x.data.scores?.staffScore}/20 | خدمات ${x.data.scores?.svcScore}/15`).join('');
+
+  const prompt = `أنت مستشار أول في تطوير المكتبات المدرسية. أعدّ تقريراً تنفيذياً احترافياً مُوجَّهاً لمدير التعليم وتُقدّمه فيه أخصائية تطوير المكتبات، يشمل:
+
+**بيانات المهمة:**
+- المدة المنقضية: ${mission.elapsed} يوماً (${mission.pct}% من إجمالي المهمة)
+- المرحلة الحالية: ${mission.phase}
+- المدارس التي جرى تقييمها: ${withData.length} من أصل 6
+
+**نتائج التقييم (${withData.length} مدارس):**
+${summary}
+
+أنشئ التقرير التنفيذي بالبنية:
+1. **التقرير التنفيذي** — ملخص في جملتين للمسؤول الأعلى
+2. **الإنجازات المُحقَّقة حتى الآن** — 3-4 نقاط ملموسة
+3. **نتائج التقييم الميداني** — تحليل موجز للمدارس المُقيَّمة مع تصنيفها
+4. **أبرز النتائج والمشاهدات الميدانية** — نقاط محددة
+5. **التوصيات العاجلة للإدارة** — 3 توصيات تحتاج قراراً إدارياً
+6. **خطة الأسابيع القادمة** — ما هو مخطط تنفيذه
+7. **مؤشر التقدم العام** — تقييم موضوعي لمسار المهمة
+
+اجعل اللغة رسمية احترافية تليق بالتقارير الإدارية، وأبرز الإنجازات بطريقة تعكس الدقة المهنية.`;
+
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{role:'user',content:prompt}] })
+    });
+    const d = await res.json();
+    const text = d.content?.map(c=>c.text||'').join('') || 'تعذّر الاتصال';
+    document.getElementById('aiLoading').style.display='none';
+    document.getElementById('aiOutput').style.display='block';
+    document.getElementById('aiOutput').textContent = text;
+  }catch(e){
+    document.getElementById('aiLoading').style.display='none';
+    document.getElementById('aiOutput').style.display='block';
+    document.getElementById('aiOutput').textContent = '⚠️ تعذّر الاتصال بالذكاء الاصطناعي. يرجى المحاولة لاحقاً.';
+  }
+}
+
+// ══ SHARE ══
+function copyLink(){
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(()=>alert('✅ تم نسخ الرابط'));
+}
+function shareWhatsApp(){
+  const url = encodeURIComponent(window.location.href);
+  window.open(`https://wa.me/?text=لوحة متابعة مكتبات أكاديمية الفلاح 2026: ${url}`);
+}
+function shareEmail(){
+  const url = window.location.href;
+  const sub = encodeURIComponent('لوحة متابعة مكتبات أكاديمية الفلاح 2026');
+  const body = encodeURIComponent(`السلام عليكم،\n\nيمكن متابعة مجريات مهمة تطوير المكتبات عبر الرابط التالي:\n${url}`);
+  window.open(`mailto:?subject=${sub}&body=${body}`);
+}
+
+// ══ HELPERS ══
+function setText(id,v){ const el=document.getElementById(id); if(el) el.textContent=v; }
+
+// ══ INIT ══
+async function init(){
+  // Mission progress
+  calcMission();
+
+  // Share URL & QR
+  const url = window.location.href;
+  document.getElementById('shareUrl').textContent = url;
+  document.getElementById('qrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(url)}&color=0c447c&bgcolor=ffffff`;
+
+  // Footer time
+  document.getElementById('footerTime').textContent = 'تاريخ العرض: ' + new Date().toLocaleString('ar-AE');
+  document.getElementById('lastUpdate').textContent = 'آخر تحديث: ' + new Date().toLocaleString('ar-AE');
+
+  // Fetch all school data
+  const allData = await Promise.all(SCHOOLS.map(async s=>({ school:s, data: await fetchSchoolData(s.id) })));
+  window._allSchoolData = allData;
+
+  renderSchools(allData);
+  renderCharts(allData);
+
+  // Hide loading, show content
+  document.getElementById('loadingState').style.display='none';
+  document.getElementById('mainContent').style.display='block';
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

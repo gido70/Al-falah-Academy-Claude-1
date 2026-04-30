@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مقارنة المدارس — أكاديمية الفلاح 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0c447c;--blue:#185fa5;--teal:#0f9d8a;--gold:#ba7517;--amber:#f0a500;
+  --bg:#e8f0fa;--text:#0c2a4a;--muted:#5a7fa8;--border:#b8d4f0;
+  --green:#0f6e56;--red:#c0392b;
+  --grad:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56);
+}
+body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direction:rtl;}
+
+.site-header{background:var(--grad);box-shadow:0 4px 20px rgba(12,68,124,.3);padding:16px 24px;}
+.hdr-row{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:14px;}
+.back-btn{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);border-radius:10px;padding:8px 14px;color:#fff;font-family:"Cairo",sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.hdr-title{font-size:20px;font-weight:900;color:#fff;}
+.hdr-sub{font-size:12px;color:rgba(255,255,255,.8);}
+
+.wrap{max-width:1100px;margin:0 auto;padding:24px;}
+
+.card{background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:0 4px 18px rgba(12,68,124,.07);padding:22px;margin-bottom:20px;}
+.cardh{font-size:17px;font-weight:900;color:var(--navy);margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--bg);display:flex;align-items:center;gap:10px;}
+
+/* SUMMARY GRID */
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.sum-card{background:#fff;border:2px solid var(--border);border-radius:16px;padding:18px;text-align:center;transition:all .2s;text-decoration:none;color:var(--text);}
+.sum-card:hover{border-color:var(--blue);transform:translateY(-3px);}
+.sum-card.ranked-1{border-color:var(--amber);background:linear-gradient(135deg,#fffbee,#fff);}
+.sum-card.ranked-2{border-color:#b0c4de;background:linear-gradient(135deg,#f8faff,#fff);}
+.sum-card.ranked-3{border-color:#c8956e;background:linear-gradient(135deg,#fff7f3,#fff);}
+.rank-badge{font-size:24px;margin-bottom:6px;}
+.school-name{font-size:13px;font-weight:900;color:var(--navy);margin-bottom:4px;line-height:1.3;}
+.school-city{font-size:11px;color:var(--muted);margin-bottom:10px;}
+.score-display{font-size:32px;font-weight:900;color:var(--navy);line-height:1;}
+.score-max{font-size:13px;color:var(--muted);}
+.grade-pill{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;margin-top:8px;}
+.g-a{background:#e1f5ee;color:#085041;}
+.g-b{background:#e6f1fb;color:#0c447c;}
+.g-c{background:#faeeda;color:#633806;}
+.g-d{background:#fcebeb;color:#791f1f;}
+.g-na{background:#f0f0f0;color:#555;}
+
+/* COMPARISON TABLE */
+.cmp-table{width:100%;border-collapse:collapse;font-size:13px;}
+.cmp-table th{background:var(--navy);color:#fff;padding:11px 10px;text-align:center;font-size:12px;}
+.cmp-table th:first-child{text-align:right;min-width:140px;}
+.cmp-table td{padding:10px;border-bottom:1px solid var(--border);text-align:center;}
+.cmp-table td:first-child{text-align:right;font-weight:700;background:#f8fbff;}
+.cmp-table tr:hover td{background:#f0f8ff;}
+.best-cell{background:#e1f5ee;color:#085041;font-weight:700;border-radius:6px;}
+.worst-cell{background:#fcebeb;color:#791f1f;border-radius:6px;}
+
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+.chart-box{background:#fff;border-radius:18px;border:1px solid var(--border);padding:20px;}
+.chart-box h4{font-size:14px;font-weight:900;color:var(--navy);margin-bottom:14px;}
+
+/* AI ANALYSIS */
+.ai-box{background:linear-gradient(135deg,#e8f4fd,#e6f7f0);border:2px solid var(--blue);border-radius:18px;padding:22px;margin-bottom:20px;}
+.ai-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.ai-output{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;font-size:14px;line-height:1.9;white-space:pre-wrap;display:none;}
+.ai-loading{text-align:center;padding:24px;color:var(--muted);display:none;}
+
+.btn{border:none;border-radius:11px;padding:11px 20px;font-family:"Cairo",sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
+.btn:hover{transform:translateY(-2px);}
+.bp{background:var(--grad);color:#fff;}
+.bg{background:linear-gradient(135deg,var(--gold),var(--amber));color:#fff;}
+
+.no-data{text-align:center;padding:40px;color:var(--muted);}
+.no-data .icon{font-size:48px;margin-bottom:12px;}
+
+@media(max-width:800px){
+  .sum-grid{grid-template-columns:1fr 1fr;}
+  .chart-grid{grid-template-columns:1fr;}
+}
+@media(max-width:500px){
+  .sum-grid{grid-template-columns:1fr;}
+  .wrap{padding:14px;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-row">
+    <a href="../" class="back-btn">← لوحة التحكم</a>
+    <div>
+      <div class="hdr-title">📊 مقارنة المدارس الست</div>
+      <div class="hdr-sub">تحليل مقارن لتقييمات مكتبات أكاديمية الفلاح 2026</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- NO DATA MESSAGE -->
+  <div id="noDataMsg" class="card" style="display:none">
+    <div class="no-data">
+      <div class="icon">📋</div>
+      <div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:8px">لا توجد بيانات تقييم بعد</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:16px">أكمل تقييم المدارس أولاً من صفحات المدارس الست</div>
+      <a href="../" class="btn bp">← العودة للوحة التحكم</a>
+    </div>
+  </div>
+
+  <!-- RANKINGS -->
+  <div id="rankingsSection">
+    <div style="font-size:19px;font-weight:900;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+      🏆 ترتيب المدارس
+      <span style="flex:1;height:2px;background:linear-gradient(90deg,var(--border),transparent);display:inline-block;margin-right:10px;"></span>
+    </div>
+    <div class="sum-grid" id="rankingsGrid"></div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="chart-grid" id="chartsSection">
+    <div class="chart-box">
+      <h4>📊 النتائج الإجمالية بالنسبة المئوية</h4>
+      <canvas id="barChart" height="220"></canvas>
+    </div>
+    <div class="chart-box">
+      <h4>🕸️ مقارنة المحاور الخمسة</h4>
+      <canvas id="radarChart" height="220"></canvas>
+    </div>
+    <div class="chart-box" style="grid-column:1/-1">
+      <h4>📈 تفصيل درجات المحاور لكل مدرسة</h4>
+      <canvas id="stackedChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="card" id="tableSection">
+    <div class="cardh">📋 جدول المقارنة التفصيلي</div>
+    <div style="overflow-x:auto">
+      <table class="cmp-table" id="cmpTable">
+        <thead><tr id="tableHead"></tr></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- AI ANALYSIS -->
+  <div class="ai-box">
+    <div class="ai-header">
+      <span style="font-size:28px">🤖</span>
+      <div>
+        <div style="font-size:17px;font-weight:900;color:var(--navy)">التحليل المقارن الشامل بالذكاء الاصطناعي</div>
+        <div style="font-size:12px;color:var(--muted)">تحليل ذكي لنتائج المدارس الست وتوصيات تطوير المنظومة</div>
+      </div>
+      <button class="btn bg" style="margin-right:auto" onclick="generateComparativeReport()">🤖 إنشاء التحليل</button>
+    </div>
+    <div class="ai-loading" id="aiLoading">⏳ جاري إعداد التحليل المقارن الشامل...</div>
+    <div class="ai-output" id="aiOutput"></div>
+  </div>
+
+  <!-- PRINT -->
+  <div style="text-align:center;margin-top:10px">
+    <button class="btn bp" onclick="window.print()">🖨️ طباعة التقرير المقارن</button>
+  </div>
+
+</div>
+
+<script>
+const SCHOOLS = [
+  { id:'khubaisi', code:'KHB', name:'الخبيصي', fullName:'فرع الخبيصي', city:'العين' },
+  { id:'jeemi',    code:'JMI', name:'الجيمي',   fullName:'فرع الجيمي', city:'العين' },
+  { id:'dakhilat', code:'DKH', name:'الدخيلات', fullName:'الدخيلات', city:'الشارجة' },
+  { id:'baniyas',  code:'BYS', name:'بني ياس',  fullName:'فرع بني ياس', city:'أبوظبي' },
+  { id:'mbz',      code:'MBZ', name:'محمد بن زايد', fullName:'فرع محمد بن زايد', city:'أبوظبي' },
+  { id:'dana',     code:'DNA', name:'الدانة',   fullName:'فرع الدانة', city:'أبوظبي' },
+];
+
+const COLORS = ['#0c447c','#185fa5','#0f9d8a','#ba7517','#5b21b6','#0f6e56'];
+const AXES = ['المجموعات','البيئة','التقنية','الكادر','الخدمات'];
+
+function getGrade(score){
+  if(!score) return {label:'—', cls:'g-na'};
+  if(score>=90) return {label:'ممتاز 🌟', cls:'g-a'};
+  if(score>=80) return {label:'جيد جداً ✅', cls:'g-b'};
+  if(score>=70) return {label:'جيد 👍', cls:'g-b'};
+  if(score>=60) return {label:'مقبول ⚠️', cls:'g-c'};
+  return {label:'يحتاج تطوير 🔧', cls:'g-d'};
+}
+
+function getRankIcon(rank){ return ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'][rank]; }
+
+function loadAllData(){
+  return SCHOOLS.map(s=>{
+    try{ return { school:s, data: JSON.parse(localStorage.getItem('eval_'+s.id)||'null') }; }
+    catch(e){ return { school:s, data:null }; }
+  });
+}
+
+function renderAll(){
+  const all = loadAllData();
+  const withData = all.filter(x=>x.data);
+
+  if(withData.length === 0){
+    document.getElementById('noDataMsg').style.display = 'block';
+    document.getElementById('rankingsSection').style.display = 'none';
+    document.getElementById('chartsSection').style.display = 'none';
+    document.getElementById('tableSection').style.display = 'none';
+    return;
+  }
+
+  // Sort by score
+  const sorted = [...withData].sort((a,b)=>(b.data.totalScore||0)-(a.data.totalScore||0));
+  const allWithRank = all.map(x=>{
+    const rank = sorted.findIndex(s=>s.school.id===x.school.id);
+    return {...x, rank: rank>=0 ? rank : 99};
+  });
+
+  renderRankings(sorted);
+  renderCharts(sorted);
+  renderTable(all, sorted);
+}
+
+function renderRankings(sorted){
+  const grid = document.getElementById('rankingsGrid');
+  grid.innerHTML = sorted.map((x,i)=>{
+    const score = x.data?.totalScore || 0;
+    const g = getGrade(score);
+    const cls = i<3 ? `ranked-${i+1}` : '';
+    return `
+    <a href="../schools/${x.school.id}/" class="sum-card ${cls}">
+      <div class="rank-badge">${getRankIcon(i)}</div>
+      <div class="school-name">${x.school.fullName}</div>
+      <div class="school-city">📍 ${x.school.city}</div>
+      <div class="score-display">${score}</div>
+      <div class="score-max">من 100 درجة</div>
+      <div class="grade-pill ${g.cls}">${g.label}</div>
+    </a>`;
+  }).join('');
+}
+
+function renderCharts(sorted){
+  const names = sorted.map(x=>x.school.name);
+  const scores = sorted.map(x=>x.data?.totalScore||0);
+  const colors = sorted.map((x,i)=>COLORS[i%COLORS.length]);
+
+  // BAR CHART
+  new Chart(document.getElementById('barChart'), {
+    type:'bar',
+    data:{ labels:names, datasets:[{ label:'الدرجة الكلية', data:scores, backgroundColor:colors, borderRadius:8, borderSkipped:false }]},
+    options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{max:100,min:0, ticks:{font:{family:'Cairo'}}, title:{display:true,text:'الدرجة/100',font:{family:'Cairo'}}}, x:{ticks:{font:{family:'Cairo'}}}}}
+  });
+
+  // RADAR CHART (axes scores)
+  const radarDatasets = sorted.slice(0,4).map((x,i)=>({
+    label: x.school.name,
+    data:[
+      x.data?.scores?.colScore ? Math.round(x.data.scores.colScore/25*100) : 0,
+      x.data?.scores?.envScore ? Math.round(x.data.scores.envScore/20*100) : 0,
+      x.data?.scores?.techScore ? Math.round(x.data.scores.techScore/20*100) : 0,
+      x.data?.scores?.staffScore ? Math.round(x.data.scores.staffScore/20*100) : 0,
+      x.data?.scores?.svcScore ? Math.round(x.data.scores.svcScore/15*100) : 0,
+    ],
+    borderColor: COLORS[i],
+    backgroundColor: COLORS[i]+'22',
+    pointBackgroundColor: COLORS[i],
+  }));
+
+  new Chart(document.getElementById('radarChart'), {
+    type:'radar',
+    data:{ labels:AXES, datasets:radarDatasets },
+    options:{ responsive:true, scales:{r:{min:0,max:100,ticks:{font:{family:'Cairo'}}}}, plugins:{legend:{labels:{font:{family:'Cairo'}}}}}
+  });
+
+  // STACKED BAR
+  new Chart(document.getElementById('stackedChart'), {
+    type:'bar',
+    data:{
+      labels: sorted.map(x=>x.school.name),
+      datasets:[
+        { label:'المجموعات', data:sorted.map(x=>x.data?.scores?.colScore||0), backgroundColor:'#0c447c' },
+        { label:'البيئة',    data:sorted.map(x=>x.data?.scores?.envScore||0), backgroundColor:'#185fa5' },
+        { label:'التقنية',   data:sorted.map(x=>x.data?.scores?.techScore||0), backgroundColor:'#0f9d8a' },
+        { label:'الكادر',    data:sorted.map(x=>x.data?.scores?.staffScore||0), backgroundColor:'#ba7517' },
+        { label:'الخدمات',   data:sorted.map(x=>x.data?.scores?.svcScore||0), backgroundColor:'#0f6e56' },
+      ]
+    },
+    options:{ responsive:true, scales:{x:{stacked:true,ticks:{font:{family:'Cairo'}}},y:{stacked:true,max:100,ticks:{font:{family:'Cairo'}}}}, plugins:{legend:{labels:{font:{family:'Cairo'}}}}}
+  });
+}
+
+function renderTable(all, sorted){
+  const head = document.getElementById('tableHead');
+  const body = document.getElementById('tableBody');
+
+  head.innerHTML = `<th>المحور</th>` + all.map(x=>`<th>${x.school.code}</th>`).join('');
+
+  const rows = [
+    { label:'الدرجة الكلية /100', key: d=>d?.totalScore },
+    { label:'المجموعات /25', key: d=>d?.scores?.colScore },
+    { label:'البيئة /20', key: d=>d?.scores?.envScore },
+    { label:'التقنية /20', key: d=>d?.scores?.techScore },
+    { label:'الكادر /20', key: d=>d?.scores?.staffScore },
+    { label:'الخدمات /15', key: d=>d?.scores?.svcScore },
+  ];
+
+  body.innerHTML = rows.map(row=>{
+    const vals = all.map(x=>row.key(x.data));
+    const maxVal = Math.max(...vals.filter(v=>v!=null));
+    const minVal = Math.min(...vals.filter(v=>v!=null && v>0));
+    return `<tr>
+      <td>${row.label}</td>
+      ${all.map((x,i)=>{
+        const v = vals[i];
+        let cls = '';
+        if(v!=null && v===maxVal && v>0) cls='best-cell';
+        else if(v!=null && v===minVal && minVal<maxVal) cls='worst-cell';
+        return `<td class="${cls}">${v!=null ? v : '—'}</td>`;
+      }).join('')}
+    </tr>`;
+  }).join('');
+}
+
+// AI COMPARATIVE REPORT
+async function generateComparativeReport(){
+  const all = loadAllData();
+  const withData = all.filter(x=>x.data);
+  if(withData.length===0){ alert('لا توجد بيانات تقييم بعد'); return; }
+
+  document.getElementById('aiLoading').style.display='block';
+  document.getElementById('aiOutput').style.display='none';
+
+  const summary = withData.map(x=>`
+- ${x.school.fullName} (${x.school.city}): ${x.data.totalScore}/100
+  • مجموعات: ${x.data.scores?.colScore}/25 | بيئة: ${x.data.scores?.envScore}/20 | تقنية: ${x.data.scores?.techScore}/20 | كادر: ${x.data.scores?.staffScore}/20 | خدمات: ${x.data.scores?.svcScore}/15`).join('\n');
+
+  const prompt = `أنت خبير في تطوير المكتبات المدرسية. أنشئ تقريراً مقارناً شاملاً باللغة العربية الفصحى لتقييم مكتبات أكاديمية الفلاح:
+
+**النتائج (${withData.length} مدارس من أصل 6):**
+${summary}
+
+أنشئ التقرير بالبنية:
+1. **الملخص التنفيذي** (أبرز النتائج في 3 أسطر)
+2. **ترتيب المدارس ومبررات الترتيب**
+3. **المحاور الأكثر ضعفاً عبر المنظومة** (تحليل مشترك)
+4. **المحاور الأكثر قوة** (نقاط الإشراق)
+5. **توصيات على مستوى المنظومة** (5 توصيات استراتيجية)
+6. **أولويات التدخل الفوري** (ما يجب البدء به الأسبوع القادم)
+7. **خارطة طريق التطوير** (3 أشهر، 6 أشهر، نهاية العام)
+
+اجعل التقرير دقيقاً ومفيداً للإدارة التعليمية.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{role:'user',content:prompt}] })
+    });
+    const d = await res.json();
+    const text = d.content?.map(c=>c.text||'').join('') || 'حدث خطأ';
+    document.getElementById('aiLoading').style.display='none';
+    document.getElementById('aiOutput').style.display='block';
+    document.getElementById('aiOutput').textContent=text;
+  } catch(e) {
+    document.getElementById('aiLoading').style.display='none';
+    document.getElementById('aiOutput').style.display='block';
+    document.getElementById('aiOutput').textContent='⚠️ تعذّر الاتصال. تحقق من الإنترنت وحاول مجدداً.';
+  }
+}
+
+renderAll();
+</script>
+<!-- FIXED HOME BUTTON -->
+<a href="../" id="homeBtn" style="position:fixed;bottom:20px;left:20px;z-index:9999;background:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56);color:#fff;text-decoration:none;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 18px rgba(12,68,124,.45);transition:all .2s;font-family:Cairo,sans-serif;border:3px solid rgba(255,255,255,.35);" title="الصفحة الرئيسية" onmouseover="this.style.transform='scale(1.12)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+</body>
+</html>

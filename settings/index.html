@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إعدادات الحفظ — منصة الفلاح</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0c447c;--blue:#185fa5;--teal:#0f9d8a;--gold:#ba7517;--amber:#f0a500;
+  --bg:#e8f0fa;--text:#0c2a4a;--muted:#5a7fa8;--border:#b8d4f0;--green:#0f6e56;
+  --grad:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56);
+}
+body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direction:rtl;min-height:100vh;}
+
+.site-header{background:var(--grad);padding:18px 24px;box-shadow:0 4px 20px rgba(12,68,124,.3);}
+.hdr-row{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px;}
+.back-btn{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.35);border-radius:10px;padding:8px 14px;color:#fff;font-family:"Cairo",sans-serif;font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.hdr-title{font-size:18px;font-weight:900;color:#fff;}
+
+.wrap{max-width:760px;margin:0 auto;padding:28px 20px;}
+
+/* STATUS CARD */
+.status-card{border-radius:18px;padding:20px;margin-bottom:22px;display:flex;align-items:center;gap:16px;}
+.status-card.connected{background:#e1f5ee;border:2px solid var(--teal);}
+.status-card.disconnected{background:#faeeda;border:2px solid var(--amber);}
+.status-card.error{background:#fcebeb;border:2px solid var(--red,#c0392b);}
+.status-icon{font-size:36px;flex-shrink:0;}
+.status-text .st{font-size:16px;font-weight:900;color:var(--navy);}
+.status-text .ss{font-size:13px;color:var(--muted);margin-top:3px;}
+
+/* STEPS */
+.steps{background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:0 4px 18px rgba(12,68,124,.07);padding:24px;margin-bottom:20px;}
+.steps-title{font-size:16px;font-weight:900;color:var(--navy);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.step{display:flex;gap:14px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--bg);}
+.step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;}
+.step-body{flex:1;}
+.step-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.step-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+.step-link{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:6px 14px;background:var(--navy);color:#fff;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;transition:all .2s;}
+.step-link:hover{background:var(--blue);}
+code{background:#e8f0fa;padding:2px 8px;border-radius:5px;font-size:12px;color:var(--navy);border:1px solid var(--border);}
+
+/* FORM */
+.form-card{background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:0 4px 18px rgba(12,68,124,.07);padding:24px;margin-bottom:20px;}
+.form-title{font-size:16px;font-weight:900;color:var(--navy);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.fld{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.fld label{font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px;}
+.fld input{border:2px solid var(--border);border-radius:11px;padding:12px 14px;font-family:"Cairo",sans-serif;font-size:14px;color:var(--text);background:#f5faff;outline:none;transition:border .2s;width:100%;}
+.fld input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(24,95,165,.1);}
+.fld input.ok{border-color:var(--teal);background:#f0fbf6;}
+.fld-help{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.6;}
+.token-wrap{position:relative;}
+.token-wrap input{padding-left:44px;}
+.token-toggle{position:absolute;left:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted);}
+
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+.btn{border:none;border-radius:11px;padding:12px 22px;font-family:"Cairo",sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15);}
+.bp{background:var(--grad);color:#fff;}
+.bt{background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;}
+.bo{background:#fff;border:2px solid var(--border);color:var(--navy);}
+
+/* TEST RESULT */
+.test-result{border-radius:12px;padding:12px 16px;font-size:14px;font-weight:700;margin-top:12px;display:none;}
+.test-result.ok{background:#e1f5ee;border:1px solid var(--teal);color:#085041;}
+.test-result.fail{background:#fcebeb;border:1px solid #e74c3c;color:#791f1f;}
+
+/* DATA OVERVIEW */
+.data-card{background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:0 4px 18px rgba(12,68,124,.07);padding:24px;}
+.data-title{font-size:16px;font-weight:900;color:var(--navy);margin-bottom:16px;}
+.data-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.di{background:#f5faff;border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+.di-n{font-size:24px;font-weight:900;color:var(--navy);}
+.di-l{font-size:11px;color:var(--muted);margin-top:4px;font-weight:700;}
+.di.has-data{border-color:var(--teal);background:#e1f5ee;}
+.di.has-data .di-n{color:var(--green);}
+
+/* DANGER ZONE */
+.danger{background:#fff5f5;border:2px solid #f5c6c6;border-radius:18px;padding:20px;margin-top:20px;}
+.danger-title{font-size:14px;font-weight:900;color:#791f1f;margin-bottom:10px;}
+.btn-danger{background:linear-gradient(135deg,#7f1d1d,#c0392b);color:#fff;border:none;border-radius:10px;padding:10px 18px;font-family:"Cairo",sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
+
+@media(max-width:600px){.data-grid{grid-template-columns:repeat(2,1fr);}.wrap{padding:16px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="hdr-row">
+    <a href="../" class="back-btn">← الرئيسية</a>
+    <div>
+      <div class="hdr-title">⚙️ إعدادات الحفظ الدائم</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- STATUS -->
+  <div class="status-card disconnected" id="statusCard">
+    <div class="status-icon" id="statusIcon">⚠️</div>
+    <div class="status-text">
+      <div class="st" id="statusTitle">لم يتم الإعداد بعد</div>
+      <div class="ss" id="statusSub">اتبع الخطوات أدناه لتفعيل الحفظ الدائم عبر GitHub</div>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps">
+    <div class="steps-title">🔑 كيف تحصل على رمز الوصول (Token)</div>
+
+    <div class="step">
+      <div class="step-num">١</div>
+      <div class="step-body">
+        <div class="step-title">افتح إعدادات GitHub</div>
+        <div class="step-desc">اذهب إلى GitHub وادخل على إعدادات حسابك الشخصية</div>
+        <a href="https://github.com/settings/tokens?type=beta" target="_blank" class="step-link">فتح إعدادات GitHub →</a>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">٢</div>
+      <div class="step-body">
+        <div class="step-title">اضغط "Generate new token" ← "Fine-grained token"</div>
+        <div class="step-desc">
+          • اسم الـ Token: <code>falah-platform</code><br>
+          • Expiration: اختر <code>No expiration</code><br>
+          • Repository access: اختر <code>Only select repositories</code> واختر مشروعك
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">٣</div>
+      <div class="step-body">
+        <div class="step-title">اعطِه صلاحية الكتابة</div>
+        <div class="step-desc">
+          تحت <strong>Repository permissions</strong> ← <strong>Contents</strong> ← اختر <code>Read and write</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">٤</div>
+      <div class="step-body">
+        <div class="step-title">انسخ الـ Token والصقه في الحقل أدناه</div>
+        <div class="step-desc">⚠️ احتفظ بنسخة منه في مكان آمن — لن يظهر مرة ثانية</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card">
+    <div class="form-title">⚙️ إدخال بيانات الاتصال</div>
+
+    <div class="fld">
+      <label>👤 اسم المستخدم على GitHub</label>
+      <input type="text" id="inp-owner" placeholder="مثال: gido70" autocomplete="off">
+      <div class="fld-help">اسم حسابك على GitHub (يظهر في URL بعد github.com/)</div>
+    </div>
+
+    <div class="fld">
+      <label>📁 اسم الـ Repository</label>
+      <input type="text" id="inp-repo" placeholder="مثال: falah" autocomplete="off">
+      <div class="fld-help">اسم مشروع GitHub الخاص بالمنصة</div>
+    </div>
+
+    <div class="fld">
+      <label>🔑 رمز الوصول (Personal Access Token)</label>
+      <div class="token-wrap">
+        <input type="password" id="inp-token" placeholder="github_pat_..." autocomplete="off">
+        <button class="token-toggle" onclick="toggleToken()" title="إظهار/إخفاء">👁️</button>
+      </div>
+      <div class="fld-help">يُخزَّن على جهازك فقط ولا يُرسَل لأي جهة أخرى غير GitHub</div>
+    </div>
+
+    <div class="test-result" id="testResult"></div>
+
+    <div class="btns">
+      <button class="btn bt" onclick="testConnection()">🔌 اختبار الاتصال</button>
+      <button class="btn bp" onclick="saveConfig()">💾 حفظ الإعدادات</button>
+      <button class="btn bo" onclick="clearConfig()">🗑️ مسح</button>
+    </div>
+  </div>
+
+  <!-- DATA OVERVIEW -->
+  <div class="data-card">
+    <div class="data-title">📊 البيانات المحفوظة حالياً</div>
+    <div class="data-grid" id="dataGrid">
+      <div class="di"><div class="di-n">—</div><div class="di-l">جاري التحقق...</div></div>
+    </div>
+  </div>
+
+  <!-- DANGER ZONE -->
+  <div class="danger">
+    <div class="danger-title">⚠️ منطقة الخطر</div>
+    <p style="font-size:13px;color:#791f1f;margin-bottom:12px">مسح جميع البيانات المحلية (بيانات GitHub لا تُمسح)</p>
+    <button class="btn-danger" onclick="clearAllLocal()">🗑️ مسح البيانات المحلية</button>
+  </div>
+
+</div>
+
+<script src="../js/storage.js"></script>
+<script>
+const SCHOOLS = [
+  {id:'khubaisi', name:'الخبيصي'},
+  {id:'jeemi',    name:'الجيمي'},
+  {id:'dakhilat', name:'الدخيلات'},
+  {id:'baniyas',  name:'بني ياس'},
+  {id:'mbz',      name:'محمد بن زايد'},
+  {id:'dana',     name:'الدانة'},
+];
+
+// ── Load existing config ──
+window.addEventListener('DOMContentLoaded', ()=>{
+  const c = GHStorage.getConfig();
+  if(c.owner) document.getElementById('inp-owner').value = c.owner;
+  if(c.repo)  document.getElementById('inp-repo').value  = c.repo;
+  if(c.token) document.getElementById('inp-token').value = c.token;
+  updateStatus();
+  renderDataGrid();
+});
+
+function toggleToken(){
+  const inp = document.getElementById('inp-token');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+async function testConnection(){
+  const btn = event.target;
+  btn.textContent = '⏳ جاري الاتصال...';
+  btn.disabled = true;
+
+  // Temporarily save to test
+  saveToStorage(false);
+
+  const result = await GHStorage.testConnection();
+  const el = document.getElementById('testResult');
+  el.style.display = 'block';
+  el.className = 'test-result ' + (result.ok ? 'ok' : 'fail');
+  el.textContent = result.msg;
+
+  btn.textContent = '🔌 اختبار الاتصال';
+  btn.disabled = false;
+}
+
+function saveToStorage(notify=true){
+  const owner = document.getElementById('inp-owner').value.trim();
+  const repo  = document.getElementById('inp-repo').value.trim();
+  const token = document.getElementById('inp-token').value.trim();
+
+  if(!owner || !repo || !token){ alert('يرجى ملء جميع الحقول'); return; }
+
+  localStorage.setItem('gh_owner', owner);
+  localStorage.setItem('gh_repo',  repo);
+  localStorage.setItem('gh_token', token);
+
+  if(notify){
+    updateStatus();
+    const el = document.getElementById('testResult');
+    el.style.display='block';
+    el.className='test-result ok';
+    el.textContent='✅ تم حفظ الإعدادات — اضغط "اختبار الاتصال" للتحقق';
+  }
+}
+
+function saveConfig(){ saveToStorage(true); }
+
+function clearConfig(){
+  if(!confirm('هل تريد مسح إعدادات الاتصال؟')) return;
+  localStorage.removeItem('gh_owner');
+  localStorage.removeItem('gh_repo');
+  localStorage.removeItem('gh_token');
+  document.getElementById('inp-owner').value = '';
+  document.getElementById('inp-repo').value  = '';
+  document.getElementById('inp-token').value = '';
+  updateStatus();
+}
+
+function updateStatus(){
+  const card  = document.getElementById('statusCard');
+  const icon  = document.getElementById('statusIcon');
+  const title = document.getElementById('statusTitle');
+  const sub   = document.getElementById('statusSub');
+  const c = GHStorage.getConfig();
+
+  if(GHStorage.isConfigured()){
+    card.className = 'status-card connected';
+    icon.textContent = '✅';
+    title.textContent = 'متصل بـ GitHub';
+    sub.textContent = `${c.owner}/${c.repo} — الحفظ الدائم مفعّل`;
+  } else {
+    card.className = 'status-card disconnected';
+    icon.textContent = '⚠️';
+    title.textContent = 'لم يتم الإعداد بعد';
+    sub.textContent = 'اتبع الخطوات أدناه لتفعيل الحفظ الدائم';
+  }
+}
+
+function renderDataGrid(){
+  const grid = document.getElementById('dataGrid');
+  const items = SCHOOLS.map(s=>{
+    const hasData = !!(
+      localStorage.getItem('gh_file_schools/'+s.id+'.json') ||
+      localStorage.getItem('ls_schools/'+s.id+'.json')
+    );
+    return `<div class="di ${hasData?'has-data':''}">
+      <div class="di-n">${hasData?'✅':'—'}</div>
+      <div class="di-l">${s.name}</div>
+    </div>`;
+  });
+
+  const schedCount = Object.keys(localStorage).filter(k=>k.includes('schedule/')).length;
+  items.push(`<div class="di ${schedCount>0?'has-data':''}">
+    <div class="di-n">${schedCount||'—'}</div>
+    <div class="di-l">أسابيع الجدول</div>
+  </div>`);
+
+  grid.innerHTML = items.join('');
+}
+
+function clearAllLocal(){
+  if(!confirm('سيتم مسح جميع البيانات المحلية. هل أنت متأكد؟')) return;
+  const keysToRemove = Object.keys(localStorage).filter(k=>
+    k.startsWith('gh_file_') || k.startsWith('ls_') || k.startsWith('gh_sha_') || k.startsWith('eval_')
+  );
+  keysToRemove.forEach(k=>localStorage.removeItem(k));
+  renderDataGrid();
+  alert('تم مسح البيانات المحلية');
+}
+</script>
+<!-- FIXED HOME BUTTON -->
+<a href="../" id="homeBtn" style="position:fixed;bottom:20px;left:20px;z-index:9999;background:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56);color:#fff;text-decoration:none;width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 18px rgba(12,68,124,.45);transition:all .2s;font-family:Cairo,sans-serif;border:3px solid rgba(255,255,255,.35);" title="الصفحة الرئيسية" onmouseover="this.style.transform='scale(1.12)'" onmouseout="this.style.transform='scale(1)'">🏠</a>
+</body>
+</html>
