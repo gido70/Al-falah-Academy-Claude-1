@@ -5,8 +5,7 @@
 .chartbox{min-height:300px}.chartbox canvas{width:100%!important;height:280px!important}.director-mode .chartbox{min-height:240px}.director-mode .chartbox canvas{height:230px!important}.visual-note{background:#f8fbff;border:1px solid var(--border);border-radius:14px;padding:12px;margin-top:10px;color:var(--muted);font-size:13px}@media(max-width:900px){.chartbox{min-height:250px}.chartbox canvas{height:240px!important}}
 @media(max-width:900px){.grid,.grid3,.filters,.filters.two,.kpis{grid-template-columns:1fr}.hero h1{font-size:22px}.logo{max-width:190px}.wrap{padding:10px 10px 70px}.home{top:auto;bottom:14px;right:14px}.card{padding:14px}.topbar .btn{flex:1 1 150px}.director-mode .wrap{max-width:100%}.director-mode .kpis{grid-template-columns:1fr 1fr}.director-mode .hero p{font-size:13px}}
 @media print{.home,.topbar,.only-normal,.no-print,.feedback-form{display:none!important}body{background:#fff}.wrap{max-width:100%;padding:0}.hero{box-shadow:none;border-radius:0}.card{break-inside:avoid;box-shadow:none}.print-only{display:block}}
-</style></head><body><a class="home" href="../index.html">🏠 الرئيسية</a><div class="topbar no-print"><button class="btn primary" onclick="printPage()">🖨️ طباعة / PDF</button><button class="btn primary" onclick="copyReportText()">📋 نسخ نص التقرير</button><button class="btn gold only-normal" onclick="copyDirectorLink()">🔗 نسخ رابط المدير</button><button class="btn teal only-normal" onclick="openDirector()">👁️ معاينة رابط المدير</button><button class="btn outline only-normal" onclick="gmailDirector()">Gmail</button><button class="btn teal only-normal" onclick="whatsappDirector()">واتساب</button></div><div class="wrap"><section class="card only-normal filters-card"><h2>خيارات التقرير</h2><div class="filters"><div><label>نوع التقرير</label><select id="type" class="report-control"><option value="all">تقرير شامل</option><option value="weekly">تقرير أسبوعي</option><option value="monthly">تقرير شهري</option><option value="eval">تقييم المكتبات</option><option value="work">الدوام والزيارات</option><option value="special">موضوع خاص</option></select></div><div><label>المدرسة</label><select id="school" class="report-control"><option value="all">كل المدارس</option><option value="khb">الخبيصي</option><option value="jmi">الجيمي</option><option value="shj">الشارقة</option><option value="bny">بني ياس</option><option value="mzd">محمد بن زايد</option><option value="dan">الدانة</option></select></div><div><label>الشهر</label><select id="month" class="report-control"><option value="all">كل الشهور</option><option value="04">أبريل</option><option value="05">مايو</option><option value="06">يونيو</option><option value="07">يوليو</option><option value="08">أغسطس</option><option value="09">سبتمبر</option><option value="10">أكتوبر</option><option value="11">نوفمبر</option><option value="12">ديسمبر</option></select></div><div><label>الأسبوع</label><select id="week" class="report-control"><option value="all">كل الأسابيع</option></select></div><div><label>مستوى العرض</label><select id="level" class="report-control"><option value="brief">مختصر للمدير</option><option value="detail">تفصيلي</option></select></div></div><div class="grid" style="margin-top:12px"><div><label>عنوان خاص اختياري</label><input id="title" class="report-control" placeholder="مثال: تقرير متابعة مكتبة الحلقة الأولى"></div><div><label>ملاحظات أو توجيه خاص</label><input id="note" class="report-control" placeholder="مثال: ركز على مدرسة الجيمي فقط"></div></div><div class="actions"><button class="btn teal" onclick="updateURL()">🔄 توليد التقرير حسب الاختيارات</button><button class="btn gold" onclick="copyDirectorLink()">📋 نسخ رابط المدير</button><button class="btn outline" onclick="gmailDirector()">Gmail</button><button class="btn teal" onclick="whatsappDirector()">واتساب</button></div></section><main id="reportRoot"></main></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2?v=20260510f"></script>
-<script src="../supabase-config.js?v=20260510c"></script><script>const logoSrc='../assets/logo.png';
+</style></head><body><a class="home" href="../index.html">🏠 الرئيسية</a><div class="topbar no-print"><button class="btn primary" onclick="printPage()">🖨️ طباعة / PDF</button><button class="btn primary" onclick="copyReportText()">📋 نسخ نص التقرير</button><button class="btn gold only-normal" onclick="copyDirectorLink()">🔗 نسخ رابط المدير</button><button class="btn teal only-normal" onclick="openDirector()">👁️ معاينة رابط المدير</button><button class="btn outline only-normal" onclick="gmailDirector()">Gmail</button><button class="btn teal only-normal" onclick="whatsappDirector()">واتساب</button></div><div class="wrap"><section class="card only-normal filters-card"><h2>خيارات التقرير</h2><div class="filters"><div><label>نوع التقرير</label><select id="type" class="report-control"><option value="">— اختر نوع التقرير —</option><option value="all">تقرير شامل</option><option value="weekly">تقرير أسبوعي</option><option value="monthly">تقرير شهري</option><option value="eval">تقييم المكتبات</option><option value="work">الدوام والزيارات</option><option value="special">موضوع خاص</option></select></div><div><label>المدرسة</label><select id="school" class="report-control"><option value="">— اختر المدرسة —</option><option value="all">كل المدارس</option><option value="khb">الخبيصي</option><option value="jmi">الجيمي</option><option value="shj">الشارقة</option><option value="bny">بني ياس</option><option value="mzd">محمد بن زايد</option><option value="dan">الدانة</option></select></div><div><label>الشهر</label><select id="month" class="report-control"><option value="">— اختر الشهر —</option><option value="all">كل الشهور</option><option value="04">أبريل</option><option value="05">مايو</option><option value="06">يونيو</option><option value="07">يوليو</option><option value="08">أغسطس</option><option value="09">سبتمبر</option><option value="10">أكتوبر</option><option value="11">نوفمبر</option><option value="12">ديسمبر</option></select></div><div><label>الأسبوع</label><select id="week" class="report-control"><option value="all">كل الأسابيع</option></select></div><div><label>مستوى العرض</label><select id="level" class="report-control"><option value="">— اختر مستوى العرض —</option><option value="brief">مختصر للمدير</option><option value="detail">تفصيلي</option></select></div></div><div class="grid" style="margin-top:12px"><div><label>عنوان خاص اختياري</label><input id="title" class="report-control" placeholder="مثال: تقرير متابعة مكتبة الحلقة الأولى"></div><div><label>ملاحظات أو توجيه خاص</label><input id="note" class="report-control" placeholder="مثال: ركز على مدرسة الجيمي فقط"></div></div><div class="actions"><button class="btn teal" onclick="updateURL()">🔄 توليد التقرير حسب الاختيارات</button><button class="btn gold" onclick="copyDirectorLink()">📋 نسخ رابط المدير</button><button class="btn outline" onclick="gmailDirector()">Gmail</button><button class="btn teal" onclick="whatsappDirector()">واتساب</button></div></section><main id="reportRoot"></main></div><script src="../supabase-config.js?v=20260510c"></script><script>const logoSrc='../assets/logo.png';
 let CHARTS=[];
 const SCHOOLS=[
  {id:'khb',short:'الخبيصي',name:'أكاديمية الفلاح فرع الخبيصي',city:'العين'},
@@ -34,13 +33,49 @@ function staffScore(d,l){let raw=(l&&l.staff)||(l&&l.specialist)||d?.staff||d?.l
 function getEvalRows(){const db=load('falah_lib_v6',{ev:{}});let out=[];SCHOOLS.forEach(s=>{const d=db.ev?.[s.id];if(!d||!d.saved)return;let sc=evalAvg(d);out.push({school:s,library:d.lib||d.librarian||'المكتبة الرئيسية',kind:'رئيسية',score:sc,staff:staffScore(d,null),date:d.date||'',raw:d});(Array.isArray(d.libraries)?d.libraries:[]).forEach((l,i)=>{let sc2=RM[l.rating]||booksToScore(l.books)||0;out.push({school:s,library:l.type||('مكتبة إضافية '+(i+1)),kind:'إضافية',score:sc2,staff:staffScore(d,l),date:d.date||'',raw:l})})});return out}
 function getWeekRows(){let rows=[];for(let i=0;i<localStorage.length;i++){let k=localStorage.key(i);if(k==='falah_wp_final'||k.startsWith('falah_week_')){let d=load(k,null);if(!d)continue;let sig=JSON.stringify(d);if(rows.some(r=>r.sig===sig))continue;let days=['mon','tue','wed','thu','fri'].map((day,j)=>({type:d['atype'+j]||'',loc:d['dloc'+j]||'',task:d['dtasks'+j]||'',note:d['anote'+j]||'',in:d['ain'+j]||'',out:d['aout'+j]||''}));let visits=days.filter(x=>/زيارة|مدرسة|ميدانية/.test((x.type+' '+x.loc+' '+x.task))).length;let tasks=days.filter(x=>(x.task||'').trim()).length;rows.push({sig,key:k,week:String(d.wnum||k.replace('falah_week_','')),from:d.from||d.dateFrom||'',to:d.to||d.dateTo||'',status:d.wstatus||d.status||'',month:monthFromDate(d.from||d.dateFrom||''),days,visits,tasks})}}return rows.sort((a,b)=>String(a.from).localeCompare(String(b.from)))}
 function selected(){return {type:q.get('type')||document.getElementById('type')?.value||'all',school:q.get('school')||document.getElementById('school')?.value||'all',month:q.get('month')||document.getElementById('month')?.value||'all',week:q.get('week')||document.getElementById('week')?.value||'all',level:q.get('level')||document.getElementById('level')?.value||'brief',title:q.get('title')||document.getElementById('title')?.value||'',note:q.get('note')||document.getElementById('note')?.value||''}}
-function filteredData(sel){let er=getEvalRows(), wr=getWeekRows();if(sel.school!=='all')er=er.filter(r=>r.school.id===sel.school);if(sel.month!=='all'){er=er.filter(r=>monthFromDate(r.date)===sel.month||!r.date);wr=wr.filter(w=>w.month===sel.month)}if(sel.week!=='all')wr=wr.filter(w=>w.week===sel.week);return {er,wr}}
-function summary(sel,er,wr){let doneSchools=[...new Set(er.map(r=>r.school.id))].length;let libs=er.length;let scores=er.map(r=>r.score).filter(Boolean);let average=avg(scores);let best=er.slice().sort((a,b)=>b.score-a.score)[0];let worst=er.filter(r=>r.score>0).slice().sort((a,b)=>a.score-b.score)[0];let title=sel.title||({all:'تقرير شامل',weekly:'تقرير أسبوعي',monthly:'تقرير شهري',eval:'تقييم المكتبات',work:'الدوام والزيارات',special:'موضوع خاص'})[sel.type]||'تقرير';let scope=sel.school==='all'?'كل المدارس':(schoolBy(sel.school)?.short||'مدرسة محددة');let period=sel.week!=='all'?'الأسبوع '+sel.week:(sel.month!=='all'?monthName(sel.month):'كل الفترات');return {doneSchools,libs,average,best,worst,title,scope,period,weeks:wr.length,visits:wr.reduce((s,w)=>s+w.visits,0),tasks:wr.reduce((s,w)=>s+w.tasks,0)}}
-function kpisHTML(sum,sel){if(sel.type==='special')return '';return `<section class="kpis"><div class="kpi"><strong>${sum.doneSchools}</strong><span>مدارس ضمن التقرير</span></div><div class="kpi"><strong>${sum.libs}</strong><span>مكتبات داخلة في التقرير</span></div><div class="kpi"><strong>${sum.average||0}</strong><span>متوسط التقييم من 6</span></div><div class="kpi"><strong>${sum.weeks}</strong><span>أسابيع عمل</span></div></section>`}
+function filteredData(sel){
+  let er=getEvalRows(), wr=getWeekRows();
+  // فلترة المدرسة
+  if(sel.school&&sel.school!=='all'&&sel.school!=='')er=er.filter(r=>r.school.id===sel.school);
+  // فلترة الشهر
+  if(sel.month&&sel.month!=='all'&&sel.month!==''){
+    er=er.filter(r=>monthFromDate(r.date)===sel.month||!r.date);
+    wr=wr.filter(w=>w.month===sel.month);
+  }
+  // فلترة الأسبوع
+  if(sel.week&&sel.week!=='all'&&sel.week!=='')wr=wr.filter(w=>w.week===sel.week);
+  return {er,wr};
+}
+function summary(sel,er,wr){let doneSchools=[...new Set(er.map(r=>r.school.id))].length;let libs=er.length;let scores=er.map(r=>r.score).filter(Boolean);let average=avg(scores);let best=er.slice().sort((a,b)=>b.score-a.score)[0];let worst=er.filter(r=>r.score>0).slice().sort((a,b)=>a.score-b.score)[0];let title=sel.title||({all:'تقرير شامل',weekly:'تقرير أسبوعي',monthly:'تقرير شهري',eval:'تقييم المكتبات',work:'الدوام والزيارات',special:'موضوع خاص','':'لم يتم الاختيار بعد'})[sel.type]||'تقرير';let scope=sel.school==='all'?'كل المدارس':(schoolBy(sel.school)?.short||'مدرسة محددة');let period=sel.week!=='all'?'الأسبوع '+sel.week:(sel.month!=='all'?monthName(sel.month):'كل الفترات');return {doneSchools,libs,average,best,worst,title,scope,period,weeks:wr.length,visits:wr.reduce((s,w)=>s+w.visits,0),tasks:wr.reduce((s,w)=>s+w.tasks,0)}}
+function kpisHTML(sum,sel){if(sel.type===''||sel.type==='special')return '';return `<section class="kpis"><div class="kpi"><strong>${sum.doneSchools}</strong><span>مدارس ضمن التقرير</span></div><div class="kpi"><strong>${sum.libs}</strong><span>مكتبات داخلة في التقرير</span></div><div class="kpi"><strong>${sum.average||0}</strong><span>متوسط التقييم من 6</span></div><div class="kpi"><strong>${sum.weeks}</strong><span>أسابيع عمل</span></div></section>`}
 function evalSection(er,sel){if(!['all','eval','monthly'].includes(sel.type) && !(sel.school!=='all'&&sel.type!=='work'))return '';if(!er.length)return '<section class="card"><h2>نتائج التقييم</h2><div class="note">لا توجد تقييمات محفوظة ضمن الاختيار الحالي.</div></section>';let rows=er.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.school.short)}</td><td>${esc(r.library)}</td><td>${r.kind}</td><td><b>${r.score||0}</b> / 6 <div class="bar"><div class="fill" style="width:${Math.round((r.score||0)/6*100)}%"></div></div></td><td>${r.staff||0}%</td><td><span class="pill ${tag(r.score)}">${level(r.score)}</span></td></tr>`).join('');return `<section class="card"><h2>📚 نتائج تقييم المكتبات</h2><table><thead><tr><th>#</th><th>المدرسة</th><th>المكتبة</th><th>النوع</th><th>التقييم</th><th>الكادر المهني</th><th>المستوى</th></tr></thead><tbody>${rows}</tbody></table></section>`}
-function workSection(wr,sel){if(!['all','work','weekly','monthly'].includes(sel.type))return '';if(!wr.length)return '<section class="card"><h2>سجل الدوام والزيارات</h2><div class="note">لا توجد أسابيع عمل ضمن الاختيار الحالي.</div></section>';let rows=wr.map(w=>`<div class="mini"><b>الأسبوع ${esc(w.week)}</b> — ${esc(w.from)} إلى ${esc(w.to)}<br><span class="muted">الحالة: ${esc(w.status)} — الزيارات: ${w.visits} — المهام: ${w.tasks}</span></div>`).join('');return `<section class="card"><h2>🗓️ سجل الدوام والزيارات</h2><div class="mini-list">${rows}</div></section>`}
+function workSection(wr,sel){
+  if(sel.type===''||sel.type==='eval')return '';
+  if(!['all','work','weekly','monthly'].includes(sel.type)&&sel.type!=='')return '';
+  if(!wr.length)return '<section class="card"><h2>🗓️ سجل الدوام والزيارات</h2><div class="note">لا توجد أسابيع عمل ضمن الاختيار الحالي.</div></section>';
+  // إذا اختار أسبوعًا محددًا → عرض تفاصيل الأيام
+  if(sel.week&&sel.week!=='all'&&sel.week!==''){
+    let w=wr.find(x=>x.week===sel.week)||wr[0];
+    if(!w)return '';
+    let dayNames=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'];
+    let daysHtml=(w.days||[]).map((d,i)=>{
+      if(!d.task&&!d.type&&!d.loc)return '';
+      return `<div class="mini"><b>${dayNames[i]||'يوم '+(i+1)}</b>${d.in||d.out?' — دخول: '+esc(d.in||'—')+' خروج: '+esc(d.out||'—'):''}
+<br><span class="pill ok">${esc(d.type||'دوام')}</span>${d.loc?' — '+esc(d.loc):''}
+${d.task?`<br><span class="muted">المهام: ${esc(d.task)}</span>`:''}
+${d.note?`<br><span class="muted">ملاحظات: ${esc(d.note)}</span>`:''}</div>`;
+    }).filter(Boolean).join('');
+    return `<section class="card"><h2>🗓️ الأسبوع ${esc(w.week)} — تفاصيل الأيام</h2>
+<div class="note">الفترة: ${esc(w.from)} إلى ${esc(w.to)} | الزيارات: ${w.visits} | المهام: ${w.tasks} | الحالة: ${esc(w.status||'—')}</div>
+<div class="mini-list" style="margin-top:12px">${daysHtml||'<div class="note">لا توجد تفاصيل يومية مُدخلة لهذا الأسبوع.</div>'}</div></section>`;
+  }
+  // إذا اختار شهرًا أو كل الأسابيع → عرض ملخص الأسابيع
+  let rows=wr.map(w=>`<div class="mini"><b>الأسبوع ${esc(w.week)}</b> — ${esc(w.from)} إلى ${esc(w.to)}<br>
+<span class="muted">الحالة: ${esc(w.status||'—')} — الزيارات: ${w.visits} — المهام: ${w.tasks}</span></div>`).join('');
+  return `<section class="card"><h2>🗓️ سجل الدوام والزيارات</h2><div class="mini-list">${rows}</div></section>`;
+}
 function chartsSection(er,wr,sel){
-  if(sel.type==='special')return '';
+  if(sel.type===''||sel.type==='special')return '';
   const showEval = ['all','eval','monthly'].includes(sel.type) || (sel.school!=='all' && sel.type!=='work');
   const showWork = ['all','work','weekly','monthly'].includes(sel.type);
   let html='';
@@ -87,9 +122,35 @@ function specialSection(sel){if(sel.type!=='special')return '';return `<section 
 function feedbackForm(sel){return `<section class="feedback-form"><h2>💬 تعليق المدير والتوصيات</h2><p class="muted">اختر الرد المناسب، ويمكن إضافة ملاحظة مختصرة. سيتم حفظ الرد في صفحة المتابعة الإدارية.</p><div class="grid"><div><label>نوع الرد</label><select id="decision"><option>معتمد</option><option>معتمد مع ملاحظات</option><option>يحتاج تعديل</option><option>للاطلاع والمتابعة</option><option>توجيه للتنفيذ</option><option>يرجى إعادة العرض</option></select></div><div><label>الأولوية</label><select id="priority"><option>عادي</option><option>مهم</option><option>عاجل</option></select></div></div><label>تعليق أو توصيات اختيارية</label><textarea id="comment" placeholder="اكتب التعليق أو التوصيات هنا..."></textarea><div class="actions"><button class="btn teal" onclick="sendFeedback()">📨 إرسال الرد</button></div><div id="fbStatus" class="muted" style="text-align:center;margin-top:10px"></div></section>`}
 function render(){let sel=selected();let {er,wr}=filteredData(sel);let sum=summary(sel,er,wr);let schoolText=sel.school==='all'?'كل المدارس':(schoolBy(sel.school)?.name||'مدرسة محددة');let headerTitle=director?'تقرير متابعة أداء مكتبات أكاديمية الفلاح':'التقرير الذكي النهائي';let sub=director?'نسخة مختصرة للعرض الإداري — بدون روابط رجوع أو عناصر تشغيل داخلية':'قراءة موحدة للتقييمات المكتبية، الأعمال اليومية، وردود الإدارة';let brief = sel.type==='special' ? `يعرض هذا الرابط موضوعًا خاصًا للإدارة: <b>${esc(sel.title||'موضوع خاص')}</b>.` : `يعرض هذا التقرير ما تم اختياره فقط: <b>${esc(sum.title)}</b> — النطاق: <b>${esc(schoolText)}</b> — الفترة: <b>${esc(sum.period)}</b>. ${sum.best?`أعلى نتيجة حالية: <b>${esc(sum.best.school.short)}</b>.`:''} ${sum.worst?`الأكثر احتياجًا للتحسين: <b>${esc(sum.worst.school.short)}</b>.`:''}`;
 let html=`<section class="hero"><img class="logo" src="${logoSrc}" onerror="this.style.display='none'" alt="شعار أكاديمية الفلاح"><h1>${headerTitle}</h1><p>${sub}</p></section><section class="card"><h2>خلاصة تنفيذية جاهزة للمدير</h2><div class="smart">${brief}</div></section>${kpisHTML(sum,sel)}${specialSection(sel)}${evalSection(er,sel)}${workSection(wr,sel)}${chartsSection(er,wr,sel)}${director?feedbackForm(sel):''}<div class="footer">أكاديمية الفلاح — منصة تطوير المكتبات ومراكز مصادر التعلم 2026</div>`;document.getElementById('reportRoot').innerHTML=html;document.title=headerTitle;setTimeout(()=>drawCharts(er,wr,sel),80); if(document.getElementById('type')){document.getElementById('type').value=sel.type;document.getElementById('school').value=sel.school;document.getElementById('month').value=sel.month;document.getElementById('level').value=sel.level;document.getElementById('title').value=sel.title;document.getElementById('note').value=sel.note;populateWeeks(sel.week)}}
-function populateWeeks(selectedWeek='all'){const el=document.getElementById('week');if(!el)return;let weeks=getWeekRows();let opts=['<option value="all">كل الأسابيع</option>'].concat(weeks.map(w=>`<option value="${esc(w.week)}">الأسبوع ${esc(w.week)} (${esc(w.from)} - ${esc(w.to)})</option>`));el.innerHTML=opts.join('');el.value=selectedWeek||'all'}
+function populateWeeks(selectedWeek){const el=document.getElementById('week');if(!el)return;let weeks=getWeekRows();// إزالة التكرار بناءً على رقم الأسبوع
+let seen=new Set();weeks=weeks.filter(w=>{if(seen.has(w.week))return false;seen.add(w.week);return true;});
+let opts=['<option value="">— اختر الأسبوع —</option>','<option value="all">كل الأسابيع</option>'].concat(weeks.map(w=>`<option value="${esc(w.week)}">الأسبوع ${esc(w.week)}${w.from?' ('+esc(w.from)+' ← '+esc(w.to)+')':''}</option>`));
+el.innerHTML=opts.join('');if(selectedWeek!==undefined)el.value=selectedWeek;}
 function updateURL(){let p=new URLSearchParams();['type','school','month','week','level','title','note'].forEach(id=>{let el=document.getElementById(id);if(el&&el.value&&!(id==='title'||id==='note'))p.set(id,el.value); if((id==='title'||id==='note')&&el&&el.value.trim())p.set(id,el.value.trim())});history.replaceState(null,'','?'+p.toString());render()}
-function directorLink(){let p=selected();let u=new URL(location.href);u.search='';u.searchParams.set('director','1');u.searchParams.set('type',p.type);u.searchParams.set('school',p.school);u.searchParams.set('month',p.month);u.searchParams.set('week',p.week);u.searchParams.set('level',p.level);if(p.title)u.searchParams.set('title',p.title);if(p.note)u.searchParams.set('note',p.note);return u.toString()}
+function directorLink(){
+  try{
+    var p=selected();
+    var params=new URLSearchParams();
+    params.set('director','1');
+    if(p.type)params.set('type',p.type);
+    if(p.school)params.set('school',p.school);
+    if(p.month)params.set('month',p.month);
+    if(p.week)params.set('week',p.week);
+    if(p.level)params.set('level',p.level);
+    if(p.title)params.set('title',p.title);
+    if(p.note)params.set('note',p.note);
+    var base;
+    if(location.protocol==='file:'){
+      base=location.pathname;
+    } else {
+      base=location.origin+location.pathname;
+    }
+    return base+'?'+params.toString();
+  }catch(e){
+    console.warn('directorLink error:',e);
+    return location.href+'?director=1';
+  }
+}
 function copyDirectorLink(){let u=directorLink();navigator.clipboard?.writeText(u).then(()=>alert('تم نسخ رابط المدير')).catch(()=>prompt('انسخ الرابط:',u))}
 function openDirector(){window.open(directorLink(),'_blank')}
 function gmailDirector(){let u=directorLink();let su='تقرير متابعة مكتبات أكاديمية الفلاح';let body='سعادة المدير/ة،\n\nمرفق رابط التقرير المختصر للمتابعة:\n'+u;window.open('https://mail.google.com/mail/?view=cm&fs=1&su='+encodeURIComponent(su)+'&body='+encodeURIComponent(body),'_blank')}
@@ -97,67 +158,5 @@ function whatsappDirector(){let u=directorLink();window.open('https://wa.me/?tex
 function printPage(){window.print()}
 function copyReportText(){let text=document.getElementById('reportRoot').innerText;navigator.clipboard?.writeText(text).then(()=>alert('تم نسخ نص التقرير')).catch(()=>prompt('انسخ النص:',text))}
 async function sendFeedback(){let sel=selected();let rec={report_type:sel.type,school_id:sel.school,period:sel.week!=='all'?'week:'+sel.week:(sel.month!=='all'?'month:'+sel.month:'all'),decision:document.getElementById('decision').value,priority:document.getElementById('priority').value,comment:document.getElementById('comment').value.trim(),page_url:location.href,is_read:false,created_at:new Date().toISOString()};let ok=false;try{if(window.supabaseClient){let {error}=await window.supabaseClient.from('director_feedback').insert([rec]);if(!error)ok=true;else console.warn(error)}}catch(e){console.warn(e)}let arr=load('director_feedback_local',[]);arr.unshift(rec);localStorage.setItem('director_feedback_local',JSON.stringify(arr.slice(0,50)));document.getElementById('fbStatus').innerHTML='✅ تم إرسال الرد وحفظه '+(ok?'في قاعدة البيانات.':'محليًا، وسيظهر في نفس المتصفح.');document.getElementById('comment').value=''}
-
-
-/* === Supabase live data loader for final reports === */
-window.REPORT_REMOTE_READY=false;
-window.REMOTE_EVAL_ROWS=[];
-window.REMOTE_WEEK_ROWS=[];
-function _safeObj(x){return x&&typeof x==='object'?x:{};}
-function _schoolIdFromRow(row){
-  var d=_safeObj(row.full_data); var sid=String(d.school_id||d.school_code||row.school_code||'').trim();
-  if(sid && schoolBy(sid)) return sid;
-  var n=String(row.school_id||d.school_db_id||'');
-  var map={1:'dan',2:'mzd',3:'bny',4:'khb',5:'jmi',6:'shj'};
-  if(map[n]) return map[n];
-  var nm=String(d.school_name||row.school_name||'');
-  var f=SCHOOLS.find(function(s){return nm.indexOf(s.short)>=0 || nm.indexOf(s.name)>=0;});
-  return f?f.id:'';
-}
-function _evalRowsFromRemote(rows){
-  var out=[];
-  (rows||[]).forEach(function(row){
-    var sid=_schoolIdFromRow(row); var s=schoolBy(sid); if(!s) return;
-    var d=_safeObj(row.full_data); d.saved=true;
-    if(!d.date) d.date=row.visit_date||row.created_at||'';
-    if(!d.lib) d.lib=row.librarian_name||'';
-    if(!d.overall) d.overall=row.final_level||'';
-    var sc=Number(row.total_score||d.total_score||evalAvg(d)||0);
-    out.push({school:s,library:d.lib||d.librarian||'المكتبة الرئيسية',kind:'رئيسية',score:sc,staff:staffScore(d,null),date:d.date||'',raw:d});
-    (Array.isArray(d.libraries)?d.libraries:[]).forEach(function(l,i){
-      var sc2=RM[l.rating]||booksToScore(l.books)||0;
-      out.push({school:s,library:l.type||('مكتبة إضافية '+(i+1)),kind:'إضافية',score:sc2,staff:staffScore(d,l),date:d.date||'',raw:l});
-    });
-  });
-  return out;
-}
-function _weekRowsFromRemote(rows){
-  var out=[];
-  (rows||[]).forEach(function(row){
-    var d=_safeObj(row.full_data); if(!Object.keys(d).length) d={};
-    var days=['mon','tue','wed','thu','fri'].map(function(day,j){return {type:d['atype'+j]||row.task_type||'',loc:d['dloc'+j]||'',task:d['dtasks'+j]||row.task_details||'',note:d['anote'+j]||row.notes||'',in:d['ain'+j]||'',out:d['aout'+j]||''};});
-    var from=d.from||d.dateFrom||row.work_date||row.created_at||'';
-    var visits=days.filter(function(x){return /زيارة|مدرسة|ميدانية/.test((x.type+' '+x.loc+' '+x.task));}).length;
-    var tasks=days.filter(function(x){return (x.task||'').trim();}).length;
-    out.push({sig:String(row.id||JSON.stringify(row)),key:String(row.id||''),week:String(d.wnum||row.week_number||row.id||''),from:from,to:d.to||d.dateTo||row.work_date||'',status:d.wstatus||d.status||'',month:monthFromDate(from),days:days,visits:visits,tasks:tasks});
-  });
-  return out.sort(function(a,b){return String(a.from).localeCompare(String(b.from));});
-}
-async function loadReportRemoteData(){
-  try{
-    var c=window.alfalahSupabase||window.supabaseClient;
-    if(!c || typeof c.from!=='function'){window.REPORT_REMOTE_READY=true; return;}
-    var ev=await c.from('library_evaluations').select('*').order('created_at',{ascending:false});
-    if(!ev.error && ev.data) window.REMOTE_EVAL_ROWS=_evalRowsFromRemote(ev.data);
-    var wk=await c.from('daily_work_logs').select('*').order('created_at',{ascending:false}).limit(200);
-    if(!wk.error && wk.data) window.REMOTE_WEEK_ROWS=_weekRowsFromRemote(wk.data);
-  }catch(e){console.warn('Remote report data unavailable',e)}
-  window.REPORT_REMOTE_READY=true;
-}
-var _localGetEvalRows=getEvalRows, _localGetWeekRows=getWeekRows;
-getEvalRows=function(){return (window.REMOTE_EVAL_ROWS&&window.REMOTE_EVAL_ROWS.length)?window.REMOTE_EVAL_ROWS:_localGetEvalRows();};
-getWeekRows=function(){return (window.REMOTE_WEEK_ROWS&&window.REMOTE_WEEK_ROWS.length)?window.REMOTE_WEEK_ROWS:_localGetWeekRows();};
-
-document.addEventListener('DOMContentLoaded',async()=>{await loadReportRemoteData();populateWeeks(q.get('week')||'all');render();document.querySelectorAll('.report-control').forEach(el=>el.addEventListener('change',updateURL));});
-</script><script src="../assets/reset-demo-data.js?v=20260510f"></script>
-</body></html>
+document.addEventListener('DOMContentLoaded',()=>{populateWeeks(q.get('week')||'all');render();document.querySelectorAll('.report-control').forEach(el=>el.addEventListener('change',updateURL));});
+</script></body></html>
