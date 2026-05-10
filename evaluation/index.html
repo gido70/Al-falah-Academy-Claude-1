@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>نظام تقييم مكتبات أكاديمية الفلاح 2026</title>
@@ -311,9 +314,60 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direc
 .analysis-box h4{font-size:14px;color:var(--navy);margin-bottom:8px;}
 .analysis-box ul{padding-right:18px;font-size:13px;line-height:1.9;}
 @media(max-width:900px){.analysis-grid{grid-template-columns:1fr}.brand-logo-img{max-width:170px}}
+
+.platform-home-btn {
+  position: fixed; top: 12px; right: 12px; z-index: 99999;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 16px; border-radius: 999px;
+  background: linear-gradient(135deg, #0c447c, #185fa5, #0f9d8a);
+  color: #fff !important; text-decoration: none;
+  font-family: Cairo, sans-serif; font-weight: 900; font-size: 13px;
+  box-shadow: 0 4px 16px rgba(12,68,124,.35);
+  border: 2px solid rgba(255,255,255,.4); transition: all .2s; white-space: nowrap;
+}
+.platform-home-btn:hover { transform: translateY(-2px); }
+@media(max-width:600px) { .platform-home-btn { top:auto; bottom:14px; right:14px; font-size:12px; padding:8px 13px; } }
+@media print { .platform-home-btn { display:none !important; } }
+
+.alfalah-fixed-home{position:fixed;top:14px;right:14px;z-index:999999;background:linear-gradient(135deg,#0c447c,#0f9d8a);color:#fff!important;text-decoration:none!important;padding:10px 16px;border-radius:22px;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.22)}@media(max-width:700px){.alfalah-fixed-home{top:auto;bottom:12px;right:12px}}
+
+
+
+/* ══════ MULTI LIBRARY UNITS - أكثر من مكتبة داخل المدرسة ══════ */
+.multi-lib-card{background:linear-gradient(135deg,#f8fbff,#e6f7f2);border:2px solid var(--teal);border-radius:16px;padding:16px;margin:14px 0;}
+.multi-lib-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+.multi-lib-title{font-size:16px;font-weight:900;color:var(--navy);display:flex;align-items:center;gap:8px;}
+.multi-lib-note{font-size:12px;color:var(--muted);line-height:1.7;margin-top:3px;}
+.multi-lib-list{display:grid;gap:12px;margin-top:12px;}
+.library-unit{background:#fff;border:1.5px solid var(--border);border-right:5px solid var(--gold);border-radius:14px;padding:14px;box-shadow:0 3px 12px rgba(12,68,124,.05);}
+.library-unit-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--bg);}
+.library-unit-title{font-size:14px;font-weight:900;color:var(--navy);}
+.library-unit-remove{background:linear-gradient(135deg,#a32d2d,var(--red));color:#fff;border:none;border-radius:9px;padding:6px 12px;font-family:Cairo,sans-serif;font-size:12px;font-weight:900;cursor:pointer;}
+.library-unit-remove:hover{filter:brightness(.95);}
+.library-unit-main{border-right-color:var(--navy);background:linear-gradient(135deg,#ffffff,#f8fbff);}
+.library-unit-main .library-unit-title::before{content:'⭐ ';}
+.secondary-library-summary{background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-top:10px;font-size:13px;line-height:1.8;color:var(--navy);}
+@media(max-width:900px){.multi-lib-head{align-items:stretch}.multi-lib-head .btn{justify-content:center;width:100%;}.library-unit .g2{grid-template-columns:1fr!important;}}
+
+/* ══════ IMPORT PREVIEW PANEL - واضح بعد رفع ملف JSON ══════ */
+.import-preview-card{display:none;border:2px solid var(--teal);background:linear-gradient(135deg,#f8fbff,#e6f7f2);border-radius:16px;padding:16px;margin:14px 0;box-shadow:0 4px 16px rgba(12,68,124,.08)}
+.import-preview-card.show{display:block}
+.import-preview-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.import-preview-title{font-size:16px;font-weight:900;color:var(--navy)}
+.import-preview-meta{font-size:13px;color:var(--muted);line-height:1.8}
+.import-preview-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.import-preview-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;margin-top:10px;font-size:13px}
+.import-preview-table th{background:var(--navy);color:#fff;padding:9px;text-align:center}
+.import-preview-table td{border-bottom:1px solid var(--border);padding:8px;text-align:center}
+.import-preview-table td:first-child,.import-preview-table th:first-child{text-align:right;font-weight:800}
+.import-status-ok{display:inline-block;background:#e1f5ee;color:#085041;border-radius:999px;padding:3px 10px;font-weight:900;font-size:12px}
+.import-status-warn{display:inline-block;background:#faeeda;color:#633806;border-radius:999px;padding:3px 10px;font-weight:900;font-size:12px}
+
 </style>
 </head>
-<body>
+<body><a class="alfalah-fixed-home" href="../index.html">🏠 الرئيسية</a>
+<a class="platform-home-btn" href="../index.html">🏠 الرئيسية</a>
+
 
 <!-- ══════════ SITE HEADER WITH LOGO ══════════ -->
 <header class="site-header">
@@ -343,7 +397,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direc
   </nav>
   <!-- ACTION STRIP -->
   <div class="action-strip">
-    <button class="abtn" onclick="saveAll()">💾 حفظ</button>
+    <button class="abtn abtn-teal" onclick="saveAll()">💾 حفظ في قاعدة البيانات</button>
     <button class="abtn" onclick="expWord()">Word 📄</button>
     <button class="abtn abtn-gold" onclick="expAll()">📤 تصدير JSON</button>
     <button class="abtn abtn-gold" onclick="expCSV()">📊 تصدير CSV</button>
@@ -465,36 +519,18 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direc
             </div>
             <div class="fld full"><label>وصف مختصر للمكتبة (اختياري)</label><textarea id="f-ldesc" placeholder="الموقع، التقسيمات، ما يميزها..."></textarea></div>
           </div>
-          <!-- EXTRA LIBRARY INLINE -->
-          <div class="exbox" id="exbox">
-            <div class="extog" onclick="togEx()">
-              <div style="display:flex;align-items:center;gap:10px">
-                <span style="font-size:20px">📚</span>
-                <div>
-                  <div>هل توجد مكتبة ثانية (إضافية) في المدرسة؟</div>
-                  <div style="font-size:12px;font-weight:400;color:var(--muted);margin-top:2px">اضغط لإضافة معلومات مختصرة — تُسجّل ضمن نفس المدرسة</div>
-                </div>
+          <!-- MULTIPLE LIBRARIES INLINE -->
+          <div class="multi-lib-card" id="libraryUnitsBox">
+            <div class="multi-lib-head">
+              <div>
+                <div class="multi-lib-title">📚 المكتبات داخل المدرسة</div>
+                <div class="multi-lib-note">المكتبة الرئيسية هي التقييم الشامل أعلاه. أضف مكتبات فرعية عند وجود مكتبة KG أو الحلقة الأولى أو الثانية أو الثالثة أو مكتبة رئيسية إضافية.</div>
               </div>
-              <button class="btn bt bxs" type="button" id="exbtn">+ إضافة</button>
+              <button class="btn bt bsm" type="button" onclick="addLibraryUnit()">➕ إضافة مكتبة أخرى</button>
             </div>
-            <div class="excnt" id="excnt">
-              <div class="al als" style="margin-bottom:12px">📌 البيانات التالية للمكتبة الثانية — تُحفظ ضمن سجل نفس المدرسة وليس كمدرسة منفصلة</div>
-              <div class="g2">
-                <div class="fld"><label>نوع المكتبة الثانية</label><select id="f-et"><option>مكتبة الصفوف الصغيرة KG-4</option><option>مكتبة الصفوف الكبيرة 5-12</option><option>مكتبة رقمية</option><option>ركن قراءة</option><option>مكتبة متنقلة</option><option>أخرى</option></select></div>
-                <div class="fld"><label>أخصائيها</label><input id="f-es" placeholder="الاسم أو اتركه فارغاً..."></div>
-                <div class="fld">
-                  <label>عدد كتبها</label>
-                  <div class="qp" id="qeb"><div class="pill" onclick="qp('f-eb',this,'qeb')">أقل من 500</div><div class="pill" onclick="qp('f-eb',this,'qeb')">500-1500</div><div class="pill" onclick="qp('f-eb',this,'qeb')">1500-3000</div><div class="pill" onclick="qp('f-eb',this,'qeb')">أكثر من 3000</div></div>
-                  <input id="f-eb" placeholder="العدد التقريبي...">
-                </div>
-                <div class="fld">
-                  <label>تقييمها العام</label>
-                  <div class="qp" id="qer"><div class="pill" onclick="qp('f-er',this,'qer')">ضعيف</div><div class="pill" onclick="qp('f-er',this,'qer')">مقبول</div><div class="pill" onclick="qp('f-er',this,'qer')">جيد</div><div class="pill" onclick="qp('f-er',this,'qer')">متميز</div></div>
-                  <input id="f-er">
-                </div>
-                <div class="fld full"><label>ملاحظات مختصرة عن المكتبة الثانية</label><textarea id="f-en" placeholder="ما يميزها، احتياجاتها، توافر مجموعات الإمارات فيها..."></textarea></div>
-              </div>
-            </div>
+            <div class="al als" style="margin-bottom:10px">📌 كل مكتبة إضافية تُحفظ ضمن نفس سجل المدرسة في قاعدة البيانات، ولا تُعامل كمدرسة منفصلة.</div>
+            <div id="libraryUnitsList" class="multi-lib-list"></div>
+            <div id="libraryUnitsSummary" class="secondary-library-summary">لا توجد مكتبات إضافية مسجلة حالياً.</div>
           </div>
         </div>
 
@@ -891,7 +927,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direc
           </div>
         </div>
         <div class="abar">
-          <button class="btn bp" onclick="saveEval()">💾 حفظ التقييم</button>
+          <button class="btn bp" onclick="saveEval()">💾 حفظ التقييم في قاعدة البيانات</button>
           <button class="btn bg" onclick="window.print()">🖨️ طباعة PDF</button>
           <button class="btn bt" onclick="expCurJ()" title="تصدير تقييم المدرسة الحالية فقط بعد حفظه تلقائياً">📤 تصدير JSON</button>
           <button class="btn bo" onclick="clrEval()">🔄 مسح</button>
@@ -910,7 +946,21 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direc
           <button class="btn bo bsm" onclick="document.getElementById('impF').click()">📥 رفع واستيراد</button>
           <button class="btn br bsm" onclick="clrAll()">🗑️ حذف الكل</button>
         </div>
-        <div class="al ali">💡 البيانات في المتصفح — صدّري JSON بعد كل جلسة واحفظيه على جهازك، ثم استوريه بزر "رفع واستيراد" عند الحاجة</div>
+        <div class="al ali">💡 عند رفع ملف JSON ستظهر معاينة واضحة هنا أولاً، ثم اضغط زر الحفظ لتثبيت البيانات في Supabase.</div>
+        <div id="importPreviewBox" class="import-preview-card">
+          <div class="import-preview-head">
+            <div>
+              <div class="import-preview-title">📥 معاينة البيانات المرفوعة قبل الحفظ</div>
+              <div id="importPreviewMeta" class="import-preview-meta"></div>
+            </div>
+            <span id="importPreviewStatus" class="import-status-warn">بانتظار الحفظ</span>
+          </div>
+          <div id="importPreviewTable" style="overflow-x:auto"></div>
+          <div class="import-preview-actions">
+            <button class="btn bt bsm" type="button" onclick="saveImportedEvaluationsToSupabase()">💾 حفظ البيانات المرفوعة في قاعدة البيانات</button>
+            <button class="btn bo bsm" type="button" onclick="cancelImportedPreview()">إلغاء المعاينة</button>
+          </div>
+        </div>
         <div id="dtbl" style="overflow-x:auto"></div>
       </div>
     </div>
@@ -931,6 +981,7 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direc
         <div class="cbox"><h4>🇦🇪 مجموعات الإمارات — المقارنة</h4><canvas id="ch-ua" height="200" role="img" aria-label="uae"></canvas></div>
         <div class="cbox"><h4>📚 إجمالي الكتب</h4><canvas id="ch-bk" height="200" role="img" aria-label="books"></canvas></div>
         <div class="cbox cful"><h4>🔍 المقارنة التفصيلية لجميع المحاور</h4><canvas id="ch-fl" height="110" role="img" aria-label="full"></canvas></div>
+        <div class="cbox cful"><h4>🎯 الخلاصة العامة لتقييم جميع المكتبات</h4><canvas id="ch-summary" height="115" role="img" aria-label="summary"></canvas><div id="chartSummaryText" style="font-size:13px;color:var(--muted);line-height:1.9;text-align:center;margin-top:10px"></div></div>
       </div>
     </div>
 
@@ -1102,7 +1153,60 @@ function calcSc(d){
   };
 }
 function tot(sc){const v=Object.values(sc).filter(x=>x>0);return v.length?Math.round(v.reduce((s,x)=>s+x,0)/v.length*10)/10:0;}
-function allD(){return SCH.map(s=>{const d=DB.ev[s.id];return{s,d:d||null,sc:d&&d.saved?calcSc(d):null};}).filter(r=>r.sc);}
+function ratingToScore(v){
+  const t=String(v||'').trim();
+  if(/متميز|ممتاز/.test(t)) return 6;
+  if(/جيد جداً|جيد جدا/.test(t)) return 5;
+  if(/جيد/.test(t)) return 4;
+  if(/مقبول/.test(t)) return 3;
+  if(/ضعيف جداً|ضعيف جدا/.test(t)) return 1;
+  if(/ضعيف/.test(t)) return 2;
+  return 0;
+}
+function booksToScore(v){
+  const t=String(v||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+  const nums=(t.match(/\d+/g)||[]).map(Number);
+  const n=nums.length?Math.max(...nums):0;
+  if(/أكثر|3000/.test(t) && n>=3000) return 6;
+  if(n>=1500) return 5;
+  if(n>=500) return 4;
+  if(n>0) return 2;
+  return 0;
+}
+function extraLibraryScore(s,d,lib,idx){
+  const base=ratingToScore(lib.rating);
+  const books=booksToScore(lib.books);
+  const staff=lib.specialist ? Math.max(base||0,4) : (base?Math.max(2,base-1):0);
+  const sc={
+    "المجموعات":books || base,
+    "مجموعات الإمارات":0,
+    "التنظيم الفني":base,
+    "البيئة":base,
+    "الأنشطة":0,
+    "الشراكات":0,
+    "الكادر والمؤهلات":staff,
+    "التقنية":0
+  };
+  return {
+    s:{...s, short:(s.short+' — '+(lib.type||('مكتبة '+idx))), name:(s.name+' — '+(lib.type||('مكتبة إضافية '+idx))), code:s.id+'_lib_'+idx},
+    d:{...d, lib:d.lib, overall:lib.rating||d.overall, priority:d.priority, isExtraLibrary:true, libraryUnit:lib},
+    sc,
+    isExtraLibrary:true
+  };
+}
+function allD(){
+  const rows=[];
+  SCH.forEach(s=>{
+    const d=DB.ev[s.id];
+    if(d&&d.saved){
+      rows.push({s,d,sc:calcSc(d),isMainLibrary:true});
+      (Array.isArray(d.libraries)?d.libraries:[]).forEach((lib,i)=>{
+        rows.push(extraLibraryScore(s,d,lib,i+1));
+      });
+    }
+  });
+  return rows.filter(r=>r.sc);
+}
 function uHome(){
   const done=SCH.filter(s=>DB.ev[s.id]?.saved).length;
   document.getElementById("hd").textContent=done;
@@ -1146,10 +1250,72 @@ function sR(k,v,btn){
 }
 function clrRS(){RS={};document.querySelectorAll(".rp").forEach(rp=>rp.querySelectorAll(".rpill").forEach(b=>RCL.forEach(c=>{if(c)b.classList.remove(c);})));}
 function ldRS(d){["uae","cd","cc","cco","sh","cr","sp","se","at","in","rch","tu","cu","ri","pa","co","ts","ss","sb","sc","sst","si","ste","dg","te","un"].forEach(k=>{if(d?.["r_"+k])sR(k,d["r_"+k],null);});}
-function togEx(){
-  const c=document.getElementById("excnt");const b=document.getElementById("exbtn");const box=document.getElementById("exbox");
-  const o=c.classList.toggle("open");box.classList.toggle("open",o);b.textContent=o?"— إخفاء":"+ إضافة";
+
+function libraryTypeOptions(){
+  return ["مكتبة رئيسية","مكتبة الحلقة الثالثة","مكتبة الحلقة الثانية","مكتبة الحلقة الأولى","مكتبة رياض الأطفال KG","مكتبة الصفوف الصغيرة KG-4","مكتبة الصفوف الكبيرة 5-12","مكتبة رقمية","ركن قراءة","مكتبة متنقلة","أخرى"];
 }
+function libraryRatingOptions(){return ["ضعيف","مقبول","جيد","متميز"];}
+function escapeHtml(v){return String(v||"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]));}
+function addLibraryUnit(data){
+  const list=document.getElementById("libraryUnitsList"); if(!list) return;
+  const i=Date.now()+"_"+Math.random().toString(36).slice(2,7);
+  const d=data||{};
+  const typeOpts=libraryTypeOptions().map(o=>`<option ${String(d.type||'')===o?'selected':''}>${o}</option>`).join('');
+  const ratingOpts=libraryRatingOptions().map(o=>`<option ${String(d.rating||'')===o?'selected':''}>${o}</option>`).join('');
+  const card=document.createElement('div');
+  card.className='library-unit';
+  card.dataset.libraryUnit='1';
+  card.innerHTML=`
+    <div class="library-unit-head">
+      <div class="library-unit-title">مكتبة إضافية داخل نفس المدرسة</div>
+      <button type="button" class="library-unit-remove" onclick="removeLibraryUnit(this)">حذف</button>
+    </div>
+    <div class="g2">
+      <div class="fld"><label>نوع المكتبة</label><select data-lib-field="type">${typeOpts}</select></div>
+      <div class="fld"><label>أخصائي/مسؤول المكتبة</label><input data-lib-field="specialist" value="${escapeHtml(d.specialist||d.es||'')}" placeholder="الاسم أو اتركه فارغاً..."></div>
+      <div class="fld"><label>عدد الكتب التقريبي</label><input data-lib-field="books" value="${escapeHtml(d.books||d.eb||'')}" placeholder="مثال: أقل من 500 أو 1500"></div>
+      <div class="fld"><label>التقييم العام لهذه المكتبة</label><select data-lib-field="rating">${ratingOpts}</select></div>
+      <div class="fld full"><label>ملاحظات مختصرة عن هذه المكتبة</label><textarea data-lib-field="notes" placeholder="ما يميزها، احتياجاتها، هل تحتاج دعماً، ملاحظات عامة...">${escapeHtml(d.notes||d.en||'')}</textarea></div>
+    </div>`;
+  list.appendChild(card);
+  updateLibraryUnitsSummary();
+}
+function removeLibraryUnit(btn){
+  const card=btn.closest('[data-library-unit]'); if(card) card.remove();
+  updateLibraryUnitsSummary();
+}
+function clearLibraryUnits(){
+  const list=document.getElementById('libraryUnitsList'); if(list) list.innerHTML='';
+  updateLibraryUnitsSummary();
+}
+function collectLibraryUnits(){
+  return Array.from(document.querySelectorAll('[data-library-unit]')).map(card=>{
+    const v=f=>card.querySelector(`[data-lib-field="${f}"]`)?.value||'';
+    return {type:v('type'),specialist:v('specialist'),books:v('books'),rating:v('rating'),notes:v('notes')};
+  }).filter(x=>x.type||x.specialist||x.books||x.rating||x.notes);
+}
+function loadLibraryUnits(arr,legacy){
+  clearLibraryUnits();
+  let rows=Array.isArray(arr)?arr.filter(Boolean):[];
+  if((!rows.length) && legacy && (legacy.hasEx || legacy.et || legacy.es || legacy.eb || legacy.er || legacy.en)){
+    rows=[{type:legacy.et||'مكتبة إضافية',specialist:legacy.es||'',books:legacy.eb||'',rating:legacy.er||'',notes:legacy.en||''}];
+  }
+  rows.forEach(addLibraryUnit);
+  updateLibraryUnitsSummary();
+}
+function updateLibraryUnitsSummary(){
+  const el=document.getElementById('libraryUnitsSummary'); if(!el) return;
+  const rows=collectLibraryUnits();
+  if(!rows.length){el.textContent='لا توجد مكتبات إضافية مسجلة حالياً.';return;}
+  el.innerHTML='تم تسجيل <b>'+rows.length+'</b> مكتبة إضافية: '+rows.map((r,i)=>`${i+1}. ${escapeHtml(r.type||'مكتبة')} ${r.rating?('— '+escapeHtml(r.rating)):''}`).join(' | ');
+}
+function bindLibraryUnitsAutoSummary(){
+  const box=document.getElementById('libraryUnitsBox'); if(!box || box._bound) return;
+  box.addEventListener('input', updateLibraryUnitsSummary);
+  box.addEventListener('change', updateLibraryUnitsSummary);
+  box._bound=true;
+}
+function togEx(){ addLibraryUnit(); }
 function onSch(){
   const sid=document.getElementById("esch").value;const w=document.getElementById("eform");
   if(!sid){w.style.display="none";return;}
@@ -1167,9 +1333,7 @@ function ldEv(sid){
   document.getElementById("eform").querySelectorAll("input:not([type=checkbox]),textarea,select").forEach(el=>{if(!el.readOnly&&el.id!=="esch")el.value="";});
   document.getElementById("eform").querySelectorAll("input[type=checkbox]").forEach(el=>el.checked=false);
   document.querySelectorAll(".pill").forEach(p=>p.classList.remove("sel"));
-  document.getElementById("excnt").classList.remove("open");
-  document.getElementById("exbox").classList.remove("open");
-  document.getElementById("exbtn").textContent="+ إضافة";
+  clearLibraryUnits();
   sv("f-lib",d.lib);sv("f-date",d.date);sv("f-stg",d.stg);sv("f-ltyp",d.ltyp);
   sv("f-stu",d.stu);sv("f-stf",d.stf);sv("f-ldesc",d.ldesc);sv("f-uaen",d.uaen);
   sv("f-bt",d.bt);sv("f-bar",d.bar);sv("f-ben",d.ben);sv("f-dig",d.dig);
@@ -1180,7 +1344,7 @@ function ldEv(sid){
   sv("f-crs",d.crs);sv("f-cred",d.cred);sv("f-sdev",d.sdev);sv("f-sstr",d.sstr);sv("f-tr",d.tr);
   sv("f-lsy",d.lsy);sv("f-tecn",d.tecn);sv("f-ovr",d.overall);sv("f-pri",d.priority);
   sv("f-chal",d.chal);sv("f-str",d.str);sv("f-wk",d.wk);sv("f-rec",d.rec);sv("f-plan",d.plan);
-  if(d.hasEx){togEx();sv("f-et",d.et);sv("f-es",d.es);sv("f-eb",d.eb);sv("f-er",d.er);sv("f-en",d.en);}
+  loadLibraryUnits(d.libraries,d);
   ["h","c","p","s","g","e","r","a","l","d","n","o"].forEach(k=>sk("uae-"+k,d["uae-"+k]));
   ["tl","dp","ac","uc","dg","co"].forEach(k=>sk("env-"+k,d["env-"+k]));
   ["ar","en","st","ua","bf","cl"].forEach(k=>sk("act-"+k,d["act-"+k]));
@@ -1201,8 +1365,9 @@ function getEv(){
     lsy:gv("f-lsy"),tecn:gv("f-tecn"),
     overall:gv("f-ovr"),priority:gv("f-pri"),
     chal:gv("f-chal"),str:gv("f-str"),wk:gv("f-wk"),rec:gv("f-rec"),plan:gv("f-plan"),
-    hasEx:document.getElementById("excnt").classList.contains("open"),
-    et:gv("f-et"),es:gv("f-es"),eb:gv("f-eb"),er:gv("f-er"),en:gv("f-en"),
+    libraries:collectLibraryUnits(),
+    hasEx:collectLibraryUnits().length>0,
+    et:(collectLibraryUnits()[0]||{}).type||"",es:(collectLibraryUnits()[0]||{}).specialist||"",eb:(collectLibraryUnits()[0]||{}).books||"",er:(collectLibraryUnits()[0]||{}).rating||"",en:(collectLibraryUnits()[0]||{}).notes||"",
     saved:true,savedAt:new Date().toISOString()
   };
   ["h","c","p","s","g","e","r","a","l","d","n","o"].forEach(k=>d["uae-"+k]=gk("uae-"+k));
@@ -1247,8 +1412,19 @@ function uCh(){
   dc("ch-ax");if(data.length){const ap=axes.map(a=>{const vs=data.map(r=>r.sc[a]||0).filter(v=>v>0);return vs.length?Math.round(vs.reduce((s,v)=>s+v,0)/vs.length*10)/10:0;});CI["ch-ax"]=new Chart(document.getElementById("ch-ax").getContext("2d"),{type:"bar",data:{labels:axes,datasets:[{data:ap,backgroundColor:COL,borderRadius:10,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:6},x:{ticks:{font:{family:"Cairo",size:10}}}}}});}
   dc("ch-rk");if(data.length){CI["ch-rk"]=new Chart(document.getElementById("ch-rk").getContext("2d"),{type:"bar",data:{labels:lbs,datasets:[{data:data.map(r=>tot(r.sc)),backgroundColor:data.map((_,i)=>COL[i%COL.length]),borderRadius:10,borderSkipped:false}]},options:{indexAxis:"y",responsive:true,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,max:6},y:{ticks:{font:fo}}}}});}
   dc("ch-ua");if(data.length){CI["ch-ua"]=new Chart(document.getElementById("ch-ua").getContext("2d"),{type:"bar",data:{labels:lbs,datasets:[{label:"مجموعات الإمارات",data:data.map(r=>r.sc["مجموعات الإمارات"]||0),backgroundColor:"#0f9d8a",borderRadius:8,borderSkipped:false},{label:"المجموعات العامة",data:data.map(r=>r.sc["المجموعات"]||0),backgroundColor:"#185fa5",borderRadius:8,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{position:"bottom",labels:{font:fo}}},scales:{y:{beginAtZero:true,max:6},x:{ticks:{font:{family:"Cairo",size:11}}}}}});}
-  dc("ch-bk");if(data.length){CI["ch-bk"]=new Chart(document.getElementById("ch-bk").getContext("2d"),{type:"bar",data:{labels:lbs,datasets:[{label:"عربي",data:data.map(r=>parseInt(r.d.bar)||0),backgroundColor:"#185fa5",borderRadius:6},{label:"إنجليزي",data:data.map(r=>parseInt(r.d.ben)||0),backgroundColor:"#0f9d8a",borderRadius:6}]},options:{responsive:true,plugins:{legend:{position:"bottom",labels:{font:fo}}},scales:{x:{stacked:true,ticks:{font:{family:"Cairo",size:11}}},y:{stacked:true,beginAtZero:true}}}});}
-  dc("ch-fl");if(data.length){CI["ch-fl"]=new Chart(document.getElementById("ch-fl").getContext("2d"),{type:"bar",data:{labels:axes,datasets:data.map((r,i)=>({label:r.s.short,data:axes.map(a=>r.sc[a]||0),backgroundColor:COL[i%COL.length]+"bb",borderColor:COL[i%COL.length],borderWidth:1.5,borderRadius:6}))},options:{responsive:true,plugins:{legend:{position:"bottom",labels:{font:fo}}},scales:{y:{beginAtZero:true,max:6},x:{ticks:{font:{family:"Cairo",size:11}}}}}});}
+  dc("ch-bk");if(data.length){CI["ch-bk"]=new Chart(document.getElementById("ch-bk").getContext("2d"),{type:"bar",data:{labels:lbs,datasets:[{label:"عربي",data:data.map(r=>parseInt(r.d.bar)||0),backgroundColor:"#185fa5",borderRadius:6},{label:"إنجليزي",data:data.map(r=>parseInt(r.d.ben)||0),backgroundColor:"#0f9d8a",borderRadius:6},{label:"تقدير كتب المكتبات الإضافية",data:data.map(r=>r.isExtraLibrary?booksToScore(r.d.libraryUnit?.books||0):0),backgroundColor:"#ba7517",borderRadius:6}]},options:{responsive:true,plugins:{legend:{position:"bottom",labels:{font:fo}}},scales:{x:{stacked:true,ticks:{font:{family:"Cairo",size:11}}},y:{stacked:true,beginAtZero:true}}}});}
+  dc("ch-fl");if(data.length){CI["ch-fl"]=new Chart(document.getElementById("ch-fl").getContext("2d"),{type:"bar",data:{labels:axes,datasets:data.map((r,i)=>({label:r.s.short+(r.isExtraLibrary?' 📚':''),data:axes.map(a=>r.sc[a]||0),backgroundColor:COL[i%COL.length]+"bb",borderColor:COL[i%COL.length],borderWidth:1.5,borderRadius:6}))},options:{responsive:true,plugins:{legend:{position:"bottom",labels:{font:fo}}},scales:{y:{beginAtZero:true,max:6},x:{ticks:{font:{family:"Cairo",size:11}}}}}});}
+  dc("ch-summary");if(data.length&&document.getElementById("ch-summary")){
+    const main=data.filter(r=>r.isMainLibrary).length;
+    const extra=data.filter(r=>r.isExtraLibrary).length;
+    const overall=avgA(data.map(r=>tot(r.sc)));
+    const staffAvg=avgA(data.map(r=>r.sc["الكادر والمؤهلات"]||0));
+    const strong=data.filter(r=>tot(r.sc)>=4).length;
+    const need=data.filter(r=>tot(r.sc)>0&&tot(r.sc)<3).length;
+    CI["ch-summary"]=new Chart(document.getElementById("ch-summary").getContext("2d"),{type:"bar",data:{labels:["المكتبات الرئيسية","المكتبات الإضافية","المتوسط العام","متوسط الكادر","مكتبات قوية","تحتاج دعم"],datasets:[{data:[main,extra,overall,staffAvg,strong,need],backgroundColor:["#185fa5","#0f9d8a","#ba7517","#534ab7","#0f6e56","#c0392b"],borderRadius:10,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:fo}},x:{ticks:{font:{family:"Cairo",size:11}}}}}});
+    const txt=document.getElementById("chartSummaryText");
+    if(txt) txt.innerHTML=`تم احتساب <b>${main}</b> مكتبة رئيسية و<b>${extra}</b> مكتبة إضافية. المتوسط العام الحالي <b>${overall}/6</b>، ومتوسط محور الكادر المهني <b>${staffAvg}/6</b>.`;
+  }
 }
 function scoreLevel(v){
   if(v>=5) return {txt:"متميزة",cls:"bg2",color:"#0f6e56"};
@@ -1304,7 +1480,7 @@ function uRep(){
   data.map((r,i)=>buildSchoolReport(r,i+1)).join('')+ 
   '<div class="card"><div class="cardh"><div class="cnum">✅</div><div><div class="ctitle">الخلاصة الإدارية</div></div></div><p style="font-size:14px;line-height:2">يوصى باعتماد هذا التقرير كمرجع أولي لخطة تطوير مكتبات الأكاديمية، مع متابعة المحاور الأقل من 4/6، وتوثيق ممارسات الفروع الأعلى أداءً، وتحديد جدول زمني واضح لمعالجة الأولويات العاجلة.</p></div>';
 }
-function wordShell(content,title){return '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>'+title+'</title><style>body{font-family:Tahoma,Arial,sans-serif;direction:rtl;color:#0c2a4a;line-height:1.8}.card{border:1px solid #b8d4f0;border-radius:12px;padding:16px;margin:14px 0}.cardh{display:flex;gap:10px;border-bottom:1px solid #e8f0fa;margin-bottom:12px;padding-bottom:8px}.cnum{font-weight:bold;color:#0c447c}.ctitle{font-size:18px;font-weight:bold;color:#0c447c}.csub{font-size:12px;color:#5a7fa8}.s4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.sc{background:#f5faff;border:1px solid #b8d4f0;border-radius:10px;padding:10px;text-align:center}.sn{font-size:20px;font-weight:bold;color:#0c447c}.sl{font-size:11px;color:#5a7fa8}.ctbl{width:100%;border-collapse:collapse}.ctbl th{background:#0c447c;color:#fff;padding:8px}.ctbl td{border-bottom:1px solid #ddd;padding:7px}.analysis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.analysis-box{background:#f8fbff;border:1px solid #b8d4f0;border-radius:10px;padding:10px}.pbt{height:8px;background:#dceefb;border-radius:5px;overflow:hidden}.pbf{height:100%}.bdg{display:inline-block;padding:3px 9px;border-radius:12px;background:#e6f1fb;color:#0c447c;font-weight:bold}</style></head><body>'+content+'</body></html>';}
+function wordShell(content,title){return '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>'+title+'</title><style>body{font-family:Tahoma,Arial,sans-serif;direction:rtl;color:#0c2a4a;line-height:1.8}.card{border:1px solid #b8d4f0;border-radius:12px;padding:16px;margin:14px 0}.cardh{display:flex;gap:10px;border-bottom:1px solid #e8f0fa;margin-bottom:12px;padding-bottom:8px}.cnum{font-weight:bold;color:#0c447c}.ctitle{font-size:18px;font-weight:bold;color:#0c447c}.csub{font-size:12px;color:#5a7fa8}.s4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.sc{background:#f5faff;border:1px solid #b8d4f0;border-radius:10px;padding:10px;text-align:center}.sn{font-size:20px;font-weight:bold;color:#0c447c}.sl{font-size:11px;color:#5a7fa8}.ctbl{width:100%;border-collapse:collapse}.ctbl th{background:#0c447c;color:#fff;padding:8px}.ctbl td{border-bottom:1px solid #ddd;padding:7px}.analysis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.analysis-box{background:#f8fbff;border:1px solid #b8d4f0;border-radius:10px;padding:10px}.pbt{height:8px;background:#dceefb;border-radius:5px;overflow:hidden}.pbf{height:100%}.bdg{display:inline-block;padding:3px 9px;border-radius:12px;background:#e6f1fb;color:#0c447c;font-weight:bold}</style><\/head><body>'+content+'<\/body><\/html>';}
 function expWord(){uRep();const c=document.getElementById("repC").innerHTML;dl(new Blob(["\ufeff"+wordShell(c,"التقرير النهائي لتقييم مكتبات أكاديمية الفلاح")],{type:"application/msword;charset=utf-8"}),"التقرير_النهائي_لتقييم_مكتبات_أكاديمية_الفلاح_2026.doc");}
 function expSchoolWord(){let sid=document.getElementById("email-school")?.value||document.getElementById("esch")?.value; if(!sid){alert("اختر مدرسة أولاً من صفحة البريد أو نموذج التقييم.");return;} const row=allD().find(r=>r.s.id===sid); if(!row){alert("لا توجد بيانات محفوظة لهذه المدرسة.");return;} const html='<div style="text-align:center"><img src="'+AF_LOGO_DATA+'" style="max-width:180px"><h2>تقرير تقييم مكتبة '+escHtml(row.s.name)+'</h2></div>'+buildSchoolReport(row,1); dl(new Blob(["\ufeff"+wordShell(html,"تقرير "+row.s.short)],{type:"application/msword;charset=utf-8"}),"تقرير_مكتبة_"+row.s.short.replace(/\s+/g,"_")+".doc");}
 function dl(blob,fn){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);}
@@ -1543,5 +1719,328 @@ function popEmSch(){
 // Init
 document.addEventListener("DOMContentLoaded",()=>{popEmSch();});
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2?v=20260502b"></script>
+<script src="../supabase-config.js?v=20260502b"></script>
+<script src="../assets/db-sync.js?v=20260502b"></script>
+
+
+
+
+<script>
+/* === Alfalah Evaluation Reliable Sync + Clear + Charts Patch — 2026-05-03 ===
+   إصلاح نهائي محصور في البيانات فقط:
+   - Supabase هو مصدر الحقيقة للتقييمات عند فتح الصفحة.
+   - حذف فردي وحذف شامل من القاعدة + الجهاز.
+   - استيراد JSON مع إمكانية رفعه للقاعدة.
+   - الرسوم والمقارنة والتقرير النهائي تعتمد على نفس البيانات.
+*/
+(function(){
+  const TABLE = 'library_evaluations';
+  const LOCAL_KEY = (typeof LSK !== 'undefined') ? LSK : 'falah_lib_v6';
+  const SCHOOL_DB_ID = {dan:1,mzd:2,bny:3,khb:4,jmi:5,shj:6};
+  const AXES = ["المجموعات","مجموعات الإمارات","التنظيم الفني","البيئة","الأنشطة","الشراكات","الكادر والمؤهلات","التقنية"];
+  const RATING_KEYS = ["uae","cd","cc","cco","sh","cr","sp","se","at","in","rch","tu","cu","ri","pa","co","ts","ss","sb","sc","sst","si","ste","dg","te","un"];
+
+  function sb(){ return window.alfalahSupabase || window.supabaseClient || null; }
+  function db(){ if(typeof DB==='undefined' || !DB) window.DB={ev:{}}; if(!DB.ev) DB.ev={}; return DB; }
+  function saveLocal(){ try{ localStorage.setItem(LOCAL_KEY, JSON.stringify(db())); }catch(e){ console.warn(e); } }
+  function toast(msg){
+    let el=document.getElementById('alfalah-sync-toast');
+    if(!el){
+      el=document.createElement('div'); el.id='alfalah-sync-toast';
+      el.style.cssText='position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:999999;background:#0c447c;color:#fff;padding:12px 20px;border-radius:18px;font-family:Cairo,Tahoma,sans-serif;font-weight:900;box-shadow:0 8px 26px rgba(0,0,0,.25);max-width:92%;text-align:center;display:none';
+      document.body.appendChild(el);
+    }
+    el.textContent=msg; el.style.display='block'; clearTimeout(el._t); el._t=setTimeout(()=>el.style.display='none',2800);
+  }
+  function school(sid){ try{return SCH.find(s=>s.id===sid)||null;}catch(e){return null;} }
+  function normalizeLevel(v){ return String(v||'').replace(/🔴|🟠|🔵|🟢/g,'').trim(); }
+  function cleanNumber(v){ const n=Number(v); return Number.isFinite(n)?Math.max(0,Math.min(6,n)):0; }
+  function avg(vals){ vals=(vals||[]).map(cleanNumber).filter(v=>v>0); return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*10)/10:0; }
+  function axisFromRatings(d){
+    const R=k=>cleanNumber(d&&d['r_'+k]);
+    return {
+      "المجموعات":avg([R('cd'),R('cc'),R('cco')]),
+      "مجموعات الإمارات":avg([R('uae')]),
+      "التنظيم الفني":avg([R('sh'),R('cr')]),
+      "البيئة":avg([R('sp'),R('se'),R('at'),R('in')]),
+      "الأنشطة":avg([R('rch'),R('tu'),R('cu'),R('ri')]),
+      "الشراكات":avg([R('pa'),R('co'),R('ts'),R('ss')]),
+      "الكادر والمؤهلات":avg([R('sb'),R('sc'),R('sst'),R('si'),R('ste'),R('scol'),R('marc'),R('ils')]),
+      "التقنية":avg([R('dg'),R('te'),R('un')])
+    };
+  }
+  function firstScoreObject(d,row){
+    const candidates=[d&&d._axisScores,d&&d.axis_scores,d&&d.axisScores,d&&d.scores,d&&d.sc,d&&d.score_by_axis,row&&row.axis_scores,row&&row.scores,row&&row.score_by_axis];
+    for(const c of candidates){ if(c && typeof c==='object') return c; }
+    return null;
+  }
+  function axisScores(d,row){
+    const fromRatings=axisFromRatings(d||{});
+    const hasRatings=Object.values(fromRatings).some(v=>v>0);
+    if(hasRatings) return fromRatings;
+    const obj=firstScoreObject(d,row);
+    if(obj){
+      const out={}; AXES.forEach(a=>out[a]=cleanNumber(obj[a]));
+      if(Object.values(out).some(v=>v>0)) return out;
+    }
+    const total=cleanNumber((d&&d.total_score)||(d&&d.totalScore)||(row&&row.total_score));
+    if(total>0){ const out={}; AXES.forEach(a=>out[a]=total); return out; }
+    return fromRatings;
+  }
+  function totalFromScores(sc){ const vals=Object.values(sc||{}).map(cleanNumber).filter(v=>v>0); return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*10)/10:0; }
+
+  // اجعل حسابات النظام كلها تقرأ المحاور المحفوظة أو أرقام التقييم المفصلة أو المتوسط العام كاحتياط.
+  window.calcSc = function(d){ return axisScores(d||{}, null); };
+  window.tot = function(sc){ return totalFromScores(sc); };
+  window.allD = function(){
+    return (SCH||[]).map(s=>{ const d=db().ev[s.id]; const sc=d&&d.saved?axisScores(d,null):null; return {s,d:d||null,sc}; })
+      .filter(r=>r.sc && Object.values(r.sc).some(v=>cleanNumber(v)>0 || r.d?.saved));
+  };
+
+  function sidFromRow(row){
+    const d=(row&&row.full_data&&typeof row.full_data==='object')?row.full_data:{};
+    let sid=String(d.school_id||d.esch||d.school_code||row.school_code||'').trim();
+    if(sid && SCH.some(s=>s.id===sid)) return sid;
+    const numeric=row.school_id || d.school_db_id;
+    if(numeric){ const found=Object.entries(SCHOOL_DB_ID).find(([,v])=>String(v)===String(numeric)); if(found) return found[0]; }
+    const name=String(d.school_name||d.sname||d['f-sname']||row.school_name||'').trim();
+    if(name){ const m=SCH.find(s=>name===s.name || name.includes(s.short) || name.includes(s.name)); if(m) return m.id; }
+    return '';
+  }
+  function rowTime(row){ return row.updated_at||row.created_at||row.saved_at||row.visit_date||(row.full_data&&row.full_data.savedAt)||''; }
+  function dataFromRow(row){
+    const base=(row&&row.full_data&&typeof row.full_data==='object')?JSON.parse(JSON.stringify(row.full_data)):{};
+    const sid=sidFromRow(row); const s=school(sid);
+    base.school_id=sid; base.school_code=sid; base.school_db_id=SCHOOL_DB_ID[sid]||null; base.school_name=s?.name||base.school_name||'';
+    if(!base.date) base.date=row.visit_date||'';
+    if(!base.lib) base.lib=row.librarian_name||'';
+    if(!base.overall) base.overall=row.final_level||'';
+    if(!base.str) base.str=row.strengths||'';
+    if(!base.wk) base.wk=row.weaknesses||'';
+    if(!base.chal) base.chal=row.weaknesses||'';
+    if(!base.rec) base.rec=row.recommendations||'';
+    base.total_score=cleanNumber(row.total_score||base.total_score);
+    base._axisScores=axisScores(base,row);
+    base.saved=true; base.savedAt=rowTime(row)||base.savedAt||new Date().toISOString(); base._dbRowId=row.id||null;
+    return base;
+  }
+  async function fetchRows(){
+    const c=sb(); if(!c) return null;
+    const {data,error}=await c.from(TABLE).select('*').order('created_at',{ascending:false});
+    if(error){ console.error('load evaluations error', error); toast('تعذر تحميل التقييمات من القاعدة'); return null; }
+    return Array.isArray(data)?data:[];
+  }
+  function refresh(){
+    try{ if(typeof popSel==='function') popSel(); }catch(e){}
+    try{ if(typeof uHome==='function') uHome(); }catch(e){}
+    try{ if(typeof uSch==='function') uSch(); }catch(e){}
+    try{ if(typeof uDat==='function') uDat(); }catch(e){}
+    try{ if(typeof uCmp==='function') uCmp(); }catch(e){}
+    try{ if(typeof uRep==='function' && document.getElementById('page-rep')?.classList.contains('active')) uRep(); }catch(e){}
+    try{ if(typeof uCh==='function') setTimeout(uCh,120); }catch(e){}
+    try{ if(typeof popEmailSchool==='function') popEmailSchool(); }catch(e){}
+    try{ if(typeof popEmSch==='function') popEmSch(); }catch(e){}
+  }
+  async function loadRemote({replace=true}={}){
+    const rows=await fetchRows();
+    if(rows===null){ refresh(); return; }
+    if(replace) db().ev={};
+    const seen=new Set();
+    for(const row of rows){
+      const sid=sidFromRow(row); if(!sid || seen.has(sid)) continue;
+      seen.add(sid); db().ev[sid]=dataFromRow(row);
+    }
+    saveLocal(); refresh();
+  }
+  window.loadEvaluationsFromSupabase = loadRemote;
+
+  async function deleteRowsForSchool(sid){
+    const c=sb(); if(!c) return;
+    const ids=[];
+    const rows=await fetchRows();
+    if(rows){ rows.forEach(r=>{ if(sidFromRow(r)===sid && r.id) ids.push(r.id); }); }
+    if(ids.length){ const {error}=await c.from(TABLE).delete().in('id',ids); if(error) throw error; }
+    else{
+      // احتياط إذا تعذر تحديد id
+      await c.from(TABLE).delete().eq('school_code',sid);
+      if(SCHOOL_DB_ID[sid]) await c.from(TABLE).delete().eq('school_id',SCHOOL_DB_ID[sid]);
+    }
+  }
+  async function deleteAllRows(){
+    const c=sb(); if(!c) return;
+    const {error}=await c.from(TABLE).delete().neq('id',0);
+    if(error) throw error;
+  }
+  async function saveOneRemote(sid,d){
+    const c=sb(); if(!c) return false;
+    const s=school(sid); const scores=axisScores(d,null); const total=totalFromScores(scores);
+    d.school_id=sid; d.school_code=sid; d.school_db_id=SCHOOL_DB_ID[sid]||null; d.school_name=s?.name||'';
+    d.saved=true; d.savedAt=new Date().toISOString(); d._axisScores=scores; d.total_score=total;
+    await deleteRowsForSchool(sid);
+    const row={
+      school_id:SCHOOL_DB_ID[sid]||null,
+      school_code:sid,
+      visit_date:d.date||new Date().toISOString().slice(0,10),
+      librarian_name:d.lib||'',
+      total_score:total,
+      final_level:normalizeLevel(d.overall),
+      strengths:d.str||'',
+      weaknesses:d.wk||d.chal||'',
+      recommendations:d.rec||'',
+      full_data:d
+    };
+    const {error}=await c.from(TABLE).insert(row);
+    if(error) throw error;
+    return true;
+  }
+  async function pushAllRemote(){
+    const entries=Object.entries(db().ev||{}).filter(([,d])=>d&&d.saved);
+    for(const [sid,d] of entries){ await saveOneRemote(sid,d); }
+    await loadRemote({replace:true});
+  }
+  window.pushAllEvaluationsToSupabase = pushAllRemote;
+
+  window.saveEval = async function(){
+    const sid=document.getElementById('esch')?.value||''; if(!sid) return alert('اختر المدرسة!');
+    const d=(typeof getEv==='function')?getEv():(db().ev[sid]||{});
+    d.saved=true; d._axisScores=axisScores(d,null); d.total_score=totalFromScores(d._axisScores);
+    db().ev[sid]=d; saveLocal(); refresh();
+    try{ await saveOneRemote(sid,d); await loadRemote({replace:true}); toast('✅ تم حفظ التقييم في القاعدة'); }
+    catch(e){ console.error(e); alert('تم الحفظ محلياً، لكن فشل الحفظ في القاعدة: '+(e.message||e)); }
+  };
+  window.saveAll = async function(){
+    const sid=document.getElementById('esch')?.value||'';
+    if(sid && document.getElementById('eform')?.style.display!=='none') return window.saveEval();
+    saveLocal(); refresh(); toast('✅ تم الحفظ محلياً');
+  };
+  window.delEv = async function(sid){
+    if(!sid) sid=document.getElementById('esch')?.value||''; if(!sid) return alert('اختر المدرسة أولاً');
+    const s=school(sid); if(!confirm('حذف تقييم '+(s?s.short:sid)+' من القاعدة والجهاز؟')) return;
+    try{ await deleteRowsForSchool(sid); delete db().ev[sid]; saveLocal(); await loadRemote({replace:true}); toast('✅ تم حذف التقييم'); }
+    catch(e){ console.error(e); alert('فشل حذف التقييم: '+(e.message||e)); }
+  };
+  window.clrAll = async function(){
+    if(!confirm('سيتم تصفير كل التقييمات الحالية من القاعدة والجهاز. هل أنت متأكد؟')) return;
+    try{
+      await deleteAllRows();
+      db().ev={};
+      try{ localStorage.removeItem(LOCAL_KEY); }catch(e){}
+      saveLocal();
+      refresh();
+      try{ if(typeof uCh==='function') setTimeout(uCh,120); }catch(e){}
+      toast('✅ تم تصفير التقييمات بالكامل من القاعدة والجهاز');
+    }
+    catch(e){ console.error(e); alert('فشل تصفير التقييمات من القاعدة: '+(e.message||e)); }
+  };
+  window.clearEvaluationLocalCache = function(){
+    try{ localStorage.removeItem(LOCAL_KEY); }catch(e){}
+    try{ db().ev={}; saveLocal(); refresh(); }catch(e){}
+    toast('✅ تم مسح كاش التقييم المحلي');
+  };
+  window.clrEval = function(){
+    if(!confirm('مسح بيانات النموذج الحالي فقط دون حذف التقييم المحفوظ؟')) return;
+    const sid=document.getElementById('esch')?.value||''; if(sid){ const keep=db().ev[sid]; delete db().ev[sid]; try{ ldEv(sid); } finally { if(keep) db().ev[sid]=keep; } } else if(typeof ldEv==='function') ldEv('');
+  };
+  window.__pendingImportedEvaluations = null;
+
+  function buildImportPreview(incoming,fileName){
+    const rows=[]; const valid={}; const ignored=[];
+    Object.entries(incoming||{}).forEach(([sid,d])=>{
+      const schoolObj=SCH.find(s=>s.id===sid);
+      if(!schoolObj){ ignored.push(sid); return; }
+      d=d&&typeof d==='object'?d:{};
+      d.saved=true;
+      d._axisScores=axisScores(d,null);
+      d.total_score=totalFromScores(d._axisScores);
+      valid[sid]=d;
+      rows.push({sid,school:schoolObj.name,date:d.date||'',lib:d.lib||'',level:d.overall||'',score:d.total_score||0});
+    });
+    window.__pendingImportedEvaluations = valid;
+    const box=document.getElementById('importPreviewBox');
+    const meta=document.getElementById('importPreviewMeta');
+    const table=document.getElementById('importPreviewTable');
+    const status=document.getElementById('importPreviewStatus');
+    if(!box||!meta||!table) return;
+    meta.innerHTML = `اسم الملف: <b>${fileName||'-'}</b> — السجلات الصالحة: <b>${rows.length}</b>` + (ignored.length?` — سجلات غير معروفة لم يتم إدخالها: <b>${ignored.length}</b>`:'');
+    status.className='import-status-warn';
+    status.textContent='بانتظار الحفظ في قاعدة البيانات';
+    table.innerHTML = rows.length ? `<table class="import-preview-table"><thead><tr><th>المدرسة</th><th>التاريخ</th><th>الأخصائي</th><th>التقييم</th><th>الدرجة</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.school}</td><td>${r.date||'-'}</td><td>${r.lib||'-'}</td><td>${r.level||'-'}</td><td>${r.score||0}</td></tr>`).join('')}</tbody></table>` : '<div class="al alw">لم يتم العثور على سجلات مدارس معروفة داخل الملف.</div>';
+    box.classList.add('show');
+    try{ box.scrollIntoView({behavior:'smooth',block:'center'}); }catch(e){}
+  }
+
+  window.cancelImportedPreview = function(){
+    window.__pendingImportedEvaluations=null;
+    const box=document.getElementById('importPreviewBox'); if(box) box.classList.remove('show');
+    const input=document.getElementById('impF'); if(input) input.value='';
+    toast('تم إلغاء معاينة الملف المرفوع');
+  };
+
+  window.saveImportedEvaluationsToSupabase = async function(){
+    const pending=window.__pendingImportedEvaluations;
+    if(!pending || !Object.keys(pending).length) return alert('لا توجد بيانات مرفوعة جاهزة للحفظ. ارفع ملف JSON أولاً.');
+    try{
+      for(const [sid,d] of Object.entries(pending)){ db().ev[sid]=d; }
+      saveLocal(); refresh();
+      await pushAllRemote();
+      const status=document.getElementById('importPreviewStatus');
+      if(status){ status.className='import-status-ok'; status.textContent='تم الحفظ في قاعدة البيانات'; }
+      toast('✅ تم حفظ البيانات المرفوعة في Supabase وظهرت في صفحة الإدارة');
+    }catch(e){
+      console.error(e);
+      alert('تمت قراءة الملف، لكن فشل الحفظ في قاعدة البيانات: '+(e.message||e));
+    }
+  };
+
+  window.impData = function(){
+    const f=document.getElementById('impF')?.files?.[0]; if(!f) return;
+    const reader=new FileReader();
+    reader.onload=async e=>{
+      try{
+        const p=JSON.parse(e.target.result);
+        const incoming=p.ev || (p.data&&p.school?{[document.getElementById('esch')?.value||'imported']:p.data}:null);
+        if(!incoming) return alert('الملف لا يحتوي على بيانات تقييم صحيحة');
+        const replace=confirm('هل تريد استبدال التقييمات الحالية بالمستوردة؟\nموافق = تصفير الحالي من العرض المحلي فقط ثم استيراد.\nإلغاء = دمج المستورد مع الحالي.\n\nملاحظة: لن يتم الحفظ في Supabase إلا بعد الضغط على زر الحفظ الواضح في المعاينة.');
+        if(replace){ db().ev={}; saveLocal(); }
+        Object.entries(incoming).forEach(([sid,d])=>{ if(SCH.some(s=>s.id===sid)){ d.saved=true; d._axisScores=axisScores(d,null); d.total_score=totalFromScores(d._axisScores); db().ev[sid]=d; } });
+        saveLocal(); refresh();
+        try{ pg('page-dat','البيانات المحفوظة','nav-dat'); }catch(e){}
+        buildImportPreview(incoming,f.name);
+        toast('✅ تم رفع الملف وظهرت البيانات في الصفحة. اضغط زر الحفظ لتثبيتها في Supabase.');
+      }catch(err){ alert('❌ خطأ في الملف: '+err.message); }
+    };
+    reader.readAsText(f);
+  };
+
+  // إعادة بناء الرسوم بعد كل فتح للقسم، مع ضبط حجمها على الموبايل.
+  const oldUCh = window.uCh;
+  window.uCh = function(){
+    if(typeof oldUCh==='function') oldUCh();
+    setTimeout(()=>{ try{ Object.values(CI||{}).forEach(ch=>{ if(ch&&ch.options){ ch.options.maintainAspectRatio=false; ch.resize(); } }); }catch(e){} },80);
+  };
+  const prevPg=window.pg;
+  window.pg=function(id,title,nid){
+    const r=(typeof prevPg==='function')?prevPg(id,title,nid):undefined;
+    if(['page-home','page-sch','page-cmp','page-dat','page-rep','page-ch'].includes(id)){
+      loadRemote({replace:true}).then(()=>{ if(id==='page-ch') setTimeout(()=>window.uCh&&window.uCh(),180); });
+    }
+    return r;
+  };
+  document.addEventListener('DOMContentLoaded',()=>{
+    const style=document.createElement('style');
+    style.textContent='.cbox{overflow:hidden}.cbox canvas{width:100%!important;max-width:100%!important;height:320px!important}@media(max-width:700px){.cbox{padding:12px}.cbox canvas{height:260px!important}.cgrid{grid-template-columns:1fr!important}.ctbl{font-size:12px}.sn{font-size:24px}.s4{grid-template-columns:1fr 1fr!important}}';
+    document.head.appendChild(style);
+    setTimeout(()=>loadRemote({replace:true}),500);
+    setTimeout(()=>loadRemote({replace:true}),1500);
+  });
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{try{bindLibraryUnitsAutoSummary(); updateLibraryUnitsSummary();}catch(e){console.warn(e);}});
+</script>
+
+<script src="../assets/reset-demo-data.js?v=20260510f"></script>
 </body>
 </html>

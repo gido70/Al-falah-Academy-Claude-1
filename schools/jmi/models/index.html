@@ -1,0 +1,53 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>النماذج وقوائم العمل - الجيمي</title><style>@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');:root{--navy:#0c447c;--blue:#185fa5;--teal:#0f9d8a;--gold:#ba7517;--amber:#f0a500;--bg:#e8f0fa;--text:#0c2a4a;--muted:#5a7fa8;--border:#b8d4f0;--green:#0f6e56;--red:#c0392b;--grad:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56)}*{box-sizing:border-box}body{margin:0;font-family:'Cairo',sans-serif;background:linear-gradient(135deg,#e8f0fa,#f7fbff);color:var(--text);direction:rtl}.wrap{max-width:1180px;margin:auto;padding:16px 16px 90px}.hero{background:var(--grad);border-radius:24px;padding:28px 24px;color:white;text-align:center;box-shadow:0 14px 36px rgba(12,68,124,.25);position:relative;overflow:hidden}.logo{display:block;max-width:270px;width:72%;margin:0 auto 14px;background:rgba(255,255,255,.96);padding:12px 20px;border-radius:18px}.hero h1{margin:0;font-size:30px;font-weight:900}.hero p{margin:8px 0 0;color:rgba(255,255,255,.86)}.home-return-btn{position:fixed;top:14px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;background:linear-gradient(135deg,#0c447c,#185fa5,#0f9d8a);color:#fff!important;text-decoration:none;font-weight:900;font-size:13px;box-shadow:0 6px 18px rgba(12,68,124,.28);border:1px solid rgba(255,255,255,.45)}.nav,.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:14px;text-decoration:none;border:0;font-family:'Cairo',sans-serif;font-weight:800;cursor:pointer}.primary{background:white;color:var(--navy)}.gold{background:linear-gradient(135deg,var(--gold),var(--amber));color:white}.teal{background:linear-gradient(135deg,var(--green),var(--teal));color:white}.outline{background:#fff;border:2px solid var(--border);color:var(--navy)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}.card{background:white;border:1px solid var(--border);border-radius:20px;padding:18px;box-shadow:0 4px 18px rgba(12,68,124,.08)}.card h2,.card h3{margin:0 0 10px;color:var(--navy);font-weight:900}.muted{color:var(--muted);font-size:14px}.main-card{min-height:210px;display:flex;flex-direction:column;justify-content:space-between;border-right:7px solid var(--gold)}.main-card .ico{font-size:34px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.kpi{text-align:center;background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px}.kpi strong{font-size:30px;color:var(--navy);display:block}table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden}th{background:var(--navy);color:#fff;padding:10px;font-size:13px}td{border-bottom:1px solid #e8eef5;padding:10px;text-align:center;font-size:13px}td:first-child,th:first-child{text-align:right}.tag{display:inline-block;padding:4px 10px;border-radius:999px;background:#e6f1fb;color:var(--navy);font-size:12px;font-weight:800}.note{border-right:5px solid var(--gold);background:#fff8e6;border-radius:14px;padding:14px;line-height:1.9}.footer{text-align:center;color:var(--muted);font-size:12px;margin:28px 0}input,select,textarea{width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:12px;font-family:'Cairo',sans-serif;font-size:14px;background:#f8fbff;color:var(--text);outline:none}textarea{min-height:100px;resize:vertical}label{display:block;font-weight:800;color:var(--navy);margin:10px 0 5px}.filebox{border:2px dashed var(--border);border-radius:18px;padding:16px;background:#f8fbff}.file-list{display:grid;gap:8px;margin-top:12px}.file-row{display:flex;justify-content:space-between;gap:8px;align-items:center;background:white;border:1px solid var(--border);border-radius:12px;padding:10px;font-size:13px}.ok{color:var(--green);font-weight:900}.warn{color:var(--red);font-weight:900}@media(max-width:850px){.grid,.grid2,.kpis{grid-template-columns:1fr}.hero h1{font-size:22px}.wrap{padding:10px 10px 90px}.logo{max-width:220px}.home-return-btn{top:auto;bottom:16px;right:16px}.card{padding:14px}}@media print{.home-return-btn,.nav,.actions,.no-print{display:none!important}.hero{box-shadow:none}.card{break-inside:avoid;box-shadow:none}}</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../../../supabase-config.js"></script></head><body><a class="home-return-btn" href="../../../index.html">🏠 الرئيسية</a><div class="wrap"><section class="hero"><img class="logo" src="../../../assets/logo.png" alt="شعار أكاديمية الفلاح"><h1>النماذج وقوائم العمل — الجيمي</h1><p>يمكن رفع حتى 10 ملفات في هذا القسم. تحفظ في Supabase عند ضبط المفتاح، ومعها نسخة مرجعية محلية.</p><div class="nav"><a class="btn primary" href="../../../index.html">🏠 الرئيسية</a><a class="btn primary" href="../index.html">ملف المدرسة</a><button class="btn gold" onclick="exportJson()">تصدير سجل الملفات JSON</button></div></section><section class="card"><h2>خطوات الرفع</h2><ol><li>اضغط اختيار الملفات.</li><li>اختر حتى 10 صور أو ملفات.</li><li>اضغط حفظ/رفع الملفات.</li><li>ستظهر الملفات فوراً في القائمة.</li><li>إذا كان Supabase مفعلاً ستظهر عبارة: محفوظ في Supabase.</li></ol></section><section class="card"><h2>رفع الملفات</h2><div class="filebox"><input type="file" id="files" multiple><div class="actions"><button class="btn teal" onclick="uploadFiles()">حفظ / رفع الملفات</button></div><p class="muted">عدد الملفات المحفوظة: <b id="count">0</b></p></div></section><section class="card"><h2>الملفات المحفوظة</h2><div id="fileList" class="file-list"></div></section><script>window.SCHOOL='jmi';window.CATEGORY='models';</script><script>
+const CATEGORY = window.CATEGORY;
+const SCHOOL = window.SCHOOL;
+const SCHOOL_ID = {dan:1,mzd:2,bny:3,khb:4,jmi:5,shj:6}[SCHOOL] || null;
+const BUCKET_BY_CATEGORY = {photos:'library-images',models:'library-documents',certificates:'specialist-certificates'};
+const CATEGORY_AR = {photos:'صور المكتبة',models:'النماذج وقوائم العمل',certificates:'شهادات الأخصائي'};
+function key(){return 'alfalah_files_'+SCHOOL+'_'+CATEGORY}
+function loadLocal(){try{return JSON.parse(localStorage.getItem(key())||'[]')}catch(e){return []}}
+function saveLocal(a){localStorage.setItem(key(),JSON.stringify(a))}
+function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+async function loadFromSupabase(){
+  if(!window.alfalahSupabase || !SCHOOL_ID) return [];
+  try{
+    const {data,error}=await window.alfalahSupabase.from('school_files').select('*').eq('school_id',SCHOOL_ID).eq('file_category',CATEGORY).order('created_at',{ascending:false});
+    if(error) throw error;
+    return (data||[]).map(r=>({name:r.file_name,size:r.file_size,type:r.file_type,date:r.created_at,status:'محفوظ في Supabase',url:r.file_url,path:r.file_path,source:'supabase'}));
+  }catch(e){console.warn('تعذر تحميل الملفات من Supabase',e);return []}
+}
+async function renderFiles(){
+  const local=loadLocal();
+  const remote=await loadFromSupabase();
+  const seen=new Set();
+  const all=[...remote,...local].filter(f=>{const k=(f.path||'')+'|'+(f.name||''); if(seen.has(k)) return false; seen.add(k); return true;});
+  count.textContent=all.length;
+  fileList.innerHTML=all.length?all.map((f,i)=>`<div class="file-row"><span>${i+1}. ${esc(f.name)}<br><small class="muted">${esc(f.date||'')} — ${esc(f.status||'محفوظ محلياً')}</small></span>${f.url?`<a class="btn outline" href="${esc(f.url)}" target="_blank">فتح</a>`:''}</div>`).join(''):'<div class="note">لا توجد ملفات مرفوعة بعد.</div>';
+}
+function safeName(name){return String(name||'file').replace(/[^\w.\-\u0600-\u06FF]+/g,'_')}
+async function uploadFiles(){
+  const fs=[...files.files].slice(0,10);
+  if(!fs.length){alert('اختر ملفات أولاً');return}
+  let a=loadLocal();
+  const bucket=BUCKET_BY_CATEGORY[CATEGORY] || 'library-documents';
+  for(const file of fs){
+    let rec={name:file.name,size:file.size,type:file.type,date:new Date().toLocaleString('ar-AE'),status:'محفوظ محلياً'};
+    if(window.alfalahSupabase && SCHOOL_ID){
+      try{
+        const path=SCHOOL+'/'+CATEGORY+'/'+Date.now()+'_'+safeName(file.name);
+        const up=await window.alfalahSupabase.storage.from(bucket).upload(path,file,{upsert:false,contentType:file.type||undefined});
+        if(up.error) throw up.error;
+        const pub=window.alfalahSupabase.storage.from(bucket).getPublicUrl(path);
+        rec.url=pub.data.publicUrl;rec.path=path;rec.status='محفوظ في Supabase';
+        const {error:metaError}=await window.alfalahSupabase.from('school_files').insert([{school_id:SCHOOL_ID,file_category:CATEGORY,file_name:file.name,file_path:path,file_url:rec.url,file_type:file.type,file_size:file.size,notes:CATEGORY_AR[CATEGORY]||CATEGORY}]);
+        if(metaError) throw metaError;
+      }catch(e){console.error(e);rec.status='تعذر رفعه إلى Supabase — محفوظ محلياً: '+(e.message||e);}
+    }
+    a.push(rec);
+  }
+  saveLocal(a);files.value='';await renderFiles();alert('تمت معالجة الملفات');
+}
+function exportJson(){const b=new Blob([JSON.stringify(loadLocal(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=SCHOOL+'_'+CATEGORY+'_files.json';a.click()}
+renderFiles();
+</script>
+<div class="footer">أكاديمية الفلاح — منصة تطوير المكتبات ومراكز مصادر التعلم 2026</div></div><script src="../../../assets/db-sync.js"></script></body></html>

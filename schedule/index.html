@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>جدول أعمال مراكز مصادر التعلم | أكاديمية الفلاح 2026</title>
@@ -269,6 +272,14 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
   background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px;
   line-height:2;font-size:14px;color:#1e293b;white-space:pre-wrap;
 }
+textarea.manager-letter{
+  width:100%;min-height:360px;resize:vertical;display:block;
+  font-family:'Cairo',Tahoma,Arial,sans-serif;direction:rtl;text-align:right;
+  outline:none;
+}
+textarea.manager-letter:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,134,11,.12)}
+.manager-edit-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:10px;background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:12px}
+.manager-edit-tools .fld{min-width:220px;flex:1}
 .manager-letter h3{color:var(--navy);font-size:16px;margin:0 0 8px;text-align:center}
 .btn-word{background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff}
 .final-note{
@@ -323,10 +334,82 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
   margin-top:2px;
 }
 
+
+/* ════ WEEK MANAGER ════ */
+#wkm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;direction:rtl;}
+#wkm-modal{background:#fff;border-radius:22px;padding:24px;width:100%;max-width:520px;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.wkm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #f0f4f8;}
+.wkm-title{font-size:18px;font-weight:900;color:#0c447c;}
+.wkm-close{background:none;border:none;font-size:22px;cursor:pointer;color:#64748b;padding:4px;}
+.wkm-body{overflow-y:auto;flex:1;}
+.wkm-empty{text-align:center;padding:32px;color:#64748b;font-size:14px;}
+.wkm-week-row{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:14px;margin-bottom:8px;cursor:pointer;transition:all .18s;}
+.wkm-week-row:hover{border-color:#1a5f9e;background:#f0f6ff;}
+.wkm-week-row.current-wk{border-color:#0e7f70;background:#f0fbf8;}
+.wkm-wnum{font-size:20px;font-weight:900;color:#0c447c;min-width:32px;text-align:center;}
+.wkm-winfo{flex:1;}
+.wkm-dates{font-size:13px;font-weight:700;color:#1a5f9e;}
+.wkm-wstatus{font-size:11px;color:#64748b;margin-top:2px;}
+.wkm-wactions{display:flex;gap:6px;}
+.wkm-load-btn{background:#0c447c;color:#fff;border:none;border-radius:9px;padding:7px 14px;font-family:Cairo,sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+.wkm-del-btn{background:#fee2e2;color:#991b1b;border:none;border-radius:9px;padding:7px 10px;font-family:Cairo,sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+.wkm-topbar{background:linear-gradient(135deg,#0c447c,#185fa5);border-radius:12px;padding:10px 16px;margin-bottom:14px;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+.wkm-toplabel{opacity:.85;}
+.wkm-topval{color:#ffe97a;font-size:14px;}
+
+
+/* ── Fixed Home Return Button ── */
+.platform-home-btn {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 99999;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0c447c, #185fa5, #0f9d8a);
+  color: #fff !important;
+  text-decoration: none;
+  font-family: Cairo, sans-serif;
+  font-weight: 900;
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgba(12,68,124,.35);
+  border: 2px solid rgba(255,255,255,.4);
+  transition: all .2s;
+  white-space: nowrap;
+}
+.platform-home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(12,68,124,.4);
+}
+@media(max-width:600px) {
+  .platform-home-btn { top: auto; bottom: 14px; right: 14px; font-size: 12px; padding: 8px 13px; }
+}
+@media print { .platform-home-btn { display: none !important; } }
+
+.alfalah-fixed-home{position:fixed;top:14px;right:14px;z-index:999999;background:linear-gradient(135deg,#0c447c,#0f9d8a);color:#fff!important;text-decoration:none!important;padding:10px 16px;border-radius:22px;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.22)}@media(max-width:700px){.alfalah-fixed-home{top:auto;bottom:12px;right:12px}}
+
+/* === IMPORT PREVIEW + CLEAR DATABASE SAVE PANEL === */
+.import-preview-panel{display:none;margin:14px 0 18px;background:linear-gradient(135deg,#ffffff,#f8fbff);border:2px solid var(--blue);border-radius:18px;padding:16px;box-shadow:0 8px 24px rgba(13,59,110,.12)}
+.import-preview-panel.active{display:block}
+.import-preview-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:12px}
+.import-preview-title{font-size:16px;font-weight:900;color:var(--navy)}
+.import-preview-meta{font-size:12px;color:var(--muted);line-height:1.8}
+.import-preview-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.import-preview-table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;margin-top:8px;background:#fff}
+.import-preview-table th{background:var(--navy);color:#fff;padding:8px 10px;font-size:12px;text-align:center}
+.import-preview-table td{border-bottom:1px solid #e8eef5;padding:8px 10px;font-size:12px;text-align:center}
+.import-preview-ok{background:#ecfdf5;border:1px solid #86efac;color:#14532d;border-radius:12px;padding:10px 12px;font-size:13px;font-weight:800;margin-top:10px;text-align:center}
+.import-preview-warn{background:#fffbeb;border:1px solid #fbbf24;color:#78350f;border-radius:12px;padding:10px 12px;font-size:13px;font-weight:800;margin-top:10px;text-align:center}
+.save-db-strong{background:linear-gradient(135deg,#0d3b6e,#0e7f70)!important;color:#fff!important;border:2px solid rgba(255,255,255,.3)!important;font-weight:900!important}
+
 </style>
 </head>
-<body>
-<a class="home-return-btn" href="../index.html" aria-label="الرجوع للصفحة الرئيسية">🏠 الرئيسية</a><style>.home-return-btn{position:fixed;top:14px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;background:linear-gradient(135deg,#0c447c,#185fa5,#0f9d8a);color:#fff!important;text-decoration:none;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;font-size:13px;box-shadow:0 6px 18px rgba(12,68,124,.28);border:1px solid rgba(255,255,255,.45)}.home-return-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(12,68,124,.36)}@media(max-width:700px){.home-return-btn{top:auto;bottom:16px;right:16px;padding:10px 16px;font-size:13px}}@media print{.home-return-btn{display:none!important}}</style>
+<body><a class="alfalah-fixed-home" href="../index.html">🏠 الرئيسية</a>
+<a class="platform-home-btn" href="../index.html">🏠 الرئيسية</a>
+
 <div id="toast"></div>
 
 <div class="email-panel" id="emailPanel">
@@ -346,6 +429,23 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
 
 <div class="wrap">
 
+<div id="importPreviewPanel" class="import-preview-panel">
+  <div class="import-preview-head">
+    <div>
+      <div class="import-preview-title">📥 معاينة ملف الزيارات والدوام قبل الحفظ</div>
+      <div class="import-preview-meta" id="importPreviewMeta">لم يتم رفع ملف بعد.</div>
+    </div>
+    <button type="button" class="btn btn-soft bsm" onclick="ScheduleImportPreview.hide()">إغلاق المعاينة</button>
+  </div>
+  <div id="importPreviewBody"></div>
+  <div class="import-preview-actions">
+    <button type="button" class="btn save-db-strong bsm" onclick="ScheduleImportPreview.saveToDatabase()">💾 حفظ البيانات المرفوعة في قاعدة البيانات</button>
+    <button type="button" class="btn btn-gold bsm" onclick="generateReport()">📄 عرض التقرير الكامل</button>
+    <button type="button" class="btn btn-soft bsm" onclick="saveJSON()">⬇️ تنزيل نسخة JSON</button>
+  </div>
+</div>
+
+
 <!-- HEADER -->
 <header class="site-header">
   <div class="hdr-top brand-center">
@@ -360,10 +460,12 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
     <button class="ha ha-gold" id="ha-gen">📄 التقرير الكامل</button>
     <button class="ha" style="background:rgba(91,33,182,.3);border-color:#a78bfa;" id="ha-mgr">👔 عرض المدير</button>
     <button class="ha ha-teal" id="ha-email">📧 Gmail</button>
-    <button class="ha" id="ha-json">💾 JSON</button>
+    <button class="ha" id="ha-json">⬇️ تنزيل JSON</button>
     <button class="ha" id="ha-csv">📊 CSV</button>
-    <button class="ha" id="ha-imp">📥 استيراد</button>
+    <button class="ha" id="ha-imp">📥 رفع JSON</button>
     <button class="ha" id="ha-print">🖨️ طباعة</button>
+    <button class="ha" id="ha-new-week" style="background:rgba(240,165,0,.35);border-color:#f0a500;font-weight:900;" onclick="WKM.newWeek()">➕ أسبوع جديد</button>
+    <button class="ha" id="ha-weeks-btn" style="border-color:rgba(255,255,255,.6);" onclick="WKM.showList()">📅 الأسابيع</button>
     <button class="ha ha-red" id="ha-reset">🔄 تصفير</button>
   </div>
 </header>
@@ -417,7 +519,6 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
     <div class="sc-head"><div class="sc-num">1</div><div><div class="sc-title">بيانات الأسبوع</div></div></div>
     <div class="g2">
       <div class="fld"><label>رقم الأسبوع</label><input id="wnum" name="wnum" placeholder="مثال: 1"></div>
-      <div class="fld"><label>إجراء الأسبوع</label><button type="button" class="btn btn-teal" id="btn-new-week" style="justify-content:center">➕ أسبوع جديد / فتح سجل فارغ</button><small id="week-save-state" style="color:var(--muted);font-weight:700;margin-top:4px">غيّر رقم الأسبوع لفتح سجل مستقل.</small></div>
       <div class="fld"><label>حالة الأسبوع</label>
         <select name="wstatus">
           <option>دوام كامل</option><option>دوام جزئي</option>
@@ -713,7 +814,7 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
 
 <!-- SAVE BAR -->
 <div class="save-bar">
-  <button type="button" class="btn btn-navy bsm" id="btn-save">📌 حفظ مؤقت</button>
+  <button type="button" class="btn save-db-strong bsm" id="btn-save">💾 حفظ في قاعدة البيانات</button>
   <button type="button" class="btn btn-soft bsm" id="btn-load">🔄 استرجاع</button>
   <button type="button" class="btn btn-gold bsm" id="btn-gen">📄 التقرير الكامل</button>
   <button type="button" class="btn bsm" style="background:linear-gradient(135deg,var(--purple),#7c3aed);color:#fff;" id="btn-mgr">👔 عرض المدير</button>
@@ -777,7 +878,18 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
     <table class="mgr-tbl"><thead><tr><th>اليوم</th><th>النوع</th><th>الحضور</th><th>الانصراف</th><th>ملاحظة</th></tr></thead><tbody id="mgrAttBody"></tbody></table>
     
     <div class="mgr-stitle" style="margin-top:14px">📨 الصياغة الإدارية المختصرة</div>
-    <div class="manager-letter" id="mgrLetterBody">سيظهر هنا ملخص إداري احترافي بعد توليد التقرير.</div>
+    <div class="manager-edit-tools">
+      <div class="fld">
+        <label>اسم المدير/ة أو الجهة المستلمة</label>
+        <input id="managerName" type="text" placeholder="مثال: مدير الإدارة / الأستاذ ...">
+      </div>
+      <div class="fld">
+        <label>صفة المخاطب</label>
+        <input id="managerTitle" type="text" value="المدير/ة" placeholder="مثال: المدير/ة، مدير الإدارة، سعادة الأستاذ">
+      </div>
+      <button type="button" class="btn btn-soft bsm" id="btn-refresh-manager-letter">🔄 تحديث الصياغة تلقائياً</button>
+    </div>
+    <textarea class="manager-letter editable" id="mgrLetterBody" rows="14" placeholder="يمكنك تعديل خطاب المدير هنا قبل الطباعة أو Word أو Gmail...">سيظهر هنا ملخص إداري احترافي بعد توليد التقرير.</textarea>
 
     
     <div class="mgr-stitle" style="margin-top:12px">📈 مؤشرات بصرية مختصرة</div>
@@ -800,8 +912,6 @@ input[readonly]{background:#edf2f7;cursor:default;color:var(--muted);}
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../supabase-config.js"></script>
 <script>
 // ══════════════════════════════════════════════════
 // DATA
@@ -1071,48 +1181,16 @@ function setFormData(d) {
 }
 
 // ══════════════════════════════════════════════════
-// SUPABASE SAVE
-// ══════════════════════════════════════════════════
-function supaReady(){return !!(window.alfalahSupabase && window.ALFALAH_SUPABASE_KEY && !String(window.ALFALAH_SUPABASE_KEY).includes("PUT_PUBLISHABLE_KEY_HERE"));}
-async function saveDailyWorkToSupabase(d){
-  if(!supaReady())return {ok:false,skipped:true};
-  try{
-    const payload={
-      work_date:d.wstart||new Date().toISOString().split('T')[0],
-      week_number: parseInt(d.wnum || 0, 10) || null,
-      task_type: d.wstatus || null,
-      task_details: (d.achievements || d.other_work || null),
-      check_in:d.ain0||null,
-      check_out:d.aout0||null,
-      tasks:JSON.stringify(d._pills||[],null,0),
-      notes:d.notes||d.summary||null,
-      full_data:d
-    };
-    const {error}=await window.alfalahSupabase.from('daily_work_logs').insert([payload]);
-    if(error)return {ok:false,error};
-    return {ok:true};
-  }catch(e){return {ok:false,error:e};}
-}
-
-// ══════════════════════════════════════════════════
 // SAVE / LOAD
 // ══════════════════════════════════════════════════
-async function saveDraft() {
-  try{
-    const d=getFormData();
-    localStorage.setItem(LSK, JSON.stringify(d));
-    if(d.wnum) localStorage.setItem(LSK + "_week_" + d.wnum, JSON.stringify(d));
-    const r=await saveDailyWorkToSupabase(d);
-    if(r.ok) toast("📌 تم الحفظ محلياً وفي Supabase");
-    else if(r.skipped) toast("📌 تم الحفظ محلياً — مفتاح Supabase غير مفعّل بعد");
-    else toast("📌 تم الحفظ محلياً — لم ينجح حفظ Supabase");
-  }
+function saveDraft() {
+  try{ localStorage.setItem(LSK, JSON.stringify(getFormData())); toast("📌 تم الحفظ على الجهاز"); }
   catch(e){ alert("خطأ في الحفظ!"); }
 }
 function loadDraft() {
   try{
     var s = localStorage.getItem(LSK);
-    if(!s){ toast("⚠️ لا يوجد حفظ مؤقت"); return; }
+    if(!s){ toast("⚠️ لا يوجد حفظ في القاعدة"); return; }
     setFormData(JSON.parse(s)); setTimeout(syncToReport, 100); toast("✅ تم استرجاع البيانات");
   }catch(e){ alert("خطأ في الاسترجاع!"); }
 }
@@ -1154,12 +1232,126 @@ function saveCSV() {
 }
 
 function importJSON() { document.getElementById("impF").click(); }
+
+var ScheduleImportPreview = (function(){
+  var importedData = null;
+  var importedFileName = "";
+
+  function esc(v){
+    return String(v==null?"":v).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]||c;});
+  }
+  function val(d,k,alt){ return d && d[k]!=null && d[k]!=="" ? d[k] : (alt||""); }
+  function daysRows(d){
+    if(typeof DAYS === "undefined") return "";
+    return DAYS.map(function(day,i){
+      return "<tr>"+
+        "<td><b>"+esc(day)+"</b></td>"+
+        "<td>"+esc(val(d,"atype"+i,"دوام رسمي"))+"</td>"+
+        "<td>"+esc(val(d,"ain"+i,"08:00"))+"</td>"+
+        "<td>"+esc(val(d,"aout"+i,(i===4?"11:30":"14:00")))+"</td>"+
+        "<td>"+esc(val(d,"dloc"+i,"—"))+"</td>"+
+        "<td>"+esc(val(d,"anote"+i,"—"))+"</td>"+
+      "</tr>";
+    }).join("");
+  }
+  function render(d,fileName){
+    var panel=document.getElementById("importPreviewPanel");
+    var meta=document.getElementById("importPreviewMeta");
+    var body=document.getElementById("importPreviewBody");
+    if(!panel||!meta||!body) return;
+    var pills=(d._pills&&Array.isArray(d._pills))?d._pills.length:0;
+    meta.innerHTML = "<b>اسم الملف:</b> "+esc(fileName)+" &nbsp; | &nbsp; <b>رقم الأسبوع:</b> "+esc(val(d,"wnum","—"))+" &nbsp; | &nbsp; <b>الفترة:</b> "+esc(val(d,"wstart","—"))+" ← "+esc(val(d,"wend","—"))+" &nbsp; | &nbsp; <b>عناصر العمل:</b> "+pills;
+    body.innerHTML = "<div class='import-preview-ok'>✅ تم قراءة الملف وعرضه في الصفحة. راجع البيانات ثم اضغط زر الحفظ في قاعدة البيانات.</div>"+
+      "<table class='import-preview-table'><thead><tr><th>اليوم</th><th>نوع الدوام</th><th>الحضور</th><th>الانصراف</th><th>الموقع/الزيارة</th><th>ملاحظة</th></tr></thead><tbody>"+daysRows(d)+"</tbody></table>";
+    panel.classList.add("active");
+    panel.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  function normalize(raw){
+    var d = raw;
+    if(Array.isArray(d)) d = d[0] || {};
+    if(d && d.full_data) d = (typeof d.full_data === "string" ? JSON.parse(d.full_data) : d.full_data);
+    if(d && d.data && typeof d.data === "object" && !d.wnum) d = d.data;
+    if(!d || typeof d !== "object" || Array.isArray(d)) throw new Error("صيغة JSON غير مناسبة لصفحة الدوام والزيارات.");
+    return d;
+  }
+  async function saveDataToDatabase(d){
+    if(!d) throw new Error("لا توجد بيانات للحفظ.");
+    var sb = window.alfalahSupabase || (window.AlfalahDBSync && window.AlfalahDBSync.client && window.AlfalahDBSync.client()) || null;
+    if(!sb) throw new Error("لم يتم الاتصال بـ Supabase. تأكد من ملف supabase-config.js.");
+    var wn = parseInt(String(d.wnum||d.week_number||"").replace(/[^0-9]/g,""),10);
+    if(!wn) throw new Error("رقم الأسبوع غير موجود داخل الملف.");
+    var now = new Date().toISOString();
+    var payload = {
+      week_number: wn,
+      week_title: d.week_title || ("الأسبوع رقم "+wn),
+      work_date: d.wstart || d.work_date || null,
+      work_type: d.wstatus || d.work_type || "دوام كامل",
+      tasks: JSON.stringify(d),
+      notes: JSON.stringify(d),
+      full_data: d,
+      updated_at: now
+    };
+    var existing = null;
+    try{
+      var q = await sb.from("daily_work_logs").select("id").eq("week_number",wn).limit(1);
+      if(!q.error && q.data && q.data.length) existing = q.data[0].id;
+    }catch(_e){}
+    var res;
+    if(d._db_id || existing){
+      res = await sb.from("daily_work_logs").update(payload).eq("id", d._db_id || existing).select();
+    }else{
+      res = await sb.from("daily_work_logs").insert(payload).select();
+    }
+    if(res.error) throw res.error;
+    if(res.data && res.data[0] && res.data[0].id) d._db_id = res.data[0].id;
+    d._savedAt = now;
+    d._savedAtAr = new Date(now).toLocaleString("ar-AE");
+    localStorage.setItem("falah_week_"+wn, JSON.stringify(d));
+    localStorage.setItem("falah_wp_final", JSON.stringify(d));
+    return res.data && res.data[0];
+  }
+  return {
+    show:function(raw,fileName){
+      importedData = normalize(raw);
+      importedFileName = fileName || "ملف JSON";
+      if(typeof setFormData === "function") setFormData(importedData);
+      if(importedData._pills && typeof setSelectedWork === "function") setSelectedWork(importedData._pills);
+      if(typeof syncToReport === "function") setTimeout(syncToReport,120);
+      render(importedData, importedFileName);
+      toast("✅ تم رفع الملف وظهرت البيانات في الصفحة — لم تحفظ بعد في القاعدة");
+    },
+    hide:function(){ var p=document.getElementById("importPreviewPanel"); if(p) p.classList.remove("active"); },
+    saveToDatabase:async function(){
+      try{
+        var d = importedData || (typeof getFormData === "function" ? getFormData() : null);
+        await saveDataToDatabase(d);
+        render(d, importedFileName || "البيانات الحالية");
+        var body=document.getElementById("importPreviewBody");
+        if(body) body.insertAdjacentHTML("afterbegin","<div class='import-preview-ok'>💾 تم الحفظ في قاعدة البيانات بنجاح. ستظهر البيانات في الإدارة والتقارير.</div>");
+        toast("💾 تم الحفظ في قاعدة البيانات");
+      }catch(err){
+        console.error(err);
+        var body=document.getElementById("importPreviewBody");
+        if(body) body.insertAdjacentHTML("afterbegin","<div class='import-preview-warn'>❌ فشل الحفظ: "+esc(err.message||err)+"</div>");
+        alert("فشل الحفظ في قاعدة البيانات: "+(err.message||err));
+      }
+    },
+    saveCurrentToDatabase:async function(){
+      var d = typeof getFormData === "function" ? getFormData() : null;
+      importedData = d; importedFileName = "البيانات الحالية";
+      render(d, importedFileName);
+      return this.saveToDatabase();
+    },
+    _saveDataToDatabase:saveDataToDatabase
+  };
+})();
+
 document.getElementById("impF").addEventListener("change", function(e){
   var f = e.target.files[0]; if(!f) return;
   var reader = new FileReader();
   reader.onload = function(ev){
-    try{ setFormData(JSON.parse(ev.target.result)); setTimeout(syncToReport, 100); toast("✅ تم الاستيراد: "+f.name); }
-    catch(err){ alert("خطأ: "+err.message); }
+    try{ ScheduleImportPreview.show(JSON.parse(ev.target.result), f.name); }
+    catch(err){ alert("خطأ في قراءة ملف JSON: "+err.message); }
   };
   reader.readAsText(f); e.target.value="";
 });
@@ -1764,96 +1956,12 @@ function attachSync() {
 }
 
 // ══════════════════════════════════════════════════
-// INDEPENDENT WEEK RECORDS — every week has its own draft/data
-// ══════════════════════════════════════════════════
-var _loadingWeekRecord = false;
-function setWeekStatus(msg, type){
-  var el=document.getElementById("week-save-state");
-  if(!el) return;
-  el.textContent=msg;
-  el.style.color = type==="ok" ? "#0f6e56" : type==="warn" ? "#b8860b" : type==="bad" ? "#991b1b" : "var(--muted)";
-}
-function clearWeekFormKeepWeek(){
-  var keep = document.getElementById("wnum") ? document.getElementById("wnum").value : "";
-  var form = document.getElementById("wForm");
-  if(form) form.reset();
-  if(document.getElementById("wnum")) document.getElementById("wnum").value = keep;
-  // reset attendance defaults
-  DAYS.forEach(function(_,i){
-    var ain=document.getElementById("ain"+i), aout=document.getElementById("aout"+i), atype=document.getElementById("atype"+i), anote=document.getElementById("anote"+i);
-    if(ain) ain.value="08:00";
-    if(aout) aout.value=(i===4?"11:30":"14:00");
-    if(atype) atype.value="دوام رسمي";
-    if(anote) anote.value="";
-    styleRow(i); calcHrs(i);
-  });
-  document.querySelectorAll(".pill").forEach(function(p){p.classList.remove("sel")});
-  PILL_GROUPS.forEach(function(_,gi){
-    var res=document.getElementById("pr"+gi);
-    if(res){res.textContent="— لم يُختر بعد —";res.style.color="#94a3b8";res.style.fontStyle="italic";}
-  });
-  updateAttSumm();
-  setTimeout(syncToReport,50);
-}
-async function loadWeekRecordByNumber(week){
-  if(!week) return;
-  _loadingWeekRecord = true;
-  clearWeekFormKeepWeek();
-  setWeekStatus("جاري البحث عن سجل الأسبوع " + week + "...", "warn");
-  var local = localStorage.getItem(LSK + "_week_" + week);
-  if(local){
-    try{ setFormData(JSON.parse(local)); setWeekStatus("تم فتح مسودة محلية للأسبوع " + week, "ok"); }
-    catch(e){}
-  } else {
-    setWeekStatus("أسبوع جديد: النموذج فارغ وجاهز للإدخال.", "ok");
-  }
-  if(supaReady()){
-    try{
-      var r = await window.alfalahSupabase
-        .from('daily_work_logs')
-        .select('id, week_number, full_data, created_at')
-        .eq('week_number', parseInt(week,10))
-        .order('created_at', {ascending:false})
-        .limit(1);
-      if(r && r.data && r.data.length && r.data[0].full_data){
-        setFormData(r.data[0].full_data);
-        localStorage.setItem(LSK + "_week_" + week, JSON.stringify(r.data[0].full_data));
-        setWeekStatus("تم فتح آخر سجل محفوظ للأسبوع " + week + " من القاعدة.", "ok");
-      } else if(!local){
-        setWeekStatus("أسبوع جديد: لا توجد بيانات سابقة لهذا الرقم.", "ok");
-      }
-    }catch(e){
-      setWeekStatus("تعذر جلب الأسبوع من القاعدة، ويمكنك البدء محلياً.", "warn");
-    }
-  }
-  _loadingWeekRecord = false;
-  setTimeout(syncToReport,100);
-}
-function initIndependentWeeks(){
-  var w=document.getElementById("wnum");
-  if(w){
-    w.addEventListener("change", function(){ loadWeekRecordByNumber(this.value); });
-  }
-  var b=document.getElementById("btn-new-week");
-  if(b){
-    b.addEventListener("click", function(){
-      var w=document.getElementById("wnum");
-      if(!w || !w.value){ alert("اكتب رقم الأسبوع أولاً، مثل 2 أو 3."); return; }
-      clearWeekFormKeepWeek();
-      localStorage.removeItem(LSK + "_week_" + w.value);
-      setWeekStatus("تم فتح سجل فارغ للأسبوع " + w.value + ".", "ok");
-    });
-  }
-}
-
-// ══════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════
 buildNav();
 buildAtt();
 buildWeekCards();
 buildPills();
-initIndependentWeeks();
 loadDraft();
 attachSync();
 syncToReport();
@@ -1899,6 +2007,8 @@ function buildManagerLetterFinal(){
   var wnum=_fv("wnum") || "—";
   var wstart=_fv("wstart") || "—";
   var wend=_fv("wend") || "—";
+  var managerName=_fv("managerName");
+  var managerTitle=_fv("managerTitle") || "المدير/ة";
   var ach=_fv("achievements");
   var chal=_fv("challenges");
   var next=_fv("next_week");
@@ -1906,7 +2016,7 @@ function buildManagerLetterFinal(){
   var reqType=_fv("week_request_type");
   var req=_fv("week_requests");
   var text="";
-  text += "سعادة المدير/ة،\n\n";
+  text += "سعادة "+managerTitle+(managerName ? " " + managerName : "")+"،\n\n";
   text += "أرفع لسعادتكم التقرير الأسبوعي لمتابعة أعمال تطوير مراكز مصادر التعلم، وذلك عن الأسبوع رقم "+wnum+"، للفترة من "+wstart+" إلى "+wend+".\n\n";
   text += "أولاً: ملخص الأسبوع\n";
   text += (ach ? ach : "تم تنفيذ الأعمال الأسبوعية وفق خطة المتابعة، مع توثيق الحضور والانصراف ومتابعة الجوانب الإدارية والميدانية المرتبطة بمشروع تطوير المكتبات.") + "\n\n";
@@ -1925,23 +2035,41 @@ function buildManagerLetterFinal(){
   text += "\nوتفضلوا بقبول فائق الاحترام.";
   return text;
 }
-function updateManagerLetterFinal(){
+function updateManagerLetterFinal(force){
   var el=document.getElementById("mgrLetterBody");
-  if(el) el.textContent=buildManagerLetterFinal();
+  if(!el) return;
+  var txt=buildManagerLetterFinal();
+  if(el.tagName === "TEXTAREA"){
+    if(force || el.dataset.userEdited !== "1") el.value = txt;
+  }else{
+    if(force || el.dataset.userEdited !== "1") el.textContent = txt;
+  }
+}
+function getManagerLetterTextFinal(){
+  var el=document.getElementById("mgrLetterBody");
+  if(el){
+    var val = (el.tagName === "TEXTAREA") ? el.value : el.textContent;
+    if(val && val.trim()) return val;
+  }
+  return buildManagerLetterFinal();
 }
 function exportElementWordFinal(elId, fileName){
-  updateManagerLetterFinal();
+  updateManagerLetterFinal(false);
   var el=document.getElementById(elId);
   if(!el){ alert("لا يوجد محتوى للتصدير"); return; }
+  var clone=el.cloneNode(true);
+  var ta=clone.querySelector ? clone.querySelector("#mgrLetterBody") : null;
+  var liveTa=document.getElementById("mgrLetterBody");
+  if(ta && liveTa){ ta.textContent = liveTa.value || liveTa.textContent || ""; }
   var style=document.querySelector("style") ? document.querySelector("style").innerHTML : "";
-  var html='<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><style>'+style+' body{font-family:Cairo,Tahoma,Arial,sans-serif;direction:rtl;background:#fff}.site-header,.save-bar,button{display:none!important}</style></head><body>'+el.outerHTML+'</body></html>';
+  var html='<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><style>'+style+' body{font-family:Cairo,Tahoma,Arial,sans-serif;direction:rtl;background:#fff}.site-header,.save-bar,button{display:none!important}</style><\/head><body>'+clone.outerHTML+'<\/body><\/html>';
   var blob=new Blob(["\ufeff",html],{type:"application/msword;charset=utf-8"});
   var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=fileName; a.click();
 }
 function openGmailFinal(){
   updateManagerLetterFinal();
   var subject=encodeURIComponent("التقرير الأسبوعي - مراكز مصادر التعلم");
-  var body=encodeURIComponent(buildManagerLetterFinal());
+  var body=encodeURIComponent(getManagerLetterTextFinal());
   window.open("https://mail.google.com/mail/?view=cm&fs=1&su="+subject+"&body="+body, "_blank");
 }
 document.addEventListener("click", function(e){
@@ -1949,14 +2077,27 @@ document.addEventListener("click", function(e){
   if(e.target.id==="btn-word") exportElementWordFinal("reportBox","التقرير_الأسبوعي_الكامل.doc");
   if(e.target.id==="btn-mgr-word") exportElementWordFinal("mgrBox","تقرير_المدير_الأسبوعي.doc");
   if(["btn-mgr-email","ha-email","btn-email"].includes(e.target.id)){ e.preventDefault(); openGmailFinal(); }
-  if(["btn-mgr","ha-mgr","btn-gen","ha-gen"].includes(e.target.id)){ setTimeout(updateManagerLetterFinal,400); }
+  if(["btn-mgr","ha-mgr","btn-gen","ha-gen"].includes(e.target.id)){ 
+    var ta=document.getElementById("mgrLetterBody");
+    if(ta) ta.dataset.userEdited="0";
+    setTimeout(function(){ updateManagerLetterFinal(true); },400); 
+  }
+  if(e.target.id==="btn-refresh-manager-letter"){
+    var ta2=document.getElementById("mgrLetterBody");
+    if(ta2) ta2.dataset.userEdited="0";
+    updateManagerLetterFinal(true);
+    if(typeof toast === "function") toast("تم تحديث صياغة المدير تلقائيًا");
+  }
+});
+document.addEventListener("input", function(e){
+  if(e.target && e.target.id === "mgrLetterBody") e.target.dataset.userEdited="1";
 });
 
 
 // === إصلاح البريد والرسوم البيانية الرسمية ===
 function showEmailPanelFinal(){
   if(typeof updateManagerLetterFinal === "function") updateManagerLetterFinal();
-  var text = (typeof buildManagerLetterFinal === "function") ? buildManagerLetterFinal() : "التقرير الأسبوعي";
+  var text = (typeof getManagerLetterTextFinal === "function") ? getManagerLetterTextFinal() : ((typeof buildManagerLetterFinal === "function") ? buildManagerLetterFinal() : "التقرير الأسبوعي");
   var box = document.getElementById("emailTextBox");
   if(box) box.value = text;
   var panel = document.getElementById("emailPanel");
@@ -2094,5 +2235,364 @@ document.addEventListener("click", function(e){
 setTimeout(function(){ applyDateDirection(); refreshDateTextsDMY(); }, 1000);
 
 </script>
+
+<!-- ════ WEEK MANAGER MODAL ════ -->
+<div id="wkm-overlay" style="display:none" onclick="if(event.target===this)WKM.close()">
+  <div id="wkm-modal">
+    <div class="wkm-header">
+      <div class="wkm-title">📅 سجل الأسابيع</div>
+      <button class="wkm-close" onclick="WKM.close()">✕</button>
+    </div>
+    <div class="wkm-topbar">
+      <span class="wkm-toplabel">الأسبوع المحمَّل حالياً:</span>
+      <span class="wkm-topval" id="wkm-cur-label">اضغط ➕ لإنشاء أسبوع</span>
+    </div>
+    <div class="wkm-body" id="wkm-list-body">
+      <div class="wkm-empty">📭 لا توجد أسابيع — اضغط ➕ أسبوع جديد</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════
+   WEEK MANAGER — كل أسبوع يُحفظ منفصلاً
+   يعمل فوق الكود الأصلي بدون تعديله
+════════════════════════════════════════════════════ */
+var WKM=(function(){
+  var PFX='falah_week_';
+  var RFX='supabase_week_';
+  var _cur=null;
+  var _remote=[];
+  var _remoteMap={};
+
+  function _client(){
+    return window.alfalahSupabase || (window.AlfalahDBSync && window.AlfalahDBSync.client && window.AlfalahDBSync.client()) || null;
+  }
+
+  function _keys(){
+    var a=[];
+    for(var i=0;i<localStorage.length;i++){
+      var k=localStorage.key(i);
+      if(k&&k.indexOf(PFX)===0)a.push(k);
+    }
+    return a.sort(function(a,b){return parseInt(a.replace(PFX,''))-parseInt(b.replace(PFX,''));});
+  }
+
+  function _get(k){
+    try{
+      if(k && k.indexOf(RFX)===0) return _remoteMap[k] || null;
+      return JSON.parse(localStorage.getItem(k)||'null');
+    }catch(e){return null;}
+  }
+
+  function _toast(msg,color){
+    var el=document.getElementById('wkm-toast');
+    if(!el){el=document.createElement('div');el.id='wkm-toast';
+      el.style.cssText='position:fixed;bottom:72px;left:50%;transform:translateX(-50%);padding:9px 22px;border-radius:22px;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;z-index:99999;direction:rtl;box-shadow:0 4px 18px rgba(0,0,0,.2);transition:opacity .3s;';
+      document.body.appendChild(el);
+    }
+    el.style.background=color||'#0c447c';el.style.color='#fff';el.style.opacity='1';el.textContent=msg;
+    clearTimeout(el._t);el._t=setTimeout(function(){el.style.opacity='0';},3000);
+  }
+
+  function _updateLabel(){
+    var lbl=document.getElementById('wkm-cur-label');if(!lbl)return;
+    if(_cur){var d=_get(_cur)||{};var wn=d&&d.wnum?d.wnum:(_cur.indexOf(PFX)===0?_cur.replace(PFX,''):(d.week_number||''));var s=d&&d.wstart?d.wstart:'—';var e=d&&d.wend?d.wend:'—';lbl.textContent='الأسبوع '+(wn||'—')+' | '+s+' ← '+e;}
+    else{lbl.textContent='لم يُختر أسبوع — اضغط ➕';}
+  }
+
+  function _safeJson(x){
+    if(!x) return null;
+    if(typeof x==='object') return x;
+    try{return JSON.parse(x);}catch(e){return null;}
+  }
+
+  function _rowToData(row){
+    var d=_safeJson(row.full_data) || _safeJson(row.tasks) || _safeJson(row.notes) || {};
+    if(typeof d!=='object' || Array.isArray(d)) d={};
+    if(!d.wnum && row.week_number!=null) d.wnum=String(row.week_number);
+    if(!d.wstart && row.work_date) d.wstart=row.work_date;
+    if(!d.week_title && row.week_title) d.week_title=row.week_title;
+    if(!d.wstatus && row.work_type) d.wstatus=row.work_type;
+    if(!d._savedAtAr && row.updated_at) d._savedAtAr=new Date(row.updated_at).toLocaleString('ar-AE');
+    if(!d._savedAt && row.updated_at) d._savedAt=row.updated_at;
+    d._db_id=row.id;
+    d._fromSupabase=true;
+    return d;
+  }
+
+  function _deletedDbIds(){
+    try{return JSON.parse(localStorage.getItem('wkm_deleted_db_ids')||'[]')||[];}catch(e){return [];}
+  }
+
+  function _markDeletedDbId(id){
+    if(id==null)return;
+    var a=_deletedDbIds().map(String);
+    if(a.indexOf(String(id))<0){a.push(String(id));localStorage.setItem('wkm_deleted_db_ids',JSON.stringify(a));}
+  }
+
+  function _sameWeekData(a,b){
+    if(!a||!b)return false;
+    var aw=(a.wnum||a.week_number||'').toString();
+    var bw=(b.wnum||b.week_number||'').toString();
+    var as=(a.wstart||a.work_date||'').toString();
+    var bs=(b.wstart||b.work_date||'').toString();
+    var ae=(a.wend||'').toString();
+    var be=(b.wend||'').toString();
+    return !!aw && aw===bw && (as===bs || (!as&&!bs)) && (ae===be || (!ae&&!be));
+  }
+
+  function _purgeLocalMatches(d, keepKey){
+    try{
+      _keys().forEach(function(lk){
+        var ld=_get(lk);
+        if(lk===keepKey || _sameWeekData(ld,d)) localStorage.removeItem(lk);
+      });
+      if(localStorage.getItem('falah_wp_final')){
+        var fd=_safeJson(localStorage.getItem('falah_wp_final'));
+        if(_sameWeekData(fd,d)) localStorage.removeItem('falah_wp_final');
+      }
+    }catch(e){console.error(e);}
+  }
+
+  function _uniqueKeys(remoteKeys, localKeys){
+    var out=[];
+    var seen=[];
+    (remoteKeys||[]).concat(localKeys||[]).forEach(function(k){
+      var d=_get(k)||{};
+      var sig=[d.wnum||d.week_number||'',d.wstart||d.work_date||'',d.wend||'',d._db_id||''].join('|');
+      if(seen.indexOf(sig)===-1){seen.push(sig);out.push(k);}
+    });
+    return out;
+  }
+
+  async function _fetchRemote(){
+    var c=_client();
+    if(!c) return [];
+    var r=await c.from('daily_work_logs').select('*').order('updated_at',{ascending:false}).limit(100);
+    if(r.error){console.error(r.error);_toast('⚠️ تعذر قراءة الأسابيع من القاعدة','#b8860b');return [];} 
+    var deleted=_deletedDbIds().map(String);
+    _remoteMap={};
+    _remote=(r.data||[]).filter(function(row){return deleted.indexOf(String(row.id))===-1;}).map(function(row){
+      var d=_rowToData(row);
+      var k=RFX+(row.id!=null?row.id:Math.random().toString(36).slice(2));
+      _remoteMap[k]=d;
+      return k;
+    });
+    return _remote;
+  }
+
+  function _save(){
+    if(typeof getFormData!=='function'){_toast('⚠️ الدالة getFormData غير موجودة','#991b1b');return false;}
+    var d=getFormData();
+    var wn=(d.wnum||'').toString().replace(/[^0-9]/g,'');
+    if(!wn){_toast('⚠️ أدخل رقم الأسبوع أولاً','#b8860b');return false;}
+    var k=PFX+wn;
+    d._savedAt=new Date().toISOString();
+    d._savedAtAr=new Date().toLocaleString('ar-AE');
+    localStorage.setItem(k,JSON.stringify(d));
+    localStorage.setItem('falah_wp_final',JSON.stringify(d));
+    _cur=k;_updateLabel();
+    if(window.ScheduleImportPreview && ScheduleImportPreview._saveDataToDatabase){
+      ScheduleImportPreview._saveDataToDatabase(d).then(function(){
+        _toast('💾 الأسبوع '+wn+' محفوظ في قاعدة البيانات','#0e7f70');
+      }).catch(function(err){
+        console.error(err);
+        _toast('⚠️ حُفظ على الجهاز فقط، وفشل حفظ القاعدة: '+(err.message||err),'#991b1b');
+      });
+    }else{
+      _toast('✅ الأسبوع '+wn+' محفوظ على الجهاز','#0e7f70');
+    }
+    return true;
+  }
+
+  async function _load(k){
+    var d=_get(k);
+    if(!d && k && k.indexOf(RFX)===0){ await _fetchRemote(); d=_get(k); }
+    if(!d){_toast('⚠️ لا توجد بيانات لهذا الأسبوع','#991b1b');return;}
+    if(typeof setFormData==='function')setFormData(d);
+    if(d._pills && typeof setSelectedWork==='function')setSelectedWork(d._pills);
+    if(typeof syncToReport==='function')setTimeout(syncToReport,150);
+    _cur=k;_updateLabel();
+    var wn=d.wnum||d.week_number||(k.indexOf(PFX)===0?k.replace(PFX,''):'');
+    _toast('📂 تم تحميل الأسبوع '+(wn||''),'#0c447c');
+    WKM.close();
+    if(typeof showPage==='function')showPage('pg-week','📋 الأسبوع والحضور','nav-week');
+  }
+
+  function _itemHtml(k){
+    var d=_get(k)||{};
+    var wn=d.wnum||d.week_number||(k.indexOf(PFX)===0?k.replace(PFX,''):'—');
+    var s=d.wstart||'—';var e=d.wend||'—';
+    var st=d.wstatus||d.work_type||'—';
+    var sv=d._savedAtAr?('حُفظ: '+d._savedAtAr):(d._savedAt?('حُفظ: '+new Date(d._savedAt).toLocaleString('ar-AE')):'');
+    var isCur=(k===_cur);
+    var src=(k.indexOf(RFX)===0?'قاعدة البيانات':'الجهاز');
+    return '<div class="wkm-week-row'+(isCur?' current-wk':'')+'" data-wkm-key="'+k+'">'
+      +'<div class="wkm-wnum">'+wn+'</div>'
+      +'<div class="wkm-winfo"><div class="wkm-dates">'+s+' ← '+e+'</div><div class="wkm-wstatus">'+st+(sv?' | '+sv:'')+' | '+src+'</div></div>'
+      +'<div class="wkm-wactions">'
+      +'<button type="button" class="wkm-load-btn" data-wkm-open="'+k+'">📂 فتح</button>'
+      +'<button type="button" class="wkm-del-btn" data-wkm-del="'+k+'">🗑️ حذف</button>'
+      +'</div></div>';
+  }
+
+  async function _render(){
+    var body=document.getElementById('wkm-list-body');if(!body)return;
+    body.innerHTML='<div class="wkm-empty">⏳ جارٍ تحميل الأسابيع من القاعدة...</div>';
+    var localKeys=_keys().slice().reverse();
+    var remoteKeys=[];
+    try{ remoteKeys=await _fetchRemote(); }catch(e){ console.error(e); }
+    var keys=_uniqueKeys(remoteKeys,localKeys);
+    if(!keys.length){body.innerHTML='<div class="wkm-empty">📭 لا توجد أسابيع<br><br>اضغط <strong>➕ أسبوع جديد</strong></div>';return;}
+    body.innerHTML=keys.map(_itemHtml).join('');
+    _updateLabel();
+  }
+
+  async function _del(k,e){
+    if(e)e.stopPropagation();
+    var d=_get(k)||{};
+    var wn=d.wnum||d.week_number||(k&&k.indexOf(PFX)===0?k.replace(PFX,''):'');
+
+    if(k && k.indexOf(RFX)===0){
+      var dbid=d._db_id;
+      if(!dbid){_toast('⚠️ لا يوجد رقم قاعدة لهذا الأسبوع','#991b1b');return;}
+      if(!confirm('حذف الأسبوع '+(wn||'المحدد')+' من القاعدة؟'))return;
+      var c=_client();
+      if(!c){_toast('⚠️ لا يوجد اتصال بقاعدة البيانات','#991b1b');return;}
+      try{
+        var r=await c.from('daily_work_logs').delete().eq('id',dbid);
+        if(r.error){console.error(r.error);_toast('❌ فشل حذف الأسبوع من القاعدة','#991b1b');return;}
+        _markDeletedDbId(dbid);
+        _purgeLocalMatches(d,k);
+        delete _remoteMap[k];
+        _remote=_remote.filter(function(x){return x!==k;});
+        var rowEl=document.querySelector('[data-wkm-key="'+k+'"]');
+        if(rowEl) rowEl.remove();
+        if(_cur===k)_cur=null;
+        await _render();
+        _toast('🗑️ تم حذف الأسبوع من القاعدة والقائمة','#991b1b');
+        return;
+      }catch(err){console.error(err);_toast('❌ خطأ أثناء الحذف من القاعدة','#991b1b');return;}
+    }
+
+    if(!confirm('حذف الأسبوع '+(wn||'المحدد')+' من الجهاز؟'))return;
+    _purgeLocalMatches(d,k);
+    localStorage.removeItem(k);
+    var rowEl=document.querySelector('[data-wkm-key="'+k+'"]');
+    if(rowEl) rowEl.remove();
+    if(_cur===k)_cur=null;
+    _render();_toast('🗑️ تم الحذف من الجهاز والقائمة','#991b1b');
+  }
+
+  function _bindModalClicks(){
+    document.addEventListener('click',function(e){
+      var openBtn=e.target.closest && e.target.closest('[data-wkm-open]');
+      if(openBtn){e.preventDefault();e.stopPropagation();_load(openBtn.getAttribute('data-wkm-open'));return false;}
+      var delBtn=e.target.closest && e.target.closest('[data-wkm-del]');
+      if(delBtn){e.preventDefault();e.stopPropagation();_del(delBtn.getAttribute('data-wkm-del'),e);return false;}
+      var row=e.target.closest && e.target.closest('.wkm-week-row[data-wkm-key]');
+      if(row && !e.target.closest('button')){e.preventDefault();_load(row.getAttribute('data-wkm-key'));return false;}
+    },true);
+  }
+
+  return {
+    _load:_load,_del:_del,
+    newWeek:function(){
+      /* زر أسبوع جديد — تفريغ كامل وآمن دون المساس بالحفظ أو التصميم */
+      var wnEl = document.getElementById('wnum');
+      var oldWn = parseInt((wnEl && wnEl.value ? wnEl.value : '0').toString().replace(/[^0-9]/g,''),10) || 0;
+
+      var keys = _keys();
+      var mx = 0;
+      keys.forEach(function(k){
+        var n = parseInt(k.replace(PFX,''),10);
+        if(!isNaN(n) && n > mx) mx = n;
+      });
+      _remote.forEach(function(k){var d=_get(k)||{};var n=parseInt(d.wnum||d.week_number,10);if(!isNaN(n)&&n>mx)mx=n;});
+
+      var nw = oldWn ? oldWn + 1 : (mx + 1 || 1);
+
+      var prevStart = document.querySelector('[name="wstart"]') ? document.querySelector('[name="wstart"]').value : '';
+      var prevEnd   = document.querySelector('[name="wend"]') ? document.querySelector('[name="wend"]').value : '';
+
+      var form = document.getElementById('wForm');
+      if(form) form.reset();
+
+      if(wnEl) wnEl.value = nw;
+
+      try{
+        var sEl = document.querySelector('[name="wstart"]');
+        var eEl = document.querySelector('[name="wend"]');
+        function fmt(d){ return d.toISOString().split('T')[0]; }
+        if(prevStart && sEl){ var ns = new Date(prevStart); ns.setDate(ns.getDate()+7); sEl.value = fmt(ns); }
+        if(prevEnd && eEl){ var ne = new Date(prevEnd); ne.setDate(ne.getDate()+7); eEl.value = fmt(ne); }
+      }catch(er){}
+
+      if(typeof DAYS !== 'undefined'){
+        DAYS.forEach(function(_,i){
+          var ain = document.getElementById('ain'+i);
+          var aout = document.getElementById('aout'+i);
+          var atype = document.getElementById('atype'+i);
+          var anote = document.getElementById('anote'+i);
+          var dloc = document.getElementById('dloc'+i);
+          var dtasks = document.getElementById('dtasks'+i);
+          if(ain) ain.value = '08:00';
+          if(aout) aout.value = (i===4 ? '11:30' : '14:00');
+          if(atype) atype.selectedIndex = 0;
+          if(anote) anote.value = '';
+          if(dloc) dloc.selectedIndex = 0;
+          if(dtasks) dtasks.value = '';
+          if(typeof calcHrs === 'function') calcHrs(i);
+          if(typeof styleRow === 'function') styleRow(i);
+        });
+      }
+
+      document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('sel'); });
+      document.querySelectorAll('.pill-result').forEach(function(r){
+        r.textContent = '— لم يُختر بعد —';
+        r.style.color = '#94a3b8';
+        r.style.fontStyle = 'italic';
+      });
+
+      var reportBox = document.getElementById('reportBox');
+      var mgrBox = document.getElementById('mgrBox');
+      if(reportBox) reportBox.style.display = 'none';
+      if(mgrBox) mgrBox.style.display = 'none';
+
+      if(typeof updateAttSumm === 'function') updateAttSumm();
+      if(typeof syncToReport === 'function') setTimeout(syncToReport, 120);
+      if(typeof showPage === 'function') showPage('pg-week','📋 الأسبوع والحضور','nav-week');
+
+      _cur = null;
+      _updateLabel();
+      _toast('📝 تم تجهيز الأسبوع رقم '+nw+' للتعبئة','#0e7f70');
+      return false;
+    },
+    showList:function(){var ov=document.getElementById('wkm-overlay');if(ov)ov.style.display='flex';_render();},
+    close:function(){var ov=document.getElementById('wkm-overlay');if(ov)ov.style.display='none';},
+    save:_save,
+    init:function(){
+      _bindModalClicks();
+      var old=localStorage.getItem('falah_wp_final');
+      if(old){try{var d=JSON.parse(old);var wn=(d.wnum||'1').toString().replace(/[^0-9]/g,'')||'1';var k=PFX+wn;if(!localStorage.getItem(k))localStorage.setItem(k,old);_cur=k;if(typeof setFormData==='function')setFormData(d);if(typeof syncToReport==='function')setTimeout(syncToReport,300);}catch(er){}}
+      _updateLabel();
+    }
+  };
+})();
+
+saveDraft=function(){WKM.save();};
+loadDraft=function(){
+  /* سجل الأسابيع يقرأ من Supabase أولاً ثم من الجهاز، لذلك لا نمنعه إذا لم توجد نسخة محلية */
+  WKM.showList();
+};
+
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',WKM.init);}
+else{setTimeout(WKM.init,600);}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2?v=20260502b"></script>
+<script src="../supabase-config.js?v=20260502b"></script>
+<script src="../assets/db-sync.js?v=20260502b"></script>
+<script src="../assets/reset-demo-data.js?v=20260510f"></script>
 </body>
 </html>

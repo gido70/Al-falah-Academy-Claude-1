@@ -1,234 +1,165 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منصة مكتبات أكاديمية الفلاح 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="js/styles.css">
-<style>
-/* ── HERO ── */
-.hero{background:var(--grad);border-radius:22px;padding:30px 36px;margin-bottom:28px;color:#fff;position:relative;overflow:hidden;}
-.hero::before{content:"";position:absolute;top:-70px;right:-70px;width:280px;height:280px;background:rgba(255,255,255,.05);border-radius:50%;}
-.hero::after{content:"";position:absolute;bottom:-50px;left:-50px;width:200px;height:200px;background:rgba(255,255,255,.04);border-radius:50%;}
-.hero-inner{display:flex;align-items:center;gap:26px;position:relative;z-index:1;}
-.hero-logo img{height:90px;width:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35));}
-.hero-text .t1{font-size:26px;font-weight:900;line-height:1.2;}
-.hero-text .t2{font-size:14px;opacity:.88;margin-top:8px;line-height:1.7;}
-.hero-days{flex-shrink:0;background:rgba(255,255,255,.18);border:2.5px solid rgba(255,255,255,.35);border-radius:20px;padding:18px 24px;text-align:center;}
-.hd-n{font-size:36px;font-weight:900;color:#ffe07a;}
-.hd-l{font-size:12px;opacity:.85;margin-top:2px;font-weight:700;}
+<!doctype html><html lang="ar" dir="rtl"><head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>منصة تطوير مكتبات أكاديمية الفلاح</title><style>@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');:root{--navy:#0c447c;--blue:#185fa5;--teal:#0f9d8a;--gold:#ba7517;--amber:#f0a500;--bg:#e8f0fa;--text:#0c2a4a;--muted:#5a7fa8;--border:#b8d4f0;--green:#0f6e56;--red:#c0392b;--grad:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56)}*{box-sizing:border-box}body{margin:0;font-family:'Cairo',sans-serif;background:linear-gradient(135deg,#e8f0fa,#f7fbff);color:var(--text);direction:rtl}.wrap{max-width:1180px;margin:auto;padding:16px 16px 90px}.hero{background:var(--grad);border-radius:24px;padding:28px 24px;color:white;text-align:center;box-shadow:0 14px 36px rgba(12,68,124,.25);position:relative;overflow:hidden}.logo{display:block;max-width:270px;width:72%;margin:0 auto 14px;background:rgba(255,255,255,.96);padding:12px 20px;border-radius:18px}.hero h1{margin:0;font-size:30px;font-weight:900}.hero p{margin:8px 0 0;color:rgba(255,255,255,.86)}.home-return-btn{position:fixed;top:14px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;background:linear-gradient(135deg,#0c447c,#185fa5,#0f9d8a);color:#fff!important;text-decoration:none;font-weight:900;font-size:13px;box-shadow:0 6px 18px rgba(12,68,124,.28);border:1px solid rgba(255,255,255,.45)}.nav,.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:14px;text-decoration:none;border:0;font-family:'Cairo',sans-serif;font-weight:800;cursor:pointer}.primary{background:white;color:var(--navy)}.gold{background:linear-gradient(135deg,var(--gold),var(--amber));color:white}.teal{background:linear-gradient(135deg,var(--green),var(--teal));color:white}.outline{background:#fff;border:2px solid var(--border);color:var(--navy)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}.card{background:white;border:1px solid var(--border);border-radius:20px;padding:18px;box-shadow:0 4px 18px rgba(12,68,124,.08)}.card h2,.card h3{margin:0 0 10px;color:var(--navy);font-weight:900}.muted{color:var(--muted);font-size:14px}.main-card{min-height:210px;display:flex;flex-direction:column;justify-content:space-between;border-right:7px solid var(--gold)}.main-card .ico{font-size:34px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.kpi{text-align:center;background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px}.kpi strong{font-size:30px;color:var(--navy);display:block}table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden}th{background:var(--navy);color:#fff;padding:10px;font-size:13px}td{border-bottom:1px solid #e8eef5;padding:10px;text-align:center;font-size:13px}td:first-child,th:first-child{text-align:right}.tag{display:inline-block;padding:4px 10px;border-radius:999px;background:#e6f1fb;color:var(--navy);font-size:12px;font-weight:800}.note{border-right:5px solid var(--gold);background:#fff8e6;border-radius:14px;padding:14px;line-height:1.9}.footer{text-align:center;color:var(--muted);font-size:12px;margin:28px 0}input,select,textarea{width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:12px;font-family:'Cairo',sans-serif;font-size:14px;background:#f8fbff;color:var(--text);outline:none}textarea{min-height:100px;resize:vertical}label{display:block;font-weight:800;color:var(--navy);margin:10px 0 5px}.filebox{border:2px dashed var(--border);border-radius:18px;padding:16px;background:#f8fbff}.file-list{display:grid;gap:8px;margin-top:12px}.file-row{display:flex;justify-content:space-between;gap:8px;align-items:center;background:white;border:1px solid var(--border);border-radius:12px;padding:10px;font-size:13px}.ok{color:var(--green);font-weight:900}.warn{color:var(--red);font-weight:900}@media(max-width:850px){.grid,.grid2,.kpis{grid-template-columns:1fr}.hero h1{font-size:22px}.wrap{padding:10px 10px 90px}.logo{max-width:220px}.home-return-btn{top:auto;bottom:16px;right:16px}.card{padding:14px}}@media print{.home-return-btn,.nav,.actions,.no-print{display:none!important}.hero{box-shadow:none}.card{break-inside:avoid;box-shadow:none}}.alfalah-fixed-home{position:fixed;top:14px;right:14px;z-index:999999;background:linear-gradient(135deg,#0c447c,#0f9d8a);color:#fff!important;text-decoration:none!important;padding:10px 16px;border-radius:22px;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.22)}@media(max-width:700px){.alfalah-fixed-home{top:auto;bottom:12px;right:12px}}
+/* === FINAL MAIN CHANNELS 2x2 LAYOUT === */
+.channels-title{margin:26px 0 16px;text-align:center;font-size:25px;font-weight:900;color:var(--navy);}
+.channels-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:18px 0 28px;}
+.channel-card{min-height:245px;padding:28px 28px 24px;border-radius:24px;border:1px solid var(--border);border-right:9px solid var(--gold);background:linear-gradient(180deg,#fff,#fafdff);box-shadow:0 10px 30px rgba(12,68,124,.12);display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:.2s ease;}
+.channel-card:hover{transform:translateY(-4px);box-shadow:0 16px 38px rgba(12,68,124,.18);}
+.channel-card:before{content:attr(data-num);position:absolute;top:18px;left:22px;width:46px;height:46px;border-radius:15px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 8px 20px rgba(12,68,124,.22);}
+.channel-card .ico{font-size:42px;margin-bottom:12px;}
+.channel-card h2{font-size:28px;line-height:1.45;margin:0 0 12px;color:var(--navy);font-weight:900;}
+.channel-card .muted{font-size:16px;line-height:1.9;color:var(--muted);max-width:92%;}
+.channel-card .btn{width:100%;justify-content:center;font-size:17px;padding:15px 22px;border-radius:15px;margin-top:18px;}
+.channel-card.report{border-right-color:var(--teal);}
+.channel-card.report:before{background:linear-gradient(135deg,var(--green),var(--teal));}
+@media(max-width:850px){.channels-grid{grid-template-columns:1fr;gap:16px}.channels-title{font-size:21px}.channel-card{min-height:220px;padding:22px 18px}.channel-card h2{font-size:23px}.channel-card .muted{font-size:14px;max-width:100%}.channel-card:before{width:40px;height:40px;font-size:19px}.channel-card .btn{font-size:15px}}
 
-/* ── MISSION BAR ── */
-.mission-bar{background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:var(--card-shadow);padding:20px 26px;margin-bottom:24px;}
-.mb-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.mb-title{font-size:15px;font-weight:900;color:var(--navy);}
-.mb-pct{font-size:22px;font-weight:900;color:var(--navy);}
-.mb-bar{height:14px;background:#dceefb;border-radius:7px;overflow:hidden;margin-bottom:10px;}
-.mb-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--navy),var(--teal));transition:width 1s ease;}
-.mb-stats{display:flex;gap:20px;flex-wrap:wrap;}
-.mbs{font-size:13px;color:var(--muted);font-weight:600;}
-.mbs strong{color:var(--navy);}
-
-/* ── 5 MAIN CARDS ── */
-.main-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:28px;}
-.main-card{background:#fff;border:2.5px solid var(--border);border-radius:22px;padding:26px 22px;cursor:pointer;transition:all .22s;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:flex-start;position:relative;overflow:hidden;}
-.main-card::before{content:"";position:absolute;top:0;right:0;width:5px;height:100%;background:var(--border);transition:background .2s;}
-.main-card:hover{transform:translateY(-5px);box-shadow:0 14px 36px rgba(12,68,124,.14);}
-.main-card:hover::before{background:var(--card-accent,var(--blue));}
-.main-card:hover .mc-arrow{opacity:1;transform:translateX(-4px);}
-.mc-icon{font-size:44px;margin-bottom:14px;}
-.mc-num{position:absolute;top:14px;left:16px;font-size:11px;font-weight:900;color:var(--muted);letter-spacing:1px;background:var(--bg);padding:2px 9px;border-radius:20px;border:1px solid var(--border);}
-.mc-title{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:8px;line-height:1.3;}
-.mc-desc{font-size:13px;color:var(--muted);line-height:1.7;flex:1;}
-.mc-arrow{margin-top:16px;font-size:13px;font-weight:700;color:var(--blue);opacity:.6;transition:all .2s;}
-.mc-tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:10px;}
-
-/* card colors */
-.card-eval   {--card-accent:#185fa5; border-color:#b8d4f0; background:linear-gradient(145deg,#f0f7ff,#fff);}
-.card-sched  {--card-accent:#0f9d8a; border-color:#b5e5db; background:linear-gradient(145deg,#f0fbf8,#fff);}
-.card-admin  {--card-accent:#ba7517; border-color:#f5d88a; background:linear-gradient(145deg,#fffbee,#fff);}
-.card-compare{--card-accent:#5b21b6; border-color:#d8c5f5; background:linear-gradient(145deg,#f5f0ff,#fff);}
-.card-ai     {--card-accent:#0f6e56; border-color:#9fe0c9; background:linear-gradient(145deg,#f0fbf6,#fff);}
-.card-admin{grid-column:1/-1;}
-
-/* ── SCHOOLS STRIP ── */
-.school-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:24px;}
-.ss-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:14px 10px;text-align:center;text-decoration:none;color:var(--text);transition:all .2s;}
-.ss-card:hover{border-color:var(--blue);transform:translateY(-2px);}
-.ss-card.done{border-color:var(--teal);background:#f0fbf6;}
-.ss-icon{font-size:22px;margin-bottom:5px;}
-.ss-name{font-size:11px;font-weight:900;color:var(--navy);line-height:1.3;}
-.ss-score{font-size:18px;font-weight:900;color:var(--navy);margin-top:4px;}
-.ss-status{font-size:10px;font-weight:700;margin-top:3px;}
-
-@media(max-width:900px){.main-grid{grid-template-columns:1fr 1fr;} .card-admin{grid-column:auto;} .school-strip{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:600px){.main-grid{grid-template-columns:1fr;} .card-admin{grid-column:auto;} .hero-inner{flex-direction:column;text-align:center;} .school-strip{grid-template-columns:repeat(2,1fr);}}
-</style>
-</head>
-<body>
-
-<div class="wrap">
-
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-inner">
-      <div class="hero-logo">
-        <img id="mainLogo" src="" alt="أكاديمية الفلاح" onerror="this.style.display='none'">
-      </div>
-      <div class="hero-text">
-        <div class="t1">🌟 منصة مكتبات أكاديمية الفلاح<br>Library Excellence Platform 2026</div>
-        <div class="t2">منصة متكاملة لإدارة مهمة تطوير مراكز مصادر التعلم<br>التقييم الميداني • الدوام والمهام • التقارير الإدارية • الذكاء الاصطناعي</div>
-      </div>
-      <div class="hero-days">
-        <div class="hd-n" id="heroDay">—</div>
-        <div class="hd-l">يوم منجز من المهمة</div>
+/* === DIRECTOR FEEDBACK INBOX === */
+.director-inbox{margin:18px 0 24px;background:linear-gradient(135deg,#ffffff,#f6fbff);border:1.8px solid var(--border);border-right:8px solid var(--teal);border-radius:24px;padding:20px;box-shadow:0 10px 28px rgba(12,68,124,.11);position:relative;overflow:hidden;}
+.director-inbox:before{content:"";position:absolute;left:-70px;top:-70px;width:180px;height:180px;border-radius:50%;background:rgba(15,157,138,.08)}
+.inbox-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;position:relative;z-index:1}.inbox-title{display:flex;align-items:center;gap:12px}.inbox-icon{width:56px;height:56px;border-radius:18px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 20px rgba(12,68,124,.2)}.inbox-title h2{font-size:24px;margin:0;color:var(--navy)}.inbox-title p{margin:3px 0 0;color:var(--muted);font-weight:700}.inbox-badge{min-width:48px;height:48px;border-radius:999px;background:linear-gradient(135deg,#b83232,#e24b4a);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 8px 18px rgba(184,50,50,.25)}.inbox-badge.zero{background:linear-gradient(135deg,#5a7ea8,#8db5e5)}.inbox-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.inbox-list{display:none;margin-top:14px;gap:10px}.inbox-list.show{display:grid}.inbox-item{background:#f8fbff;border:1px solid var(--border);border-radius:16px;padding:12px;display:grid;gap:6px}.inbox-item.unread{border-right:5px solid var(--red);background:#fffafa}.inbox-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.inbox-pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;background:#e6f1fb;color:var(--navy);font-size:12px;font-weight:900}.inbox-pill.urgent{background:#fcebeb;color:#791f1f}.inbox-pill.ok{background:#e1f5ee;color:#085041}.inbox-empty{background:#fff8e6;border-right:5px solid var(--gold);border-radius:14px;padding:12px;color:#5c3b00;font-weight:700}.inbox-empty.okmsg{background:#e1f5ee;border-right-color:var(--teal);color:#085041}.inbox-empty.errmsg{background:#fcebeb;border-right-color:var(--red);color:#791f1f}.inbox-comment{font-size:14px;line-height:1.9;color:var(--text)}
+@media(max-width:850px){.director-inbox{padding:16px}.inbox-title h2{font-size:20px}.inbox-icon{width:48px;height:48px}.inbox-badge{width:42px;height:42px;font-size:18px}.inbox-actions .btn{flex:1 1 140px;justify-content:center}}
+</style></head><body><a class="alfalah-fixed-home" href="index.html">🏠 الرئيسية</a><a class="home-return-btn" href="./index.html">🏠 الرئيسية</a><div class="wrap"><section class="hero"><img class="logo" src="./assets/logo.png" alt="شعار أكاديمية الفلاح"><h1>منصة تطوير مكتبات أكاديمية الفلاح</h1><p>واجهة موحدة للتقييم، الدوام، المتابعة، التقارير، ومشاركة الإدارة</p><div class="nav"><a class="btn primary" href="index.html">🏠 الرئيسية</a><a class="btn gold" href="reports/index.html">📊 التقرير النهائي</a></div></section><section class="director-inbox" id="directorInbox">
+  <div class="inbox-head">
+    <div class="inbox-title">
+      <div class="inbox-icon">💬</div>
+      <div>
+        <h2>ردود وتعليقات الإدارة</h2>
+        <p>تظهر هنا ردود المديرين القادمة من روابط التقارير.</p>
       </div>
     </div>
+    <div id="directorInboxBadge" class="inbox-badge zero">0</div>
   </div>
-
-  <!-- MISSION PROGRESS -->
-  <div class="mission-bar">
-    <div class="mb-top">
-      <div class="mb-title">📈 تقدم المهمة — أبريل ← ديسمبر 2026</div>
-      <div class="mb-pct" id="mbPct">—%</div>
-    </div>
-    <div class="mb-bar"><div class="mb-fill" id="mbFill" style="width:0%"></div></div>
-    <div class="mb-stats">
-      <div class="mbs">📅 أيام منجزة: <strong id="mbElapsed">—</strong></div>
-      <div class="mbs">⏳ متبقية: <strong id="mbLeft">—</strong></div>
-      <div class="mbs">✅ تقييمات مكتملة: <strong id="mbEvals">—/6</strong></div>
-      <div class="mbs">📍 المرحلة: <strong id="mbPhase">—</strong></div>
-    </div>
+  <div class="inbox-actions">
+    <button class="btn teal" type="button" onclick="toggleDirectorInbox()">فتح الردود</button>
+    <button class="btn outline" type="button" onclick="refreshDirectorInbox()">تحديث</button>
+    <button class="btn gold" type="button" onclick="markDirectorFeedbackRead()">تعليم كمقروء</button>
+    <a class="btn outline" href="management/index.html">صفحة مشاركة الإدارة</a>
   </div>
-
-  <!-- 5 MAIN SECTIONS -->
-  <div class="sec-title">🗂️ الأقسام الرئيسية الخمسة</div>
-  <div class="main-grid">
-
-    <a href="evaluation/" class="main-card card-eval">
-      <div class="mc-num">01</div>
-      <div class="mc-icon">📋</div>
-      <div class="mc-title">نظام تقييم المكتبات</div>
-      <div class="mc-desc">تقييم شامل لمكتبات المدارس الست بمعايير احترافية — المجموعات، البيئة، التقنية، الكادر، الخدمات</div>
-      <div class="mc-tag" style="background:#e6f1fb;color:#0c447c">6 مكتبات + تقرير AI</div>
-      <div class="mc-arrow">فتح نظام التقييم ←</div>
-    </a>
-
-    <a href="schedule/" class="main-card card-sched">
-      <div class="mc-num">02</div>
-      <div class="mc-icon">🗓️</div>
-      <div class="mc-title">جدول الدوام والمهام اليومية</div>
-      <div class="mc-desc">تسجيل الحضور والانصراف، المهام اليومية، الزيارات الميدانية، الاجتماعات، والمتابعة الأسبوعية</div>
-      <div class="mc-tag" style="background:#e1f5ee;color:#085041">حضور + مهام + زيارات</div>
-      <div class="mc-arrow">فتح جدول الدوام ←</div>
-    </a>
-
-    <a href="ai-eval/" class="main-card card-ai">
-      <div class="mc-num">05</div>
-      <div class="mc-icon">🤖</div>
-      <div class="mc-title">تقييم وتحليل الذكاء الاصطناعي</div>
-      <div class="mc-desc">واجهة متخصصة لإنشاء تقارير AI احترافية لكل مكتبة — تحليل عميق، توصيات دقيقة، صياغة مهنية</div>
-      <div class="mc-tag" style="background:#e1f5ee;color:#085041">Claude Sonnet 4</div>
-      <div class="mc-arrow">فتح واجهة AI ←</div>
-    </a>
-
-    <a href="admin-report/" class="main-card card-admin">
-      <div class="mc-num">03</div>
-      <div class="mc-icon">📤</div>
-      <div class="mc-title">صفحة تقارير الإدارة — المشاركة الأسبوعية</div>
-      <div class="mc-desc">لوحة احترافية مخصصة للمدير المباشر ومدير الإدارة — تقرير شامل يُرسَل كل جمعة يتضمن الإنجازات والزيارات والأرقام والتحليل الذكي. رابط قابل للمشاركة عبر واتساب أو بريد إلكتروني — يُبهر من يراه بدقته ومهنيته</div>
-      <div class="mc-tag" style="background:#faeeda;color:#633806">🔗 رابط مشاركة + تقرير AI أسبوعي</div>
-      <div class="mc-arrow">فتح صفحة الإدارة ←</div>
-    </a>
-
-    <a href="compare/" class="main-card card-compare" style="grid-column:span 2">
-      <div class="mc-num">04</div>
-      <div class="mc-icon">📊</div>
-      <div class="mc-title">صفحة المقارنة والتقارير النهائية</div>
-      <div class="mc-desc">مقارنة شاملة بين المدارس الست — مخططات تفاعلية، جداول نقاط، ترتيب المدارس، وتقرير نهائي مقارن بالذكاء الاصطناعي لرفعه للإدارة التعليمية</div>
-      <div class="mc-tag" style="background:#f0ecff;color:#5b21b6">مقارنة + تقارير ختامية</div>
-      <div class="mc-arrow">فتح المقارنة ←</div>
-    </a>
-
+  <div id="directorInboxStatus" class="inbox-empty" style="display:none;margin-top:12px"></div>
+  <div id="directorInboxList" class="inbox-list">
+    <div class="inbox-empty">جاري فحص ردود الإدارة...</div>
   </div>
+</section><h2 class="channels-title">القنوات الرئيسية للنظام</h2><section class="channels-grid">
+  <article class="channel-card" data-num="1">
+    <div><div class="ico">📋</div><h2>نظام تقييم المكتبات</h2><p class="muted">تقييم ميداني لكل مكتبة، حفظ في قاعدة البيانات، تقرير تلقائي، وتصدير النتائج.</p></div>
+    <a class="btn teal" href="evaluation/index.html">فتح الصفحة</a>
+  </article>
+  <article class="channel-card" data-num="2">
+    <div><div class="ico">🕘</div><h2>جدول الدوام والمهام اليومية والمتابعة</h2><p class="muted">تسجيل الدخول والخروج، المهام، الزيارات، وساعات العمل الأسبوعية والشهرية.</p></div>
+    <a class="btn teal" href="schedule/index.html">فتح الصفحة</a>
+  </article>
+  <article class="channel-card" data-num="3">
+    <div><div class="ico">📤</div><h2>صفحة مشاركة الإدارة</h2><p class="muted">تقرير أسبوعي شامل للمباشر ومدير الإدارة، مع عرض منظم للمخرجات والمتابعة.</p></div>
+    <a class="btn teal" href="management/index.html">فتح الصفحة</a>
+  </article>
+  <article class="channel-card report" data-num="4">
+    <div><div class="ico">📊</div><h2>التقرير الذكي النهائي</h2><p class="muted">تقرير شامل للتقييمات، الدوام، الزيارات، المكتبات الإضافية، ونقاط القوة والضعف.</p></div>
+    <a class="btn teal" href="reports/index.html">فتح الصفحة</a>
+  </article>
+</section><section class="card"><h2>ملفات المدارس الست</h2><p class="muted">كل مدرسة لها فولدر مستقل للتقييم والشواهد.</p><div class="grid"><div class="card"><h3>الخبيصي</h3><p class="muted">العين — 2026-04-28</p><div class="actions"><a class="btn outline" href="schools/index.html?school=khb&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=khb&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=khb&section=library-documents">النماذج</a></div></div><div class="card"><h3>الجيمي</h3><p class="muted">العين — 2026-04-29</p><div class="actions"><a class="btn outline" href="schools/index.html?school=jmi&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=jmi&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=jmi&section=library-documents">النماذج</a></div></div><div class="card"><h3>الشارقة</h3><p class="muted">الشارقة — 2026-05-05</p><div class="actions"><a class="btn outline" href="schools/index.html?school=shj&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=shj&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=shj&section=library-documents">النماذج</a></div></div><div class="card"><h3>بني ياس</h3><p class="muted">أبوظبي — 2026-05-07</p><div class="actions"><a class="btn outline" href="schools/index.html?school=bny&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=bny&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=bny&section=library-documents">النماذج</a></div></div><div class="card"><h3>محمد بن زايد</h3><p class="muted">أبوظبي — 2026-05-11</p><div class="actions"><a class="btn outline" href="schools/index.html?school=mzd&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=mzd&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=mzd&section=library-documents">النماذج</a></div></div><div class="card"><h3>الدانة</h3><p class="muted">أبوظبي — 2026-05-12</p><div class="actions"><a class="btn outline" href="schools/index.html?school=dan&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=dan&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=dan&section=library-documents">النماذج</a></div></div></div></section><section class="card"><h2>رفع JSON بوضوح</h2><ol><li>افتح صفحة التقييم أو الدوام.</li><li>اضغط زر رفع/استيراد JSON.</li><li>اختر الملف، وستظهر البيانات في مكانها الصحيح.</li><li>ملفات المدرسة تظهر داخل فولدر المدرسة، وسجلات الدوام داخل المتابعة.</li></ol></section><div class="footer">أكاديمية الفلاح — منصة تطوير المكتبات ومراكز مصادر التعلم 2026</div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2?v=20260510f"></script>
+<script src="supabase-config.js?v=20260510f"></script>
+<script src="assets/db-sync.js?v=20260510f"></script>
 
-  <!-- SCHOOLS QUICK ACCESS -->
-  <div class="sec-title">🏫 الوصول السريع لمكتبات المدارس الست</div>
-  <div class="school-strip" id="schoolStrip"></div>
-
-  <!-- SETTINGS LINK -->
-  <div style="text-align:center;padding:16px;background:#fff;border-radius:14px;border:1px solid var(--border);">
-    <a href="settings/" style="color:var(--muted);font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
-      ⚙️ إعدادات الحفظ الدائم على GitHub &nbsp;←
-    </a>
-  </div>
-
-</div>
-
-<script src="js/nav.js"></script>
 <script>
-// Load logo from evaluation page (base64)
-(async()=>{
+function escapeHTML(v){return String(v??'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function localDirectorFeedback(){try{return JSON.parse(localStorage.getItem('director_feedback_local')||'[]')}catch(e){return []}}
+function feedbackLabel(x){const map={all:'شامل',weekly:'أسبوعي',monthly:'شهري',eval:'تقييم مكتبات',work:'دوام وزيارات',special:'موضوع خاص'};return map[x]||x||'تقرير'}
+function schoolLabel(x){const map={all:'كل المدارس',khb:'الخبيصي',jmi:'الجيمي',shj:'الشارقة',bny:'بني ياس',mzd:'محمد بن زايد',dan:'الدانة'};return map[x]||x||'—'}
+function setInboxStatus(msg,type){
+  const st=document.getElementById('directorInboxStatus');
+  if(!st)return;
+  st.textContent=msg||'';
+  st.className='inbox-empty '+(type||'');
+  st.style.display=msg?'block':'none';
+}
+function getSupabaseClient(){
+  if(window.supabaseClient && typeof window.supabaseClient.from==='function') return window.supabaseClient;
+  if(window.falahSupabase && typeof window.falahSupabase.from==='function') return window.falahSupabase;
+  return null;
+}
+async function loadDirectorFeedback(showStatus=false){
+  const badge=document.getElementById('directorInboxBadge');
+  const list=document.getElementById('directorInboxList');
+  if(!badge||!list)return [];
+  let rows=localDirectorFeedback();
+  let source='محلي';
   try{
-    const r = localStorage.getItem('ls_schools/khubaisi.json');
-    // Logo stored separately
-    const logo = localStorage.getItem('falah_logo');
-    if(logo){ document.getElementById('mainLogo').src=logo; document.getElementById('mainLogo').style.display='block'; }
-  }catch(e){}
-})();
-
-// Mission progress
-function calcMission(){
-  const start=new Date('2026-04-13'), end=new Date('2026-12-31'), now=new Date();
-  const total=Math.round((end-start)/86400000);
-  const elapsed=Math.max(0,Math.round((now-start)/86400000));
-  const left=Math.max(0,total-elapsed);
-  const pct=Math.min(100,Math.round(elapsed/total*100));
-  let phase='التأسيس والتخطيط';
-  if(elapsed>17) phase='الزيارات التقييمية';
-  if(elapsed>60) phase='التحليل ورفع التقارير';
-  if(elapsed>120) phase='التطوير والتنفيذ';
-  if(elapsed>210) phase='التقييم الختامي';
-  document.getElementById('heroDay').textContent=elapsed;
-  document.getElementById('mbPct').textContent=pct+'%';
-  document.getElementById('mbElapsed').textContent=elapsed+' يوم';
-  document.getElementById('mbLeft').textContent=left+' يوم';
-  document.getElementById('mbPhase').textContent=phase;
-  setTimeout(()=>{ document.getElementById('mbFill').style.width=pct+'%'; },400);
-}
-calcMission();
-
-// Schools strip
-const SCHOOLS=[
-  {id:'khubaisi',code:'KHB',name:'الخبيصي',city:'العين'},
-  {id:'jeemi',code:'JMI',name:'الجيمي',city:'العين'},
-  {id:'dakhilat',code:'DKH',name:'الدخيلات',city:'الشارجة'},
-  {id:'baniyas',code:'BYS',name:'بني ياس',city:'أبوظبي'},
-  {id:'mbz',code:'MBZ',name:'محمد بن زايد',city:'أبوظبي'},
-  {id:'dana',code:'DNA',name:'الدانة',city:'أبوظبي'},
-];
-
-function renderStrip(){
-  const strip=document.getElementById('schoolStrip');
-  let doneCount=0;
-  strip.innerHTML=SCHOOLS.map(s=>{
-    const raw=localStorage.getItem('ls_schools/'+s.id+'.json')||localStorage.getItem('eval_'+s.id);
-    let score='—', done=false;
-    if(raw){ try{ const d=JSON.parse(raw); score=d.totalScore||'—'; done=!!d.totalScore; doneCount++; }catch(e){} }
-    return `<a href="schools/${s.id}/" class="ss-card ${done?'done':''}">
-      <div class="ss-icon">${done?'✅':'🏫'}</div>
-      <div class="ss-name">${s.name}</div>
-      <div class="ss-score" style="color:${done?'#0f6e56':'#aaa'}">${score}</div>
-      <div class="ss-status" style="color:${done?'#0f6e56':'#aaa'}">${done?'مكتمل':'لم يُقيَّم'}</div>
-    </a>`;
+    const client=getSupabaseClient();
+    if(client){
+      const res=await client.from('director_feedback').select('*').order('created_at',{ascending:false}).limit(20);
+      if(res.error) throw res.error;
+      if(Array.isArray(res.data)){rows=res.data; source='Supabase';}
+    }
+  }catch(e){
+    console.warn('director feedback load failed',e);
+    if(showStatus) setInboxStatus('تعذر جلب الردود من Supabase. سيتم عرض النسخة المحلية إن وجدت. تأكد من إنشاء جدول director_feedback وصلاحياته.','errmsg');
+  }
+  const unread=rows.filter(r=>r.is_read===false || r.is_read===0 || r.is_read==null).length;
+  badge.textContent=unread || rows.length || 0;
+  badge.classList.toggle('zero',!(unread||rows.length));
+  if(!rows.length){
+    list.innerHTML='<div class="inbox-empty">لا توجد ردود من الإدارة حتى الآن.</div>';
+    if(showStatus) setInboxStatus('تم التحديث: لا توجد ردود حتى الآن.','okmsg');
+    return rows;
+  }
+  list.innerHTML=rows.map(r=>{
+    const unreadCls=(r.is_read===false||r.is_read===0||r.is_read==null)?' unread':'';
+    const pr=escapeHTML(r.priority||'عادي');
+    return `<div class="inbox-item${unreadCls}">
+      <div class="inbox-meta">
+        <span class="inbox-pill ok">${escapeHTML(r.decision||'رد إداري')}</span>
+        <span class="inbox-pill ${pr==='عاجل'?'urgent':''}">${pr}</span>
+        <span class="inbox-pill">${feedbackLabel(r.report_type)}</span>
+        <span class="inbox-pill">${schoolLabel(r.school_id)}</span>
+        <span class="inbox-pill">${new Date(r.created_at||Date.now()).toLocaleString('ar-AE')}</span>
+      </div>
+      <div class="inbox-comment">${escapeHTML(r.comment||'لا توجد ملاحظة نصية، فقط اختيار من المدير.')}</div>
+    </div>`
   }).join('');
-  document.getElementById('mbEvals').textContent=doneCount+'/6';
+  if(showStatus) setInboxStatus(`تم التحديث من ${source}: عدد الردود ${rows.length}، غير المقروء ${unread}.`,'okmsg');
+  return rows;
 }
-renderStrip();
-
-// Inject nav (home page = 'home')
-injectNav('home');
+async function refreshDirectorInbox(){
+  const el=document.getElementById('directorInboxList');
+  if(el) el.classList.add('show');
+  setInboxStatus('جاري تحديث ردود الإدارة...','');
+  await loadDirectorFeedback(true);
+}
+function toggleDirectorInbox(){
+  const el=document.getElementById('directorInboxList');
+  if(el){
+    el.classList.toggle('show');
+    if(el.classList.contains('show')) refreshDirectorInbox();
+  }
+}
+async function markDirectorFeedbackRead(){
+  const el=document.getElementById('directorInboxList');
+  if(el) el.classList.add('show');
+  setInboxStatus('جاري تعليم الردود كمقروءة...','');
+  try{
+    const client=getSupabaseClient();
+    if(client){
+      // جميع السجلات عندك تعتبر مقروءة عند الضغط على الزر
+      const res=await client.from('director_feedback').update({is_read:true}).neq('id',0);
+      if(res.error) throw res.error;
+    }
+  }catch(e){
+    console.warn(e);
+    setInboxStatus('لم يتم تحديث Supabase. تأكد من وجود صلاحية UPDATE على جدول director_feedback.','errmsg');
+  }
+  try{
+    let arr=localDirectorFeedback().map(x=>({...x,is_read:true}));
+    localStorage.setItem('director_feedback_local',JSON.stringify(arr));
+  }catch(e){}
+  await loadDirectorFeedback(false);
+  const badge=document.getElementById('directorInboxBadge');
+  if(badge){badge.textContent='0'; badge.classList.add('zero');}
+  setInboxStatus('تم تعليم الردود كمقروءة.','okmsg');
+}
+document.addEventListener('DOMContentLoaded',()=>{setTimeout(loadDirectorFeedback,700);setInterval(loadDirectorFeedback,45000);});
 </script>
-</body>
-</html>
+<script src="./assets/reset-demo-data.js?v=20260510f"></script>
+</body></html>
