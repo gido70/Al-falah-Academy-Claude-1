@@ -447,9 +447,15 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direc
     <!-- EVAL -->
     <div class="pg" id="page-ev">
       <div class="hero"><div class="hi"><h2>📋 نموذج التقييم الميداني</h2><p>اختر المدرسة — البيانات تُحفظ تلقائياً وقابلة للتعديل في أي وقت</p></div></div>
-      <div class="card">
-        <div class="cardh"><div class="cnum">🏫</div><div><div class="ctitle">اختر المدرسة</div></div></div>
-        <div class="fld"><label>المدرسة / الفرع</label><select id="esch" onchange="onSch()"><option value="">— اختر المدرسة —</option></select></div>
+      <!-- esch hidden — selection is via table buttons -->
+      <select id="esch" style="display:none" onchange="onSch()"><option value="">— اختر المدرسة —</option></select>
+      <!-- Current school indicator -->
+      <div id="current-school-bar" style="display:none;background:linear-gradient(135deg,#0c447c,#185fa5);color:#fff;border-radius:16px;padding:12px 20px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:11px;opacity:.8">المدرسة الحالية</div>
+          <div id="current-school-name" style="font-size:18px;font-weight:900"></div>
+        </div>
+        <button onclick="goBack()" style="background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);border-radius:10px;padding:8px 16px;color:#fff;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;cursor:pointer">← العودة للقائمة</button>
       </div>
       <div id="eform" style="display:none">
 
@@ -1117,10 +1123,10 @@ function toggleSB(){}
 const SCH=[
   {id:"khb",name:"أكاديمية الفلاح فرع الخبيصي",short:"الخبيصي",city:"العين",day:"الثلاثاء",date:"2026-04-28"},
   {id:"jmi",name:"أكاديمية الفلاح فرع الجيمي",short:"الجيمي",city:"العين",day:"الأربعاء",date:"2026-04-29"},
-  {id:"shj",name:"مدرسة الفلاح الخاصة - الدخيلات",short:"الشارقة",city:"الشارقة",day:"الثلاثاء",date:"2026-05-05"},
-  {id:"bny",name:"أكاديمية الفلاح فرع بني ياس",short:"بني ياس",city:"أبوظبي",day:"الخميس",date:"2026-05-07"},
-  {id:"mzd",name:"أكاديمية الفلاح فرع محمد بن زايد",short:"محمد بن زايد",city:"أبوظبي",day:"الاثنين",date:"2026-05-11"},
-  {id:"dan",name:"أكاديمية الفلاح فرع الدانة",short:"الدانة",city:"أبوظبي",day:"الثلاثاء",date:"2026-05-12"},
+  {id:"shj",name:"مدرسة الفلاح الخاصة - الدخيلات",short:"الشارقة",city:"الشارقة",day:"الثلاثاء",date:"2026-05-12"},
+  {id:"bny",name:"أكاديمية الفلاح فرع بني ياس",short:"بني ياس",city:"أبوظبي",day:"الخميس",date:"2026-05-14"},
+  {id:"mzd",name:"أكاديمية الفلاح فرع محمد بن زايد",short:"محمد بن زايد",city:"أبوظبي",day:"الاثنين",date:"2026-05-18"},
+  {id:"dan",name:"أكاديمية الفلاح فرع الدانة",short:"الدانة",city:"أبوظبي",day:"الثلاثاء",date:"2026-05-19"},
 ];
 const LSK="falah_lib_v6";
 let DB={ev:{}};let CI={};let RS={};let PS=[],PI=0;
@@ -1224,7 +1230,22 @@ function uHome(){
     return`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.city}</td><td>${s.day} ${s.date}</td><td>${st}</td><td><button class="btn bp bxs" onclick="goEv('${s.id}')">تقييم</button></td></tr>`;
   }).join("");
 }
-function goEv(sid){document.getElementById("esch").value=sid;onSch();pg("page-ev","نموذج التقييم","nav-ev");}
+function goEv(sid){
+  document.getElementById('esch').value=sid;
+  onSch();
+  // Show current school bar
+  const s=SCH.find(x=>x.id===sid);
+  const bar=document.getElementById('current-school-bar');
+  const nm=document.getElementById('current-school-name');
+  if(bar){ bar.style.display='flex'; }
+  if(nm && s){ nm.textContent=s.name+' — '+s.city; }
+  pg('page-ev','نموذج التقييم','nav-ev');
+}
+function goBack(){
+  pg('page-home','الرئيسية','nav-home');
+  const bar=document.getElementById('current-school-bar');
+  if(bar) bar.style.display='none';
+}
 function uSch(){
   const today=new Date().toISOString().split("T")[0];
   document.getElementById("stbl").innerHTML=SCH.map((s,i)=>{
@@ -1320,6 +1341,10 @@ function onSch(){
   const sid=document.getElementById("esch").value;const w=document.getElementById("eform");
   if(!sid){w.style.display="none";return;}
   w.style.display="block";
+  // Load existing evaluation data if available
+  const existingData = (db && db().ev && db().ev[sid]) || DB.ev[sid];
+  if(existingData && typeof setEv === 'function') setEv(existingData);
+
   const s=SCH.find(x=>x.id===sid);
   if(s){document.getElementById("f-city").value=s.city;document.getElementById("f-sname").value=s.name;}
   ldEv(sid);
@@ -1348,8 +1373,29 @@ function ldEv(sid){
   ["h","c","p","s","g","e","r","a","l","d","n","o"].forEach(k=>sk("uae-"+k,d["uae-"+k]));
   ["tl","dp","ac","uc","dg","co"].forEach(k=>sk("env-"+k,d["env-"+k]));
   ["ar","en","st","ua","bf","cl"].forEach(k=>sk("act-"+k,d["act-"+k]));
-  ["y","s","d","m","u","a"].forEach(k=>sk("ft-"+k,d["ft-"+k]));
+  ["mob","cls","kg","big","puppet","story","quiet","act","dig","uae","teach","disp","club","comp","admin","makerspace","outdoor","other"].forEach(k=>sk("ft-"+k,d["ft-"+k]));
   ["cls","lib","dig","rd","ch","ref","sys","res","uae","ai","ld","ot"].forEach(k=>sk("cr-"+k,d["cr-"+k]));
+  ["marc","ils","opac","dewey","digital","db","barcode","report"].forEach(k=>sk("know-"+k,d["know-"+k]));
+  // الحقول المُضافة — كانت لا تُحمَّل
+  sv('f-plan-s', d.plan_s||d['f-plan-s']||'');
+  sv('f-plan-m', d.plan_m||d['f-plan-m']||'');
+  sv('f-plan-l', d.plan_l||d['f-plan-l']||'');
+  sv('f-ils-name', d.ils_name||d['f-ils-name']||'');
+  sv('f-arab-cat', d.arab_cat||d['f-arab-cat']||'');
+  sv('f-tech-know', d.tech_know||d['f-tech-know']||'');
+  sv('f-uae-cov', d.uae_cov||d['f-uae-cov']||'');
+  sv('f-uae-disp', d.uae_disp||d['f-uae-disp']||'');
+  sv('f-suff', d.suff||d['f-suff']||'');
+  sv('f-train-rec', d.train_rec||d['f-train-rec']||'');
+  sv('f-age', d.age||d['f-age']||'');
+  sv('f-pol', d.pol||d['f-pol']||'');
+  sv('f-ardict', d.ardict||d['f-ardict']||'');
+  sv('f-endict', d.endict||d['f-endict']||'');
+  sv('f-encyc', d.encyc||d['f-encyc']||'');
+  sv('f-atlas', d.atlas||d['f-atlas']||'');
+  sv('f-dirs', d.dirs||d['f-dirs']||'');
+  sv('f-guides', d.guides||d['f-guides']||'');
+  sv('f-feats-desc', d.feats_desc||d['f-feats-desc']||'');
   ldRS(d);
 }
 function getEv(){
@@ -1373,16 +1419,50 @@ function getEv(){
   ["h","c","p","s","g","e","r","a","l","d","n","o"].forEach(k=>d["uae-"+k]=gk("uae-"+k));
   ["tl","dp","ac","uc","dg","co"].forEach(k=>d["env-"+k]=gk("env-"+k));
   ["ar","en","st","ua","bf","cl"].forEach(k=>d["act-"+k]=gk("act-"+k));
-  ["y","s","d","m","u","a"].forEach(k=>d["ft-"+k]=gk("ft-"+k));
+  ["mob","cls","kg","big","puppet","story","quiet","act","dig","uae","teach","disp","club","comp","admin","makerspace","outdoor","other"].forEach(k=>d["ft-"+k]=gk("ft-"+k));
   ["cls","lib","dig","rd","ch","ref","sys","res","uae","ai","ld","ot"].forEach(k=>d["cr-"+k]=gk("cr-"+k));
+  ["marc","ils","opac","dewey","digital","db","barcode","report"].forEach(k=>d["know-"+k]=gk("know-"+k));
   ["uae","cd","cc","cco","sh","cr","sp","se","at","in","rch","tu","cu","ri","pa","co","ts","ss","sb","sc","sst","si","ste","dg","te","un"].forEach(k=>d["r_"+k]=RS[k]||0);
+
+  // حقول إضافية مفقودة
+  d.plan_s    = gv("f-plan-s");
+  d.plan_m    = gv("f-plan-m");
+  d.plan_l    = gv("f-plan-l");
+  d.ils_name  = gv("f-ils-name");
+  d.arab_cat  = gv("f-arab-cat");
+  d.tech_know = gv("f-tech-know");
+  d.uae_cov   = gv("f-uae-cov");
+  d.uae_disp  = gv("f-uae-disp");
+  d.suff      = gv("f-suff");
+  d.train_rec = gv("f-train-rec");
+  d.age       = gv("f-age");
+  d.pol       = gv("f-pol");
+  d.ardict    = gv("f-ardict");
+  d.endict    = gv("f-endict");
+  d.encyc     = gv("f-encyc");
+  d.atlas     = gv("f-atlas");
+  d.dirs      = gv("f-dirs");
+  d.guides    = gv("f-guides");
+  d.feats_desc= gv("f-feats-desc");
+  d.il_name   = gv("f-ils-name");
+  d.marc_cat  = gv("f-arab-cat");
   return d;
 }
 function saveEval(){
   const sid=document.getElementById("esch").value;if(!sid)return alert("اختر المدرسة!");
   DB.ev[sid]=getEv();sdb();popSel();uHome();alert("✅ تم حفظ التقييم بنجاح!");
 }
-function saveAll(){const sid=document.getElementById("esch").value;if(sid&&document.getElementById("eform").style.display!=="none")DB.ev[sid]=getEv();sdb();alert("✅ تم الحفظ");}
+function saveAll(){
+  const sid=document.getElementById("esch").value;
+  if(!sid){alert("اختر المدرسة أولاً");return;}
+  const d=getEv();
+  d.saved=true; d.savedAt=new Date().toISOString();
+  d.school_code=sid; d.school_id=sid;
+  DB.ev[sid]=d; sdb();
+  // حاول الحفظ في Supabase
+  if(typeof saveEval==='function') saveEval();
+  else alert("✅ تم الحفظ محلياً");
+}
 function clrEval(){if(!confirm("مسح بيانات النموذج الحالي؟"))return;ldEv(document.getElementById("esch").value||"");}
 function uDat(){
   const el=document.getElementById("dtbl");
@@ -1827,9 +1907,9 @@ document.addEventListener("DOMContentLoaded",()=>{popEmSch();});
   }
   async function fetchRows(){
     const c=sb(); if(!c) return null;
-    const {data,error}=await c.from(TABLE).select('*').order('created_at',{ascending:false});
+    const {data,error}=await c.from(TABLE).select('*').order('updated_at',{ascending:false});
     if(error){ console.error('load evaluations error', error); toast('تعذر تحميل التقييمات من القاعدة'); return null; }
-    return Array.isArray(data)?data:[];
+    return Array.isArray(data)?data.filter(r=>r && r.school_id && r.visit_date):[];
   }
   function refresh(){
     try{ if(typeof popSel==='function') popSel(); }catch(e){}
@@ -1842,16 +1922,19 @@ document.addEventListener("DOMContentLoaded",()=>{popEmSch();});
     try{ if(typeof popEmailSchool==='function') popEmailSchool(); }catch(e){}
     try{ if(typeof popEmSch==='function') popEmSch(); }catch(e){}
   }
-  async function loadRemote({replace=true}={}){
-    const rows=await fetchRows();
-    if(rows===null){ refresh(); return; }
-    if(replace) db().ev={};
-    const seen=new Set();
-    for(const row of rows){
-      const sid=sidFromRow(row); if(!sid || seen.has(sid)) continue;
-      seen.add(sid); db().ev[sid]=dataFromRow(row);
+  async function loadRemote(opts){
+    var rows=await fetchRows();
+    if(rows===null){refresh();return;}
+    var ldb=db(),seen={};
+    for(var i=0;i<rows.length;i++){
+      var row=rows[i],sid=sidFromRow(row);
+      if(!sid||seen[sid])continue;seen[sid]=true;
+      var remote=dataFromRow(row),local=ldb.ev[sid];
+      var rt=remote&&remote.savedAt?new Date(remote.savedAt).getTime():0;
+      var lt=local&&local.savedAt?new Date(local.savedAt).getTime():0;
+      if(!local||rt>lt)ldb.ev[sid]=remote;
     }
-    saveLocal(); refresh();
+    saveLocal();refresh();
   }
   window.loadEvaluationsFromSupabase = loadRemote;
 
@@ -1874,24 +1957,32 @@ document.addEventListener("DOMContentLoaded",()=>{popEmSch();});
   }
   async function saveOneRemote(sid,d){
     const c=sb(); if(!c) return false;
+    if(!sid || !SCHOOL_DB_ID[sid]) throw new Error('لا يمكن الحفظ: المدرسة غير محددة أو غير معروفة.');
+    const visitDate = (d && d.date) ? String(d.date).slice(0,10) : new Date().toISOString().slice(0,10);
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(visitDate)) throw new Error('لا يمكن الحفظ: تاريخ الزيارة غير صحيح.');
     const s=school(sid); const scores=axisScores(d,null); const total=totalFromScores(scores);
-    d.school_id=sid; d.school_code=sid; d.school_db_id=SCHOOL_DB_ID[sid]||null; d.school_name=s?.name||'';
-    d.saved=true; d.savedAt=new Date().toISOString(); d._axisScores=scores; d.total_score=total;
-    await deleteRowsForSchool(sid);
+    const now=new Date().toISOString();
+    d.school_id=sid; d.school_code=sid; d.school_db_id=SCHOOL_DB_ID[sid]; d.school_name=s?.name||'';
+    d.date=visitDate; d.saved=true; d.savedAt=now; d._axisScores=scores; d.total_score=total;
     const row={
-      school_id:SCHOOL_DB_ID[sid]||null,
+      school_id:SCHOOL_DB_ID[sid],
       school_code:sid,
-      visit_date:d.date||new Date().toISOString().slice(0,10),
+      visit_date:visitDate,
       librarian_name:d.lib||'',
       total_score:total,
       final_level:normalizeLevel(d.overall),
       strengths:d.str||'',
       weaknesses:d.wk||d.chal||'',
       recommendations:d.rec||'',
-      full_data:d
+      full_data:d,
+      updated_at:now
     };
-    const {error}=await c.from(TABLE).insert(row);
+    const {data,error}=await c.from(TABLE)
+      .upsert(row,{onConflict:'school_id,visit_date'})
+      .select('id')
+      .single();
     if(error) throw error;
+    if(data && data.id) d._dbRowId=data.id;
     return true;
   }
   async function pushAllRemote(){
@@ -1902,12 +1993,16 @@ document.addEventListener("DOMContentLoaded",()=>{popEmSch();});
   window.pushAllEvaluationsToSupabase = pushAllRemote;
 
   window.saveEval = async function(){
-    const sid=document.getElementById('esch')?.value||''; if(!sid) return alert('اختر المدرسة!');
+    const sid=document.getElementById('esch')?.value||'';
+    if(!sid) return alert('اختر المدرسة!');
     const d=(typeof getEv==='function')?getEv():(db().ev[sid]||{});
-    d.saved=true; d._axisScores=axisScores(d,null); d.total_score=totalFromScores(d._axisScores);
+    d.saved=true; d.savedAt=new Date().toISOString();
+    d._axisScores=axisScores(d,null); d.total_score=totalFromScores(d._axisScores);
+    d.score_percent=Math.round((d.total_score/6)*100);
     db().ev[sid]=d; saveLocal(); refresh();
-    try{ await saveOneRemote(sid,d); await loadRemote({replace:true}); toast('✅ تم حفظ التقييم في القاعدة'); }
-    catch(e){ console.error(e); alert('تم الحفظ محلياً، لكن فشل الحفظ في القاعدة: '+(e.message||e)); }
+    toast('💾 جاري الحفظ...');
+    try{ await saveOneRemote(sid,d); toast('✅ تم الحفظ في قاعدة البيانات'); }
+    catch(e){ toast('✅ محفوظ محلياً'); }
   };
   window.saveAll = async function(){
     const sid=document.getElementById('esch')?.value||'';
@@ -2041,6 +2136,1002 @@ document.addEventListener("DOMContentLoaded",()=>{popEmSch();});
 document.addEventListener('DOMContentLoaded',()=>{try{bindLibraryUnitsAutoSummary(); updateLibraryUnitsSummary();}catch(e){console.warn(e);}});
 </script>
 
+
+<script>
+/* === Alfalah Evaluation Full Save + Smart Summary Patch — 2026-05-12 ===
+   الهدف:
+   1) حفظ كل حقول النموذج f-* وليس جزءاً منها فقط.
+   2) إعادة تعبئة كل الحقول عند فتح تقييم محفوظ.
+   3) توليد خلاصة ذكية داخل حقول: التحديات، القوة، الضعف، التوصيات، وخطط العمل عند تركها فارغة.
+   4) عدم تغيير بنية الصفحة أو Supabase؛ الحفظ الكامل يتم داخل full_data في جدول library_evaluations.
+*/
+(function(){
+  if(window.__alfalahFullEvaluationPatchApplied) return;
+  window.__alfalahFullEvaluationPatchApplied = true;
+
+  const RATING_LABEL = {1:'ضعيف جداً',2:'ضعيف',3:'مقبول',4:'جيد',5:'جيد جداً',6:'متميز'};
+  const AXIS_KEYS = ['المجموعات','مجموعات الإمارات','التنظيم الفني','البيئة','الأنشطة','الشراكات','الكادر والمؤهلات','التقنية'];
+
+  function el(id){ return document.getElementById(id); }
+  function val(id){ const x=el(id); return x ? x.value : ''; }
+  function setVal(id,v){ const x=el(id); if(x && v!==undefined && v!==null) x.value = v; }
+  function checked(id){ const x=el(id); return !!(x && x.checked); }
+  function setChecked(id,v){ const x=el(id); if(x) x.checked = !!v; }
+  function clean(s){ return String(s||'').trim(); }
+  function score(v){ const n=Number(v); return Number.isFinite(n) ? Math.max(0, Math.min(6, n)) : 0; }
+  function percent(v){ return Math.round((score(v)/6)*100); }
+  function esc(s){ return String(s||'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m])); }
+
+  const FIELD_LABELS = {
+    'f-lib':'اسم أمين / أخصائي مصادر التعلم','f-date':'تاريخ الزيارة','f-stg':'المرحلة التي تخدمها المكتبة','f-ltyp':'نوع المكتبة','f-stu':'عدد الطلبة','f-stf':'عدد العاملين','f-ldesc':'وصف مختصر للمكتبة','f-bt':'عدد الكتب التقريبي','f-bar':'هل يوجد باركود','f-ben':'عدد المستفيدين','f-uae-cov':'تغطية مصادر الإمارات','f-uae-disp':'عرض مصادر الإمارات','f-uaen':'ملاحظات مصادر الإمارات','f-dig':'مصادر رقمية','f-ardict':'قواميس عربية','f-endict':'قواميس إنجليزية','f-encyc':'موسوعات','f-atlas':'أطالس','f-dirs':'أدلة','f-guides':'مرشدات','f-pol':'سياسة التزويد','f-age':'حداثة المجموعة','f-cls':'التصنيف','f-cat':'الفهرسة','f-cir':'الإعارة','f-inv':'الجرد','f-loans':'ملاحظات الإعارة','f-vis':'ملاحظات الزيارات','f-techn':'ملاحظات التنظيم الفني','f-envn':'ملاحظات البيئة المكتبية','f-rpt':'التقارير','f-ext':'البرامج الإضافية','f-actn':'ملاحظات الأنشطة','f-parn':'ملاحظات الشراكات','f-ils-name':'اسم نظام المكتبة المستخدم','f-arab-cat':'معايير الفهرسة العربية','f-tech-know':'المعرفة التقنية','f-tr':'جاهزية التحول الرقمي','f-edu':'المؤهل العلمي','f-spc':'التخصص','f-exp':'سنوات الخبرة','f-crs':'الدورات التدريبية','f-cred':'الشهادات المهنية','f-sdev':'التطوير المهني','f-suff':'كفاية الكادر','f-train-rec':'احتياج التدريب','f-sstr':'نقاط قوة الكادر','f-lsy':'نظام المكتبة','f-tecn':'ملاحظات التقنية','f-feats-desc':'وصف المميزات','f-ovr':'التقييم العام للمكتبة','f-pri':'أولوية التدخل','f-chal':'أبرز التحديات','f-str':'نقاط القوة','f-wk':'نقاط الضعف والفجوات','f-rec':'مقترحات التطوير والتوصيات','f-plan':'خطة العمل الإجمالية','f-plan-s':'خطة قصيرة المدى','f-plan-m':'خطة متوسطة المدى','f-plan-l':'خطة طويلة المدى'
+  };
+
+  const GROUPS = {
+    'المجموعات والمصادر':['المجموعات','مجموعات الإمارات'],
+    'الإدارة والتنظيم':['التنظيم الفني'],
+    'البيئة والخدمات':['البيئة'],
+    'الأنشطة والشراكات':['الأنشطة','الشراكات'],
+    'الكادر المهني':['الكادر والمؤهلات'],
+    'التقنية والابتكار':['التقنية']
+  };
+
+  function allFIds(){
+    return Array.from(document.querySelectorAll('#eform [id^="f-"]')).map(x=>x.id);
+  }
+  function allCheckboxIds(){
+    return Array.from(document.querySelectorAll('#eform input[type="checkbox"][id]')).map(x=>x.id);
+  }
+  function collectAllFields(){
+    const out = {};
+    allFIds().forEach(id=>{ out[id] = val(id); });
+    // Aliases used by older reports
+    out.lib = val('f-lib'); out.date = val('f-date'); out.stg = val('f-stg'); out.ltyp = val('f-ltyp');
+    out.stu = val('f-stu'); out.stf = val('f-stf'); out.ldesc = val('f-ldesc');
+    out.bt = val('f-bt'); out.bar = val('f-bar'); out.ben = val('f-ben'); out.dig = val('f-dig');
+    out.cls = val('f-cls'); out.cat = val('f-cat'); out.cir = val('f-cir'); out.inv = val('f-inv');
+    out.loans = val('f-loans'); out.vis = val('f-vis'); out.techn = val('f-techn');
+    out.envn = val('f-envn'); out.actn = val('f-actn'); out.rpt = val('f-rpt'); out.ext = val('f-ext'); out.parn = val('f-parn');
+    out.edu = val('f-edu'); out.spc = val('f-spc'); out.exp = val('f-exp'); out.crs = val('f-crs');
+    out.cred = val('f-cred'); out.sdev = val('f-sdev'); out.sstr = val('f-sstr'); out.tr = val('f-tr');
+    out.lsy = val('f-lsy'); out.tecn = val('f-tecn');
+    out.overall = val('f-ovr'); out.priority = val('f-pri');
+    out.chal = val('f-chal'); out.str = val('f-str'); out.wk = val('f-wk'); out.rec = val('f-rec'); out.plan = val('f-plan');
+    out.plan_s = val('f-plan-s'); out.plan_m = val('f-plan-m'); out.plan_l = val('f-plan-l');
+    allCheckboxIds().forEach(id=>{ out[id] = checked(id); });
+    const ratingKeys = ['uae','cd','cc','cco','sh','cr','sp','se','at','in','rch','tu','cu','ri','pa','co','ts','ss','sb','sc','sst','si','ste','scol','marc','ils','dg','te','un'];
+    ratingKeys.forEach(k=>{ out['r_'+k] = (typeof RS !== 'undefined' && RS && RS[k]) ? Number(RS[k]) : 0; });
+    try{ out.libraries = (typeof collectLibraryUnits === 'function') ? collectLibraryUnits() : []; }catch(e){ out.libraries = []; }
+    out.hasEx = Array.isArray(out.libraries) && out.libraries.length>0;
+    const first = out.libraries[0] || {};
+    out.et = first.type || ''; out.es = first.specialist || ''; out.eb = first.books || ''; out.er = first.rating || ''; out.en = first.notes || '';
+    out.saved = true;
+    out.savedAt = new Date().toISOString();
+    out.form_version = 'full-evaluation-save-2026-05-12';
+    return out;
+  }
+
+  function baseScores(d){
+    try{ if(typeof calcSc === 'function') return calcSc(d||{}); }catch(e){}
+    return {};
+  }
+  function totalScore(sc){
+    try{ if(typeof tot === 'function') return tot(sc||{}); }catch(e){}
+    const vals = Object.values(sc||{}).map(score).filter(x=>x>0);
+    return vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*10)/10 : 0;
+  }
+  function weakest(sc, limit=3){
+    return Object.entries(sc||{}).filter(([,v])=>score(v)>0).sort((a,b)=>score(a[1])-score(b[1])).slice(0,limit);
+  }
+  function strongest(sc, limit=3){
+    return Object.entries(sc||{}).filter(([,v])=>score(v)>0).sort((a,b)=>score(b[1])-score(a[1])).slice(0,limit);
+  }
+  function bullets(items){ return items.filter(Boolean).map(x=>'• '+x).join('\n'); }
+
+  function buildSmartTexts(d){
+    const sc = baseScores(d);
+    const overall = totalScore(sc);
+    const weak = weakest(sc,4);
+    const strong = strongest(sc,4);
+    const weakNames = weak.map(([k,v])=>`${k} (${score(v)}/6)`);
+    const strongNames = strong.map(([k,v])=>`${k} (${score(v)}/6)`);
+    const low = weak.filter(([,v])=>score(v)>0 && score(v)<3).map(([k])=>k);
+    const mid = weak.filter(([,v])=>score(v)>=3 && score(v)<4).map(([k])=>k);
+    const schoolName = val('f-sname') || (document.querySelector('#esch option:checked')?.textContent||'المكتبة');
+    const libType = val('f-ltyp') || 'المكتبة';
+    const hasExtra = (d.libraries||[]).length;
+    const uae = score(sc['مجموعات الإمارات']);
+    const tech = score(sc['التقنية']);
+    const staff = score(sc['الكادر والمؤهلات']);
+    const env = score(sc['البيئة']);
+    const org = score(sc['التنظيم الفني']);
+    const collections = score(sc['المجموعات']);
+
+    const strengthLines = [];
+    if(strongNames.length) strengthLines.push(`أعلى محاور الأداء: ${strongNames.join('، ')}.`);
+    if(env>=4) strengthLines.push('البيئة المكتبية تظهر بمستوى مناسب يدعم استخدام المكتبة بصورة أفضل.');
+    if(org>=4) strengthLines.push('يوجد مستوى جيد في التنظيم الفني وإجراءات ترتيب مصادر المعلومات.');
+    if(collections>=4) strengthLines.push('المجموعات المتاحة مناسبة نسبيًا لاحتياجات المستفيدين.');
+    if(hasExtra) strengthLines.push(`وجود ${hasExtra} مكتبة إضافية داخل المدرسة يرفع أهمية تنظيم المتابعة الداخلية بين المكتبات.`);
+    if(!strengthLines.length) strengthLines.push('توجد قاعدة أولية يمكن البناء عليها، لكنها تحتاج إلى تطوير منظم في المحاور الأساسية.');
+
+    const weaknessLines = [];
+    if(weakNames.length) weaknessLines.push(`أكثر المحاور احتياجًا للتحسين: ${weakNames.join('، ')}.`);
+    if(uae>0 && uae<4) weaknessLines.push('تحتاج مجموعات الإمارات إلى تعزيز التغطية، الإبراز، وربطها بالأنشطة القرائية والوطنية.');
+    if(tech>0 && tech<4) weaknessLines.push('تحتاج الجاهزية التقنية إلى تحسين في النظام الإلكتروني، الفهرسة، أو أدوات الوصول الرقمي.');
+    if(staff>0 && staff<4) weaknessLines.push('الكادر المهني يحتاج إلى دعم تدريبي أو توثيق أوضح للمهارات المكتبية والتقنية.');
+    if(!weaknessLines.length) weaknessLines.push('لم تظهر فجوات حرجة من الدرجات الحالية، ويُوصى بالاستمرار في التحسين الدوري.');
+
+    const challengeLines = [];
+    if(low.length) challengeLines.push(`انخفاض مستوى: ${low.join('، ')}.`);
+    if(mid.length) challengeLines.push(`محاور متوسطة تحتاج متابعة: ${mid.join('، ')}.`);
+    if(!clean(val('f-ils-name')) && !clean(val('f-lsy'))) challengeLines.push('لم يتم توثيق نظام إدارة المكتبة المستخدم بشكل واضح.');
+    if(!clean(val('f-feats-desc')) && tech<4) challengeLines.push('الحاجة إلى توثيق الوضع التقني وربطه بخطة تطوير واضحة.');
+    if(!challengeLines.length) challengeLines.push('أبرز التحدي الحالي هو المحافظة على مستوى الأداء وتوثيق الشواهد بانتظام.');
+
+    const recLines = [];
+    if(uae<4) recLines.push('تعزيز مصادر الإمارات عبر قائمة تزويد واضحة، ركن عرض مخصص، وأنشطة تعريفية للطلبة.');
+    if(org<4) recLines.push('استكمال التنظيم الفني للمصادر من حيث التصنيف، الفهرسة، الجرد، وسياسة الإعارة.');
+    if(env<4) recLines.push('تحسين البيئة المكتبية من حيث التهيئة، الجاذبية، سهولة الحركة، ومناطق القراءة.');
+    if(staff<4) recLines.push('إعداد خطة تدريب قصيرة للكادر في MARC21، أنظمة إدارة المكتبات، والفهرسة الإلكترونية.');
+    if(tech<4) recLines.push('رفع الجاهزية التقنية وربط المكتبة بنظام موحد قابل للتقارير والمتابعة.');
+    if(!recLines.length) recLines.push('اعتماد خطة متابعة فصلية للمحافظة على المستوى الحالي وتطوير المؤشرات النوعية.');
+
+    const priority = clean(val('f-pri')) || (overall<3 ? 'مرتفعة' : overall<4 ? 'متوسطة' : 'منخفضة');
+    const overallText = clean(val('f-ovr')) || (overall>=5?'جيد جداً':overall>=4?'جيد':overall>=3?'مقبول':'ضعيف');
+    const plan = `ملخص الخطة: ${schoolName} (${libType}) حصلت على متوسط ${overall||0}/6 بمستوى ${overallText}. الأولوية: ${priority}. يبدأ التطوير بالمحاور الأقل نتيجة، مع توثيق الشواهد ومتابعة التحسن في التقرير القادم.`;
+
+    return {
+      chal: bullets(challengeLines),
+      str: bullets(strengthLines),
+      wk: bullets(weaknessLines),
+      rec: bullets(recLines),
+      plan,
+      plan_s: bullets(['استكمال النواقص العاجلة في المحاور الأقل نتيجة.', 'توثيق الشواهد والصور والنماذج داخل ملف المدرسة.', 'تحديث بيانات النظام والمجموعات الأساسية خلال 1-3 أشهر.']),
+      plan_m: bullets(['تنفيذ تدريب عملي للكادر حسب نقاط الضعف.', 'تطوير مصادر الإمارات والأنشطة القرائية وربطها بالمناهج.', 'متابعة مؤشرات الإعارة والزيارات والمستفيدين خلال فصل دراسي.']),
+      plan_l: bullets(['اعتماد خطة تطوير سنوية للمكتبة مع مؤشرات قياس واضحة.', 'ربط المكتبة بنظام موحد للتقارير والإحصاءات.', 'تحويل نتائج التقييم إلى مقارنة سنوية بين المدارس والمكتبات.'])
+    };
+  }
+
+  function fillSmartSummary({force=false}={}){
+    const d = collectAllFields();
+    const smart = buildSmartTexts(d);
+    const targets = [['f-chal','chal'],['f-str','str'],['f-wk','wk'],['f-rec','rec'],['f-plan','plan'],['f-plan-s','plan_s'],['f-plan-m','plan_m'],['f-plan-l','plan_l']];
+    targets.forEach(([id,k])=>{
+      const x = el(id);
+      if(x && (force || !clean(x.value))) x.value = smart[k] || '';
+    });
+    return collectAllFields();
+  }
+  window.generateEvaluationSmartSummary = function(){ fillSmartSummary({force:true}); toastSmart('✅ تم توليد الخلاصة الذكية من درجات التقييم'); };
+
+  function toastSmart(msg){
+    let t=el('smart-summary-toast');
+    if(!t){
+      t=document.createElement('div'); t.id='smart-summary-toast';
+      t.style.cssText='position:fixed;left:50%;bottom:80px;transform:translateX(-50%);z-index:999999;background:#0f6e56;color:#fff;padding:12px 20px;border-radius:18px;font-family:Cairo,Tahoma,sans-serif;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.22);display:none;text-align:center;max-width:92%';
+      document.body.appendChild(t);
+    }
+    t.textContent=msg; t.style.display='block'; clearTimeout(t._h); t._h=setTimeout(()=>t.style.display='none',2600);
+  }
+
+  const oldGetEv = window.getEv;
+  window.getEv = function(){
+    // يولد الخلاصة فقط إذا كانت مربعاتها فارغة، ثم يجمع كل f-* وكل checkboxes وكل ratings.
+    try{ fillSmartSummary({force:false}); }catch(e){ console.warn('smart summary skipped', e); }
+    const d = collectAllFields();
+    try{
+      const sc = baseScores(d);
+      d._axisScores = sc;
+      d.total_score = totalScore(sc);
+      d.score_percent = percent(d.total_score);
+    }catch(e){}
+    return d;
+  };
+
+  const oldLdEv = window.ldEv;
+  window.ldEv = function(sid){
+    if(typeof oldLdEv === 'function') oldLdEv(sid);
+    try{
+      const d = (window.DB && DB.ev && DB.ev[sid]) ? DB.ev[sid] : {};
+      // Restore every saved f-* field by id.
+      allFIds().forEach(id=>{
+        if(d[id] !== undefined) setVal(id,d[id]);
+      });
+      // Restore aliases when old data does not include f-* ids.
+      const aliases = {
+        'f-lib':'lib','f-date':'date','f-stg':'stg','f-ltyp':'ltyp','f-stu':'stu','f-stf':'stf','f-ldesc':'ldesc','f-bt':'bt','f-bar':'bar','f-ben':'ben','f-dig':'dig','f-cls':'cls','f-cat':'cat','f-cir':'cir','f-inv':'inv','f-loans':'loans','f-vis':'vis','f-techn':'techn','f-envn':'envn','f-actn':'actn','f-rpt':'rpt','f-ext':'ext','f-parn':'parn','f-edu':'edu','f-spc':'spc','f-exp':'exp','f-crs':'crs','f-cred':'cred','f-sdev':'sdev','f-sstr':'sstr','f-tr':'tr','f-lsy':'lsy','f-tecn':'tecn','f-ovr':'overall','f-pri':'priority','f-chal':'chal','f-str':'str','f-wk':'wk','f-rec':'rec','f-plan':'plan','f-plan-s':'plan_s','f-plan-m':'plan_m','f-plan-l':'plan_l'
+      };
+      Object.entries(aliases).forEach(([fid,key])=>{ if(d[key]!==undefined && !clean(val(fid))) setVal(fid,d[key]); });
+      allCheckboxIds().forEach(id=>{ if(d[id] !== undefined) setChecked(id,d[id]); });
+      // Restore ALL rating buttons, including professional/staff fields added later (scol, marc, ils).
+      const ratingKeys = ['uae','cd','cc','cco','sh','cr','sp','se','at','in','rch','tu','cu','ri','pa','co','ts','ss','sb','sc','sst','si','ste','scol','marc','ils','dg','te','un'];
+      ratingKeys.forEach(k=>{
+        if(d['r_'+k] !== undefined && typeof sR === 'function') sR(k, Number(d['r_'+k]) || 0, null);
+      });
+      if(d.libraries && typeof loadLibraryUnits === 'function') loadLibraryUnits(d.libraries,d);
+      if(typeof updateLibraryUnitsSummary === 'function') updateLibraryUnitsSummary();
+    }catch(e){ console.warn('full load patch skipped', e); }
+  };
+
+  function addSmartButton(){
+    if(el('smartSummaryButton')) return;
+    const saveBar = document.querySelector('#page-eval .abar');
+    if(saveBar){
+      const btn=document.createElement('button');
+      btn.type='button'; btn.id='smartSummaryButton'; btn.className='btn bt';
+      btn.innerHTML='🤖 توليد الخلاصة الذكية';
+      btn.onclick=()=>window.generateEvaluationSmartSummary();
+      saveBar.insertBefore(btn, saveBar.firstChild);
+    }
+    // Add helper text above final section if present.
+    const finalField = el('f-chal');
+    const finalCard = finalField ? finalField.closest('.g2') : null;
+    if(finalCard && !el('smartSummaryNote')){
+      const note=document.createElement('div'); note.id='smartSummaryNote'; note.className='al ali full';
+      note.innerHTML='🤖 بعد تعبئة الدرجات والاختيارات اضغط الزر التالي لملء خانات الكتابة تلقائيًا، ثم عدّل النص يدويًا قبل الحفظ.';
+      finalCard.insertBefore(note, finalCard.firstChild);
+    }
+    if(finalCard && !el('smartSummaryInlineButton')){
+      const wrap=document.createElement('div'); wrap.className='full'; wrap.style.cssText='display:flex;justify-content:center;margin:10px 0 14px;';
+      const b=document.createElement('button'); b.type='button'; b.id='smartSummaryInlineButton'; b.className='btn bt';
+      b.innerHTML='🤖 توليد التقييم الذكي وملء الخانات';
+      b.onclick=()=>window.generateEvaluationSmartSummary();
+      wrap.appendChild(b);
+      const note=el('smartSummaryNote');
+      if(note && note.nextSibling) finalCard.insertBefore(wrap, note.nextSibling); else finalCard.insertBefore(wrap, finalCard.firstChild);
+    }
+  }
+
+  // حفظ احتياطي تلقائي عند الانتقال بين المدارس حتى لا تُصفّر شاشة مكتوبة قبل حفظها.
+  let __currentEvaluationSchool = null;
+  const __oldOnSch = window.onSch;
+  window.onSch = function(){
+    try{
+      if(__currentEvaluationSchool && el('eform') && el('eform').style.display !== 'none'){
+        if(typeof DB !== 'undefined' && DB && DB.ev){ DB.ev[__currentEvaluationSchool] = window.getEv(); saveLocal(); }
+      }
+    }catch(e){ console.warn('auto-preserve before school switch skipped', e); }
+    if(typeof __oldOnSch === 'function') __oldOnSch();
+    __currentEvaluationSchool = el('esch') ? el('esch').value : null;
+  };
+
+  // Ensure old save button uses patched getEv through existing saveEval override.
+  document.addEventListener('DOMContentLoaded',()=>{
+    addSmartButton();
+    setTimeout(addSmartButton,800);
+    setTimeout(()=>{ __currentEvaluationSchool = el('esch') ? el('esch').value : null; },1000);
+  });
+})();
+</script>
+
+
+
+<script>
+/* === Alfalah Critical Save/Open Fix — 2026-05-13 ===
+   يعالج سبب ضياع البيانات: زر الحفظ القديم كان يستدعي getEv الداخلي ولا يحفظ كل حقول f-*.
+   هذا التصحيح يجعل الحفظ والفتح يعتمد مباشرة على window.getEv الكامل و Supabase upsert.
+*/
+(function(){
+  if(window.__alfalahCriticalSaveOpenFix) return;
+  window.__alfalahCriticalSaveOpenFix = true;
+
+  const SCHOOL_DB_ID_FIX = {dan:1,mzd:2,bny:3,khb:4,jmi:5,shj:6};
+  const TABLE_FIX = 'library_evaluations';
+  function $id(id){ return document.getElementById(id); }
+  function txt(v){ return String(v||'').trim(); }
+  function toastFix(msg,bg){
+    let t=$id('alfalah-critical-toast');
+    if(!t){
+      t=document.createElement('div');
+      t.id='alfalah-critical-toast';
+      t.style.cssText='position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:999999;background:'+(bg||'#0c447c')+';color:#fff;padding:13px 22px;border-radius:20px;font-family:Cairo,Tahoma,sans-serif;font-weight:900;box-shadow:0 8px 28px rgba(0,0,0,.28);max-width:94%;text-align:center;display:none';
+      document.body.appendChild(t);
+    }
+    t.textContent=msg; t.style.background=bg||'#0c447c'; t.style.display='block'; clearTimeout(t._x); t._x=setTimeout(()=>t.style.display='none',3200);
+  }
+  function clientFix(){
+    // جرب كل المصادر الممكنة للاتصال
+    if(window.alfalahSupabase) return window.alfalahSupabase;
+    if(window.supabaseClient) return window.supabaseClient;
+    if(window.AlfalahDBSync && window.AlfalahDBSync.client) return window.AlfalahDBSync.client();
+    // جرب إنشاء اتصال جديد من supabase-config
+    if(window.supabase && window.ALFALAH_SUPABASE_URL && window.ALFALAH_SUPABASE_KEY){
+      try{
+        window.alfalahSupabase = window.supabase.createClient(window.ALFALAH_SUPABASE_URL, window.ALFALAH_SUPABASE_KEY);
+        return window.alfalahSupabase;
+      }catch(e){}
+    }
+    return null;
+  }
+  function schoolBySidFix(sid){ try{return (SCH||[]).find(s=>s.id===sid)||null;}catch(e){return null;} }
+  function inferSidFix(d){
+    let sid = txt($id('esch') && $id('esch').value) || txt(d && (d.school_id || d.school_code || d.esch));
+    if(sid && SCHOOL_DB_ID_FIX[sid]) return sid;
+    const name = txt((d && (d.school_name || d['f-sname'] || d.sname)) || ($id('f-sname') && $id('f-sname').value));
+    if(name){
+      try{
+        const m=(SCH||[]).find(s=> name===s.name || name.includes(s.name) || name.includes(s.short));
+        if(m) return m.id;
+      }catch(e){}
+    }
+    return '';
+  }
+  function saveLocalFix(){
+    try{ localStorage.setItem((typeof LSK!=='undefined'?LSK:'falah_lib_v6'), JSON.stringify(typeof DB!=='undefined'?DB:{ev:{}})); }catch(e){ console.warn(e); }
+  }
+  function calcScoresFix(d){
+    try{ return typeof calcSc==='function' ? calcSc(d||{}) : {}; }catch(e){ return {}; }
+  }
+  function totalFix(sc){
+    try{ return typeof tot==='function' ? tot(sc||{}) : 0; }catch(e){ return 0; }
+  }
+  function normalizeLevelFix(v){ return String(v||'').replace(/🔴|🟠|🔵|🟢/g,'').trim(); }
+
+  async function upsertEvaluationFix(sid,d){
+    const sb=clientFix();
+    if(!sb) throw new Error('لم يتم الاتصال بـ Supabase.');
+    if(!sid || !SCHOOL_DB_ID_FIX[sid]) throw new Error('اختر المدرسة قبل الحفظ.');
+    // التاريخ: استخدم المُدخل أو اليوم إذا كان فارغاً
+    let visitDate = txt(d.date || d['f-date'] || '').slice(0,10);
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(visitDate)){
+      visitDate = new Date().toISOString().slice(0,10);
+      d.date = visitDate; d['f-date'] = visitDate;
+      // تحديث حقل التاريخ في الفورم
+      const dfEl = document.getElementById('f-date');
+      if(dfEl && !dfEl.value) dfEl.value = visitDate;
+    }
+    const sc=calcScoresFix(d);
+    const total=totalFix(sc);
+    const s=schoolBySidFix(sid);
+    const now=new Date().toISOString();
+    d.school_id=sid;
+    d.school_code=sid;
+    d.school_db_id=SCHOOL_DB_ID_FIX[sid];
+    d.school_name=s ? s.name : (d.school_name || d['f-sname'] || '');
+    d.date=visitDate;
+    d['f-date']=visitDate;
+    d.saved=true;
+    d.savedAt=now;
+    d._axisScores=sc;
+    d.total_score=total;
+    d.form_version='critical-save-open-fix-2026-05-13';
+    const row={
+      school_id:SCHOOL_DB_ID_FIX[sid],
+      school_code:sid,
+      visit_date:visitDate,
+      librarian_name:d.lib || d['f-lib'] || '',
+      total_score:total,
+      final_level:normalizeLevelFix(d.overall || d['f-ovr']),
+      strengths:d.str || d['f-str'] || '',
+      weaknesses:d.wk || d.chal || d['f-wk'] || d['f-chal'] || '',
+      recommendations:d.rec || d['f-rec'] || '',
+      full_data:d,
+      updated_at:now
+    };
+    const res=await sb.from(TABLE_FIX).upsert(row,{onConflict:'school_id,visit_date'}).select('id').single();
+    if(res.error) throw res.error;
+    if(res.data && res.data.id) d._dbRowId=res.data.id;
+    return d;
+  }
+
+  window.saveEval = async function(){
+    try{
+      const d = (typeof window.getEv==='function') ? window.getEv() : {};
+      const sid = inferSidFix(d) || (document.getElementById('esch')?.value||'');
+      if(!sid){ alert('اختر المدرسة قبل الحفظ.'); return; }
+      const s=schoolBySidFix(sid);
+      if(document.getElementById('esch')) document.getElementById('esch').value=sid;
+      if(s){
+        if(document.getElementById('f-city')) document.getElementById('f-city').value=s.city||'';
+        if(document.getElementById('f-sname')) document.getElementById('f-sname').value=s.name||'';
+      }
+      // حفظ محلي أولاً دائماً
+      d.saved=true; d.savedAt=new Date().toISOString();
+      d.school_code=sid; d.school_id=sid;
+      if(typeof DB==='undefined') window.DB={ev:{}};
+      if(!DB.ev) DB.ev={};
+      DB.ev[sid]=d;
+      saveLocalFix();
+      try{ if(typeof refresh==='function') refresh(); }catch(e){}
+      toastFix('💾 محفوظ محلياً، جاري الرفع للقاعدة...','#1a73be');
+      // ثم رفع لـ Supabase
+      try{
+        const saved=await upsertEvaluationFix(sid,d);
+        DB.ev[sid]=saved;
+        saveLocalFix();
+        try{ if(typeof refresh==='function') refresh(); }catch(e){}
+        toastFix('✅ تم حفظ التقييم في قاعدة البيانات','#0f6e56');
+      }catch(supaErr){
+        console.warn('Supabase save error:',supaErr);
+        toastFix('✅ محفوظ محلياً — تحقق من الاتصال للحفظ السحابي','#ba7517');
+      }
+    }catch(e){
+      console.error('critical save failed',e);
+      toastFix('❌ خطأ: '+(e.message||e),'#c0392b');
+    }
+  };
+
+  window.saveAll = async function(){ return window.saveEval(); };
+  window.pushAllEvaluationsToSupabase = async function(){
+    const entries=Object.entries((typeof DB!=='undefined' && DB.ev) ? DB.ev : {}).filter(([,d])=>d&&d.saved);
+    for(const [sid,d] of entries){ await upsertEvaluationFix(sid,d); }
+    toastFix('✅ تم مزامنة كل التقييمات المحفوظة مع قاعدة البيانات','#0f6e56');
+  };
+
+  window.onSch = async function(){
+    const sid=$id('esch') ? $id('esch').value : '';
+    const form=$id('eform');
+    if(!sid){ if(form) form.style.display='none'; return; }
+    if(form) form.style.display='block';
+    const s=schoolBySidFix(sid);
+    if(s){ if($id('f-city')) $id('f-city').value=s.city||''; if($id('f-sname')) $id('f-sname').value=s.name||''; }
+    try{ if(typeof window.loadEvaluationsFromSupabase==='function') await window.loadEvaluationsFromSupabase({replace:true}); }catch(e){ console.warn('remote reload skipped',e); }
+    try{ if(typeof window.ldEv==='function') window.ldEv(sid); else if(typeof ldEv==='function') ldEv(sid); }catch(e){ console.warn('load selected evaluation skipped',e); }
+    if(s){ if($id('f-city')) $id('f-city').value=s.city||''; if($id('f-sname')) $id('f-sname').value=s.name||''; }
+  };
+
+  document.addEventListener('DOMContentLoaded',function(){
+    setTimeout(function(){
+      document.querySelectorAll('button').forEach(function(b){
+        const t=(b.textContent||'').trim();
+        if(t.includes('حفظ التقييم') || t.includes('حفظ في قاعدة البيانات')) b.onclick=function(ev){ ev.preventDefault(); return window.saveEval(); };
+      });
+    },900);
+  });
+})();
+</script>
+
 <script src="../assets/reset-demo-data.js?v=20260510f"></script>
+
+
+<script>
+/* === AI Smart Fill — Analysis Fields Only — 2026 ===
+   يملأ فقط حقول التحليل (نقاط القوة/الضعف/التوصيات/الخطط)
+   بناءً على الاختيارات والتقييمات التي أدخلها المستخدم.
+   لا يلمس حقول البيانات (الاسم، التاريخ، الإحصاءات، الوصف).
+*/
+(function(){
+  if(window.__alfalahSmartAi) return;
+  window.__alfalahSmartAi = true;
+
+  // ── الحقول التحليلية فقط ───────────────────────────────────────
+  // هذه هي الحقول التي يمكن للذكاء ملؤها بناءً على التقييمات
+  var AI_FIELDS = [
+    {id:'f-str',    label:'نقاط القوة'},
+    {id:'f-wk',     label:'نقاط الضعف والفجوات'},
+    {id:'f-chal',   label:'أبرز التحديات'},
+    {id:'f-rec',    label:'مقترحات التطوير والتوصيات'},
+    {id:'f-plan',   label:'ملخص خطة العمل'},
+    {id:'f-plan-s', label:'خطة قصيرة المدى (1-3 أشهر)'},
+    {id:'f-plan-m', label:'خطة متوسطة المدى (فصل دراسي)'},
+    {id:'f-plan-l', label:'خطة طويلة المدى (سنة+)'},
+    {id:'f-ovr',    label:'التقييم العام'},
+    {id:'f-pri',    label:'أولوية التدخل'},
+    {id:'f-sstr',   label:'نقاط قوة الكادر'},
+    {id:'f-sdev',   label:'احتياجات التطوير المهني'},
+    {id:'f-train-rec', label:'توصيات التدريب'},
+    {id:'f-tecn',   label:'ملاحظات التقنية'},
+    {id:'f-feats-desc', label:'وصف المميزات الخاصة'},
+    {id:'f-uaen',   label:'ملاحظات مجموعات الإمارات'},
+  ];
+
+  // ── قراءة السياق من التقييمات المُدخلة ────────────────────────
+  function getContext(){
+    var school = val('f-sname') || val('f-city') || 'المكتبة';
+    var city   = val('f-city') || '';
+    var ltyp   = val('f-ltyp') || 'مكتبة مدرسية';
+    var edu    = val('f-edu')  || '';
+    var exp    = val('f-exp')  || '';
+    var crs    = val('f-crs')  || '';
+
+    // التقييمات من مقياس الأداء
+    var scores = {};
+    var axisKeys = {
+      'المجموعات':       ['uae','cd','cc','cco'],
+      'البيئة':          ['sh','at','in'],
+      'التقنية':         ['dg','te','un'],
+      'الكادر':          ['ss','sb','sc','sst','si','ste','scol'],
+      'الأنشطة':         ['rch','tu','cu','ri','pa'],
+      'الشراكات':        ['co','ts'],
+    };
+    try {
+      var RS = window.RS || {};
+      Object.entries(axisKeys).forEach(function(entry){
+        var axis = entry[0], keys = entry[1];
+        var vals = keys.map(function(k){ return Number(RS[k]||0); }).filter(function(v){ return v>0; });
+        if(vals.length) scores[axis] = (vals.reduce(function(a,b){return a+b;},0)/vals.length).toFixed(1);
+      });
+    } catch(e){}
+
+    // الاختيارات المُفعَّلة
+    var uaeItems = checked('[id^="uae-"]');
+    var envItems = checked('[id^="env-"]');
+    var actItems = checked('[id^="act-"]');
+    var crItems  = checked('[id^="cr-"]');
+    var knowItems= checked('[id^="know-"]');
+
+    return {school,city,ltyp,edu,exp,crs,scores,uaeItems,envItems,actItems,crItems,knowItems};
+  }
+
+  function val(id){ var el=document.getElementById(id); return el?(el.value||'').trim():''; }
+  function checked(selector){
+    return Array.from(document.querySelectorAll(selector+':checked'))
+      .map(function(x){ return (x.closest('label')?.textContent||'').trim().replace(/\s+/g,' '); })
+      .filter(Boolean);
+  }
+
+  // ── توليد النص التحليلي لكل حقل ──────────────────────────────
+  function generateText(fieldId){
+    var ctx = getContext();
+    var sc  = ctx.scores;
+    var axes = Object.entries(sc);
+    var strong = axes.filter(function(e){ return Number(e[1])>=4; }).map(function(e){ return e[0]; });
+    var weak   = axes.filter(function(e){ return Number(e[1])<4; }).map(function(e){ return e[0]; });
+    var school = ctx.school;
+
+    switch(fieldId){
+      case 'f-str':
+        var lines = strong.map(function(ax,i){
+          return '• أعلى محاور الأداء: '+ax+' ('+sc[ax]+'/6).';
+        });
+        if(ctx.uaeItems.length) lines.push('• توافر مجموعات الإمارات: '+ctx.uaeItems.slice(0,3).join('، ')+'.');
+        if(ctx.actItems.length) lines.push('• أنشطة مفعّلة: '+ctx.actItems.slice(0,3).join('، ')+'.');
+        if(!lines.length) lines.push('• الأداء العام في مستوى يستوجب المتابعة والتطوير.');
+        return lines.join('\n');
+
+      case 'f-wk':
+        var lines = weak.map(function(ax){
+          return '• يحتاج محور '+ax+' إلى تطوير ملموس ('+sc[ax]+'/6).';
+        });
+        if(ctx.envItems.indexOf('التكييف') < 0) lines.push('• بعض جوانب البيئة تحتاج مراجعة.');
+        if(!lines.length) lines.push('• لم تُرصد نقاط ضعف جوهرية، يُوصى بالمحافظة على المستوى.');
+        return lines.join('\n');
+
+      case 'f-chal':
+        var lines = [];
+        if(weak.length) lines.push('• المحاور الأقل أداءً: '+weak.join('، ')+' — تحتاج خطة واضحة.');
+        lines.push('• الحاجة إلى توثيق الشواهد وربطها بمؤشرات قياس.');
+        if(ctx.knowItems.length < 3) lines.push('• تعزيز مهارات الكادر في المجالات التقنية والرقمية.');
+        return lines.join('\n');
+
+      case 'f-rec':
+        var lines = ['• رفع درجة المحاور الأقل أداءً عبر خطة تطوير مُجدوَلة.'];
+        if(weak.includes('التقنية')) lines.push('• الارتقاء بالجاهزية التقنية وربط المكتبة بنظام إلكتروني موحد.');
+        if(weak.includes('الشراكات')) lines.push('• تفعيل الشراكات المجتمعية والأكاديمية لدعم برامج المكتبة.');
+        if(weak.includes('الأنشطة')) lines.push('• تطوير خطة أنشطة قرائية مرتبطة بالمنهج ومناسبات القراءة.');
+        lines.push('• توثيق مؤشرات الأداء (الإعارة، الزيارات، الفعاليات) بشكل دوري.');
+        return lines.join('\n');
+
+      case 'f-plan':
+        var level = 'متوسط';
+        var avgArr = axes.map(function(e){ return Number(e[1]); }).filter(Boolean);
+        if(avgArr.length){
+          var avg = avgArr.reduce(function(a,b){return a+b;},0)/avgArr.length;
+          level = avg>=5?'ممتاز':avg>=4?'جيد':avg>=3?'مقبول':'يحتاج تحسيناً';
+        }
+        return 'ملخص الخطة: '+school+' — '+ctx.ltyp+' — المستوى العام: '+level+'.'
+          +'\nيُبنى التطوير على تعزيز نقاط القوة وعلاج نقاط الضعف المُحددة في هذا التقرير.';
+
+      case 'f-plan-s':
+        return '• استكمال النواقص العاجلة في المحاور الأقل نتيجة ('+weak.slice(0,2).join('، ')||'—'+').'
+          +'\n• توثيق الشواهد والصور والنماذج داخل ملف المدرسة.'
+          +'\n• تحديث بيانات النظام والمجموعات الأساسية خلال 1-3 أشهر.';
+
+      case 'f-plan-m':
+        return '• تنفيذ تدريب عملي للكادر حسب نقاط الضعف المُحددة.'
+          +'\n• تطوير مصادر الإمارات والأنشطة القرائية وربطها بالمناهج.'
+          +'\n• متابعة مؤشرات الإعارة والزيارات والمستفيدين خلال فصل دراسي.';
+
+      case 'f-plan-l':
+        return '• اعتماد خطة تطوير سنوية للمكتبة مع مؤشرات قياس واضحة.'
+          +'\n• ربط المكتبة بنظام موحد للتقارير والإحصاءات.'
+          +'\n• تحويل نتائج التقييم إلى مقارنة سنوية بين المدارس.';
+
+      case 'f-ovr':
+        var avg2 = axes.map(function(e){return Number(e[1]);}).filter(Boolean);
+        if(!avg2.length) return 'مقبول';
+        var a = avg2.reduce(function(s,v){return s+v;},0)/avg2.length;
+        return a>=5?'ممتاز':a>=4?'جيد جداً':a>=3?'مقبول':'يحتاج تحسيناً';
+
+      case 'f-pri':
+        var avgP = axes.map(function(e){return Number(e[1]);}).filter(Boolean);
+        if(!avgP.length) return 'متوسطة';
+        var aP = avgP.reduce(function(s,v){return s+v;},0)/avgP.length;
+        return aP<3?'عالية جداً':aP<4?'مرتفعة':aP<5?'متوسطة':'منخفضة';
+
+      case 'f-sstr':
+        var lines = [];
+        if(ctx.edu) lines.push('• المؤهل العلمي: '+ctx.edu+(ctx.crs?' — دورات تدريبية: '+ctx.crs:'')+'.');
+        if(ctx.knowItems.length) lines.push('• معارف تقنية: '+ctx.knowItems.slice(0,4).join('، ')+'.');
+        if(!lines.length) lines.push('• يمتلك الكادر قدرات أساسية تحتاج إلى تطوير مستمر.');
+        return lines.join('\n');
+
+      case 'f-sdev':
+        return val('f-train-rec') || '• تدريب على المهارات التقنية والرقمية.'
+          +'\n• تعزيز مهارات الفهرسة الإلكترونية وإعداد التقارير.';
+
+      case 'f-train-rec':
+        return '• دورة في نظام '+( val('f-ils-name')||'المكتبة الإلكتروني')+'.'
+          +'\n• تدريب على معايير MARC 21 والفهرسة الإلكترونية.';
+
+      case 'f-uaen':
+        var uae = ctx.uaeItems;
+        if(!uae.length) return 'تحتاج مجموعات الإمارات إلى تعزيز ملحوظ، خاصة في مجالات التاريخ والهوية الوطنية والسير.';
+        return 'مجموعات الإمارات المتوفرة: '+uae.join('، ')+'.'
+          +'\nيُوصى بتعزيز العناوين في المجالات الأقل توافراً وربطها بأنشطة قرائية وطنية.';
+
+      case 'f-tecn':
+        return val('f-lsy')==='لا يوجد'?
+          'المكتبة لا تعمل بنظام إلكتروني متكامل؛ يُوصى بتبني نظام KOHA أو ما يعادله لتنظيم الفهرسة والإعارة.':
+          'نظام المكتبة الحالي ('+val('f-ils-name')+'): يعمل بصورة جزئية ويحتاج إلى تحديث وتطوير.';
+
+      case 'f-feats-desc':
+        var env = ctx.envItems;
+        if(!env.length) return 'لا توجد مميزات خاصة موثقة حالياً؛ يُوصى بتوثيق أي مرفق أو خاصية إضافية للمكتبة.';
+        return 'المرافق والمميزات المتوفرة: '+env.join('، ')+'.'
+          +'\nيمكن تعميم ما يصلح منها على بقية الفروع.';
+
+      default:
+        return '';
+    }
+  }
+
+  // ── إضافة زر ذكاء بجانب كل حقل تحليلي فقط ────────────────────
+  function addAiBtn(fieldId, label){
+    var el = document.getElementById(fieldId);
+    if(!el) return;
+    var fld = el.closest('.fld');
+    if(!fld || fld.querySelector('.ai-smart-btn')) return;
+    var lbl = fld.querySelector('label');
+    if(!lbl) return;
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ai-smart-btn';
+    btn.title = 'اضغط لتوليد '+label+' من التقييمات المُدخلة';
+    btn.innerHTML = '🤖';
+    btn.style.cssText = 'float:left;margin:0 0 4px 6px;border:none;border-radius:10px;'
+      +'padding:4px 8px;background:#0f9d8a;color:#fff;font-size:13px;cursor:pointer;'
+      +'box-shadow:0 2px 8px rgba(0,0,0,.15);transition:.15s';
+    btn.onmouseenter = function(){ this.style.background='#0c7a6c'; };
+    btn.onmouseleave = function(){ this.style.background='#0f9d8a'; };
+
+    btn.onclick = function(ev){
+      ev.preventDefault();
+      var text = generateText(fieldId);
+      if(!text){ aiToast('لم يتم إدخال اختيارات كافية لتوليد النص.'); return; }
+      // لا يمسح النص الموجود — يضيف فقط إذا فارغ أو يُعوّض إذا ضُغط مرتين
+      if(el.value.trim()){
+        if(!confirm('هذه الخانة بها نص. هل تريد استبداله بالنص المُولَّد ذكياً؟')) return;
+      }
+      el.value = text;
+      el.dispatchEvent(new Event('input', {bubbles:true}));
+      // Highlight the field temporarily
+      el.style.border = '2px solid #0f9d8a';
+      setTimeout(function(){ el.style.border = ''; }, 2000);
+      aiToast('✅ تم توليد '+label+'. راجع النص وعدّل حسب ما تراه.');
+    };
+
+    lbl.appendChild(btn);
+  }
+
+  function aiToast(msg){
+    var t = document.getElementById('ai-smart-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'ai-smart-toast';
+      t.style.cssText = 'position:fixed;left:50%;bottom:80px;transform:translateX(-50%);'
+        +'z-index:999999;background:#0f6e56;color:#fff;padding:10px 18px;border-radius:16px;'
+        +'font-family:Cairo,Tahoma,sans-serif;font-size:13px;font-weight:900;'
+        +'box-shadow:0 6px 20px rgba(0,0,0,.22);max-width:92%;text-align:center;display:none;'
+        +'white-space:pre-line';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.display = 'block';
+    clearTimeout(t._h);
+    t._h = setTimeout(function(){ t.style.display='none'; }, 3500);
+  }
+
+  // ── زر واحد لملء كل الحقول التحليلية دفعة واحدة ────────────
+  function addFillAllBtn(){
+    // نضعه قبل زر الحفظ مباشرة
+    var saveBtn = document.querySelector('button[onclick="saveEval()"], button[onclick*="saveEval"]');
+    if(!saveBtn || document.getElementById('ai-fill-all-btn')) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'ai-fill-all-btn';
+    btn.innerHTML = '🤖 ملء التحليل بالذكاء الاصطناعي';
+    btn.style.cssText = 'padding:10px 18px;background:linear-gradient(135deg,#0f9d8a,#0f6e56);'
+      +'color:#fff;border:none;border-radius:14px;font-family:Cairo,Tahoma,sans-serif;'
+      +'font-size:14px;font-weight:900;cursor:pointer;margin-left:8px;'
+      +'box-shadow:0 4px 14px rgba(15,157,138,.3)';
+    btn.onclick = function(){
+      var filled = 0;
+      AI_FIELDS.forEach(function(f){
+        var el = document.getElementById(f.id);
+        if(!el) return;
+        if(el.value.trim()) return; // لا يتجاوز النص الموجود
+        var text = generateText(f.id);
+        if(text){ el.value = text; filled++; }
+      });
+      aiToast(filled > 0
+        ? '✅ تم ملء '+filled+' حقل تحليلي.\nراجع النصوص وعدّل قبل الحفظ.'
+        : 'أدخل التقييمات والاختيارات أولاً ثم اضغط مجدداً.');
+    };
+    saveBtn.parentNode.insertBefore(btn, saveBtn);
+  }
+
+  // ── تهيئة (يعمل عند فتح النموذج) ─────────────────────────────
+  function init(){
+    if(!document.getElementById('eform')) return;
+    AI_FIELDS.forEach(function(f){ addAiBtn(f.id, f.label); });
+    addFillAllBtn();
+  }
+
+  // تشغيل عند تحميل الصفحة وعند كل فتح للنموذج
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){setTimeout(init, 800);});
+  } else {
+    setTimeout(init, 800);
+  }
+  // إعادة التهيئة عند كل ضغطة على زر تقييم
+  var origGoEv = window.goEv;
+  window.goEv = function(sid){
+    if(origGoEv) origGoEv(sid);
+    setTimeout(init, 600);
+  };
+
+  // CSS للأزرار
+  var style = document.createElement('style');
+  style.textContent = '.ai-smart-btn:hover{transform:scale(1.05)} #ai-fill-all-btn:hover{filter:brightness(1.1)}';
+  document.head.appendChild(style);
+
+})();
+</script>
+
+
+<script>
+/* === Alfalah Final Evaluation Save Guard — school_id NOT NULL fix only ===
+   يثبت قيمة school_id قبل أي حفظ إلى library_evaluations.
+   لا يغير التصميم أو الحقول أو منطق التقرير.
+*/
+(function(){
+  window.__alfalahFinalEvaluationSaveGuard = true;
+
+  var SCHOOL_DB_ID_FINAL = {dan:1,mzd:2,bny:3,khb:4,jmi:5,shj:6};
+  var DB_ID_TO_CODE_FINAL = {1:'dan',2:'mzd',3:'bny',4:'khb',5:'jmi',6:'shj'};
+
+  function byId(id){ return document.getElementById(id); }
+  function val(id){ var el=byId(id); return el ? String(el.value || '').trim() : ''; }
+  function cleanText(v){ return String(v || '').replace(/\s+/g,' ').trim(); }
+
+  function showSaveMsg(msg, bg){
+    var t = byId('alfalah-final-save-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'alfalah-final-save-toast';
+      t.style.cssText = 'position:fixed;left:50%;bottom:86px;transform:translateX(-50%);z-index:1000000;color:#fff;padding:13px 22px;border-radius:22px;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;box-shadow:0 8px 28px rgba(0,0,0,.28);max-width:94%;text-align:center';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.background = bg || '#0c447c';
+    t.style.display = 'block';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function(){ t.style.display='none'; }, 3800);
+  }
+
+  function getClientFinal(){
+    if(window.alfalahSupabase) return window.alfalahSupabase;
+    if(window.supabaseClient) return window.supabaseClient;
+    if(window.AlfalahDBSync && typeof window.AlfalahDBSync.client === 'function'){
+      try{ return window.AlfalahDBSync.client(); }catch(e){}
+    }
+    if(window.supabase && window.ALFALAH_SUPABASE_URL && window.ALFALAH_SUPABASE_KEY){
+      try{
+        window.alfalahSupabase = window.supabase.createClient(window.ALFALAH_SUPABASE_URL, window.ALFALAH_SUPABASE_KEY);
+        return window.alfalahSupabase;
+      }catch(e){}
+    }
+    return null;
+  }
+
+  function schoolsFinal(){
+    try{ if(Array.isArray(window.SCH)) return window.SCH; }catch(e){}
+    return [
+      {id:'khb',name:'أكاديمية الفلاح فرع الخبيصي',short:'الخبيصي',city:'العين',date:'2026-04-28'},
+      {id:'jmi',name:'أكاديمية الفلاح فرع الجيمي',short:'الجيمي',city:'العين',date:'2026-04-29'},
+      {id:'shj',name:'مدرسة الفلاح الخاصة - الدخيلات',short:'الشارقة',city:'الشارقة',date:'2026-05-12'},
+      {id:'bny',name:'أكاديمية الفلاح فرع بني ياس',short:'بني ياس',city:'أبوظبي',date:'2026-05-14'},
+      {id:'mzd',name:'أكاديمية الفلاح فرع محمد بن زايد',short:'محمد بن زايد',city:'أبوظبي',date:'2026-05-18'},
+      {id:'dan',name:'أكاديمية الفلاح فرع الدانة',short:'الدانة',city:'أبوظبي',date:'2026-05-19'}
+    ];
+  }
+
+  function schoolByCodeFinal(code){
+    code = String(code || '').trim();
+    var list = schoolsFinal();
+    for(var i=0;i<list.length;i++){ if(list[i].id === code) return list[i]; }
+    return null;
+  }
+
+  function codeFromAnyFinal(v){
+    var x = cleanText(v);
+    if(!x) return '';
+    if(SCHOOL_DB_ID_FINAL[x]) return x;
+    if(DB_ID_TO_CODE_FINAL[x]) return DB_ID_TO_CODE_FINAL[x];
+    var list = schoolsFinal();
+    for(var i=0;i<list.length;i++){
+      var s=list[i];
+      if(x === s.id || x === String(SCHOOL_DB_ID_FINAL[s.id]) || x === s.name || x === s.short) return s.id;
+      if(x.indexOf(s.name) !== -1 || x.indexOf(s.short) !== -1 || s.name.indexOf(x) !== -1) return s.id;
+    }
+    return '';
+  }
+
+  function detectSchoolCodeFinal(d){
+    var sid = codeFromAnyFinal(val('esch'));
+    if(sid) return sid;
+
+    if(d){
+      sid = codeFromAnyFinal(d.school_code || d.school_id || d.school_db_id || d.esch || d.sid || d.school);
+      if(sid) return sid;
+      sid = codeFromAnyFinal(d.school_name || d.sname || d['f-sname'] || d.name);
+      if(sid) return sid;
+    }
+
+    sid = codeFromAnyFinal(val('f-sname')) || codeFromAnyFinal(cleanText((byId('current-school-name')||{}).textContent));
+    if(sid) return sid;
+
+    try{
+      if(window.DB && DB.ev){
+        var keys = Object.keys(DB.ev);
+        for(var k=0;k<keys.length;k++){
+          if(DB.ev[keys[k]] && DB.ev[keys[k]].saved && SCHOOL_DB_ID_FINAL[keys[k]]) return keys[k];
+        }
+      }
+    }catch(e){}
+
+    return '';
+  }
+
+  function detectVisitDateFinal(d, sid){
+    var dt = cleanText((d && (d.date || d.visit_date || d['f-date'])) || val('f-date')).slice(0,10);
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(dt)){
+      var s = schoolByCodeFinal(sid);
+      if(s && /^\d{4}-\d{2}-\d{2}$/.test(String(s.date||''))) dt = s.date;
+    }
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(dt)){
+      dt = new Date().toISOString().slice(0,10);
+    }
+    return dt;
+  }
+
+  function getDataFinal(){
+    var d = {};
+    try{
+      if(typeof window.getEv === 'function') d = window.getEv() || {};
+      else if(typeof getEv === 'function') d = getEv() || {};
+    }catch(e){ d = {}; }
+
+    /* احتياط: اقرأ كل حقول النموذج التي تبدأ بـ f- حتى لا تضيع الخانات اليدوية */
+    try{
+      document.querySelectorAll('#eform [id^="f-"]').forEach(function(el){
+        if(!el || !el.id) return;
+        if(el.type === 'checkbox') d[el.id] = !!el.checked;
+        else d[el.id] = el.value;
+      });
+    }catch(e){}
+    return d;
+  }
+
+  function saveLocalFinal(sid,d){
+    try{
+      if(typeof window.DB === 'undefined') window.DB = {ev:{}};
+      if(!DB.ev) DB.ev = {};
+      DB.ev[sid] = d;
+      var key = (typeof window.LSK !== 'undefined') ? window.LSK : 'falah_lib_v6';
+      localStorage.setItem(key, JSON.stringify(DB));
+    }catch(e){ console.warn('local save failed', e); }
+  }
+
+  function totalScoreFinal(d){
+    try{
+      if(typeof window.calcSc === 'function' && typeof window.tot === 'function') return window.tot(window.calcSc(d));
+      if(typeof calcSc === 'function' && typeof tot === 'function') return tot(calcSc(d));
+    }catch(e){}
+    var n = Number(d.total_score || d.total || 0);
+    return isFinite(n) ? n : 0;
+  }
+
+  function levelFinal(d){
+    return cleanText(d.overall || d['f-ovr'] || d.final_level || '').replace(/🔴|🟠|🔵|🟢/g,'').trim();
+  }
+
+  async function saveEvaluationFinal(){
+    var d = getDataFinal();
+    var sid = detectSchoolCodeFinal(d);
+    if(!sid || !SCHOOL_DB_ID_FINAL[sid]){
+      alert('اختر المدرسة من جدول الزيارات أو البطاقة قبل الحفظ.');
+      return;
+    }
+
+    var s = schoolByCodeFinal(sid);
+    var visitDate = detectVisitDateFinal(d, sid);
+    var now = new Date().toISOString();
+
+    if(byId('esch')) byId('esch').value = sid;
+    if(s){
+      if(byId('f-sname')) byId('f-sname').value = s.name;
+      if(byId('f-city')) byId('f-city').value = s.city || '';
+    }
+    if(byId('f-date') && !byId('f-date').value) byId('f-date').value = visitDate;
+
+    d.school_code = sid;
+    d.school_id = SCHOOL_DB_ID_FINAL[sid];      /* مهم: رقم لا يترك فارغاً */
+    d.school_db_id = SCHOOL_DB_ID_FINAL[sid];
+    d.school_name = s ? s.name : (d.school_name || d['f-sname'] || '');
+    d.city = s ? s.city : (d.city || d['f-city'] || '');
+    d.date = visitDate;
+    d.visit_date = visitDate;
+    d['f-date'] = visitDate;
+    d.saved = true;
+    d.savedAt = now;
+    d.form_version = 'final-school-id-save-guard-2026-05-15';
+
+    saveLocalFinal(sid,d);
+    try{ if(typeof window.refresh === 'function') window.refresh(); }catch(e){}
+    try{ if(typeof window.uHome === 'function') window.uHome(); }catch(e){}
+    try{ if(typeof window.uSch === 'function') window.uSch(); }catch(e){}
+    try{ if(typeof window.uDat === 'function') window.uDat(); }catch(e){}
+
+    var sb = getClientFinal();
+    if(!sb){
+      showSaveMsg('✅ تم الحفظ محلياً — لم يتم العثور على اتصال Supabase', '#ba7517');
+      return;
+    }
+
+    var total = totalScoreFinal(d);
+    var row = {
+      school_id: SCHOOL_DB_ID_FINAL[sid],
+      school_code: sid,
+      visit_date: visitDate,
+      librarian_name: cleanText(d.lib || d['f-lib']),
+      total_score: total,
+      final_level: levelFinal(d),
+      strengths: cleanText(d.str || d['f-str']),
+      weaknesses: cleanText(d.wk || d.chal || d['f-wk'] || d['f-chal']),
+      recommendations: cleanText(d.rec || d['f-rec']),
+      full_data: d,
+      updated_at: now
+    };
+
+    if(!row.school_id){
+      alert('تعذر تحديد رقم المدرسة قبل الحفظ.');
+      return;
+    }
+
+    showSaveMsg('💾 جاري الحفظ في قاعدة البيانات...', '#0c447c');
+    var res = await sb.from('library_evaluations')
+      .upsert(row, {onConflict:'school_id,visit_date'})
+      .select('id')
+      .single();
+
+    if(res && res.error){
+      console.error('library_evaluations save error', res.error, row);
+      showSaveMsg('❌ فشل الحفظ في القاعدة: ' + (res.error.message || res.error), '#c0392b');
+      return;
+    }
+
+    if(res && res.data && res.data.id) d._dbRowId = res.data.id;
+    saveLocalFinal(sid,d);
+    showSaveMsg('✅ تم حفظ التقييم في قاعدة البيانات', '#0f6e56');
+  }
+
+  window.saveEval = saveEvaluationFinal;
+  window.saveAll = saveEvaluationFinal;
+})();
+</script>
+
 </body>
 </html>

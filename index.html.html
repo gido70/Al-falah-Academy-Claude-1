@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نظام تقييم مكتبات أكاديمية الفلاح 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap");
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --navy:#0c447c;--blue:#185fa5;--teal:#0f9d8a;--gold:#ba7517;--amber:#f0a500;
+  --bg:#e8f0fa;--text:#0c2a4a;--muted:#5a7fa8;--border:#b8d4f0;
+  --green:#0f6e56;--red:#c0392b;
+  --grad:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56);
+}
+body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direction:rtl;min-height:100vh;}
+
+/* ══════ TOP HEADER WITH LOGO ══════ */
+.site-header{
+  background:var(--grad);
+  padding:20px 24px 0;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 4px 20px rgba(12,68,124,.3);
+}
+.site-header::before{content:"";position:absolute;top:-40px;left:-40px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;}
+.site-header::after{content:"";position:absolute;bottom:-40px;right:-30px;width:180px;height:180px;background:rgba(255,255,255,.05);border-radius:50%;}
+.header-logo{position:relative;z-index:2;margin-bottom:10px;}
+.header-logo svg{width:80px;height:92px;display:block;margin:0 auto 10px;filter:drop-shadow(0 6px 20px rgba(0,0,0,.4));}
+.header-logo .acname{font-size:22px;font-weight:900;color:#fff;letter-spacing:.4px;}
+.header-logo .acsub{font-size:13px;color:rgba(255,255,255,.8);margin-top:3px;}
+
+/* ══════ TOP NAV ══════ */
+.topnav{
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:2px;padding:12px 20px 0;position:relative;z-index:2;
+}
+.navbtn{
+  display:flex;align-items:center;gap:7px;padding:10px 16px;
+  cursor:pointer;transition:all .2s;color:rgba(255,255,255,.8);
+  font-size:15px;font-weight:700;font-family:"Cairo",sans-serif;
+  border:none;background:transparent;
+  border-bottom:3px solid transparent;border-radius:8px 8px 0 0;
+}
+.navbtn:hover{background:rgba(255,255,255,.12);color:#fff;}
+.navbtn.active{background:rgba(255,255,255,.18);color:#ffe07a;border-bottom-color:var(--amber);}
+.navbtn .ico{font-size:18px;}
+.nav-sep{width:1px;height:32px;background:rgba(255,255,255,.15);margin:0 2px;}
+
+/* ══════ ACTION BAR (below nav) ══════ */
+.action-strip{
+  background:rgba(255,255,255,.1);border-top:1px solid rgba(255,255,255,.15);
+  display:flex;justify-content:center;align-items:center;gap:8px;
+  padding:8px 20px;flex-wrap:wrap;
+}
+.abtn{
+  border:1.5px solid rgba(255,255,255,.35);border-radius:20px;
+  padding:6px 16px;font-family:"Cairo",sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;color:#fff;background:rgba(255,255,255,.12);
+  display:flex;align-items:center;gap:6px;transition:all .2s;
+}
+.abtn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.6);}
+.abtn-gold{background:rgba(240,165,0,.3);border-color:var(--amber);}
+.abtn-teal{background:rgba(15,157,138,.3);border-color:var(--teal);}
+
+/* ══════ PAGE TITLE BAR ══════ */
+.pagebar{
+  background:#fff;border-bottom:2px solid var(--border);
+  padding:14px 0;text-align:center;
+  box-shadow:0 3px 12px rgba(12,68,124,.08);
+}
+.pagebar-inner{max-width:960px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:center;}
+.pagetitle{font-size:20px;font-weight:900;color:var(--navy);}
+
+/* ══════ MAIN CONTENT ══════ */
+.content{max-width:960px;width:100%;margin:0 auto;padding:22px 24px;}
+
+/* ══════ HERO ══════ */
+.hero{background:var(--grad);border-radius:20px;padding:24px 30px;margin-bottom:22px;color:#fff;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;top:-50px;left:-50px;width:220px;height:220px;background:rgba(255,255,255,.06);border-radius:50%;}
+.hi{position:relative;z-index:1;}
+.hero h2{font-size:22px;font-weight:900;}.hero p{font-size:14px;opacity:.85;margin-top:6px;}
+
+/* ══════ CARDS ══════ */
+.card{background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:0 4px 18px rgba(12,68,124,.07);padding:22px;margin-bottom:18px;}
+.cardh{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid var(--bg);}
+.cnum{width:44px;height:44px;border-radius:14px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;flex-shrink:0;}
+.ctitle{font-size:19px;font-weight:900;color:var(--navy);}.csub{font-size:13px;color:var(--muted);margin-top:3px;}
+
+/* ══════ GRIDS ══════ */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.full{grid-column:1/-1;}
+
+/* ══════ FORM FIELDS ══════ */
+.fld{display:flex;flex-direction:column;gap:5px;}
+.fld label{font-size:14px;font-weight:700;color:var(--navy);}
+.fld input,.fld select,.fld textarea{border:2px solid var(--border);border-radius:11px;padding:10px 13px;font-family:"Cairo",sans-serif;font-size:14px;color:var(--text);background:#f5faff;outline:none;transition:border .2s;}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px rgba(24,95,165,.1);}
+.fld textarea{min-height:75px;resize:vertical;}
+.fld input[readonly]{background:#edf3fb;cursor:default;color:var(--muted);}
+
+/* ══════ QUICK PILLS ══════ */
+.qp{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:7px;}
+.pill{padding:6px 13px;border-radius:20px;border:1.5px solid var(--border);background:#f5faff;font-size:13px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s;user-select:none;}
+.pill:hover{border-color:var(--blue);background:#e6f1fb;color:var(--blue);}
+.pill.sel{background:var(--navy);color:#fff;border-color:var(--navy);}
+
+/* ══════ RATING PILLS ══════ */
+.rgrp{margin:10px 0;}
+.rlbl{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.rlbl small{font-size:11px;color:var(--muted);font-weight:400;}
+.rp{display:flex;gap:5px;}
+.rpill{flex:1;min-width:44px;padding:9px 3px;border-radius:10px;border:2px solid var(--border);background:#f5faff;font-family:"Cairo",sans-serif;font-size:12px;font-weight:800;color:var(--muted);cursor:pointer;transition:all .18s;text-align:center;line-height:1.3;}
+.rpill:hover{transform:translateY(-2px);border-color:var(--blue);}
+.ra1{background:#fdf0f0;border-color:#e24b4a;color:#c0392b;}
+.ra2{background:#fef6e8;border-color:#e8920a;color:#b7620a;}
+.ra3{background:#fefae8;border-color:#c9a800;color:#8a7000;}
+.ra4{background:#e6f1fb;border-color:var(--blue);color:var(--navy);}
+.ra5{background:#e1f5ee;border-color:var(--green);color:#085041;}
+.ra6{background:#e0f0fe;border-color:#0277bd;color:#014f82;}
+
+/* ══════ CHECKBOXES ══════ */
+.cg3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0;}
+.cg4{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:8px 0;}
+.chk{display:flex;align-items:center;gap:8px;background:#f5faff;border:1.5px solid var(--border);padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;}
+.chk:hover{border-color:var(--blue);background:#e6f1fb;}
+.chk input{accent-color:var(--gold);transform:scale(1.2);flex-shrink:0;}
+
+/* ══════ SECTION DIVIDER ══════ */
+.sdiv{display:flex;align-items:center;gap:10px;margin:18px 0 13px;}
+.sdivl{flex:1;height:2px;background:linear-gradient(90deg,var(--border),transparent);}
+.sdivr{flex:1;height:2px;background:linear-gradient(270deg,var(--border),transparent);}
+.sdivt{font-size:14px;font-weight:900;color:var(--navy);white-space:nowrap;padding:5px 14px;background:var(--bg);border-radius:20px;border:1px solid var(--border);}
+
+/* ══════ UAE BOX ══════ */
+.ubox{background:linear-gradient(135deg,#e8f4fd,#e6f7f0);border:2px solid var(--teal);border-radius:16px;padding:18px;margin:14px 0;}
+.utitle{font-size:16px;font-weight:900;color:#085041;margin-bottom:5px;}
+.udesc{font-size:13px;color:#0f5a3d;margin-bottom:14px;line-height:1.6;}
+
+/* ══════ EXTRA LIBRARY ══════ */
+.exbox{background:#f0faff;border:2px dashed var(--border);border-radius:14px;margin-top:14px;overflow:hidden;}
+.exbox.open{border-color:var(--teal);border-style:solid;background:#e6f7f2;}
+.extog{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:15px;font-weight:700;color:var(--navy);padding:14px 16px;}
+.excnt{display:none;padding:0 16px 16px;}
+.excnt.open{display:block;}
+
+/* ══════ CREDENTIALS ══════ */
+.credbox{background:linear-gradient(135deg,#fef9ec,#fff8e6);border:2px solid var(--gold);border-radius:14px;padding:16px;margin:12px 0;}
+.credtitle{font-size:15px;font-weight:900;color:var(--gold);margin-bottom:12px;}
+
+/* ══════ BUTTONS ══════ */
+.btn{border:none;border-radius:11px;padding:11px 20px;font-family:"Cairo",sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.15);}
+.bp{background:var(--grad);color:#fff;}.bg{background:linear-gradient(135deg,var(--gold),var(--amber));color:#fff;}
+.bt{background:linear-gradient(135deg,var(--green),var(--teal));color:#fff;}
+.br{background:linear-gradient(135deg,#a32d2d,var(--red));color:#fff;}
+.bo{background:#fff;border:2px solid var(--border);color:var(--navy);}
+.bo:hover{border-color:var(--blue);background:#e6f1fb;}
+.bsm{padding:8px 16px;font-size:13px;}.bxs{padding:5px 11px;font-size:12px;}
+
+/* ══════ STATS ══════ */
+.s4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px;}
+.sc{background:#fff;border-radius:16px;padding:18px;text-align:center;border:1px solid var(--border);box-shadow:0 3px 12px rgba(12,68,124,.06);}
+.sn{font-size:30px;font-weight:900;color:var(--navy);line-height:1;}
+.sl{font-size:12px;color:var(--muted);margin-top:5px;font-weight:700;}
+
+/* ══════ SCHOOL CARDS ══════ */
+.scards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;}
+.scard{background:#fff;border:2px solid var(--border);border-radius:16px;padding:16px;cursor:pointer;transition:all .22s;text-align:center;}
+.scard:hover{border-color:var(--blue);background:#e8f4fd;transform:translateY(-3px);box-shadow:0 8px 20px rgba(12,68,124,.1);}
+.scard.done{border-color:var(--teal);background:#e6f7f2;}
+.scem{font-size:11px;font-weight:900;color:var(--muted);letter-spacing:1px;margin-bottom:4px;}
+.scname{font-size:14px;font-weight:900;color:var(--navy);line-height:1.3;}
+.scdate{font-size:12px;color:var(--gold);margin-top:6px;font-weight:700;}
+.scbdg{margin-top:8px;}
+
+/* ══════ VISIT TABLE ══════ */
+.vtbl{width:100%;border-collapse:collapse;}
+.vtbl th{background:var(--navy);color:#fff;padding:12px 13px;font-size:14px;font-weight:700;text-align:center;}
+.vtbl th:first-child{text-align:right;}
+.vtbl td{padding:11px 13px;border-bottom:1px solid var(--border);font-size:14px;text-align:center;}
+.vtbl tr:hover td{background:#f0f8ff;}.vtbl tr:nth-child(even) td{background:#f8fbff;}
+.vb{display:inline-block;padding:4px 13px;border-radius:20px;font-size:13px;font-weight:700;}
+.vbd{background:#e1f5ee;color:#085041;}.vbp{background:#faeeda;color:#633806;}
+.vbt{background:#e6f1fb;color:#0c447c;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+
+/* ══════ BADGE ══════ */
+.bdg{display:inline-block;padding:3px 11px;border-radius:16px;font-size:13px;font-weight:700;}
+.bg2{background:#e1f5ee;color:#085041;}.bb{background:#e6f1fb;color:#0c447c;}
+.ba{background:#faeeda;color:#633806;}.br2{background:#fcebeb;color:#791f1f;}.bgr{background:#f0f0f0;color:#555;}
+
+/* ══════ ALERT ══════ */
+.al{padding:12px 16px;border-radius:12px;font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:flex-start;gap:10px;}
+.ali{background:#e6f1fb;border:1px solid #b5d4f4;color:#0c447c;}
+.alw{background:#faeeda;border:1px solid #fac775;color:#633806;}
+.als{background:#e1f5ee;border:1px solid #5dcaa5;color:#085041;}
+
+/* ══════ PBAR ══════ */
+.pbt{height:10px;background:#dceefb;border-radius:5px;overflow:hidden;}
+.pbf{height:100%;border-radius:5px;transition:width .6s ease;}
+
+/* ══════ PAGES ══════ */
+.pg{display:none;}.pg.active{display:block;}
+
+/* ══════ COMPARE TABLE ══════ */
+.ctbl{width:100%;border-collapse:collapse;font-size:13px;}
+.ctbl th{background:var(--navy);color:#fff;padding:10px;text-align:center;font-size:12px;}
+.ctbl th:first-child{text-align:right;}
+.ctbl td{padding:9px 10px;border-bottom:1px solid var(--border);text-align:center;}
+.ctbl td:first-child{text-align:right;font-weight:700;background:#f8fbff;}
+.ctbl tr:hover td{background:#f0f8ff;}
+
+/* ══════ CHARTS ══════ */
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px;}
+.cbox{background:#fff;border-radius:18px;border:1px solid var(--border);padding:20px;box-shadow:0 4px 14px rgba(12,68,124,.06);}
+.cbox h4{font-size:15px;font-weight:900;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--bg);}
+.cful{grid-column:1/-1;}
+
+/* ══════ STICKY SAVE BAR ══════ */
+.abar{background:#fff;border-top:2px solid var(--border);padding:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;box-shadow:0 -3px 14px rgba(12,68,124,.07);position:sticky;bottom:0;z-index:40;}
+
+/* ══════ PRESENTATION ══════ */
+.pov{display:none;position:fixed;inset:0;background:#051225;z-index:999;flex-direction:column;}
+.pov.active{display:flex;}
+.psl{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;color:#fff;text-align:center;overflow:auto;}
+.pnav{display:flex;align-items:center;justify-content:center;gap:16px;padding:16px;background:rgba(255,255,255,.06);border-top:1px solid rgba(255,255,255,.1);}
+.pcnt{color:rgba(255,255,255,.6);font-size:14px;min-width:80px;text-align:center;}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-thumb{background:rgba(24,95,165,.25);border-radius:3px;}
+
+@media(max-width:900px){
+  .topnav{gap:2px;}.navbtn{padding:8px 10px;font-size:13px;}
+  .navbtn .ico{font-size:16px;}
+  .g2,.g3,.s4,.scards,.cgrid{grid-template-columns:1fr;}
+  .cg3,.cg4{grid-template-columns:1fr 1fr;}
+  .content{padding:14px;}
+  .nav-sep{display:none;}
+}
+@media print{
+  .site-header,.pagebar,.abar,.pov{display:none!important;}
+  .content{max-width:100%;padding:0;}
+  .pg{display:block!important;}
+  .card{box-shadow:none;break-inside:avoid;border:1px solid #ccc;}
+}
+
+/* ══════ RATING SCALE LEGEND ══════ */
+.scale-legend{
+  display:flex;gap:4px;margin-bottom:16px;border-radius:14px;overflow:hidden;
+  border:2px solid var(--border);background:#f5faff;
+}
+.scale-item{
+  flex:1;padding:10px 4px;text-align:center;font-family:"Cairo",sans-serif;
+  cursor:default;transition:transform .15s;
+}
+.scale-item:hover{transform:scaleY(1.05);z-index:1;}
+.scale-item .snum{font-size:20px;font-weight:900;line-height:1;}
+.scale-item .sdesc{font-size:11px;font-weight:700;margin-top:3px;line-height:1.2;}
+.si1{background:#fdf0f0;border-left:1px solid #f0c0c0;}
+.si1 .snum{color:#c0392b;}.si1 .sdesc{color:#a32d2d;}
+.si2{background:#fef2e0;border-left:1px solid #f0d0a0;}
+.si2 .snum{color:#b7620a;}.si2 .sdesc{color:#9a5008;}
+.si3{background:#fefbe0;border-left:1px solid #e8d800;}
+.si3 .snum{color:#8a7000;}.si3 .sdesc{color:#756000;}
+.si4{background:#e6f1fb;border-left:1px solid #b5d4f4;}
+.si4 .snum{color:var(--navy);}.si4 .sdesc{color:#0c3a6a;}
+.si5{background:#e1f5ee;border-left:1px solid #9fdfd7;}
+.si5 .snum{color:#085041;}.si5 .sdesc{color:#064535;}
+.si6{background:#e0f0fe;border-left:1px solid #90c8f0;}
+.si6 .snum{color:#014f82;}.si6 .sdesc{color:#013a62;}
+
+/* Tooltip on hover */
+.rgrp{position:relative;}
+.rating-tip{
+  display:none;position:absolute;top:-44px;left:50%;transform:translateX(-50%);
+  background:var(--navy);color:#fff;padding:5px 12px;border-radius:8px;
+  font-size:12px;font-weight:700;white-space:nowrap;z-index:100;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+.rating-tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:var(--navy);}
+
+
+/* EMAIL PANEL */
+.email-panel{background:linear-gradient(135deg,#e8f4fd,#e6f7f0);border:2px solid var(--blue);border-radius:16px;padding:20px;margin-bottom:18px;}
+.email-title{font-size:16px;font-weight:900;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.email-formats{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.efmt{padding:9px 18px;border-radius:10px;border:2px solid var(--border);background:#fff;font-family:"Cairo",sans-serif;font-size:14px;font-weight:700;color:var(--navy);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;}
+.efmt:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12);}
+.efmt-gmail{border-color:#e24b4a;color:#c0392b;background:#fff5f5;}
+.efmt-gmail:hover{background:#e24b4a;color:#fff;}
+.efmt-pdf{border-color:var(--blue);color:var(--navy);background:#e8f4fd;}
+.efmt-pdf:hover{background:var(--blue);color:#fff;}
+.efmt-json{border-color:var(--green);color:#085041;background:#e6f7f2;}
+.efmt-json:hover{background:var(--green);color:#fff;}
+.efmt-csv{border-color:var(--gold);color:var(--gold);background:#fef9ec;}
+.efmt-csv:hover{background:var(--gold);color:#fff;}
+.email-note{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;}
+
+
+.brand-logo-img{display:block;margin:0 auto 10px;max-width:210px;width:clamp(135px,24vw,210px);height:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.28));border-radius:4px;}
+.hero .brand-logo-img{max-width:180px;margin-bottom:14px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.24));background:rgba(255,255,255,.94);padding:8px 12px;border-radius:16px;}
+.report-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0 4px;}
+.report-note{font-size:13px;color:var(--muted);text-align:center;margin-bottom:12px;}
+.analysis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0;}
+.analysis-box{background:#f8fbff;border:1px solid var(--border);border-radius:14px;padding:14px;}
+.analysis-box h4{font-size:14px;color:var(--navy);margin-bottom:8px;}
+.analysis-box ul{padding-right:18px;font-size:13px;line-height:1.9;}
+@media(max-width:900px){.analysis-grid{grid-template-columns:1fr}.brand-logo-img{max-width:170px}}
+
+/* === AUTO SAVE STATUS === */
+.autosave-pill{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#f0f8ff;border:1.5px solid var(--border);color:var(--navy);font-size:12px;font-weight:800;}
+.autosave-pill.saving{background:#fff8e6;border-color:var(--gold);color:#7a5800;}
+.autosave-pill.saved{background:#e1f5ee;border-color:var(--teal);color:#085041;}
+.autosave-pill.error{background:#fcebeb;border-color:#e24b4a;color:#791f1f;}
+
+</style>
+</head>
+<body>
+<a class="home-return-btn" href="../index.html" aria-label="الرجوع للصفحة الرئيسية">🏠 الرئيسية</a><style>.home-return-btn{position:fixed;top:14px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;background:linear-gradient(135deg,#0c447c,#185fa5,#0f9d8a);color:#fff!important;text-decoration:none;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;font-size:13px;box-shadow:0 6px 18px rgba(12,68,124,.28);border:1px solid rgba(255,255,255,.45)}.home-return-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(12,68,124,.36)}@media(max-width:700px){.home-return-btn{top:auto;bottom:16px;right:16px;padding:10px 16px;font-size:13px}}@media print{.home-return-btn{display:none!important}}</style>
+
+<!-- ══════════ SITE HEADER WITH LOGO ══════════ -->
+<header class="site-header">
+  <div class="header-logo">
+    <img class="brand-logo-img" src="../assets/logo.png" alt="شعار أكاديمية الفلاح">
+    <div class="acname">أكاديمية الفلاح</div>
+    <div class="acsub">نظام تقييم المكتبات ومراكز مصادر التعلم 2026</div>
+  </div>
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <button class="navbtn active" id="nav-home" onclick="pg('page-home','لوحة التحكم','nav-home')"><span class="ico">🏠</span> لوحة التحكم</button>
+    <div class="nav-sep"></div>
+    <button class="navbtn" id="nav-sch" onclick="pg('page-sch','جدول الزيارات','nav-sch')"><span class="ico">📅</span> جدول الزيارات</button>
+    <div class="nav-sep"></div>
+    <button class="navbtn" id="nav-ev" onclick="pg('page-ev','نموذج التقييم','nav-ev')"><span class="ico">📋</span> نموذج التقييم</button>
+    <div class="nav-sep"></div>
+    <button class="navbtn" id="nav-dat" onclick="pg('page-dat','البيانات المحفوظة','nav-dat')"><span class="ico">💾</span> البيانات</button>
+    <div class="nav-sep"></div>
+    <button class="navbtn" id="nav-cmp" onclick="pg('page-cmp','المقارنة الشاملة','nav-cmp')"><span class="ico">⚖️</span> المقارنة</button>
+    <div class="nav-sep"></div>
+    <button class="navbtn" id="nav-ch" onclick="pg('page-ch','الرسوم البيانية','nav-ch')"><span class="ico">📊</span> الرسوم البيانية</button>
+    <div class="nav-sep"></div>
+    <button class="navbtn" id="nav-rep" onclick="pg('page-rep','التقرير النهائي','nav-rep')"><span class="ico">📄</span> التقرير النهائي</button>
+  
+    <div class="nav-sep"></div>
+    <button class="navbtn" id="nav-email" onclick="pg('page-email','إرسال بالبريد','nav-email')"><span class="ico">📧</span> إرسال بالبريد</button>
+  </nav>
+  <!-- ACTION STRIP -->
+  <div class="action-strip">
+    <button class="abtn" onclick="saveAll()">💾 حفظ</button>
+    <button class="abtn" onclick="expWord()">Word 📄</button>
+    <button class="abtn abtn-gold" onclick="expAll()">📤 تصدير JSON</button>
+    <button class="abtn abtn-gold" onclick="expCSV()">📊 تصدير CSV</button>
+    <button class="abtn" onclick="document.getElementById('impF').click()">📥 رفع واستيراد</button>
+    <button class="abtn" onclick="window.print()">🖨️ طباعة PDF</button>
+    <button class="abtn abtn-teal" onclick="startPres()">🎯 عرض تقديمي</button>
+    <input type="file" id="impF" accept=".json" style="display:none" onchange="impData()">
+  </div>
+</header>
+
+<!-- PAGE TITLE BAR -->
+<div class="pagebar">
+  <div class="pagebar-inner">
+    <div class="pagetitle" id="pgtitle">لوحة التحكم</div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+<!-- HOME -->
+    <div class="pg active" id="page-home">
+      <div class="hero"><div class="hi">
+        <img class="brand-logo-img" src="../assets/logo.png" alt="شعار أكاديمية الفلاح">
+        <h2>نظام تقييم المكتبات ومراكز مصادر التعلم</h2>
+        <p>أكاديمية الفلاح — 6 مدارس | أبوظبي | العين | الشارقة | 2026</p>
+      </div></div>
+      <div class="s4">
+        <div class="sc"><div class="sn">6</div><div class="sl">إجمالي المدارس</div></div>
+        <div class="sc"><div class="sn" id="hd">0</div><div class="sl">تم تقييمها</div></div>
+        <div class="sc"><div class="sn" id="hl">6</div><div class="sl">مكتبات</div></div>
+        <div class="sc"><div class="sn" id="ha">—</div><div class="sl">متوسط التقييم</div></div>
+      </div>
+      <div class="scards" id="hcards"></div>
+      <div class="card">
+        <div class="cardh"><div class="cnum">📅</div><div><div class="ctitle">جدول الزيارات</div></div></div>
+        <div style="overflow-x:auto"><table class="vtbl"><thead><tr><th>#</th><th>المدرسة</th><th>المدينة</th><th>التاريخ</th><th>الحالة</th><th></th></tr></thead><tbody id="hvtbl"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="pg" id="page-sch">
+      <div class="hero"><div class="hi"><h2>📅 جدول الزيارات الميدانية 2026</h2></div></div>
+      <div class="card"><div style="overflow-x:auto"><table class="vtbl"><thead><tr><th>#</th><th>اليوم والتاريخ</th><th>المدرسة</th><th>المدينة</th><th>الحالة</th><th></th></tr></thead><tbody id="stbl"></tbody></table></div></div>
+    </div>
+
+    <!-- EVAL -->
+    <div class="pg" id="page-ev">
+      <div class="hero"><div class="hi"><h2>📋 نموذج التقييم الميداني</h2><p>اختر المدرسة — البيانات تُحفظ تلقائياً وقابلة للتعديل في أي وقت</p></div></div>
+      <div class="card">
+        <div class="cardh"><div class="cnum">🏫</div><div><div class="ctitle">اختر المدرسة</div></div></div>
+        <div class="fld"><label>المدرسة / الفرع</label><select id="esch" onchange="onSch()"><option value="">— اختر المدرسة —</option></select></div>
+      </div>
+      <div id="eform" style="display:none">
+
+<!-- RATING SCALE LEGEND - FIXED -->
+<div class="card" style="margin-bottom:18px">
+  <div class="cardh" style="margin-bottom:12px;padding-bottom:10px">
+    <div class="cnum" style="font-size:16px">📏</div>
+    <div><div class="ctitle">مقياس التقييم المعتمد</div><div class="csub">يُطبَّق على جميع محاور النموذج — احتفظ بهذا المقياس كمرجع أثناء التقييم</div></div>
+  </div>
+  <div class="scale-legend">
+    <div class="scale-item si1"><div class="snum">1</div><div class="sdesc">غير موجود<br>ضعيف جداً</div></div>
+    <div class="scale-item si2"><div class="snum">2</div><div class="sdesc">ضعيف<br>تدخل عاجل</div></div>
+    <div class="scale-item si3"><div class="snum">3</div><div class="sdesc">مقبول<br>دون المستوى</div></div>
+    <div class="scale-item si4"><div class="snum">4</div><div class="sdesc">جيد<br>الحد الأدنى</div></div>
+    <div class="scale-item si5"><div class="snum">5</div><div class="sdesc">جيد جداً<br>فوق المستوى</div></div>
+    <div class="scale-item si6"><div class="snum">6</div><div class="sdesc">متميز<br>نموذجي</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;font-size:13px">
+    <div style="background:#fdf0f0;border-radius:10px;padding:10px 12px;border-right:3px solid #e24b4a">
+      <strong style="color:#c0392b">1-2 ضعيف:</strong><br>
+      <span style="color:#7a2020">المكتبة تحتاج تدخلاً عاجلاً وخطة تصحيحية فورية</span>
+    </div>
+    <div style="background:#fefbe0;border-radius:10px;padding:10px 12px;border-right:3px solid #c9a800">
+      <strong style="color:#8a7000">3 مقبول:</strong><br>
+      <span style="color:#5a4800">يوجد جهد لكنه دون المستوى المطلوب — يحتاج تحسيناً</span>
+    </div>
+    <div style="background:#e1f5ee;border-radius:10px;padding:10px 12px;border-right:3px solid #0f9d8a">
+      <strong style="color:#085041">4-5-6 جيد→متميز:</strong><br>
+      <span style="color:#054035">يلبي المعايير بشكل جيد ويمكن استخدامه نموذجاً للآخرين</span>
+    </div>
+  </div>
+</div>
+
+
+        <!-- S1 -->
+        <div class="card">
+          <div class="cardh"><div class="cnum">1</div><div><div class="ctitle">البيانات العامة</div><div class="csub">اسم المدرسة والمدينة والأخصائي — بدون رمز مكتبة</div></div></div>
+          <div class="g2">
+            <div class="fld"><label>المدينة / الإمارة</label><input id="f-city" readonly></div>
+            <div class="fld"><label>اسم المدرسة / الفرع</label><input id="f-sname" readonly></div>
+            <div class="fld"><label>اسم أمين / أخصائي مصادر التعلم</label><input id="f-lib" placeholder="الاسم الكامل..."></div>
+            <div class="fld"><label>تاريخ الزيارة</label><input type="date" id="f-date"></div>
+            <div class="fld">
+              <label>المرحلة التي تخدمها المكتبة</label>
+              <div class="qp" id="qstg">
+                <div class="pill" onclick="qp('f-stg',this,'qstg')">KG رياض أطفال</div>
+                <div class="pill" onclick="qp('f-stg',this,'qstg')">حلقة أولى 1-4</div>
+                <div class="pill" onclick="qp('f-stg',this,'qstg')">حلقة ثانية 5-8</div>
+                <div class="pill" onclick="qp('f-stg',this,'qstg')">حلقة ثالثة 9-12</div>
+                <div class="pill" onclick="qp('f-stg',this,'qstg')">متعددة المراحل</div>
+              </div>
+              <input id="f-stg" placeholder="أو اكتب...">
+            </div>
+            <div class="fld">
+              <label>نوع المكتبة</label>
+              <select id="f-ltyp"><option>مكتبة مدرسية رئيسية</option><option>مركز مصادر تعلم متكامل</option><option>مكتبة الصفوف الصغيرة KG-4</option><option>مكتبة الصفوف الكبيرة 5-12</option></select>
+            </div>
+            <div class="fld">
+              <label>عدد الطلاب</label>
+              <div class="qp" id="qstu"><div class="pill" onclick="qp('f-stu',this,'qstu')">أقل من 300</div><div class="pill" onclick="qp('f-stu',this,'qstu')">300-600</div><div class="pill" onclick="qp('f-stu',this,'qstu')">600-900</div><div class="pill" onclick="qp('f-stu',this,'qstu')">أكثر من 900</div></div>
+              <input id="f-stu" placeholder="أو العدد الدقيق...">
+            </div>
+            <div class="fld">
+              <label>عدد العاملين</label>
+              <div class="qp" id="qstf"><div class="pill" onclick="qp('f-stf',this,'qstf')">1</div><div class="pill" onclick="qp('f-stf',this,'qstf')">2</div><div class="pill" onclick="qp('f-stf',this,'qstf')">3</div><div class="pill" onclick="qp('f-stf',this,'qstf')">4+</div></div>
+              <input id="f-stf" placeholder="العدد...">
+            </div>
+            <div class="fld full"><label>وصف مختصر للمكتبة (اختياري)</label><textarea id="f-ldesc" placeholder="الموقع، التقسيمات، ما يميزها..."></textarea></div>
+          </div>
+          <!-- EXTRA LIBRARY INLINE -->
+          <div class="exbox" id="exbox">
+            <div class="extog" onclick="togEx()">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:20px">📚</span>
+                <div>
+                  <div>هل توجد مكتبة ثانية (إضافية) في المدرسة؟</div>
+                  <div style="font-size:12px;font-weight:400;color:var(--muted);margin-top:2px">اضغط لإضافة معلومات مختصرة — تُسجّل ضمن نفس المدرسة</div>
+                </div>
+              </div>
+              <button class="btn bt bxs" type="button" id="exbtn">+ إضافة</button>
+            </div>
+            <div class="excnt" id="excnt">
+              <div class="al als" style="margin-bottom:12px">📌 البيانات التالية للمكتبة الثانية — تُحفظ ضمن سجل نفس المدرسة وليس كمدرسة منفصلة</div>
+              <div class="g2">
+                <div class="fld"><label>نوع المكتبة الثانية</label><select id="f-et"><option>مكتبة الصفوف الصغيرة KG-4</option><option>مكتبة الصفوف الكبيرة 5-12</option><option>مكتبة رقمية</option><option>ركن قراءة</option><option>مكتبة متنقلة</option><option>أخرى</option></select></div>
+                <div class="fld"><label>أخصائيها</label><input id="f-es" placeholder="الاسم أو اتركه فارغاً..."></div>
+                <div class="fld">
+                  <label>عدد كتبها</label>
+                  <div class="qp" id="qeb"><div class="pill" onclick="qp('f-eb',this,'qeb')">أقل من 500</div><div class="pill" onclick="qp('f-eb',this,'qeb')">500-1500</div><div class="pill" onclick="qp('f-eb',this,'qeb')">1500-3000</div><div class="pill" onclick="qp('f-eb',this,'qeb')">أكثر من 3000</div></div>
+                  <input id="f-eb" placeholder="العدد التقريبي...">
+                </div>
+                <div class="fld">
+                  <label>تقييمها العام</label>
+                  <div class="qp" id="qer"><div class="pill" onclick="qp('f-er',this,'qer')">ضعيف</div><div class="pill" onclick="qp('f-er',this,'qer')">مقبول</div><div class="pill" onclick="qp('f-er',this,'qer')">جيد</div><div class="pill" onclick="qp('f-er',this,'qer')">متميز</div></div>
+                  <input id="f-er">
+                </div>
+                <div class="fld full"><label>ملاحظات مختصرة عن المكتبة الثانية</label><textarea id="f-en" placeholder="ما يميزها، احتياجاتها، توافر مجموعات الإمارات فيها..."></textarea></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- S2 COLLECTIONS + UAE -->
+        <div class="card">
+          <div class="cardh"><div class="cnum">2</div><div><div class="ctitle">المجموعات والمصادر</div></div></div>
+          <div class="g3">
+            <div class="fld">
+              <label>إجمالي الكتب</label>
+              <div class="qp" id="qbt"><div class="pill" onclick="qp('f-bt',this,'qbt')">أقل من 1000</div><div class="pill" onclick="qp('f-bt',this,'qbt')">1000-3000</div><div class="pill" onclick="qp('f-bt',this,'qbt')">3000-6000</div><div class="pill" onclick="qp('f-bt',this,'qbt')">أكثر من 6000</div></div>
+              <input type="number" id="f-bt" placeholder="العدد الدقيق...">
+            </div>
+            <div class="fld"><label>منها عربية</label><input type="number" id="f-bar" placeholder="عدد..."></div>
+            <div class="fld"><label>منها إنجليزية</label><input type="number" id="f-ben" placeholder="عدد..."></div>
+          </div>
+
+          <!-- UAE BOX -->
+          <div class="ubox">
+            <div class="utitle">🇦🇪 تقييم مجموعات الإمارات العربية المتحدة</div>
+            <div class="udesc">مدى توفر مجموعات الكتب الخاصة بدولة الإمارات — تاريخية وثقافية وشعرية وقصصية وغيرها. هذا المحور يعكس التزام المكتبة بالهوية الوطنية والمحتوى المحلي.</div>
+            <div class="rgrp">
+              <div class="rlbl">التقييم العام لمجموعات الإمارات <small>1 = غير موجودة | 6 = متميزة وشاملة</small></div>
+              <div class="rp" id="rp-uae">
+                <button type="button" class="rpill" onclick="sR('uae',1,this)">1<br><small style="font-size:10px">غير موجودة</small></button>
+                <button type="button" class="rpill" onclick="sR('uae',2,this)">2<br><small style="font-size:10px">شحيحة</small></button>
+                <button type="button" class="rpill" onclick="sR('uae',3,this)">3<br><small style="font-size:10px">محدودة</small></button>
+                <button type="button" class="rpill" onclick="sR('uae',4,this)">4<br><small style="font-size:10px">جيدة</small></button>
+                <button type="button" class="rpill" onclick="sR('uae',5,this)">5<br><small style="font-size:10px">وافرة</small></button>
+                <button type="button" class="rpill" onclick="sR('uae',6,this)">6<br><small style="font-size:10px">متميزة</small></button>
+              </div>
+            </div>
+            <div style="font-size:13px;font-weight:700;color:#085041;margin-bottom:8px">أنواع مجموعات الإمارات المتوفرة (اختر كل ما ينطبق):</div>
+            <div class="cg4">
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-h"> 📜 تاريخ الإمارات</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-c"> 🏺 الثقافة والتراث</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-p"> 📝 الشعر الإماراتي</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-s"> 📖 قصص للأطفال</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-g"> 🗺️ جغرافيا وبيئة</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-e"> 💼 الاقتصاد والتنمية</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-r"> 🕌 دراسات إسلامية</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-a"> 🎨 الفنون والحرف</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-l"> 👑 سيرة القادة</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-d"> 💬 اللهجة والأمثال</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-n"> 🌊 الطبيعة البحرية</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="uae-o"> ➕ أخرى إماراتية</label>
+            </div>
+            
+            <div class="g2" style="margin-top:12px">
+              <div class="fld">
+                <label>تغطية المجالات الوطنية الإماراتية</label>
+                <div class="qp" id="quaecov">
+                  <div class="pill" onclick="qp('f-uae-cov',this,'quaecov')">ضعيفة</div>
+                  <div class="pill" onclick="qp('f-uae-cov',this,'quaecov')">جزئية</div>
+                  <div class="pill" onclick="qp('f-uae-cov',this,'quaecov')">جيدة</div>
+                  <div class="pill" onclick="qp('f-uae-cov',this,'quaecov')">واسعة وشاملة</div>
+                </div>
+                <input id="f-uae-cov" placeholder="التقييم...">
+              </div>
+              <div class="fld">
+                <label>عرض مرئي لمجموعات الإمارات داخل المكتبة</label>
+                <div class="qp" id="quaedisp">
+                  <div class="pill" onclick="qp('f-uae-disp',this,'quaedisp')">لا يوجد عرض</div>
+                  <div class="pill" onclick="qp('f-uae-disp',this,'quaedisp')">عرض محدود</div>
+                  <div class="pill" onclick="qp('f-uae-disp',this,'quaedisp')">عرض جيد</div>
+                  <div class="pill" onclick="qp('f-uae-disp',this,'quaedisp')">ركن إماراتي متميز</div>
+                </div>
+                <input id="f-uae-disp" placeholder="التقييم...">
+              </div>
+            </div>
+            <div class="fld" style="margin-top:12px"><label style="color:#085041">ملاحظات مجموعات الإمارات</label><textarea id="f-uaen" placeholder="أبرز العناوين المتوفرة أو الفجوات..."></textarea></div>
+          </div>
+
+          <div class="sdiv"><div class="sdivl"></div><div class="sdivt">جودة المجموعات العامة</div><div class="sdivr"></div></div>
+          <div class="g2">
+            <div class="rgrp"><div class="rlbl">تنوع المجموعات</div><div class="rp" id="rp-cd"><button type="button" class="rpill" onclick="sR('cd',1,this)">1</button><button type="button" class="rpill" onclick="sR('cd',2,this)">2</button><button type="button" class="rpill" onclick="sR('cd',3,this)">3</button><button type="button" class="rpill" onclick="sR('cd',4,this)">4</button><button type="button" class="rpill" onclick="sR('cd',5,this)">5</button><button type="button" class="rpill" onclick="sR('cd',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">حداثة المجموعات</div><div class="rp" id="rp-cc"><button type="button" class="rpill" onclick="sR('cc',1,this)">1</button><button type="button" class="rpill" onclick="sR('cc',2,this)">2</button><button type="button" class="rpill" onclick="sR('cc',3,this)">3</button><button type="button" class="rpill" onclick="sR('cc',4,this)">4</button><button type="button" class="rpill" onclick="sR('cc',5,this)">5</button><button type="button" class="rpill" onclick="sR('cc',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">توافق المحتوى مع المنهاج</div><div class="rp" id="rp-cco"><button type="button" class="rpill" onclick="sR('cco',1,this)">1</button><button type="button" class="rpill" onclick="sR('cco',2,this)">2</button><button type="button" class="rpill" onclick="sR('cco',3,this)">3</button><button type="button" class="rpill" onclick="sR('cco',4,this)">4</button><button type="button" class="rpill" onclick="sR('cco',5,this)">5</button><button type="button" class="rpill" onclick="sR('cco',6,this)">6</button></div></div>
+            <div class="fld"><label>المصادر الرقمية (عدد)</label><input type="number" id="f-dig" placeholder="عدد..."></div>
+          </div>
+          <div class="sdiv" style="margin-top:16px"><div class="sdivl"></div><div class="sdivt">📚 المراجع العامة والمصادر المرجعية</div><div class="sdivr"></div></div>
+          <div class="g2">
+            <div class="fld"><label>عدد المعاجم العربية</label><input type="number" id="f-ardict" placeholder="عدد..."></div>
+            <div class="fld"><label>عدد المعاجم الإنجليزية</label><input type="number" id="f-endict" placeholder="عدد..."></div>
+            <div class="fld"><label>عدد الموسوعات (عربي + إنجليزي)</label><input type="number" id="f-encyc" placeholder="عدد..."></div>
+            <div class="fld"><label>عدد الأطالس والخرائط</label><input type="number" id="f-atlas" placeholder="عدد..."></div>
+            <div class="fld"><label>عدد الأدلة والفهارس المتخصصة</label><input type="number" id="f-dirs" placeholder="عدد..."></div>
+            <div class="fld"><label>كتب مناهج وأدلة المعلمين</label><input type="number" id="f-guides" placeholder="عدد..."></div>
+            <div class="fld">
+              <label>سياسة اختيار الكتب واستبعادها</label>
+              <div class="qp" id="qpol">
+                <div class="pill" onclick="qp('f-pol',this,'qpol')">لا توجد</div>
+                <div class="pill" onclick="qp('f-pol',this,'qpol')">جزئية</div>
+                <div class="pill" onclick="qp('f-pol',this,'qpol')">واضحة</div>
+                <div class="pill" onclick="qp('f-pol',this,'qpol')">واضحة ومفعلة</div>
+              </div>
+              <input id="f-pol">
+            </div>
+            <div class="fld">
+              <label>ملاءمة الكتب للمراحل الدراسية</label>
+              <div class="qp" id="qage">
+                <div class="pill" onclick="qp('f-age',this,'qage')">ضعيفة</div>
+                <div class="pill" onclick="qp('f-age',this,'qage')">مقبولة</div>
+                <div class="pill" onclick="qp('f-age',this,'qage')">جيدة</div>
+                <div class="pill" onclick="qp('f-age',this,'qage')">ممتازة</div>
+              </div>
+              <input id="f-age">
+            </div>
+          </div>
+
+          
+
+        </div>
+
+        <!-- S3 -->
+        <div class="card">
+          <div class="cardh"><div class="cnum">3</div><div><div class="ctitle">التنظيم الفني والإعارة</div></div></div>
+          <div class="g3">
+            <div class="fld"><label>التصنيف</label><div class="qp" id="qcls"><div class="pill" onclick="qp('f-cls',this,'qcls')">ديوي العشري</div><div class="pill" onclick="qp('f-cls',this,'qcls')">غير منظم</div><div class="pill" onclick="qp('f-cls',this,'qcls')">أخرى</div></div><input id="f-cls"></div>
+            <div class="fld"><label>الفهرسة</label><div class="qp" id="qcat"><div class="pill" onclick="qp('f-cat',this,'qcat')">إلكترونية</div><div class="pill" onclick="qp('f-cat',this,'qcat')">يدوية</div><div class="pill" onclick="qp('f-cat',this,'qcat')">مختلطة</div><div class="pill" onclick="qp('f-cat',this,'qcat')">لا يوجد</div></div><input id="f-cat"></div>
+            <div class="fld"><label>نظام الإعارة</label><div class="qp" id="qcir"><div class="pill" onclick="qp('f-cir',this,'qcir')">إلكتروني</div><div class="pill" onclick="qp('f-cir',this,'qcir')">ورقي</div><div class="pill" onclick="qp('f-cir',this,'qcir')">مختلط</div><div class="pill" onclick="qp('f-cir',this,'qcir')">لا يوجد</div></div><input id="f-cir"></div>
+          </div>
+          <div class="g3" style="margin-top:12px">
+            <div class="rgrp"><div class="rlbl">تنظيم الأرفف</div><div class="rp" id="rp-sh"><button type="button" class="rpill" onclick="sR('sh',1,this)">1</button><button type="button" class="rpill" onclick="sR('sh',2,this)">2</button><button type="button" class="rpill" onclick="sR('sh',3,this)">3</button><button type="button" class="rpill" onclick="sR('sh',4,this)">4</button><button type="button" class="rpill" onclick="sR('sh',5,this)">5</button><button type="button" class="rpill" onclick="sR('sh',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">سجلات الإعارة</div><div class="rp" id="rp-cr"><button type="button" class="rpill" onclick="sR('cr',1,this)">1</button><button type="button" class="rpill" onclick="sR('cr',2,this)">2</button><button type="button" class="rpill" onclick="sR('cr',3,this)">3</button><button type="button" class="rpill" onclick="sR('cr',4,this)">4</button><button type="button" class="rpill" onclick="sR('cr',5,this)">5</button><button type="button" class="rpill" onclick="sR('cr',6,this)">6</button></div></div>
+            <div class="fld"><label>الجرد</label><div class="qp" id="qinv"><div class="pill" onclick="qp('f-inv',this,'qinv')">حديث ومنظم</div><div class="pill" onclick="qp('f-inv',this,'qinv')">جزئي</div><div class="pill" onclick="qp('f-inv',this,'qinv')">قديم</div><div class="pill" onclick="qp('f-inv',this,'qinv')">لا يوجد</div></div><input id="f-inv"></div>
+          </div>
+          <div class="g2" style="margin-top:12px">
+            <div class="fld"><label>الإعارات الشهرية</label><input type="number" id="f-loans" placeholder="تقريبي..."></div>
+            <div class="fld"><label>الزوار الشهريون</label><input type="number" id="f-vis" placeholder="تقريبي..."></div>
+            <div class="fld full"><label>ملاحظات التنظيم الفني</label><textarea id="f-techn"></textarea></div>
+          </div>
+        </div>
+
+        <!-- S4 -->
+        <div class="card">
+          <div class="cardh"><div class="cnum">4</div><div><div class="ctitle">البيئة المكتبية</div></div></div>
+          <div class="g2">
+            <div class="rgrp"><div class="rlbl">جاهزية المكان وتنظيمه</div><div class="rp" id="rp-sp"><button type="button" class="rpill" onclick="sR('sp',1,this)">1</button><button type="button" class="rpill" onclick="sR('sp',2,this)">2</button><button type="button" class="rpill" onclick="sR('sp',3,this)">3</button><button type="button" class="rpill" onclick="sR('sp',4,this)">4</button><button type="button" class="rpill" onclick="sR('sp',5,this)">5</button><button type="button" class="rpill" onclick="sR('sp',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">أماكن الجلوس والقراءة</div><div class="rp" id="rp-se"><button type="button" class="rpill" onclick="sR('se',1,this)">1</button><button type="button" class="rpill" onclick="sR('se',2,this)">2</button><button type="button" class="rpill" onclick="sR('se',3,this)">3</button><button type="button" class="rpill" onclick="sR('se',4,this)">4</button><button type="button" class="rpill" onclick="sR('se',5,this)">5</button><button type="button" class="rpill" onclick="sR('se',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">البيئة الجاذبة</div><div class="rp" id="rp-at"><button type="button" class="rpill" onclick="sR('at',1,this)">1</button><button type="button" class="rpill" onclick="sR('at',2,this)">2</button><button type="button" class="rpill" onclick="sR('at',3,this)">3</button><button type="button" class="rpill" onclick="sR('at',4,this)">4</button><button type="button" class="rpill" onclick="sR('at',5,this)">5</button><button type="button" class="rpill" onclick="sR('at',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">وضوح الإرشادات</div><div class="rp" id="rp-in"><button type="button" class="rpill" onclick="sR('in',1,this)">1</button><button type="button" class="rpill" onclick="sR('in',2,this)">2</button><button type="button" class="rpill" onclick="sR('in',3,this)">3</button><button type="button" class="rpill" onclick="sR('in',4,this)">4</button><button type="button" class="rpill" onclick="sR('in',5,this)">5</button><button type="button" class="rpill" onclick="sR('in',6,this)">6</button></div></div>
+          </div>
+          <div class="cg3" style="margin-top:10px">
+            <label class="chk"><input type="checkbox" id="env-tl"> وسائل تعليمية معروضة</label>
+            <label class="chk"><input type="checkbox" id="env-dp"> عروض ومعارض دورية</label>
+            <label class="chk"><input type="checkbox" id="env-ac"> إتاحة لجميع الفئات</label>
+            <label class="chk"><input type="checkbox" id="env-uc"> 🇦🇪 ركن مجموعات الإمارات</label>
+            <label class="chk"><input type="checkbox" id="env-dg"> أجهزة عرض رقمية</label>
+            <label class="chk"><input type="checkbox" id="env-co"> أركان موضوعاتية</label>
+          </div>
+          <div class="fld full" style="margin-top:10px"><label>ملاحظات البيئة</label><textarea id="f-envn" placeholder="وصف البيئة، ما يميزها، ما ينقصها..."></textarea></div>
+        </div>
+
+        <!-- S5 -->
+        <div class="card">
+          <div class="cardh"><div class="cnum">5</div><div><div class="ctitle">الأنشطة والقراءة</div></div></div>
+          <div class="g2">
+            <div class="rgrp"><div class="rlbl">تفعيل تحدي القراءة</div><div class="rp" id="rp-rch"><button type="button" class="rpill" onclick="sR('rch',1,this)">1</button><button type="button" class="rpill" onclick="sR('rch',2,this)">2</button><button type="button" class="rpill" onclick="sR('rch',3,this)">3</button><button type="button" class="rpill" onclick="sR('rch',4,this)">4</button><button type="button" class="rpill" onclick="sR('rch',5,this)">5</button><button type="button" class="rpill" onclick="sR('rch',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">استخدام المعلمين للمكتبة</div><div class="rp" id="rp-tu"><button type="button" class="rpill" onclick="sR('tu',1,this)">1</button><button type="button" class="rpill" onclick="sR('tu',2,this)">2</button><button type="button" class="rpill" onclick="sR('tu',3,this)">3</button><button type="button" class="rpill" onclick="sR('tu',4,this)">4</button><button type="button" class="rpill" onclick="sR('tu',5,this)">5</button><button type="button" class="rpill" onclick="sR('tu',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">ربط المكتبة بالمنهاج</div><div class="rp" id="rp-cu"><button type="button" class="rpill" onclick="sR('cu',1,this)">1</button><button type="button" class="rpill" onclick="sR('cu',2,this)">2</button><button type="button" class="rpill" onclick="sR('cu',3,this)">3</button><button type="button" class="rpill" onclick="sR('cu',4,this)">4</button><button type="button" class="rpill" onclick="sR('cu',5,this)">5</button><button type="button" class="rpill" onclick="sR('cu',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">المبادرات القرائية</div><div class="rp" id="rp-ri"><button type="button" class="rpill" onclick="sR('ri',1,this)">1</button><button type="button" class="rpill" onclick="sR('ri',2,this)">2</button><button type="button" class="rpill" onclick="sR('ri',3,this)">3</button><button type="button" class="rpill" onclick="sR('ri',4,this)">4</button><button type="button" class="rpill" onclick="sR('ri',5,this)">5</button><button type="button" class="rpill" onclick="sR('ri',6,this)">6</button></div></div>
+          </div>
+          <div class="cg3" style="margin-top:10px">
+            <label class="chk"><input type="checkbox" id="act-ar"> حصص عربي داخل المكتبة</label>
+            <label class="chk"><input type="checkbox" id="act-en"> حصص إنجليزي داخل المكتبة</label>
+            <label class="chk"><input type="checkbox" id="act-st"> أنشطة رواية القصص</label>
+            <label class="chk"><input type="checkbox" id="act-ua"> 🇦🇪 فعاليات مجموعات الإمارات</label>
+            <label class="chk"><input type="checkbox" id="act-bf"> معرض كتاب مدرسي</label>
+            <label class="chk"><input type="checkbox" id="act-cl"> نادي قراءة نشط</label>
+          </div>
+          <div class="g2" style="margin-top:10px">
+            <div class="fld"><label>مشاركو تحدي القراءة</label><input type="number" id="f-rpt" placeholder="عدد..."></div>
+            <div class="fld"><label>المسابقات الخارجية</label><div class="qp" id="qext"><div class="pill" onclick="qp('f-ext',this,'qext')">لا يوجد</div><div class="pill" onclick="qp('f-ext',this,'qext')">محدودة</div><div class="pill" onclick="qp('f-ext',this,'qext')">نشطة</div><div class="pill" onclick="qp('f-ext',this,'qext')">متميزة</div></div><input id="f-ext"></div>
+            <div class="fld full"><label>تفصيل الأنشطة</label><textarea id="f-actn"></textarea></div>
+          </div>
+        </div>
+
+        <!-- S6 -->
+        <div class="card">
+          <div class="cardh"><div class="cnum">6</div><div><div class="ctitle">الشراكات والخدمات</div></div></div>
+          <div class="g2">
+            <div class="rgrp"><div class="rlbl">شراكات أولياء الأمور</div><div class="rp" id="rp-pa"><button type="button" class="rpill" onclick="sR('pa',1,this)">1</button><button type="button" class="rpill" onclick="sR('pa',2,this)">2</button><button type="button" class="rpill" onclick="sR('pa',3,this)">3</button><button type="button" class="rpill" onclick="sR('pa',4,this)">4</button><button type="button" class="rpill" onclick="sR('pa',5,this)">5</button><button type="button" class="rpill" onclick="sR('pa',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">الشراكات المجتمعية</div><div class="rp" id="rp-co"><button type="button" class="rpill" onclick="sR('co',1,this)">1</button><button type="button" class="rpill" onclick="sR('co',2,this)">2</button><button type="button" class="rpill" onclick="sR('co',3,this)">3</button><button type="button" class="rpill" onclick="sR('co',4,this)">4</button><button type="button" class="rpill" onclick="sR('co',5,this)">5</button><button type="button" class="rpill" onclick="sR('co',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">خدمات للمعلمين</div><div class="rp" id="rp-ts"><button type="button" class="rpill" onclick="sR('ts',1,this)">1</button><button type="button" class="rpill" onclick="sR('ts',2,this)">2</button><button type="button" class="rpill" onclick="sR('ts',3,this)">3</button><button type="button" class="rpill" onclick="sR('ts',4,this)">4</button><button type="button" class="rpill" onclick="sR('ts',5,this)">5</button><button type="button" class="rpill" onclick="sR('ts',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">خدمات للطلبة</div><div class="rp" id="rp-ss"><button type="button" class="rpill" onclick="sR('ss',1,this)">1</button><button type="button" class="rpill" onclick="sR('ss',2,this)">2</button><button type="button" class="rpill" onclick="sR('ss',3,this)">3</button><button type="button" class="rpill" onclick="sR('ss',4,this)">4</button><button type="button" class="rpill" onclick="sR('ss',5,this)">5</button><button type="button" class="rpill" onclick="sR('ss',6,this)">6</button></div></div>
+          </div>
+          <div class="fld full" style="margin-top:10px"><label>تفصيل الشراكات</label><textarea id="f-parn"></textarea></div>
+        </div>
+
+        <!-- S7 STAFF + CREDENTIALS -->
+        <div class="card">
+          <div class="cardh"><div class="cnum">7</div><div><div class="ctitle">الكادر المهني والمؤهلات</div><div class="csub">يشمل الشهادات العلمية والدورات التدريبية</div></div></div>
+          <div class="g2">
+            <div class="rgrp"><div class="rlbl">معرفة أساسيات المكتبات</div><div class="rp" id="rp-sb"><button type="button" class="rpill" onclick="sR('sb',1,this)">1</button><button type="button" class="rpill" onclick="sR('sb',2,this)">2</button><button type="button" class="rpill" onclick="sR('sb',3,this)">3</button><button type="button" class="rpill" onclick="sR('sb',4,this)">4</button><button type="button" class="rpill" onclick="sR('sb',5,this)">5</button><button type="button" class="rpill" onclick="sR('sb',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">التصنيف والتنظيم</div><div class="rp" id="rp-sc"><button type="button" class="rpill" onclick="sR('sc',1,this)">1</button><button type="button" class="rpill" onclick="sR('sc',2,this)">2</button><button type="button" class="rpill" onclick="sR('sc',3,this)">3</button><button type="button" class="rpill" onclick="sR('sc',4,this)">4</button><button type="button" class="rpill" onclick="sR('sc',5,this)">5</button><button type="button" class="rpill" onclick="sR('sc',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">التعامل مع الطلبة</div><div class="rp" id="rp-sst"><button type="button" class="rpill" onclick="sR('sst',1,this)">1</button><button type="button" class="rpill" onclick="sR('sst',2,this)">2</button><button type="button" class="rpill" onclick="sR('sst',3,this)">3</button><button type="button" class="rpill" onclick="sR('sst',4,this)">4</button><button type="button" class="rpill" onclick="sR('sst',5,this)">5</button><button type="button" class="rpill" onclick="sR('sst',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">المبادرة والتطوير</div><div class="rp" id="rp-si"><button type="button" class="rpill" onclick="sR('si',1,this)">1</button><button type="button" class="rpill" onclick="sR('si',2,this)">2</button><button type="button" class="rpill" onclick="sR('si',3,this)">3</button><button type="button" class="rpill" onclick="sR('si',4,this)">4</button><button type="button" class="rpill" onclick="sR('si',5,this)">5</button><button type="button" class="rpill" onclick="sR('si',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">استخدام التقنية</div><div class="rp" id="rp-ste"><button type="button" class="rpill" onclick="sR('ste',1,this)">1</button><button type="button" class="rpill" onclick="sR('ste',2,this)">2</button><button type="button" class="rpill" onclick="sR('ste',3,this)">3</button><button type="button" class="rpill" onclick="sR('ste',4,this)">4</button><button type="button" class="rpill" onclick="sR('ste',5,this)">5</button><button type="button" class="rpill" onclick="sR('ste',6,this)">6</button></div></div>
+            
+          <!-- MARC21 + ILS Knowledge -->
+          <div style="background:linear-gradient(135deg,#e6f1fb,#e8f4fd);border:2px solid var(--blue);border-radius:14px;padding:16px;margin:14px 0;">
+            <div style="font-size:15px;font-weight:900;color:var(--navy);margin-bottom:12px;">🖥️ المعرفة بأنظمة إدارة المكتبات والفهرسة الإلكترونية</div>
+            <div class="g2">
+              <div class="rgrp">
+                <div class="rlbl">معرفة تسجيلة مارك MARC21</div>
+                <div class="rp" id="rp-marc">
+                  <button type="button" class="rpill" onclick="sR('marc',1,this)">1<br><small style="font-size:10px">لا معرفة</small></button>
+                  <button type="button" class="rpill" onclick="sR('marc',2,this)">2<br><small style="font-size:10px">أساسية</small></button>
+                  <button type="button" class="rpill" onclick="sR('marc',3,this)">3<br><small style="font-size:10px">مقبولة</small></button>
+                  <button type="button" class="rpill" onclick="sR('marc',4,this)">4<br><small style="font-size:10px">جيدة</small></button>
+                  <button type="button" class="rpill" onclick="sR('marc',5,this)">5<br><small style="font-size:10px">جيدة جداً</small></button>
+                  <button type="button" class="rpill" onclick="sR('marc',6,this)">6<br><small style="font-size:10px">متخصص</small></button>
+                </div>
+              </div>
+              <div class="rgrp">
+                <div class="rlbl">معرفة أنظمة إدارة المكتبات ILS</div>
+                <div class="rp" id="rp-ils">
+                  <button type="button" class="rpill" onclick="sR('ils',1,this)">1<br><small style="font-size:10px">لا معرفة</small></button>
+                  <button type="button" class="rpill" onclick="sR('ils',2,this)">2<br><small style="font-size:10px">أساسية</small></button>
+                  <button type="button" class="rpill" onclick="sR('ils',3,this)">3<br><small style="font-size:10px">مقبولة</small></button>
+                  <button type="button" class="rpill" onclick="sR('ils',4,this)">4<br><small style="font-size:10px">جيدة</small></button>
+                  <button type="button" class="rpill" onclick="sR('ils',5,this)">5<br><small style="font-size:10px">جيدة جداً</small></button>
+                  <button type="button" class="rpill" onclick="sR('ils',6,this)">6<br><small style="font-size:10px">خبير</small></button>
+                </div>
+              </div>
+              <div class="fld">
+                <label>نظام المكتبة المستخدم حالياً</label>
+                <div class="qp" id="qils">
+                  <div class="pill" onclick="qp('f-ils-name',this,'qils')">Destiny</div>
+                  <div class="pill" onclick="qp('f-ils-name',this,'qils')">Koha</div>
+                  <div class="pill" onclick="qp('f-ils-name',this,'qils')">Alexandria</div>
+                  <div class="pill" onclick="qp('f-ils-name',this,'qils')">Follett</div>
+                  <div class="pill" onclick="qp('f-ils-name',this,'qils')">Excel/ورقي</div>
+                  <div class="pill" onclick="qp('f-ils-name',this,'qils')">لا يوجد</div>
+                </div>
+                <input id="f-ils-name" placeholder="اسم النظام المستخدم...">
+              </div>
+              <div class="fld">
+                <label>معرفة معايير الفهرسة العربية</label>
+                <div class="qp" id="qarab-cat">
+                  <div class="pill" onclick="qp('f-arab-cat',this,'qarab-cat')">لا توجد</div>
+                  <div class="pill" onclick="qp('f-arab-cat',this,'qarab-cat')">أساسية</div>
+                  <div class="pill" onclick="qp('f-arab-cat',this,'qarab-cat')">جيدة</div>
+                  <div class="pill" onclick="qp('f-arab-cat',this,'qarab-cat')">متخصصة</div>
+                </div>
+                <input id="f-arab-cat" placeholder="التقييم...">
+              </div>
+            </div>
+            <div class="cg4" style="margin-top:12px">
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="know-marc"> إلمام بـ MARC21</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="know-ils"> تشغيل نظام ILS</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="know-opac"> استخدام OPAC</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="know-dewey"> تطبيق ديوي العشري</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="know-digital"> المصادر الرقمية</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="know-db"> قواعد البيانات</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="know-barcode"> الباركود والـ RFID</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="know-report"> إعداد تقارير النظام</label>
+            </div>
+            <div class="fld" style="margin-top:10px">
+              <label>ملاحظات على المعرفة التقنية للكادر</label>
+              <textarea id="f-tech-know" placeholder="مثال: الأخصائي لديه خبرة جيدة في نظام Destiny لكن يحتاج تدريباً على MARC21 والفهرسة الإلكترونية..."></textarea>
+            </div>
+          </div>
+          <div class="fld"><label>الحاجة للتدريب</label><div class="qp" id="qtr"><div class="pill" onclick="qp('f-tr',this,'qtr')">عالية</div><div class="pill" onclick="qp('f-tr',this,'qtr')">متوسطة</div><div class="pill" onclick="qp('f-tr',this,'qtr')">منخفضة</div><div class="pill" onclick="qp('f-tr',this,'qtr')">تخصصي</div></div><input id="f-tr"></div>
+          </div>
+          <div class="credbox">
+            <div class="credtitle">🎓 الشهادات العلمية والدورات التدريبية</div>
+            <div class="g2">
+              <div class="fld"><label>المؤهل العلمي</label><div class="qp" id="qedu"><div class="pill" onclick="qp('f-edu',this,'qedu')">ثانوية عامة</div><div class="pill" onclick="qp('f-edu',this,'qedu')">دبلوم</div><div class="pill" onclick="qp('f-edu',this,'qedu')">بكالوريوس</div><div class="pill" onclick="qp('f-edu',this,'qedu')">ماجستير</div><div class="pill" onclick="qp('f-edu',this,'qedu')">دكتوراه</div></div><input id="f-edu" placeholder="أو التخصص..."></div>
+              <div class="fld"><label>تخصص الشهادة</label><div class="qp" id="qspc"><div class="pill" onclick="qp('f-spc',this,'qspc')">علم المكتبات</div><div class="pill" onclick="qp('f-spc',this,'qspc')">تربية وتعليم</div><div class="pill" onclick="qp('f-spc',this,'qspc')">لغة عربية</div><div class="pill" onclick="qp('f-spc',this,'qspc')">تقنية معلومات</div><div class="pill" onclick="qp('f-spc',this,'qspc')">تخصص آخر</div></div><input id="f-spc" placeholder="التخصص..."></div>
+              <div class="fld"><label>سنوات الخبرة</label><div class="qp" id="qexp"><div class="pill" onclick="qp('f-exp',this,'qexp')">أقل من سنة</div><div class="pill" onclick="qp('f-exp',this,'qexp')">1-3 سنوات</div><div class="pill" onclick="qp('f-exp',this,'qexp')">3-7 سنوات</div><div class="pill" onclick="qp('f-exp',this,'qexp')">7-15 سنة</div><div class="pill" onclick="qp('f-exp',this,'qexp')">أكثر من 15</div></div><input id="f-exp" placeholder="أو العدد الدقيق..."></div>
+              <div class="fld"><label>عدد الدورات التدريبية</label><div class="qp" id="qcrs"><div class="pill" onclick="qp('f-crs',this,'qcrs')">لا يوجد</div><div class="pill" onclick="qp('f-crs',this,'qcrs')">1-3 دورات</div><div class="pill" onclick="qp('f-crs',this,'qcrs')">4-8 دورات</div><div class="pill" onclick="qp('f-crs',this,'qcrs')">أكثر من 8</div></div><input id="f-crs" placeholder="العدد..."></div>
+            </div>
+            <div style="font-size:13px;font-weight:700;color:#8a6800;margin:10px 0 8px">أنواع الدورات المُكتسبة:</div>
+            <div class="cg4">
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-cls"> التصنيف والفهرسة</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-lib"> إدارة المكتبات</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-dig"> المكتبات الرقمية</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-rd"> تشجيع القراءة</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-ch"> خدمات الأطفال</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-ref"> خدمات المرجعية</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-sys"> أنظمة المكتبات</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-res"> البحث والاسترجاع</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-uae"> التراث الإماراتي</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-ai"> الذكاء الاصطناعي</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-ld"> قيادة وإدارة</label>
+              <label class="chk" style="background:rgba(255,255,255,.7)"><input type="checkbox" id="cr-ot"> أخرى</label>
+            </div>
+            <div class="g2" style="margin-top:12px">
+              <div class="fld"><label>أبرز الشهادات والدورات بالتفصيل</label><textarea id="f-cred" placeholder="اذكر الشهادات والدورات مع الجهة المانحة والسنة..."></textarea></div>
+              <div class="fld"><label>احتياجات التطوير المهني</label><textarea id="f-sdev" placeholder="ما الدورات أو المهارات المطلوبة للتطوير؟"></textarea></div>
+            </div>
+          </div>
+          
+          <div class="g2" style="margin-top:14px">
+            <div class="rgrp">
+              <div class="rlbl">التعاون مع المعلمين</div>
+              <div class="rp" id="rp-scol">
+                <button type="button" class="rpill" onclick="sR('scol',1,this)">1</button>
+                <button type="button" class="rpill" onclick="sR('scol',2,this)">2</button>
+                <button type="button" class="rpill" onclick="sR('scol',3,this)">3</button>
+                <button type="button" class="rpill" onclick="sR('scol',4,this)">4</button>
+                <button type="button" class="rpill" onclick="sR('scol',5,this)">5</button>
+                <button type="button" class="rpill" onclick="sR('scol',6,this)">6</button>
+              </div>
+            </div>
+            <div class="fld">
+              <label>كفاية الكادر الحالي</label>
+              <div class="qp" id="qsuff">
+                <div class="pill" onclick="qp('f-suff',this,'qsuff')">غير كافٍ</div>
+                <div class="pill" onclick="qp('f-suff',this,'qsuff')">مقبول</div>
+                <div class="pill" onclick="qp('f-suff',this,'qsuff')">كافٍ</div>
+                <div class="pill" onclick="qp('f-suff',this,'qsuff')">متميز</div>
+              </div>
+              <input id="f-suff" placeholder="التقييم...">
+            </div>
+            <div class="fld full">
+              <label>توصيات تدريبية مقترحة للكادر</label>
+              <textarea id="f-train-rec" placeholder="اذكر الدورات والتدريبات المقترحة بناءً على الملاحظات الميدانية..."></textarea>
+            </div>
+          </div>
+
+          <div class="fld full" style="margin-top:12px"><label>نقاط قوة الكادر</label><textarea id="f-sstr"></textarea></div>
+        </div>
+
+        <!-- S8 -->
+        <div class="card">
+          <div class="cardh"><div class="cnum">8</div><div><div class="ctitle">التقنية والابتكار</div></div></div>
+          <div class="g2">
+            <div class="fld"><label>نظام المكتبة الإلكتروني</label><div class="qp" id="qlsy"><div class="pill" onclick="qp('f-lsy',this,'qlsy')">لا يوجد</div><div class="pill" onclick="qp('f-lsy',this,'qlsy')">قيد البحث</div><div class="pill" onclick="qp('f-lsy',this,'qlsy')">موجود جزئياً</div><div class="pill" onclick="qp('f-lsy',this,'qlsy')">مفعل بالكامل</div></div><input id="f-lsy"></div>
+            <div class="rgrp"><div class="rlbl">جاهزية التحول الرقمي</div><div class="rp" id="rp-dg"><button type="button" class="rpill" onclick="sR('dg',1,this)">1</button><button type="button" class="rpill" onclick="sR('dg',2,this)">2</button><button type="button" class="rpill" onclick="sR('dg',3,this)">3</button><button type="button" class="rpill" onclick="sR('dg',4,this)">4</button><button type="button" class="rpill" onclick="sR('dg',5,this)">5</button><button type="button" class="rpill" onclick="sR('dg',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">البنية التقنية والأجهزة</div><div class="rp" id="rp-te"><button type="button" class="rpill" onclick="sR('te',1,this)">1</button><button type="button" class="rpill" onclick="sR('te',2,this)">2</button><button type="button" class="rpill" onclick="sR('te',3,this)">3</button><button type="button" class="rpill" onclick="sR('te',4,this)">4</button><button type="button" class="rpill" onclick="sR('te',5,this)">5</button><button type="button" class="rpill" onclick="sR('te',6,this)">6</button></div></div>
+            <div class="rgrp"><div class="rlbl">قابلية الربط بنظام موحد</div><div class="rp" id="rp-un"><button type="button" class="rpill" onclick="sR('un',1,this)">1</button><button type="button" class="rpill" onclick="sR('un',2,this)">2</button><button type="button" class="rpill" onclick="sR('un',3,this)">3</button><button type="button" class="rpill" onclick="sR('un',4,this)">4</button><button type="button" class="rpill" onclick="sR('un',5,this)">5</button><button type="button" class="rpill" onclick="sR('un',6,this)">6</button></div></div>
+          </div>
+          <div class="fld full" style="margin-top:10px"><label>ملاحظات التقنية</label><textarea id="f-tecn"></textarea></div>
+        </div>
+
+        <!-- S9 -->
+        <div class="card">
+          <div class="cardh"><div class="cnum">9</div><div><div class="ctitle">التقييم الختامي والخطة التطويرية</div></div></div>
+          <!-- SPECIAL FEATURES EXPANDED -->
+          <div style="background:linear-gradient(135deg,#fef9ec,#fff8e6);border:2px solid var(--gold);border-radius:16px;padding:18px;margin-bottom:16px;">
+            <div style="font-size:15px;font-weight:900;color:var(--gold);margin-bottom:5px;">🏆 خصائص ومرافق إضافية بالمكتبة</div>
+            <div style="font-size:13px;color:#7a5800;margin-bottom:14px;">لرصد الامتيازات أو المرافق الخاصة التي قد توجد في بعض المدارس ولا توجد في غيرها</div>
+            <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px;border-right:3px solid var(--gold);padding-right:8px;">اختر ما ينطبق على المكتبة:</div>
+            <div class="cg3">
+              <label class="chk"><input type="checkbox" id="ft-mob"> 🚌 مكتبة متنقلة مفعلة</label>
+              <label class="chk"><input type="checkbox" id="ft-cls"> 📚 مكتبة فصلية / داخل الصف</label>
+              <label class="chk"><input type="checkbox" id="ft-kg"> 🧸 مكتبة أطفال مستقلة</label>
+              <label class="chk"><input type="checkbox" id="ft-big"> 📖 مكتبة للصفوف الكبيرة</label>
+              <label class="chk"><input type="checkbox" id="ft-puppet"> 🎭 مسرح عرائس لمكتبة الأطفال</label>
+              <label class="chk"><input type="checkbox" id="ft-story"> 📢 ركن القصة / الحكواتي</label>
+              <label class="chk"><input type="checkbox" id="ft-quiet"> 🔇 ركن قراءة هادئ مستقل</label>
+              <label class="chk"><input type="checkbox" id="ft-act"> 🎨 ركن أنشطة ومصادر تعلم</label>
+              <label class="chk"><input type="checkbox" id="ft-dig"> 💻 ركن رقمي / أجهزة حاسوب</label>
+              <label class="chk"><input type="checkbox" id="ft-uae"> 🇦🇪 ركن خاص بدولة الإمارات</label>
+              <label class="chk"><input type="checkbox" id="ft-teach"> 👩‍🏫 ركن مصادر للمعلمين</label>
+              <label class="chk"><input type="checkbox" id="ft-disp"> 🖼️ مساحة عرض لأعمال الطلاب</label>
+              <label class="chk"><input type="checkbox" id="ft-club"> 📕 نادي قراءة / أصدقاء المكتبة</label>
+              <label class="chk"><input type="checkbox" id="ft-comp"> 🏅 برامج ومسابقات قرائية</label>
+              <label class="chk"><input type="checkbox" id="ft-admin"> ✅ دعم إداري واضح للمكتبة</label>
+              <label class="chk"><input type="checkbox" id="ft-makerspace"> 🛠️ مساحة إبداع / Makerspace</label>
+              <label class="chk"><input type="checkbox" id="ft-outdoor"> 🌿 مكتبة خارجية / حديقة قراءة</label>
+              <label class="chk"><input type="checkbox" id="ft-other"> ➕ ميزة أخرى</label>
+            </div>
+            <div class="fld" style="margin-top:12px">
+              <label>وصف الخصائص الخاصة وإمكانية تعميمها</label>
+              <textarea id="f-feats-desc" placeholder="اذكر الميزات الخاصة بالمكتبة وهل يمكن تعميمها على بقية الفروع..."></textarea>
+            </div>
+          </div>
+          <div class="g2">
+            <div class="fld">
+              <label>التقييم العام للمكتبة</label>
+              <div class="qp" id="qovr"><div class="pill" onclick="qp('f-ovr',this,'qovr')">ضعيف جداً</div><div class="pill" onclick="qp('f-ovr',this,'qovr')">ضعيف</div><div class="pill" onclick="qp('f-ovr',this,'qovr')">مقبول</div><div class="pill" onclick="qp('f-ovr',this,'qovr')">جيد</div><div class="pill" onclick="qp('f-ovr',this,'qovr')">جيد جداً</div><div class="pill" onclick="qp('f-ovr',this,'qovr')">متميز</div></div>
+              <input id="f-ovr">
+            </div>
+            <div class="fld">
+              <label>أولوية التدخل</label>
+              <div class="qp" id="qpri"><div class="pill" onclick="qp('f-pri',this,'qpri')" style="border-color:#e24b4a;color:#e24b4a">عاجلة 🔴</div><div class="pill" onclick="qp('f-pri',this,'qpri')" style="border-color:#ba7517;color:#ba7517">مرتفعة 🟠</div><div class="pill" onclick="qp('f-pri',this,'qpri')" style="border-color:#185fa5;color:#185fa5">متوسطة 🔵</div><div class="pill" onclick="qp('f-pri',this,'qpri')" style="border-color:#0f6e56;color:#0f6e56">منخفضة 🟢</div></div>
+              <input id="f-pri">
+            </div>
+            <div class="fld full"><label>أبرز التحديات</label><textarea id="f-chal" placeholder="1- &#10;2- &#10;3- "></textarea></div>
+            <div class="fld full"><label>نقاط القوة</label><textarea id="f-str"></textarea></div>
+            <div class="fld full"><label>نقاط الضعف والفجوات</label><textarea id="f-wk"></textarea></div>
+            <div class="fld full"><label>مقترحات التطوير والتوصيات</label><textarea id="f-rec"></textarea></div>
+            <div class="fld full"><label>خطة العمل الإجمالية (ملخص)</label><textarea id="f-plan" placeholder="ملخص سريع لخطة العمل..."></textarea></div>
+
+          <div class="g2" style="margin-top:4px">
+            <div class="fld"><label>خطة قصيرة المدى (1-3 أشهر)</label><textarea id="f-plan-s" placeholder="الإجراءات العاجلة..."></textarea></div>
+            <div class="fld"><label>خطة متوسطة المدى (فصل دراسي)</label><textarea id="f-plan-m" placeholder="التحسينات المتوسطة..."></textarea></div>
+            <div class="fld full"><label>خطة طويلة المدى (عام دراسي)</label><textarea id="f-plan-l" placeholder="الأهداف الاستراتيجية..."></textarea></div>
+          </div>
+
+          </div>
+        </div>
+        <div class="abar">
+          <button class="btn bp" onclick="saveEval()">💾 حفظ التقييم</button>
+          <button class="btn bo" onclick="manualDraftSave()">📝 حفظ مسودة الآن</button>
+          <span id="autosave-status" class="autosave-pill">🟢 الحفظ التلقائي جاهز</span>
+          <button class="btn bg" onclick="window.print()">🖨️ طباعة PDF</button>
+          <button class="btn bt" onclick="expCurJ()" title="تصدير تقييم المدرسة الحالية فقط بعد حفظه تلقائياً">📤 تصدير JSON</button>
+          <button class="btn bo" onclick="clrEval()">🔄 مسح</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATA -->
+    <div class="pg" id="page-dat">
+      <div class="hero"><div class="hi"><h2>💾 البيانات المحفوظة</h2><p>جميع التقييمات — قابلة للتعديل والتصدير والرفع في أي وقت</p></div></div>
+      <div class="card">
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+          <button class="btn bp bsm" onclick="expWord()">Word 📄</button>
+          <button class="btn bp bsm" onclick="expAll()">📤 تصدير JSON</button>
+          <button class="btn bg bsm" onclick="expCSV()">📊 تصدير CSV</button>
+          <button class="btn bo bsm" onclick="document.getElementById('impF').click()">📥 رفع واستيراد</button>
+          <button class="btn br bsm" onclick="clrAll()">🗑️ حذف الكل</button>
+        </div>
+        <div class="al ali">💡 البيانات في المتصفح — صدّري JSON بعد كل جلسة واحفظيه على جهازك، ثم استوريه بزر "رفع واستيراد" عند الحاجة</div>
+        <div id="dtbl" style="overflow-x:auto"></div>
+      </div>
+    </div>
+
+    <!-- COMPARE -->
+    <div class="pg" id="page-cmp">
+      <div class="hero"><div class="hi"><h2>⚖️ المقارنة الشاملة</h2><p>من الأعلى للأدنى تقييماً</p></div></div>
+      <div class="card"><div style="overflow-x:auto"><table class="ctbl"><thead id="cmphead"></thead><tbody id="cmpbody"></tbody></table></div></div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="pg" id="page-ch">
+      <div class="hero"><div class="hi"><h2>📊 الرسوم البيانية التحليلية</h2></div></div>
+      <div class="cgrid">
+        <div class="cbox cful"><h4>🕸️ مقارنة المحاور — جميع المكتبات</h4><canvas id="ch-rd" height="120" role="img" aria-label="radar"></canvas></div>
+        <div class="cbox"><h4>📈 متوسط كل محور</h4><canvas id="ch-ax" height="200" role="img" aria-label="axes"></canvas></div>
+        <div class="cbox"><h4>🏆 الترتيب العام</h4><canvas id="ch-rk" height="200" role="img" aria-label="rank"></canvas></div>
+        <div class="cbox"><h4>🇦🇪 مجموعات الإمارات — المقارنة</h4><canvas id="ch-ua" height="200" role="img" aria-label="uae"></canvas></div>
+        <div class="cbox"><h4>📚 إجمالي الكتب</h4><canvas id="ch-bk" height="200" role="img" aria-label="books"></canvas></div>
+        <div class="cbox cful"><h4>🔍 المقارنة التفصيلية لجميع المحاور</h4><canvas id="ch-fl" height="110" role="img" aria-label="full"></canvas></div>
+      </div>
+    </div>
+
+    <!-- REPORT -->
+    <div class="pg" id="page-rep">
+      <div class="hero"><div class="hi"><h2>📄 التقرير النهائي الشامل</h2><p>جاهز للرفع للإدارة العليا</p></div></div>
+      <div class="report-actions"><button class="btn bp" onclick="expWord()">📄 تنزيل التقرير Word</button><button class="btn bg" onclick="window.print()">🖨️ طباعة / PDF</button><button class="btn bt" onclick="startPres()">🎯 عرض تقديمي</button></div><div class="report-note">يعتمد التقرير على التقييمات المحفوظة في المتصفح، ويمكن تصديره كملف Word أو طباعته PDF.</div><div id="repC"></div>
+    </div>
+
+
+    <!-- EMAIL -->
+    <div class="pg" id="page-email">
+      <div class="hero"><div class="hi">
+        <h2>📧 إرسال التقارير بالبريد الإلكتروني</h2>
+        <p>أرسل التقارير مباشرة إلى Gmail أو احفظها بأي صيغة</p>
+      </div></div>
+      <div class="email-panel">
+        <div class="email-title">📨 إرسال عبر Gmail</div>
+        <div class="g2">
+          <div class="fld">
+            <label>البريد الإلكتروني للمستلم</label>
+            <input type="email" id="email-to" placeholder="example@gmail.com أو أي بريد آخر">
+          </div>
+          <div class="fld">
+            <label>عنوان الرسالة</label>
+            <input type="text" id="email-subject" value="تقرير تقييم مكتبات أكاديمية الفلاح 2026">
+          </div>
+          <div class="fld full">
+            <label>نص الرسالة</label>
+            <textarea id="email-body" style="min-height:100px">السلام عليكم،
+
+مرفق تقرير تقييم مكتبات أكاديمية الفلاح للعام الدراسي 2026.
+
+يشمل التقرير:
+- تقييم جميع مكتبات الفروع الست
+- تحليل مجموعات الإمارات
+- مقارنة شاملة بين الفروع
+- توصيات وخطة تطوير
+
+مع التحية،
+مركز مصادر التعلم — أكاديمية الفلاح</textarea>
+          </div>
+        </div>
+        <div class="email-formats">
+          <button class="efmt efmt-pdf" onclick="expWord()"><span style="font-size:18px">📄</span> تصدير Word</button>
+          <button class="efmt efmt-gmail" onclick="sendGmail()">
+            <span style="font-size:18px">📧</span> فتح Gmail وإرسال
+          </button>
+          <button class="efmt efmt-pdf" onclick="window.print()">
+            <span style="font-size:18px">📄</span> طباعة / حفظ PDF ثم إرفاقه
+          </button>
+          <button class="efmt efmt-json" onclick="expAll()">
+            <span style="font-size:18px">📤</span> تصدير JSON للإرفاق
+          </button>
+          <button class="efmt efmt-csv" onclick="expCSV()">
+            <span style="font-size:18px">📊</span> تصدير CSV للإرفاق
+          </button>
+        </div>
+        <div class="email-note">
+          💡 <strong>طريقة الإرسال:</strong> اضغط "فتح Gmail" — سيفتح تلقائياً رسالة جديدة في Gmail مع العنوان والنص. ثم أرفق الملفات التي صدّرتها (PDF أو JSON أو CSV) يدوياً قبل الإرسال.
+          <br>📱 يعمل مع Gmail وOutlook وأي بريد إلكتروني آخر.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardh"><div class="cnum">📋</div><div><div class="ctitle">إرسال تقرير مدرسة محددة</div><div class="csub">اختر المدرسة وأرسل تقريرها مباشرة</div></div></div>
+        <div class="g2">
+          <div class="fld">
+            <label>اختر المدرسة</label>
+            <select id="email-school">
+              <option value="">— اختر المدرسة —</option>
+            </select>
+          </div>
+          <div class="fld">
+            <label>البريد الإلكتروني للمستلم</label>
+            <input type="email" id="email-to2" placeholder="example@gmail.com">
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <button class="btn bp" onclick="sendSchoolReport()">📧 إرسال تقرير المدرسة عبر Gmail</button>
+          <button class="btn bg" onclick="expSchoolWord()">Word تقرير المدرسة</button>
+          <button class="btn bg" onclick="expSchoolPDF()">📄 طباعة تقرير المدرسة</button>
+          <button class="btn bt" onclick="expSchoolJSON()">📤 تصدير JSON للمدرسة</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardh"><div class="cnum">📬</div><div><div class="ctitle">إرسال التقرير الشامل للإدارة العليا</div></div></div>
+        <div class="fld">
+          <label>بريد الإدارة العليا</label>
+          <input type="email" id="email-admin" placeholder="admin@alfalah.ae">
+        </div>
+        <div class="email-formats" style="margin-top:12px">
+          <button class="efmt efmt-gmail" onclick="sendAdminReport()">
+            <span>📧</span> إرسال التقرير الشامل للإدارة
+          </button>
+          <button class="efmt efmt-pdf" onclick="pg('page-rep','التقرير النهائي','nav-rep');setTimeout(()=>window.print(),500)">
+            <span>📄</span> طباعة التقرير النهائي
+          </button>
+        </div>
+      </div>
+    </div>
+
+</div>
+<!-- ══════════ PRESENTATION OVERLAY ══════════ -->
+<div class="pov" id="pov">
+  <div class="psl" id="psl" style="background:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56)"></div>
+  <div class="pnav">
+    <button class="btn bo bsm" onclick="pB()">→ السابق</button>
+    <span class="pcnt" id="pcnt">1 / 1</span>
+    <button class="btn bo bsm" onclick="pN()">← التالي</button>
+    <button class="btn br bsm" onclick="closePres()" style="margin-right:24px">✕ إغلاق</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../supabase-config.js"></script>
+<script>
+const AF_LOGO_DATA="../assets/logo.png";
+
+// Page navigation fix for new layout
+function pg(id,title,nid){
+  document.querySelectorAll(".pg").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.getElementById("pgtitle").textContent=title;
+  document.querySelectorAll(".navbtn").forEach(n=>n.classList.remove("active"));
+  if(nid)document.getElementById(nid)?.classList.add("active");
+  if(id==="page-home")uHome();if(id==="page-sch")uSch();
+  if(id==="page-cmp")uCmp();if(id==="page-dat")uDat();if(id==="page-rep")uRep();
+  if(id==="page-ch")setTimeout(uCh,100);
+}
+function toggleSB(){}
+
+
+const SCH=[
+  {id:"khb",name:"أكاديمية الفلاح فرع الخبيصي",short:"الخبيصي",city:"العين",day:"الثلاثاء",date:"2026-04-28"},
+  {id:"jmi",name:"أكاديمية الفلاح فرع الجيمي",short:"الجيمي",city:"العين",day:"الأربعاء",date:"2026-04-29"},
+  {id:"shj",name:"مدرسة الفلاح الخاصة - الدخيلات",short:"الشارقة",city:"الشارقة",day:"الثلاثاء",date:"2026-05-05"},
+  {id:"bny",name:"أكاديمية الفلاح فرع بني ياس",short:"بني ياس",city:"أبوظبي",day:"الخميس",date:"2026-05-07"},
+  {id:"mzd",name:"أكاديمية الفلاح فرع محمد بن زايد",short:"محمد بن زايد",city:"أبوظبي",day:"الاثنين",date:"2026-05-11"},
+  {id:"dan",name:"أكاديمية الفلاح فرع الدانة",short:"الدانة",city:"أبوظبي",day:"الثلاثاء",date:"2026-05-12"},
+];
+const LSK="falah_lib_v6";
+let DB={ev:{},drafts:{}};let CI={};let RS={};let PS=[],PI=0;
+
+const SCHOOL_DB_IDS={dan:1,mzd:2,bny:3,khb:4,jmi:5,shj:6};
+const DB_TO_SCHOOL_ID={1:"dan",2:"mzd",3:"bny",4:"khb",5:"jmi",6:"shj"};
+function supaReady(){return !!(window.alfalahSupabase && window.ALFALAH_SUPABASE_KEY && !String(window.ALFALAH_SUPABASE_KEY).includes("PUT_PUBLISHABLE_KEY_HERE"));}
+function localSchoolIdFromDbId(id){return DB_TO_SCHOOL_ID[Number(id)]||null;}
+async function loadEvaluationsFromSupabase(){
+  if(!supaReady())return;
+  try{
+    const {data,error}=await window.alfalahSupabase.from("library_evaluations").select("*").order("created_at",{ascending:true});
+    if(error){console.warn("Supabase load error",error);return;}
+    (data||[]).forEach(row=>{
+      const fd=row.full_data||{};
+      const sid=fd.local_school_id || localSchoolIdFromDbId(row.school_id);
+      if(!sid)return;
+      const ev=fd.data || fd;
+      if(ev && typeof ev==="object")DB.ev[sid]=ev;
+    });
+    sdb();popSel();uHome();
+    if(document.getElementById("page-dat")?.classList.contains("active"))uDat();
+    if(document.getElementById("page-cmp")?.classList.contains("active"))uCmp();
+  }catch(e){console.warn("Supabase load failed",e);}
+}
+
+async function loadDraftsFromSupabase(){
+  if(!supaReady())return;
+  try{
+    const {data,error}=await window.alfalahSupabase.from("evaluation_drafts").select("*").order("updated_at",{ascending:true});
+    if(error){console.warn("Supabase drafts load error",error);return;}
+    if(!DB.drafts)DB.drafts={};
+    (data||[]).forEach(row=>{
+      const sid=localSchoolIdFromDbId(row.school_id)||row.school_code;
+      if(sid && row.draft_data){DB.drafts[sid]={...row.draft_data,draftSavedAt:row.updated_at||new Date().toISOString()};}
+    });
+    sdb();
+  }catch(e){console.warn("Draft load exception",e);}
+}
+
+async function saveEvaluationToSupabase(sid,d){
+  if(!supaReady())return {ok:false,skipped:true};
+  const s=SCH.find(x=>x.id===sid)||{};
+  const sc=calcSc(d); const ov=tot(sc); const lvl=d.overall||scoreLevel(ov).txt;
+  const payload={
+    school_id:SCHOOL_DB_IDS[sid]||null,
+    visit_date:d.date||null,
+    librarian_name:d.lib||null,
+    total_score:ov||null,
+    final_level:lvl||null,
+    strengths:d.str||null,
+    weaknesses:d.wk||null,
+    recommendations:d.rec||null,
+    full_data:{local_school_id:sid,school_name:s.name||sid,city:s.city||"",data:d,scores:sc,saved_from:"github_pages",saved_at:new Date().toISOString()}
+  };
+  const {error}=await window.alfalahSupabase.from("library_evaluations").insert([payload]);
+  if(error){console.error("Supabase save error",error);return {ok:false,error};}
+  return {ok:true};
+}
+
+function ldb(){try{const s=localStorage.getItem(LSK);if(s)DB=JSON.parse(s);if(!DB.ev)DB.ev={};if(!DB.drafts)DB.drafts={};}catch(e){DB={ev:{},drafts:{}};}}
+function sdb(){try{localStorage.setItem(LSK,JSON.stringify(DB));}catch(e){alert("خطأ في الحفظ!");}}
+function pg(id,title,nid){
+  document.querySelectorAll(".pg").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.getElementById("pgtitle").textContent=title;
+  document.querySelectorAll(".navbtn").forEach(n=>n.classList.remove("active"));
+  if(nid)document.getElementById(nid)?.classList.add("active");
+  if(id==="page-home")uHome();if(id==="page-sch")uSch();
+  if(id==="page-cmp")uCmp();if(id==="page-dat")uDat();if(id==="page-rep")uRep();
+  if(id==="page-ch")setTimeout(uCh,100);
+}
+const RM={"ضعيف جداً":1,"ضعيف":2,"مقبول":3,"جيد":4,"جيد جداً":5,"متميز":6};
+const RL={1:"ضعيف جداً",2:"ضعيف",3:"مقبول",4:"جيد",5:"جيد جداً",6:"متميز"};
+function avgA(a){const v=a.filter(x=>x>0);return v.length?Math.round(v.reduce((s,x)=>s+x,0)/v.length*10)/10:0;}
+function calcSc(d){
+  const R=k=>d["r_"+k]||0;
+  return{
+    "المجموعات":avgA([R("cd"),R("cc"),R("cco")]),
+    "مجموعات الإمارات":avgA([R("uae")]),
+    "التنظيم الفني":avgA([R("sh"),R("cr")]),
+    "البيئة":avgA([R("sp"),R("se"),R("at"),R("in")]),
+    "الأنشطة":avgA([R("rch"),R("tu"),R("cu"),R("ri")]),
+    "الشراكات":avgA([R("pa"),R("co"),R("ts"),R("ss")]),
+    "الكادر والمؤهلات":avgA([R("sb"),R("sc"),R("sst"),R("si"),R("ste"),R("scol"),R("marc"),R("ils")]),
+    "التقنية":avgA([R("dg"),R("te"),R("un")]),
+  };
+}
+function tot(sc){const v=Object.values(sc).filter(x=>x>0);return v.length?Math.round(v.reduce((s,x)=>s+x,0)/v.length*10)/10:0;}
+function allD(){return SCH.map(s=>{const d=DB.ev[s.id];return{s,d:d||null,sc:d&&d.saved?calcSc(d):null};}).filter(r=>r.sc);}
+function uHome(){
+  const done=SCH.filter(s=>DB.ev[s.id]?.saved).length;
+  document.getElementById("hd").textContent=done;
+  document.getElementById("hl").textContent=SCH.reduce((n,s)=>n+(DB.ev[s.id]?.hasEx?2:1),0);
+  const avgs=SCH.map(s=>DB.ev[s.id]).filter(e=>e?.saved&&e.overall).map(e=>RM[e.overall]||0);
+  if(avgs.length)document.getElementById("ha").textContent=RL[Math.round(avgs.reduce((a,b)=>a+b)/avgs.length)]||"—";
+  document.getElementById("hcards").innerHTML=SCH.map(s=>{
+    const d=DB.ev[s.id];const ok=!!(d?.saved);
+    return`<div class="scard ${ok?"done":""}" onclick="goEv('${s.id}')"><div class="scem">${s.city}</div><div class="scname">${s.name}</div><div class="scdate">📅 ${s.day} ${s.date}</div><div class="scbdg">${ok?'<span class="bdg bg2">✓ مكتمل</span>':'<span class="bdg ba">لم يبدأ</span>'}</div></div>`;
+  }).join("");
+  const today=new Date().toISOString().split("T")[0];
+  document.getElementById("hvtbl").innerHTML=SCH.map((s,i)=>{
+    const d=DB.ev[s.id];const ok=!!(d?.saved);const iT=s.date===today;
+    const st=ok?'<span class="vb vbd">✓ مكتمل</span>':iT?'<span class="vb vbt">اليوم</span>':'<span class="vb vbp">قادم</span>';
+    return`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.city}</td><td>${s.day} ${s.date}</td><td>${st}</td><td><button class="btn bp bxs" onclick="goEv('${s.id}')">تقييم</button></td></tr>`;
+  }).join("");
+}
+function goEv(sid){document.getElementById("esch").value=sid;onSch();pg("page-ev","نموذج التقييم","nav-ev");}
+function uSch(){
+  const today=new Date().toISOString().split("T")[0];
+  document.getElementById("stbl").innerHTML=SCH.map((s,i)=>{
+    const d=DB.ev[s.id];const ok=!!(d?.saved);const iT=s.date===today;
+    const st=ok?'<span class="vb vbd">✓ مكتمل</span>':iT?'<span class="vb vbt">اليوم</span>':'<span class="vb vbp">قادم</span>';
+    return`<tr><td>${i+1}</td><td><strong>${s.day}</strong><br>${s.date}</td><td>${s.name}</td><td>${s.city}</td><td>${st}</td><td><button class="btn bp bxs" onclick="goEv('${s.id}')">تقييم</button></td></tr>`;
+  }).join("");
+}
+function popSel(){
+  const sel=document.getElementById("esch");
+  sel.innerHTML='<option value="">— اختر المدرسة —</option>'+SCH.map(s=>`<option value="${s.id}">${s.name} — ${s.city}${DB.ev[s.id]?.saved?" ✓":""}</option>`).join("");
+}
+function qp(fid,pill,gid){
+  document.querySelectorAll("#"+gid+" .pill").forEach(p=>p.classList.remove("sel"));
+  pill.classList.add("sel");
+  const el=document.getElementById(fid);if(el)el.value=pill.textContent.replace(/🔴|🟠|🔵|🟢/g,"").trim();
+}
+const RCL=["","ra1","ra2","ra3","ra4","ra5","ra6"];
+function sR(k,v,btn){
+  const c=document.getElementById("rp-"+k);if(!c)return;
+  c.querySelectorAll(".rpill").forEach((b,i)=>{RCL.forEach(cl=>{if(cl)b.classList.remove(cl);});if(i<v)b.classList.add(RCL[v]);});
+  RS[k]=v;
+}
+function clrRS(){RS={};document.querySelectorAll(".rp").forEach(rp=>rp.querySelectorAll(".rpill").forEach(b=>RCL.forEach(c=>{if(c)b.classList.remove(c);})));}
+function ldRS(d){["uae","cd","cc","cco","sh","cr","sp","se","at","in","rch","tu","cu","ri","pa","co","ts","ss","sb","sc","sst","si","ste","dg","te","un"].forEach(k=>{if(d?.["r_"+k])sR(k,d["r_"+k],null);});}
+function togEx(){
+  const c=document.getElementById("excnt");const b=document.getElementById("exbtn");const box=document.getElementById("exbox");
+  const o=c.classList.toggle("open");box.classList.toggle("open",o);b.textContent=o?"— إخفاء":"+ إضافة";
+}
+function onSch(){
+  const sid=document.getElementById("esch").value;const w=document.getElementById("eform");
+  if(!sid){w.style.display="none";return;}
+  w.style.display="block";
+  const s=SCH.find(x=>x.id===sid);
+  if(s){document.getElementById("f-city").value=s.city;document.getElementById("f-sname").value=s.name;}
+  ldEv(sid);
+}
+function gv(id){const el=document.getElementById(id);return el?el.value:"";}
+function sv(id,v){const el=document.getElementById(id);if(el&&v!=null)el.value=v;}
+function gk(id){const el=document.getElementById(id);return el?el.checked:false;}
+function sk(id,v){const el=document.getElementById(id);if(el)el.checked=!!v;}
+function ldEv(sid){
+  const finalD=DB.ev[sid]||{};
+  const draftD=(DB.drafts&&DB.drafts[sid])?DB.drafts[sid]:{};
+  const useDraft=!!(draftD.draftSavedAt && (!finalD.savedAt || new Date(draftD.draftSavedAt)>new Date(finalD.savedAt)));
+  const d=useDraft?draftD:finalD;
+  clrRS();
+  document.getElementById("eform").querySelectorAll("input:not([type=checkbox]),textarea,select").forEach(el=>{if(!el.readOnly&&el.id!=="esch")el.value="";});
+  document.getElementById("eform").querySelectorAll("input[type=checkbox]").forEach(el=>el.checked=false);
+  document.querySelectorAll(".pill").forEach(p=>p.classList.remove("sel"));
+  document.getElementById("excnt").classList.remove("open");
+  document.getElementById("exbox").classList.remove("open");
+  document.getElementById("exbtn").textContent="+ إضافة";
+  sv("f-lib",d.lib);sv("f-date",d.date);sv("f-stg",d.stg);sv("f-ltyp",d.ltyp);
+  sv("f-stu",d.stu);sv("f-stf",d.stf);sv("f-ldesc",d.ldesc);sv("f-uaen",d.uaen);
+  sv("f-bt",d.bt);sv("f-bar",d.bar);sv("f-ben",d.ben);sv("f-dig",d.dig);
+  sv("f-cls",d.cls);sv("f-cat",d.cat);sv("f-cir",d.cir);sv("f-inv",d.inv);
+  sv("f-loans",d.loans);sv("f-vis",d.vis);sv("f-techn",d.techn);
+  sv("f-envn",d.envn);sv("f-actn",d.actn);sv("f-rpt",d.rpt);sv("f-ext",d.ext);
+  sv("f-parn",d.parn);sv("f-edu",d.edu);sv("f-spc",d.spc);sv("f-exp",d.exp);
+  sv("f-crs",d.crs);sv("f-cred",d.cred);sv("f-sdev",d.sdev);sv("f-sstr",d.sstr);sv("f-tr",d.tr);
+  sv("f-lsy",d.lsy);sv("f-tecn",d.tecn);sv("f-ovr",d.overall);sv("f-pri",d.priority);
+  sv("f-chal",d.chal);sv("f-str",d.str);sv("f-wk",d.wk);sv("f-rec",d.rec);sv("f-plan",d.plan);
+  if(d.hasEx){togEx();sv("f-et",d.et);sv("f-es",d.es);sv("f-eb",d.eb);sv("f-er",d.er);sv("f-en",d.en);}
+  ["h","c","p","s","g","e","r","a","l","d","n","o"].forEach(k=>sk("uae-"+k,d["uae-"+k]));
+  ["tl","dp","ac","uc","dg","co"].forEach(k=>sk("env-"+k,d["env-"+k]));
+  ["ar","en","st","ua","bf","cl"].forEach(k=>sk("act-"+k,d["act-"+k]));
+  ["y","s","d","m","u","a"].forEach(k=>sk("ft-"+k,d["ft-"+k]));
+  ["cls","lib","dig","rd","ch","ref","sys","res","uae","ai","ld","ot"].forEach(k=>sk("cr-"+k,d["cr-"+k]));
+  ldRS(d);
+}
+function getEv(){
+  const d={
+    lib:gv("f-lib"),date:gv("f-date"),stg:gv("f-stg"),ltyp:gv("f-ltyp"),
+    stu:gv("f-stu"),stf:gv("f-stf"),ldesc:gv("f-ldesc"),uaen:gv("f-uaen"),
+    bt:gv("f-bt"),bar:gv("f-bar"),ben:gv("f-ben"),dig:gv("f-dig"),
+    cls:gv("f-cls"),cat:gv("f-cat"),cir:gv("f-cir"),inv:gv("f-inv"),
+    loans:gv("f-loans"),vis:gv("f-vis"),techn:gv("f-techn"),
+    envn:gv("f-envn"),actn:gv("f-actn"),rpt:gv("f-rpt"),ext:gv("f-ext"),parn:gv("f-parn"),
+    edu:gv("f-edu"),spc:gv("f-spc"),exp:gv("f-exp"),crs:gv("f-crs"),
+    cred:gv("f-cred"),sdev:gv("f-sdev"),sstr:gv("f-sstr"),tr:gv("f-tr"),
+    lsy:gv("f-lsy"),tecn:gv("f-tecn"),
+    overall:gv("f-ovr"),priority:gv("f-pri"),
+    chal:gv("f-chal"),str:gv("f-str"),wk:gv("f-wk"),rec:gv("f-rec"),plan:gv("f-plan"),
+    hasEx:document.getElementById("excnt").classList.contains("open"),
+    et:gv("f-et"),es:gv("f-es"),eb:gv("f-eb"),er:gv("f-er"),en:gv("f-en"),
+    saved:true,savedAt:new Date().toISOString()
+  };
+  ["h","c","p","s","g","e","r","a","l","d","n","o"].forEach(k=>d["uae-"+k]=gk("uae-"+k));
+  ["tl","dp","ac","uc","dg","co"].forEach(k=>d["env-"+k]=gk("env-"+k));
+  ["ar","en","st","ua","bf","cl"].forEach(k=>d["act-"+k]=gk("act-"+k));
+  ["y","s","d","m","u","a"].forEach(k=>d["ft-"+k]=gk("ft-"+k));
+  ["cls","lib","dig","rd","ch","ref","sys","res","uae","ai","ld","ot"].forEach(k=>d["cr-"+k]=gk("cr-"+k));
+  ["uae","cd","cc","cco","sh","cr","sp","se","at","in","rch","tu","cu","ri","pa","co","ts","ss","sb","sc","sst","si","ste","dg","te","un"].forEach(k=>d["r_"+k]=RS[k]||0);
+  return d;
+}
+
+let AUTO_SAVE_DIRTY=false;
+let AUTO_SAVE_BUSY=false;
+let AUTO_SAVE_TIMER=null;
+function setAutoStatus(msg,type=""){
+  const el=document.getElementById("autosave-status");
+  if(!el)return;
+  el.className="autosave-pill"+(type?" "+type:"");
+  el.textContent=msg;
+}
+function currentEvalSid(){
+  const sid=document.getElementById("esch")?.value||"";
+  const form=document.getElementById("eform");
+  if(!sid||!form||form.style.display==="none")return "";
+  return sid;
+}
+function markDraftDirty(){
+  if(!currentEvalSid())return;
+  AUTO_SAVE_DIRTY=true;
+  setAutoStatus("🟡 توجد تعديلات لم تُحفظ بعد","saving");
+}
+async function saveDraftToSupabase(sid,d){
+  if(!DB.drafts)DB.drafts={};
+  const now=new Date().toISOString();
+  const draft={...d,saved:false,isDraft:true,draftSavedAt:now};
+  DB.drafts[sid]=draft;
+  sdb();
+  if(!supaReady())return {ok:true,localOnly:true};
+  const s=SCH.find(x=>x.id===sid)||{};
+  const payload={school_id:SCHOOL_DB_IDS[sid],school_code:sid,school_name:s.name||sid,draft_data:draft,updated_at:now};
+  const {error}=await window.alfalahSupabase.from("evaluation_drafts").upsert([payload],{onConflict:"school_id"});
+  if(error){console.error("Draft autosave error",error);return {ok:false,error};}
+  return {ok:true};
+}
+async function autoSaveDraft(force=false){
+  const sid=currentEvalSid();
+  if(!sid)return;
+  if(AUTO_SAVE_BUSY)return;
+  if(!force&&!AUTO_SAVE_DIRTY)return;
+  AUTO_SAVE_BUSY=true;
+  setAutoStatus("⏳ جاري حفظ المسودة...","saving");
+  try{
+    const d=getEv();
+    const res=await saveDraftToSupabase(sid,d);
+    if(res.ok){AUTO_SAVE_DIRTY=false;setAutoStatus(res.localOnly?"✅ تم حفظ المسودة محلياً":"✅ تم حفظ المسودة تلقائياً","saved");}
+    else{setAutoStatus("⚠️ فشل حفظ المسودة في القاعدة — حُفظت محلياً","error");}
+  }catch(e){console.error(e);setAutoStatus("⚠️ حدث خطأ في الحفظ التلقائي","error");}
+  finally{AUTO_SAVE_BUSY=false;}
+}
+async function manualDraftSave(){await autoSaveDraft(true);}
+function initAutoSave(){
+  const form=document.getElementById("eform");
+  if(!form)return;
+  form.addEventListener("input",markDraftDirty);
+  form.addEventListener("change",markDraftDirty);
+  document.addEventListener("click",e=>{
+    if(e.target&&e.target.classList&&e.target.classList.contains("pill"))setTimeout(markDraftDirty,50);
+    if(e.target&&e.target.classList&&e.target.classList.contains("rpill"))setTimeout(markDraftDirty,50);
+  });
+  AUTO_SAVE_TIMER=setInterval(()=>autoSaveDraft(false),10000);
+  window.addEventListener("beforeunload",()=>{
+    const sid=currentEvalSid();
+    if(sid&&AUTO_SAVE_DIRTY){
+      const d=getEv();
+      if(!DB.drafts)DB.drafts={};
+      DB.drafts[sid]={...d,saved:false,isDraft:true,draftSavedAt:new Date().toISOString()};
+      sdb();
+    }
+  });
+}
+
+async function saveEval(){
+  const sid=document.getElementById("esch").value;if(!sid)return alert("اختر المدرسة!");
+  const d=getEv();
+  DB.ev[sid]=d;sdb();popSel();uHome();
+  const r=await saveEvaluationToSupabase(sid,d);
+  if(!DB.drafts)DB.drafts={};delete DB.drafts[sid];sdb();
+  AUTO_SAVE_DIRTY=false;setAutoStatus("✅ تم الحفظ النهائي في القاعدة","saved");
+  if(r.ok) alert("✅ تم حفظ التقييم محلياً وفي Supabase");
+  else if(r.skipped) alert("✅ تم حفظ التقييم محلياً. ملاحظة: لم يتم تفعيل مفتاح Supabase بعد في ملف supabase-config.js");
+  else alert("⚠️ تم الحفظ محلياً، لكن لم ينجح الحفظ في Supabase. راجع السياسات أو المفتاح.");
+}
+async function saveAll(){const sid=document.getElementById("esch").value;if(sid&&document.getElementById("eform").style.display!=="none"){const d=getEv();DB.ev[sid]=d;sdb();await saveEvaluationToSupabase(sid,d);}else{sdb();}alert("✅ تم الحفظ");}
+function clrEval(){if(!confirm("مسح بيانات النموذج الحالي؟"))return;ldEv(document.getElementById("esch").value||"");}
+function uDat(){
+  const el=document.getElementById("dtbl");
+  el.innerHTML=`<table class="ctbl"><thead><tr><th style="text-align:right">المدرسة</th><th>المدينة</th><th>الأخصائي</th><th>التاريخ</th><th>المؤهل</th><th>الخبرة</th><th>التقييم</th><th>الأولوية</th><th>الحالة</th><th>إجراءات</th></tr></thead><tbody>${SCH.map(s=>{const d=DB.ev[s.id];return`<tr><td style="font-weight:700">${s.name}</td><td>${s.city}</td><td>${d?.lib||"-"}</td><td>${d?.date||"-"}</td><td>${d?.edu||"-"}</td><td>${d?.exp||"-"}</td><td>${d?.overall||"-"}</td><td>${d?.priority||"-"}</td><td>${d?.saved?'<span class="bdg bg2">✓ محفوظ</span>':'<span class="bdg bgr">غير مكتمل</span>'}</td><td style="display:flex;gap:4px"><button class="btn bp bxs" onclick="goEv('${s.id}')">تعديل</button><button class="btn br bxs" onclick="delEv('${s.id}')">حذف</button></td></tr>`;}).join("")}</tbody></table>`;
+}
+function delEv(sid){if(!confirm("حذف هذا التقييم؟"))return;delete DB.ev[sid];sdb();uDat();uHome();}
+function uCmp(){
+  const data=allD().sort((a,b)=>tot(b.sc)-tot(a.sc));
+  const axes=["المجموعات","مجموعات الإمارات","التنظيم الفني","البيئة","الأنشطة","الشراكات","الكادر والمؤهلات","التقنية"];
+  const bc=v=>v>=4.5?"bg2":v>=3?"bb":v>=2?"ba":"br2";
+  document.getElementById("cmphead").innerHTML=`<tr><th style="text-align:right">المدرسة</th><th>المدينة</th>${axes.map(a=>`<th>${a}</th>`).join("")}<th>الإجمالي</th><th>التقييم</th><th>الأولوية</th></tr>`;
+  if(!data.length){document.getElementById("cmpbody").innerHTML='<tr><td colspan="12" style="text-align:center;padding:30px;color:#5a7fa8">لا توجد بيانات مكتملة — ابدئي بتقييم المدارس أولاً</td></tr>';return;}
+  document.getElementById("cmpbody").innerHTML=data.map((r,i)=>{
+    const ov=tot(r.sc);
+    return`<tr><td>${i+1}. ${r.s.short}${r.d.hasEx?" 📚📚":" 📚"}</td><td>${r.s.city}</td>${axes.map(a=>{const v=r.sc[a]||0;return`<td>${v>0?`<span class="bdg ${bc(v)}">${v}</span>`:"-"}</td>`;}).join("")}<td><span class="bdg ${bc(ov)}" style="font-size:14px">${ov.toFixed(1)}/6</span></td><td>${r.d.overall||"-"}</td><td>${r.d.priority||"-"}</td></tr>`;
+  }).join("");
+}
+const COL=["#185fa5","#0f9d8a","#ba7517","#534ab7","#e24b4a","#0c447c","#1d9e75","#ef9f27"];
+function dc(id){if(CI[id]){CI[id].destroy();delete CI[id];}}
+function uCh(){
+  if(!window.Chart){setTimeout(uCh,500);return;}
+  const data=allD().sort((a,b)=>tot(b.sc)-tot(a.sc));
+  const axes=["المجموعات","مجموعات الإمارات","التنظيم الفني","البيئة","الأنشطة","الشراكات","الكادر والمؤهلات","التقنية"];
+  const lbs=data.map(r=>r.s.short);
+  const fo={family:"Cairo",size:12};
+  dc("ch-rd");if(data.length){CI["ch-rd"]=new Chart(document.getElementById("ch-rd").getContext("2d"),{type:"radar",data:{labels:axes,datasets:data.map((r,i)=>({label:r.s.short,data:axes.map(a=>r.sc[a]||0),borderColor:COL[i%COL.length],backgroundColor:COL[i%COL.length]+"22",borderWidth:2.5,pointBackgroundColor:COL[i%COL.length]}))},options:{responsive:true,scales:{r:{beginAtZero:true,max:6,ticks:{stepSize:1}}},plugins:{legend:{position:"bottom",labels:{font:fo}}}}});}
+  dc("ch-ax");if(data.length){const ap=axes.map(a=>{const vs=data.map(r=>r.sc[a]||0).filter(v=>v>0);return vs.length?Math.round(vs.reduce((s,v)=>s+v,0)/vs.length*10)/10:0;});CI["ch-ax"]=new Chart(document.getElementById("ch-ax").getContext("2d"),{type:"bar",data:{labels:axes,datasets:[{data:ap,backgroundColor:COL,borderRadius:10,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,max:6},x:{ticks:{font:{family:"Cairo",size:10}}}}}});}
+  dc("ch-rk");if(data.length){CI["ch-rk"]=new Chart(document.getElementById("ch-rk").getContext("2d"),{type:"bar",data:{labels:lbs,datasets:[{data:data.map(r=>tot(r.sc)),backgroundColor:data.map((_,i)=>COL[i%COL.length]),borderRadius:10,borderSkipped:false}]},options:{indexAxis:"y",responsive:true,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,max:6},y:{ticks:{font:fo}}}}});}
+  dc("ch-ua");if(data.length){CI["ch-ua"]=new Chart(document.getElementById("ch-ua").getContext("2d"),{type:"bar",data:{labels:lbs,datasets:[{label:"مجموعات الإمارات",data:data.map(r=>r.sc["مجموعات الإمارات"]||0),backgroundColor:"#0f9d8a",borderRadius:8,borderSkipped:false},{label:"المجموعات العامة",data:data.map(r=>r.sc["المجموعات"]||0),backgroundColor:"#185fa5",borderRadius:8,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{position:"bottom",labels:{font:fo}}},scales:{y:{beginAtZero:true,max:6},x:{ticks:{font:{family:"Cairo",size:11}}}}}});}
+  dc("ch-bk");if(data.length){CI["ch-bk"]=new Chart(document.getElementById("ch-bk").getContext("2d"),{type:"bar",data:{labels:lbs,datasets:[{label:"عربي",data:data.map(r=>parseInt(r.d.bar)||0),backgroundColor:"#185fa5",borderRadius:6},{label:"إنجليزي",data:data.map(r=>parseInt(r.d.ben)||0),backgroundColor:"#0f9d8a",borderRadius:6}]},options:{responsive:true,plugins:{legend:{position:"bottom",labels:{font:fo}}},scales:{x:{stacked:true,ticks:{font:{family:"Cairo",size:11}}},y:{stacked:true,beginAtZero:true}}}});}
+  dc("ch-fl");if(data.length){CI["ch-fl"]=new Chart(document.getElementById("ch-fl").getContext("2d"),{type:"bar",data:{labels:axes,datasets:data.map((r,i)=>({label:r.s.short,data:axes.map(a=>r.sc[a]||0),backgroundColor:COL[i%COL.length]+"bb",borderColor:COL[i%COL.length],borderWidth:1.5,borderRadius:6}))},options:{responsive:true,plugins:{legend:{position:"bottom",labels:{font:fo}}},scales:{y:{beginAtZero:true,max:6},x:{ticks:{font:{family:"Cairo",size:11}}}}}});}
+}
+function scoreLevel(v){
+  if(v>=5) return {txt:"متميزة",cls:"bg2",color:"#0f6e56"};
+  if(v>=4) return {txt:"جيدة جداً",cls:"bb",color:"#185fa5"};
+  if(v>=3) return {txt:"مقبولة وتحتاج تحسين",cls:"ba",color:"#ba7517"};
+  return {txt:"تحتاج تدخل عاجل",cls:"br2",color:"#c0392b"};
+}
+function escHtml(v){return String(v??"").replace(/[&<>\"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;"}[m]));}
+function axisStats(data,axes){
+  return axes.map(ax=>{const rows=data.map(r=>({r,v:r.sc[ax]||0})).filter(x=>x.v>0);const avg=rows.length?rows.reduce((s,x)=>s+x.v,0)/rows.length:0;rows.sort((a,b)=>b.v-a.v);return {ax,avg,best:rows[0],weak:rows[rows.length-1]};});
+}
+function smartRecommendations(r){
+  const items=[]; const sc=r.sc;
+  Object.entries(sc).forEach(([k,v])=>{if(v>0&&v<3)items.push("إعداد خطة تصحيحية عاجلة لمحور " + k + " في " + r.s.short + "."); else if(v>=3&&v<4)items.push("تحسين محور " + k + " في " + r.s.short + " للوصول إلى مستوى جيد جداً.");});
+  if(!r.d["uae-h"]&&!r.d["uae-c"]&&!r.d["uae-s"])items.push("تعزيز مجموعات الإمارات بعناوين في التاريخ والثقافة والقصص المناسبة للمرحلة.");
+  if(!r.d.rec && !r.d.plan && items.length===0)items.push("الحفاظ على مستوى الأداء الحالي وتوثيق الممارسات الجيدة لتعميمها.");
+  return items.slice(0,5);
+}
+function buildSchoolReport(r,rank){
+  const ov=tot(r.sc);const pct=Math.round((ov/6)*100);const lev=scoreLevel(ov);
+  const axes=Object.entries(r.sc).map(([k,v])=>'<tr><td>'+k+'</td><td>'+(v?Number(v).toFixed(1):'—')+'/6</td><td>'+(v?scoreLevel(v).txt:'—')+'</td></tr>').join('');
+  const recs=[...(r.d.rec?[r.d.rec]:[]),...smartRecommendations(r)].filter(Boolean).slice(0,6).map(x=>'<li>'+escHtml(x)+'</li>').join('');
+  return '<div class="card"><div class="cardh"><div class="cnum">'+(rank||'🏫')+'</div><div><div class="ctitle">'+escHtml(r.s.name)+'</div><div class="csub">'+escHtml(r.s.city)+' — '+escHtml(r.d.date||'بدون تاريخ')+'</div></div></div>'+ 
+    '<div class="s4"><div class="sc"><div class="sn">'+ov.toFixed(1)+'/6</div><div class="sl">المتوسط العام</div></div><div class="sc"><div class="sn">'+pct+'%</div><div class="sl">النسبة</div></div><div class="sc"><div class="sn">'+lev.txt+'</div><div class="sl">المستوى</div></div><div class="sc"><div class="sn">'+escHtml(r.d.priority||'—')+'</div><div class="sl">الأولوية</div></div></div>'+ 
+    '<div class="g2"><div class="analysis-box"><h4>✅ الإيجابيات المدخلة</h4><p style="font-size:13px;line-height:1.8;white-space:pre-line">'+escHtml(r.d.str||'لم تُدخل إيجابيات نصية بعد.')+'</p></div><div class="analysis-box"><h4>⚠️ الملاحظات والسلبيات</h4><p style="font-size:13px;line-height:1.8;white-space:pre-line">'+escHtml(r.d.wk||r.d.chal||'لم تُدخل ملاحظات سلبية بعد.')+'</p></div></div>'+ 
+    '<div style="overflow-x:auto;margin-top:12px"><table class="ctbl"><thead><tr><th>المحور</th><th>الدرجة</th><th>القراءة</th></tr></thead><tbody>'+axes+'</tbody></table></div>'+ 
+    '<div class="analysis-box" style="margin-top:12px"><h4>📌 توصيات مقترحة</h4><ul>'+(recs||'<li>لا توجد توصيات حالياً.</li>')+'</ul></div></div>';
+}
+function uRep(){
+  const data=allD().sort((a,b)=>tot(b.sc)-tot(a.sc));
+  const el=document.getElementById("repC");
+  if(!data.length){el.innerHTML='<div class="al alw">⚠️ لا توجد تقييمات مكتملة. أكملي التقييم أولاً.</div>';return;}
+  const axes=["المجموعات","مجموعات الإمارات","التنظيم الفني","البيئة","الأنشطة","الشراكات","الكادر والمؤهلات","التقنية"];
+  const stats=axisStats(data,axes);
+  const avg=data.reduce((s,r)=>s+tot(r.sc),0)/data.length;
+  const level=scoreLevel(avg);
+  const best=data[0], weak=data[data.length-1];
+  const strengths=stats.filter(x=>x.avg>=4).map(x=>'<li>'+x.ax+': متوسط '+x.avg.toFixed(1)+'/6، وأفضل أداء في '+(x.best?.r.s.short||'—')+'.</li>').join('') || '<li>لم تظهر محاور قوة واضحة بعد؛ يلزم استكمال التقييمات أو رفع المتوسطات.</li>';
+  const weaknesses=stats.filter(x=>x.avg>0&&x.avg<4).map(x=>'<li>'+x.ax+': متوسط '+x.avg.toFixed(1)+'/6، ويحتاج دعم أكبر في '+(x.weak?.r.s.short||'—')+'.</li>').join('') || '<li>لا توجد محاور أقل من المستوى الجيد بناءً على البيانات الحالية.</li>';
+  const recs=[...new Set(data.flatMap(r=>smartRecommendations(r)))].slice(0,10).map(x=>'<li>'+escHtml(x)+'</li>').join('');
+  const cityRows=[...new Set(data.map(r=>r.s.city))].map(city=>{const rows=data.filter(r=>r.s.city===city);const a=rows.reduce((s,r)=>s+tot(r.sc),0)/rows.length;return '<tr><td>'+city+'</td><td>'+rows.length+'</td><td>'+a.toFixed(1)+'/6</td><td>'+scoreLevel(a).txt+'</td></tr>';}).join('');
+  el.innerHTML=
+  '<div class="card"><div style="text-align:center;margin-bottom:16px"><img src="'+AF_LOGO_DATA+'" alt="شعار أكاديمية الفلاح" style="max-width:190px;width:45%;height:auto;margin:0 auto 10px;display:block"><div style="font-size:24px;font-weight:900;color:var(--navy)">التقرير النهائي الشامل لتقييم المكتبات</div><div style="font-size:13px;color:var(--muted)">أكاديمية الفلاح — مراكز مصادر التعلم | '+new Date().toLocaleDateString("ar-AE")+'</div></div>'+ 
+  '<div class="s4"><div class="sc"><div class="sn">'+data.length+'</div><div class="sl">مكتبات مُقيَّمة</div></div><div class="sc"><div class="sn">'+avg.toFixed(1)+'/6</div><div class="sl">المتوسط العام</div></div><div class="sc"><div class="sn">'+best.s.short+'</div><div class="sl">الأعلى تقييماً</div></div><div class="sc"><div class="sn">'+level.txt+'</div><div class="sl">القراءة العامة</div></div></div></div>'+ 
+  '<div class="card"><div class="cardh"><div class="cnum">📝</div><div><div class="ctitle">الملخص التنفيذي</div></div></div>'+ 
+  '<p style="font-size:14px;line-height:2">يعرض هذا التقرير نتيجة الزيارات الميدانية لمكتبات ومراكز مصادر التعلم في فروع أكاديمية الفلاح. بلغ المتوسط العام <strong>'+avg.toFixed(1)+'/6</strong> بمستوى <strong>'+level.txt+'</strong>. جاء فرع <strong>'+best.s.short+'</strong> في المركز الأعلى، بينما يحتاج فرع <strong>'+weak.s.short+'</strong> إلى متابعة أكبر وفق البيانات المدخلة. يركز التحليل على جودة المجموعات، مجموعات الإمارات، التنظيم الفني، البيئة المكتبية، الأنشطة، الشراكات، الكادر، والتقنية.</p>'+ 
+  '<div class="analysis-grid"><div class="analysis-box"><h4>✅ الإيجابيات العامة</h4><ul>'+strengths+'</ul></div><div class="analysis-box"><h4>⚠️ جوانب التحسين</h4><ul>'+weaknesses+'</ul></div><div class="analysis-box"><h4>📌 توصيات تنفيذية</h4><ul>'+(recs||'<li>استكمال إدخال التوصيات النصية لكل فرع.</li>')+'</ul></div></div></div>'+ 
+  '<div class="card"><div class="cardh"><div class="cnum">🏆</div><div><div class="ctitle">ترتيب المكتبات — من الأعلى للأدنى</div></div></div>'+ 
+  data.map((r,i)=>{const ov=tot(r.sc);const pct=Math.round((ov/6)*100);const lev=scoreLevel(ov);return '<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><div><strong style="font-size:15px">'+(i+1)+'. '+r.s.name+'</strong>'+(r.d.hasEx?' 📚📚':'')+'<br><small style="color:var(--muted)">'+(r.d.lib?'الأخصائي: '+escHtml(r.d.lib)+' | ':'')+(r.d.edu?escHtml(r.d.edu)+' | ':'')+(r.d.exp?escHtml(r.d.exp)+' خبرة':'')+'</small></div><span class="bdg '+lev.cls+'" style="font-size:14px">'+ov.toFixed(1)+'/6 ('+pct+'%)</span></div><div class="pbt"><div class="pbf" style="width:'+pct+'%;background:'+lev.color+'"></div></div><div style="font-size:12px;color:var(--muted);margin-top:4px">'+escHtml(r.d.overall||lev.txt)+' | أولوية: '+escHtml(r.d.priority||'—')+'</div></div>';}).join('')+'</div>'+ 
+  '<div class="card"><div class="cardh"><div class="cnum">📊</div><div><div class="ctitle">تحليل المحاور الرئيسية</div></div></div>'+ 
+  stats.map(x=>{const pct=Math.round((x.avg/6)*100);const lev=scoreLevel(x.avg);return '<div style="margin-bottom:12px;padding:12px;background:#f5faff;border-radius:10px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><strong style="color:var(--navy)">'+x.ax+'</strong><span class="bdg '+lev.cls+'">'+x.avg.toFixed(1)+'/6 ('+pct+'%)</span></div><div class="pbt"><div class="pbf" style="width:'+pct+'%;background:'+lev.color+'"></div></div><div style="font-size:12px;color:var(--muted);margin-top:4px">🏆 الأفضل: '+(x.best?.r.s.short||'—')+' | ⚠️ يحتاج دعم: '+(x.weak?.r.s.short||'—')+'</div></div>';}).join('')+'</div>'+ 
+  '<div class="card"><div class="cardh"><div class="cnum">🌍</div><div><div class="ctitle">مقارنة المدن</div></div></div><div style="overflow-x:auto"><table class="ctbl"><thead><tr><th>المدينة</th><th>عدد المكتبات</th><th>المتوسط</th><th>القراءة</th></tr></thead><tbody>'+cityRows+'</tbody></table></div></div>'+ 
+  data.map((r,i)=>buildSchoolReport(r,i+1)).join('')+ 
+  '<div class="card"><div class="cardh"><div class="cnum">✅</div><div><div class="ctitle">الخلاصة الإدارية</div></div></div><p style="font-size:14px;line-height:2">يوصى باعتماد هذا التقرير كمرجع أولي لخطة تطوير مكتبات الأكاديمية، مع متابعة المحاور الأقل من 4/6، وتوثيق ممارسات الفروع الأعلى أداءً، وتحديد جدول زمني واضح لمعالجة الأولويات العاجلة.</p></div>';
+}
+function wordShell(content,title){return '<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>'+title+'</title><style>body{font-family:Tahoma,Arial,sans-serif;direction:rtl;color:#0c2a4a;line-height:1.8}.card{border:1px solid #b8d4f0;border-radius:12px;padding:16px;margin:14px 0}.cardh{display:flex;gap:10px;border-bottom:1px solid #e8f0fa;margin-bottom:12px;padding-bottom:8px}.cnum{font-weight:bold;color:#0c447c}.ctitle{font-size:18px;font-weight:bold;color:#0c447c}.csub{font-size:12px;color:#5a7fa8}.s4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.sc{background:#f5faff;border:1px solid #b8d4f0;border-radius:10px;padding:10px;text-align:center}.sn{font-size:20px;font-weight:bold;color:#0c447c}.sl{font-size:11px;color:#5a7fa8}.ctbl{width:100%;border-collapse:collapse}.ctbl th{background:#0c447c;color:#fff;padding:8px}.ctbl td{border-bottom:1px solid #ddd;padding:7px}.analysis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.analysis-box{background:#f8fbff;border:1px solid #b8d4f0;border-radius:10px;padding:10px}.pbt{height:8px;background:#dceefb;border-radius:5px;overflow:hidden}.pbf{height:100%}.bdg{display:inline-block;padding:3px 9px;border-radius:12px;background:#e6f1fb;color:#0c447c;font-weight:bold}</style></head><body>'+content+'</body></html>';}
+function expWord(){uRep();const c=document.getElementById("repC").innerHTML;dl(new Blob(["\ufeff"+wordShell(c,"التقرير النهائي لتقييم مكتبات أكاديمية الفلاح")],{type:"application/msword;charset=utf-8"}),"التقرير_النهائي_لتقييم_مكتبات_أكاديمية_الفلاح_2026.doc");}
+function expSchoolWord(){let sid=document.getElementById("email-school")?.value||document.getElementById("esch")?.value; if(!sid){alert("اختر مدرسة أولاً من صفحة البريد أو نموذج التقييم.");return;} const row=allD().find(r=>r.s.id===sid); if(!row){alert("لا توجد بيانات محفوظة لهذه المدرسة.");return;} const html='<div style="text-align:center"><img src="'+AF_LOGO_DATA+'" style="max-width:180px"><h2>تقرير تقييم مكتبة '+escHtml(row.s.name)+'</h2></div>'+buildSchoolReport(row,1); dl(new Blob(["\ufeff"+wordShell(html,"تقرير "+row.s.short)],{type:"application/msword;charset=utf-8"}),"تقرير_مكتبة_"+row.s.short.replace(/\s+/g,"_")+".doc");}
+function dl(blob,fn){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);}
+function expAll(){dl(new Blob([JSON.stringify({v:6,exported:new Date().toISOString(),ev:DB.ev},null,2)],{type:"application/json"}),"تقييم_مكتبات_الفلاح_2026.json");}
+function expCSV(){
+  const data=allD();if(!data.length){alert("لا توجد بيانات");return;}
+  const axes=["المجموعات","مجموعات الإمارات","التنظيم الفني","البيئة","الأنشطة","الشراكات","الكادر والمؤهلات","التقنية"];
+  const h=["المدرسة","المدينة","الأخصائي","التاريخ","المؤهل","التخصص","الخبرة","الدورات","الكتب","عربي","إنجليزي","التقييم","الأولوية","مكتبة ثانية",...axes];
+  const rows=data.map(r=>[r.s.name,r.s.city,r.d.lib||"",r.d.date||"",r.d.edu||"",r.d.spc||"",r.d.exp||"",r.d.crs||"",r.d.bt||0,r.d.bar||0,r.d.ben||0,r.d.overall||"",r.d.priority||"",r.d.hasEx?"نعم":"لا",...axes.map(a=>(r.sc[a]||0).toFixed(1))]);
+  dl(new Blob(["\uFEFF"+[h,...rows].map(r=>r.map(v=>`"${v}"`).join(",")).join("\n")],{type:"text/csv;charset=utf-8"}),"تقييم_مكتبات_الفلاح_2026.csv");
+}
+function expCurJ(){
+  const sid=document.getElementById("esch").value;
+  if(!sid){
+    alert("⚠️ اختر المدرسة أولاً من نموذج التقييم.");
+    return;
+  }
+  const s=SCH.find(x=>x.id===sid);
+  const d=getEv();
+  DB.ev[sid]=d;
+  sdb();
+  popSel();
+  uHome();
+  dl(
+    new Blob([JSON.stringify({
+      v:6,
+      exported:new Date().toISOString(),
+      type:"single_school_evaluation",
+      school:s?.name||sid,
+      city:s?.city||"",
+      ev:{[sid]:d},
+      data:d
+    },null,2)],{type:"application/json;charset=utf-8"}),
+    `تقييم_${(s?.short||sid).replace(/\s+/g,"_")}.json`
+  );
+}
+function impData(){
+  const f=document.getElementById("impF").files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{const p=JSON.parse(e.target.result);if(p.ev)Object.assign(DB.ev,p.ev);sdb();popSel();uHome();alert("✅ تم الاستيراد والرفع بنجاح!");}
+    catch(err){alert("❌ خطأ في الملف: "+err.message);}
+  };
+  reader.readAsText(f);document.getElementById("impF").value="";
+}
+function clrAll(){if(!confirm("حذف جميع البيانات؟ لا يمكن التراجع!"))return;DB.ev={};sdb();uDat();uHome();}
+function bldPres(){
+  const data=allD().sort((a,b)=>tot(b.sc)-tot(a.sc));
+  const logo=`<svg viewBox="0 0 80 92" width="72" height="83" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 14px;filter:drop-shadow(0 6px 20px rgba(0,0,0,.4))"><defs><clipPath id="psc"><path d="M40 4 L74 18 L74 50 Q74 72 40 88 Q6 72 6 50 L6 18 Z"/></clipPath></defs><path d="M40 4 L74 18 L74 50 Q74 72 40 88 Q6 72 6 50 L6 18 Z" fill="rgba(255,255,255,.9)"/><rect x="6" y="4" width="34" height="44" fill="#f0a500" clip-path="url(#psc)"/><rect x="40" y="4" width="34" height="44" fill="#1e7fc0" clip-path="url(#psc)"/><rect x="6" y="48" width="34" height="40" fill="#1e7fc0" clip-path="url(#psc)"/><rect x="40" y="48" width="34" height="40" fill="#0f9d8a" clip-path="url(#psc)"/><path d="M58 8 Q22 30 22 78" stroke="white" stroke-width="10" fill="none" stroke-linecap="round" clip-path="url(#psc)"/></svg>`;
+  const sl=[];
+  sl.push(`<div>${logo}<div style="font-size:38px;font-weight:900;margin-bottom:10px">أكاديمية الفلاح</div><div style="font-size:22px;opacity:.9;margin-bottom:8px">تقرير تقييم المكتبات ومراكز مصادر التعلم</div><div style="font-size:16px;opacity:.7">${new Date().toLocaleDateString("ar-AE")} | 2026</div><div style="margin-top:24px;display:flex;gap:16px;justify-content:center">${["العين","أبوظبي","الشارقة"].map(c=>`<div style="background:rgba(255,255,255,.15);border-radius:10px;padding:10px 18px;font-size:14px">📍 ${c}</div>`).join("")}</div></div>`);
+  const rA=data.length?Math.round(data.reduce((s,r)=>s+tot(r.sc),0)/data.length*10)/10:0;
+  sl.push(`<div style="max-width:750px;margin:0 auto"><div style="font-size:28px;font-weight:900;margin-bottom:28px">📊 نظرة عامة</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px">${[["6","المدارس"],[data.length+"","مُقيَّمة"],[data.filter(r=>r.d.hasEx).length+"","لديها مكتبتان"],[rA+"/6","المتوسط العام"]].map(([n,l])=>`<div style="background:rgba(255,255,255,.15);border-radius:14px;padding:18px"><div style="font-size:32px;font-weight:900">${n}</div><div style="font-size:13px;opacity:.8;margin-top:4px">${l}</div></div>`).join("")}</div></div>`);
+  sl.push(`<div style="max-width:750px;margin:0 auto;width:100%"><div style="font-size:26px;font-weight:900;margin-bottom:22px">🏆 ترتيب المكتبات</div>${data.map((r,i)=>{const ov=tot(r.sc);const pct=Math.round((ov/6)*100);return`<div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;background:rgba(255,255,255,.12);border-radius:12px;padding:12px 16px"><div style="font-size:22px;font-weight:900;width:32px">${i+1}</div><div style="flex:1"><div style="font-weight:700;font-size:15px">${r.s.name}${r.d.hasEx?" 📚📚":""}</div><div style="background:rgba(255,255,255,.2);border-radius:5px;height:8px;margin-top:6px;overflow:hidden"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#f0a500,#0f9d8a);border-radius:5px"></div></div></div><div style="font-size:20px;font-weight:900">${pct}%</div></div>`;}).join("")}</div>`);
+  sl.push(`<div style="max-width:750px;margin:0 auto;width:100%"><div style="font-size:26px;font-weight:900;margin-bottom:22px">🇦🇪 تقييم مجموعات الإمارات</div>${data.map(r=>{const v=r.sc["مجموعات الإمارات"]||0;const pct=Math.round((v/6)*100);return`<div style="margin-bottom:10px;background:rgba(255,255,255,.12);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:14px"><div style="flex:1;font-weight:700">${r.s.short}</div><div style="flex:2;background:rgba(255,255,255,.2);border-radius:5px;height:8px;overflow:hidden"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#f0a500,#0f9d8a)"></div></div><div style="font-size:16px;font-weight:900;min-width:40px">${v}/6</div></div>`;}).join("")}</div>`);
+  sl.push(`<div style="max-width:700px;margin:0 auto"><div style="font-size:26px;font-weight:900;margin-bottom:22px">🎯 أبرز التوصيات</div>${data.slice(0,5).map(r=>`<div style="background:rgba(255,255,255,.12);border-radius:12px;padding:12px 18px;margin-bottom:12px"><div style="font-weight:700;font-size:14px;margin-bottom:4px">${r.s.short} — أولوية ${r.d.priority||"—"}</div><div style="font-size:13px;opacity:.85">${(r.d.rec||"لم تُدخل توصيات بعد").substring(0,120)}</div></div>`).join("")}<div style="text-align:center;margin-top:24px;font-size:14px;opacity:.65">أكاديمية الفلاح — مركز مصادر التعلم 2026</div></div>`);
+  return sl;
+}
+function startPres(){PS=bldPres();PI=0;rSl();document.getElementById("pov").classList.add("active");}
+function rSl(){document.getElementById("psl").innerHTML=PS[PI]||"";document.getElementById("pcnt").textContent=(PI+1)+" / "+PS.length;}
+function pN(){if(PI<PS.length-1){PI++;rSl();}}
+function pB(){if(PI>0){PI--;rSl();}}
+function closePres(){document.getElementById("pov").classList.remove("active");}
+document.addEventListener("keydown",e=>{if(!document.getElementById("pov").classList.contains("active"))return;if(e.key==="ArrowLeft"||e.key==="ArrowDown")pN();if(e.key==="ArrowRight"||e.key==="ArrowUp")pB();if(e.key==="Escape")closePres();});
+ldb();popSel();uHome();loadEvaluationsFromSupabase().then(()=>loadDraftsFromSupabase()).then(()=>{popSel();uHome();});initAutoSave();
+
+
+// Rating tooltip
+const RLABELS={1:"❶ غير موجود / ضعيف جداً",2:"❷ ضعيف — يحتاج تدخل عاجل",3:"❸ مقبول — دون المستوى المطلوب",4:"❹ جيد — يلبي الحد الأدنى",5:"❺ جيد جداً — فوق المستوى",6:"❻ متميز / نموذجي"};
+document.addEventListener("mouseover",function(e){
+  const rpill=e.target.closest(".rpill");
+  if(rpill){
+    const k=rpill.getAttribute("onclick")?.match(/sR\('([^']+)',([0-9]+)/);
+    if(k){
+      const v=parseInt(k[2]);
+      let tip=document.getElementById("rtip");
+      if(!tip){tip=document.createElement("div");tip.id="rtip";tip.style.cssText="position:fixed;background:#0c447c;color:#fff;padding:6px 14px;border-radius:10px;font-size:13px;font-weight:700;font-family:Cairo,sans-serif;z-index:9999;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.25);direction:rtl";document.body.appendChild(tip);}
+      tip.textContent=RLABELS[v]||"";
+      const r=rpill.getBoundingClientRect();
+      tip.style.top=(r.top-42)+"px";
+      tip.style.right=(window.innerWidth-r.right+r.width/2-60)+"px";
+      tip.style.display="block";
+    }
+  }
+});
+document.addEventListener("mouseout",function(e){
+  if(e.target.closest(".rpill")){const t=document.getElementById("rtip");if(t)t.style.display="none";}
+});
+
+
+// ══ EMAIL FUNCTIONS ══
+function sendGmail(){
+  const to=document.getElementById('email-to').value||'';
+  const subj=encodeURIComponent(document.getElementById('email-subject').value||'تقرير تقييم مكتبات أكاديمية الفلاح 2026');
+  const body=encodeURIComponent(document.getElementById('email-body').value||'');
+  const url=`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${subj}&body=${body}`;
+  window.open(url,'_blank');
+}
+function sendAdminReport(){
+  const to=document.getElementById('email-admin').value||'';
+  const data=allD();
+  const axes=["المجموعات","مجموعات الإمارات","التنظيم الفني","البيئة","الأنشطة","الشراكات","الكادر والمؤهلات","التقنية"];
+  let body='تقرير تقييم مكتبات أكاديمية الفلاح 2026\n\n';
+  body+='الملخص التنفيذي:\n';
+  body+=`عدد المكتبات المُقيَّمة: ${data.length}\n`;
+  if(data.length){
+    const sorted=[...data].sort((a,b)=>tot(b.sc)-tot(a.sc));
+    body+='\nترتيب المكتبات:\n';
+    sorted.forEach((r,i)=>{const pct=Math.round((tot(r.sc)/6)*100);body+=`${i+1}. ${r.s.name}: ${pct}%\n`;});
+    body+='\nملاحظات مجموعات الإمارات:\n';
+    sorted.forEach(r=>{const v=r.sc["مجموعات الإمارات"]||0;body+=`${r.s.short}: ${v}/6\n`;});
+    body+='\nالتوصيات الرئيسية:\n';
+    sorted.forEach(r=>{if(r.d.rec)body+=`• ${r.s.short}: ${r.d.rec.substring(0,100)}\n`;});
+  }
+  const url=`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent('التقرير الشامل — تقييم مكتبات أكاديمية الفلاح 2026')}&body=${encodeURIComponent(body)}`;
+  window.open(url,'_blank');
+}
+function sendSchoolReport(){
+  const sid=document.getElementById('email-school').value;
+  const to=document.getElementById('email-to2').value||'';
+  if(!sid){alert('اختر المدرسة');return;}
+  const s=SCH.find(x=>x.id===sid);
+  const d=DB.ev[sid];
+  if(!d||!d.saved){alert('لا توجد بيانات محفوظة لهذه المدرسة');return;}
+  const sc=calcSc(d);const ov=tot(sc);const pct=Math.round((ov/6)*100);
+  let body=`تقرير تقييم مكتبة ${s.name}\n`;
+  body+=`المدينة: ${s.city}\n`;
+  body+=`تاريخ الزيارة: ${d.date||'—'}\n`;
+  body+=`الأخصائي: ${d.lib||'—'}\n\n`;
+  body+=`التقييم الإجمالي: ${ov.toFixed(1)}/6 (${pct}%)\n`;
+  body+=`التقييم العام: ${d.overall||'—'}\n`;
+  body+=`أولوية التدخل: ${d.priority||'—'}\n\n`;
+  body+=`مجموعات الإمارات: ${sc["مجموعات الإمارات"]||0}/6\n\n`;
+  if(d.rec)body+=`التوصيات:\n${d.rec}\n\n`;
+  if(d.plan)body+=`خطة العمل:\n${d.plan}\n`;
+  const url=`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent('تقرير تقييم مكتبة '+s.name+' 2026')}&body=${encodeURIComponent(body)}`;
+  window.open(url,'_blank');
+}
+function expSchoolJSON(){
+  const sid=document.getElementById('email-school').value;
+  if(!sid){alert('اختر المدرسة');return;}
+  const s=SCH.find(x=>x.id===sid);
+  const d=DB.ev[sid];
+  if(!d){alert('لا توجد بيانات');return;}
+  dl(new Blob([JSON.stringify({school:s.name,city:s.city,data:d},null,2)],{type:'application/json'}),`تقرير_${s.short}.json`);
+}
+function expSchoolPDF(){pg('page-rep','التقرير النهائي','nav-rep');setTimeout(()=>window.print(),600);}
+function popEmailSchool(){
+  const sel=document.getElementById('email-school');
+  if(!sel)return;
+  sel.innerHTML='<option value="">— اختر المدرسة —</option>'+SCH.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+}
+
+// Init email school select
+document.addEventListener("DOMContentLoaded",()=>{popEmailSchool();});
+
+// ══ EMAIL / SEND FUNCTIONS ══
+function buildGmailUrl(to,sub,body){
+  return "https://mail.google.com/mail/?view=cm&fs=1"
+    +(to?"&to="+encodeURIComponent(to):"")
+    +"&su="+encodeURIComponent(sub||"تقرير مكتبات الفلاح 2026")
+    +"&body="+encodeURIComponent(body||"");
+}
+function buildOutlookUrl(to,sub,body){
+  return "https://outlook.live.com/mail/0/deeplink/compose"
+    +"?to="+encodeURIComponent(to||"")
+    +"&subject="+encodeURIComponent(sub||"")
+    +"&body="+encodeURIComponent(body||"");
+}
+function doGmail(){window.open(buildGmailUrl(document.getElementById("em-to").value,document.getElementById("em-sub").value,document.getElementById("em-body").value),"_blank");}
+function doOutlook(){window.open(buildOutlookUrl(document.getElementById("em-to").value,document.getElementById("em-sub").value,document.getElementById("em-body").value),"_blank");}
+function doMailto(){
+  const to=document.getElementById("em-to").value;
+  const sub=encodeURIComponent(document.getElementById("em-sub").value);
+  const body=encodeURIComponent(document.getElementById("em-body").value);
+  window.location.href="mailto:"+to+"?subject="+sub+"&body="+body;
+}
+function sendSchool(){
+  const sid=document.getElementById("em-school").value;
+  const to=document.getElementById("em-to2").value||"";
+  if(!sid){alert("اختر المدرسة أولاً");return;}
+  const s=SCH.find(x=>x.id===sid);
+  const d=DB.ev[sid];
+  if(!d||!d.saved){alert("لا توجد بيانات محفوظة لهذه المدرسة — أكملي التقييم أولاً");return;}
+  const sc2=calcSc(d);const ov=tot(sc2);const pct=Math.round((ov/6)*100);
+  let body="السلام عليكم،\n\n";
+  body+="تقرير تقييم مكتبة "+s.name+"\n";
+  body+="المدينة: "+s.city+" | تاريخ الزيارة: "+(d.date||"—")+"\n";
+  body+="الأخصائي: "+(d.lib||"—")+"\n\n";
+  body+="═══ نتائج التقييم ═══\n";
+  body+="التقييم الإجمالي: "+ov.toFixed(1)+"/6 ("+pct+"%)\n";
+  body+="التقييم العام: "+(d.overall||"—")+" | أولوية التدخل: "+(d.priority||"—")+"\n\n";
+  body+="مجموعات الإمارات: "+(sc2["مجموعات الإمارات"]||0)+"/6\n";
+  body+="التنظيم الفني: "+(sc2["التنظيم الفني"]||0)+"/6\n";
+  body+="البيئة المكتبية: "+(sc2["البيئة"]||0)+"/6\n\n";
+  if(d.str)body+="نقاط القوة:\n"+d.str+"\n\n";
+  if(d.wk)body+="نقاط الضعف:\n"+d.wk+"\n\n";
+  if(d.rec)body+="التوصيات:\n"+d.rec+"\n\n";
+  body+="مع التحية،\nمركز مصادر التعلم — أكاديمية الفلاح";
+  window.open(buildGmailUrl(to,"تقرير تقييم مكتبة "+s.name+" 2026",body),"_blank");
+}
+function sendAdmin(){
+  const to=document.getElementById("em-admin").value||"";
+  const cc=document.getElementById("em-cc").value||"";
+  const data=allD().sort((a,b)=>tot(b.sc)-tot(a.sc));
+  let body="السلام عليكم ورحمة الله،\n\n";
+  body+="التقرير الشامل لتقييم مكتبات أكاديمية الفلاح 2026\n";
+  body+="════════════════════════════\n\n";
+  body+="عدد المكتبات المُقيَّمة: "+data.length+" من أصل 6\n\n";
+  if(data.length){
+    body+="ترتيب المكتبات (من الأعلى للأدنى):\n";
+    data.forEach((r,i)=>{
+      const pct=Math.round((tot(r.sc)/6)*100);
+      body+=(i+1)+". "+r.s.name+": "+pct+"% | مجموعات الإمارات: "+(r.sc["مجموعات الإمارات"]||0)+"/6\n";
+    });
+    body+="\nالتوصيات الرئيسية:\n";
+    data.forEach(r=>{if(r.d.rec)body+="• "+r.s.short+": "+r.d.rec.substring(0,120)+"...\n";});
+  }
+  body+="\nمع التحية،\nمركز مصادر التعلم — أكاديمية الفلاح";
+  let url=buildGmailUrl(to,"التقرير الشامل — تقييم مكتبات أكاديمية الفلاح 2026",body);
+  if(cc)url+="&cc="+encodeURIComponent(cc);
+  window.open(url,"_blank");
+}
+function expSchJ(){
+  const sid=document.getElementById("em-school").value;
+  if(!sid){alert("اختر المدرسة");return;}
+  const s=SCH.find(x=>x.id===sid);
+  dl(new Blob([JSON.stringify({school:s.name,city:s.city,data:DB.ev[sid]||{}},null,2)],{type:"application/json"}),"تقرير_"+s.short+".json");
+}
+function popEmSch(){
+  const sel=document.getElementById("em-school");
+  if(!sel)return;
+  sel.innerHTML="<option value=''>— اختر المدرسة —</option>"+SCH.map(s=>"<option value='"+s.id+"'>"+s.name+"</option>").join("");
+}
+
+// Init
+document.addEventListener("DOMContentLoaded",()=>{popEmSch();});
+</script>
+</body>
+</html>
