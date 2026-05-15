@@ -1,165 +1,675 @@
-<!doctype html><html lang="ar" dir="rtl"><head>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>منصة تطوير مكتبات أكاديمية الفلاح</title><style>@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');:root{--navy:#0c447c;--blue:#185fa5;--teal:#0f9d8a;--gold:#ba7517;--amber:#f0a500;--bg:#e8f0fa;--text:#0c2a4a;--muted:#5a7fa8;--border:#b8d4f0;--green:#0f6e56;--red:#c0392b;--grad:linear-gradient(160deg,#0c447c,#185fa5,#0f6e56)}*{box-sizing:border-box}body{margin:0;font-family:'Cairo',sans-serif;background:linear-gradient(135deg,#e8f0fa,#f7fbff);color:var(--text);direction:rtl}.wrap{max-width:1180px;margin:auto;padding:16px 16px 90px}.hero{background:var(--grad);border-radius:24px;padding:28px 24px;color:white;text-align:center;box-shadow:0 14px 36px rgba(12,68,124,.25);position:relative;overflow:hidden}.logo{display:block;max-width:270px;width:72%;margin:0 auto 14px;background:rgba(255,255,255,.96);padding:12px 20px;border-radius:18px}.hero h1{margin:0;font-size:30px;font-weight:900}.hero p{margin:8px 0 0;color:rgba(255,255,255,.86)}.home-return-btn{position:fixed;top:14px;right:14px;z-index:99999;display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;background:linear-gradient(135deg,#0c447c,#185fa5,#0f9d8a);color:#fff!important;text-decoration:none;font-weight:900;font-size:13px;box-shadow:0 6px 18px rgba(12,68,124,.28);border:1px solid rgba(255,255,255,.45)}.nav,.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:14px;text-decoration:none;border:0;font-family:'Cairo',sans-serif;font-weight:800;cursor:pointer}.primary{background:white;color:var(--navy)}.gold{background:linear-gradient(135deg,var(--gold),var(--amber));color:white}.teal{background:linear-gradient(135deg,var(--green),var(--teal));color:white}.outline{background:#fff;border:2px solid var(--border);color:var(--navy)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:18px 0}.card{background:white;border:1px solid var(--border);border-radius:20px;padding:18px;box-shadow:0 4px 18px rgba(12,68,124,.08)}.card h2,.card h3{margin:0 0 10px;color:var(--navy);font-weight:900}.muted{color:var(--muted);font-size:14px}.main-card{min-height:210px;display:flex;flex-direction:column;justify-content:space-between;border-right:7px solid var(--gold)}.main-card .ico{font-size:34px}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.kpi{text-align:center;background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px}.kpi strong{font-size:30px;color:var(--navy);display:block}table{width:100%;border-collapse:collapse;background:#fff;border-radius:16px;overflow:hidden}th{background:var(--navy);color:#fff;padding:10px;font-size:13px}td{border-bottom:1px solid #e8eef5;padding:10px;text-align:center;font-size:13px}td:first-child,th:first-child{text-align:right}.tag{display:inline-block;padding:4px 10px;border-radius:999px;background:#e6f1fb;color:var(--navy);font-size:12px;font-weight:800}.note{border-right:5px solid var(--gold);background:#fff8e6;border-radius:14px;padding:14px;line-height:1.9}.footer{text-align:center;color:var(--muted);font-size:12px;margin:28px 0}input,select,textarea{width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:12px;font-family:'Cairo',sans-serif;font-size:14px;background:#f8fbff;color:var(--text);outline:none}textarea{min-height:100px;resize:vertical}label{display:block;font-weight:800;color:var(--navy);margin:10px 0 5px}.filebox{border:2px dashed var(--border);border-radius:18px;padding:16px;background:#f8fbff}.file-list{display:grid;gap:8px;margin-top:12px}.file-row{display:flex;justify-content:space-between;gap:8px;align-items:center;background:white;border:1px solid var(--border);border-radius:12px;padding:10px;font-size:13px}.ok{color:var(--green);font-weight:900}.warn{color:var(--red);font-weight:900}@media(max-width:850px){.grid,.grid2,.kpis{grid-template-columns:1fr}.hero h1{font-size:22px}.wrap{padding:10px 10px 90px}.logo{max-width:220px}.home-return-btn{top:auto;bottom:16px;right:16px}.card{padding:14px}}@media print{.home-return-btn,.nav,.actions,.no-print{display:none!important}.hero{box-shadow:none}.card{break-inside:avoid;box-shadow:none}}.alfalah-fixed-home{position:fixed;top:14px;right:14px;z-index:999999;background:linear-gradient(135deg,#0c447c,#0f9d8a);color:#fff!important;text-decoration:none!important;padding:10px 16px;border-radius:22px;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.22)}@media(max-width:700px){.alfalah-fixed-home{top:auto;bottom:12px;right:12px}}
-/* === FINAL MAIN CHANNELS 2x2 LAYOUT === */
-.channels-title{margin:26px 0 16px;text-align:center;font-size:25px;font-weight:900;color:var(--navy);}
-.channels-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:18px 0 28px;}
-.channel-card{min-height:245px;padding:28px 28px 24px;border-radius:24px;border:1px solid var(--border);border-right:9px solid var(--gold);background:linear-gradient(180deg,#fff,#fafdff);box-shadow:0 10px 30px rgba(12,68,124,.12);display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;transition:.2s ease;}
-.channel-card:hover{transform:translateY(-4px);box-shadow:0 16px 38px rgba(12,68,124,.18);}
-.channel-card:before{content:attr(data-num);position:absolute;top:18px;left:22px;width:46px;height:46px;border-radius:15px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 8px 20px rgba(12,68,124,.22);}
-.channel-card .ico{font-size:42px;margin-bottom:12px;}
-.channel-card h2{font-size:28px;line-height:1.45;margin:0 0 12px;color:var(--navy);font-weight:900;}
-.channel-card .muted{font-size:16px;line-height:1.9;color:var(--muted);max-width:92%;}
-.channel-card .btn{width:100%;justify-content:center;font-size:17px;padding:15px 22px;border-radius:15px;margin-top:18px;}
-.channel-card.report{border-right-color:var(--teal);}
-.channel-card.report:before{background:linear-gradient(135deg,var(--green),var(--teal));}
-@media(max-width:850px){.channels-grid{grid-template-columns:1fr;gap:16px}.channels-title{font-size:21px}.channel-card{min-height:220px;padding:22px 18px}.channel-card h2{font-size:23px}.channel-card .muted{font-size:14px;max-width:100%}.channel-card:before{width:40px;height:40px;font-size:19px}.channel-card .btn{font-size:15px}}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>منصة أكاديمية الفلاح — لوحة القيادة المطوّرة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+:root{
+  --navy:#0c447c;--navy2:#0a3868;
+  --teal:#0f7d6e;--teal2:#0a6058;
+  --gold:#c19a2a;--gold2:#a07f1e;
+  --green:#1a7f4b;--red:#c0392b;--orange:#d35400;
+  --bg:#f0f4f8;--card:#fff;--text:#102a43;--muted:#5a7a99;
+  --border:#d0dff0;--radius:16px;--radius-sm:10px;
+  --shadow:0 4px 20px rgba(12,68,124,.10);
+  --shadow-lg:0 8px 32px rgba(12,68,124,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);direction:rtl;min-height:100vh}
+/* ── HEADER ── */
+.header{background:linear-gradient(135deg,#0c447c 0%,#0f7d6e 60%,#c19a2a 100%);color:#fff;padding:0;position:sticky;top:0;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.header-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;gap:12px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand img{height:52px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
+.brand-text h1{font-size:18px;font-weight:900;margin:0;letter-spacing:-.3px}
+.brand-text p{font-size:12px;opacity:.85;margin:0}
+.header-nav{display:flex;gap:6px;flex-wrap:wrap}
+.header-nav a{color:#fff;text-decoration:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:8px;background:rgba(255,255,255,.15);transition:.2s;white-space:nowrap}
+.header-nav a:hover{background:rgba(255,255,255,.28)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;display:inline-block;box-shadow:0 0 0 3px rgba(74,222,128,.25);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+/* ── WRAP ── */
+.wrap{max-width:1200px;margin:auto;padding:20px 20px 40px}
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);border:1px solid var(--border);display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%}
+.kpi.k1::before{background:var(--navy)}
+.kpi.k2::before{background:var(--teal)}
+.kpi.k3::before{background:var(--gold)}
+.kpi.k4::before{background:var(--green)}
+.kpi.k5::before{background:#9333ea}
+.kpi-label{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.kpi-val{font-size:32px;font-weight:900;line-height:1;color:var(--navy)}
+.kpi-sub{font-size:12px;color:var(--muted)}
+/* ── GRID ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+/* ── CARD ── */
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);padding:22px;margin-bottom:16px}
+.card-title{font-size:16px;font-weight:900;color:var(--navy);margin-bottom:16px;display:flex;align-items:center;gap:8px;border-bottom:2px solid var(--border);padding-bottom:12px}
+.card-title .icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+/* ── SCHOOL GRID ── */
+.school-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.school-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px 18px;box-shadow:var(--shadow);transition:.25s;cursor:pointer;position:relative;overflow:hidden}
+.school-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.school-card::before{content:'';position:absolute;top:0;right:0;left:0;height:4px;border-radius:var(--radius) var(--radius) 0 0}
+.school-card.excellent::before{background:linear-gradient(90deg,#4ade80,#22c55e)}
+.school-card.good::before{background:linear-gradient(90deg,#60a5fa,#3b82f6)}
+.school-card.acceptable::before{background:linear-gradient(90deg,#fbbf24,#f59e0b)}
+.school-card.weak::before{background:linear-gradient(90deg,#f87171,#ef4444)}
+.school-meta{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.school-name{font-size:16px;font-weight:900;color:var(--navy)}
+.school-city{font-size:12px;color:var(--muted);margin-top:2px}
+.school-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.badge-excellent{background:#dcfce7;color:#166534}
+.badge-good{background:#dbeafe;color:#1e40af}
+.badge-acceptable{background:#fef3c7;color:#92400e}
+.badge-weak{background:#fee2e2;color:#991b1b}
+.school-specialist{font-size:12px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:4px}
+.score-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.score-bar-wrap{flex:1;background:#f0f4f8;border-radius:99px;height:8px;overflow:hidden}
+.score-bar{height:8px;border-radius:99px;transition:.6s ease}
+.score-val{font-size:13px;font-weight:700;color:var(--navy);min-width:36px;text-align:left}
+.axes-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:10px}
+.axis-mini{text-align:center;padding:4px 2px;background:#f8fbff;border-radius:6px;border:1px solid var(--border)}
+.axis-mini-val{font-size:14px;font-weight:900;color:var(--navy)}
+.axis-mini-lbl{font-size:9px;color:var(--muted);line-height:1.2}
+/* ── CHART ── */
+.chart-wrap{position:relative;width:100%}
+/* ── STAFF EVAL ── */
+.staff-section{background:linear-gradient(135deg,#f0f7ff,#e8f4ec);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px}
+.competency-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:14px}
+.competency-card{background:#fff;border-radius:var(--radius-sm);border:1px solid var(--border);padding:14px;box-shadow:0 2px 8px rgba(12,68,124,.06)}
+.comp-title{font-size:13px;font-weight:900;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.comp-items{display:flex;flex-direction:column;gap:6px}
+.comp-item{display:flex;align-items:center;justify-content:space-between;font-size:12px;gap:8px}
+.comp-item-label{color:var(--text);flex:1}
+.rating-stars{display:flex;gap:3px}
+.star{width:14px;height:14px;border-radius:3px;background:#e0e9f4}
+.star.filled{background:var(--gold)}
+.star.filled.high{background:var(--teal)}
+/* ── JOB DESC ── */
+.jd-section{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.jd-header{background:linear-gradient(90deg,var(--navy),var(--navy2));color:#fff;padding:16px 22px;display:flex;justify-content:space-between;align-items:center}
+.jd-header h3{font-size:16px;font-weight:900;margin:0}
+.jd-body{background:#fff;padding:0}
+.jd-tabs{display:flex;border-bottom:2px solid var(--border)}
+.jd-tab{padding:10px 20px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.2s}
+.jd-tab.active{color:var(--navy);border-bottom-color:var(--navy)}
+.jd-content{padding:18px;display:none}
+.jd-content.active{display:block}
+.task-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.task-list li{padding:8px 12px;border-radius:8px;background:#f8fbff;border-right:3px solid var(--navy);font-size:13px;line-height:1.5;color:var(--text)}
+.task-list li strong{color:var(--navy);display:block;font-size:12px;margin-bottom:2px}
+.req-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.req-item{background:#f8fbff;border-radius:8px;padding:10px 12px;border:1px solid var(--border);font-size:12px}
+.req-item strong{display:block;color:var(--navy);font-size:11px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+/* ── MGMT REPORT ── */
+.report-section{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);margin-bottom:16px}
+.report-header{background:linear-gradient(90deg,var(--teal),var(--teal2));color:#fff;padding:16px 22px}
+.report-header h3{font-size:16px;font-weight:900;margin:0}
+.report-header p{font-size:12px;opacity:.85;margin:4px 0 0}
+.report-body{background:#fff;padding:18px}
+.report-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.report-kpi{text-align:center;padding:12px;background:#f8fbff;border-radius:10px;border:1px solid var(--border)}
+.report-kpi .rk-val{font-size:24px;font-weight:900;color:var(--navy);display:block}
+.report-kpi .rk-lbl{font-size:11px;color:var(--muted)}
+.priority-table{width:100%;border-collapse:collapse}
+.priority-table th{background:#f0f4f8;padding:8px 12px;font-size:12px;font-weight:700;color:var(--muted);text-align:right;border-bottom:2px solid var(--border)}
+.priority-table td{padding:9px 12px;font-size:13px;border-bottom:1px solid #f0f4f8}
+.priority-table tr:hover td{background:#f8fbff}
+.priority-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px}
+.p-urgent{background:#fee2e2;color:#991b1b}
+.p-high{background:#fef3c7;color:#92400e}
+.p-medium{background:#dbeafe;color:#1e40af}
+.p-low{background:#dcfce7;color:#166534}
+/* ── ACTIONS ── */
+.actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+.action-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:16px 12px;border-radius:var(--radius);text-decoration:none;font-size:13px;font-weight:700;transition:.2s;border:none;cursor:pointer;font-family:'Cairo',sans-serif;text-align:center;min-height:72px}
+.action-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.action-btn .ab-icon{font-size:22px}
+.ab-blue{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}
+.ab-teal{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff}
+.ab-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff}
+.ab-green{background:linear-gradient(135deg,#166534,#14532d);color:#fff}
+.ab-purple{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff}
+/* ── LOADING ── */
+.loading{text-align:center;padding:40px;color:var(--muted)}
+.loading-spin{font-size:32px;animation:spin 1s linear infinite;display:inline-block}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* ── FOOTER ── */
+.footer{text-align:center;padding:20px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:16px;background:var(--card)}
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .grid2,.grid3{grid-template-columns:1fr}
+  .header-inner{flex-direction:column;align-items:flex-start;gap:8px}
+  .brand-text h1{font-size:15px}
+  .report-kpi-row{grid-template-columns:repeat(2,1fr)}
+  .req-grid{grid-template-columns:1fr}
+}
+/* ── SECTION HEADER ── */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sec-title{font-size:16px;font-weight:900;color:var(--navy);display:flex;align-items:center;gap:8px}
+.sec-badge{font-size:11px;background:#e8f0fa;color:var(--navy);padding:3px 10px;border-radius:20px;font-weight:600}
+/* ── ALERT ── */
+.alert{padding:12px 16px;border-radius:10px;font-size:13px;margin-bottom:14px;border:1px solid}
+.alert-info{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
+.alert-success{background:#f0fdf4;border-color:#bbf7d0;color:#166534}
+</style>
+</head>
+<body>
 
-/* === DIRECTOR FEEDBACK INBOX === */
-.director-inbox{margin:18px 0 24px;background:linear-gradient(135deg,#ffffff,#f6fbff);border:1.8px solid var(--border);border-right:8px solid var(--teal);border-radius:24px;padding:20px;box-shadow:0 10px 28px rgba(12,68,124,.11);position:relative;overflow:hidden;}
-.director-inbox:before{content:"";position:absolute;left:-70px;top:-70px;width:180px;height:180px;border-radius:50%;background:rgba(15,157,138,.08)}
-.inbox-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;position:relative;z-index:1}.inbox-title{display:flex;align-items:center;gap:12px}.inbox-icon{width:56px;height:56px;border-radius:18px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 20px rgba(12,68,124,.2)}.inbox-title h2{font-size:24px;margin:0;color:var(--navy)}.inbox-title p{margin:3px 0 0;color:var(--muted);font-weight:700}.inbox-badge{min-width:48px;height:48px;border-radius:999px;background:linear-gradient(135deg,#b83232,#e24b4a);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;box-shadow:0 8px 18px rgba(184,50,50,.25)}.inbox-badge.zero{background:linear-gradient(135deg,#5a7ea8,#8db5e5)}.inbox-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.inbox-list{display:none;margin-top:14px;gap:10px}.inbox-list.show{display:grid}.inbox-item{background:#f8fbff;border:1px solid var(--border);border-radius:16px;padding:12px;display:grid;gap:6px}.inbox-item.unread{border-right:5px solid var(--red);background:#fffafa}.inbox-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.inbox-pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;background:#e6f1fb;color:var(--navy);font-size:12px;font-weight:900}.inbox-pill.urgent{background:#fcebeb;color:#791f1f}.inbox-pill.ok{background:#e1f5ee;color:#085041}.inbox-empty{background:#fff8e6;border-right:5px solid var(--gold);border-radius:14px;padding:12px;color:#5c3b00;font-weight:700}.inbox-empty.okmsg{background:#e1f5ee;border-right-color:var(--teal);color:#085041}.inbox-empty.errmsg{background:#fcebeb;border-right-color:var(--red);color:#791f1f}.inbox-comment{font-size:14px;line-height:1.9;color:var(--text)}
-@media(max-width:850px){.director-inbox{padding:16px}.inbox-title h2{font-size:20px}.inbox-icon{width:48px;height:48px}.inbox-badge{width:42px;height:42px;font-size:18px}.inbox-actions .btn{flex:1 1 140px;justify-content:center}}
-</style></head><body><a class="alfalah-fixed-home" href="index.html">🏠 الرئيسية</a><a class="home-return-btn" href="./index.html">🏠 الرئيسية</a><div class="wrap"><section class="hero"><img class="logo" src="./assets/logo.png" alt="شعار أكاديمية الفلاح"><h1>منصة تطوير مكتبات أكاديمية الفلاح</h1><p>واجهة موحدة للتقييم، الدوام، المتابعة، التقارير، والملخص التنفيذي للإدارة التعليمية</p><div class="nav"><a class="btn primary" href="index.html">🏠 الرئيسية</a><a class="btn gold" href="reports/index.html">📊 التقرير التحليلي النهائي</a></div></section><section class="director-inbox" id="directorInbox">
-  <div class="inbox-head">
-    <div class="inbox-title">
-      <div class="inbox-icon">💬</div>
-      <div>
-        <h2>ردود وتعليقات الإدارة</h2>
-        <p>تظهر هنا ردود المديرين القادمة من روابط التقارير.</p>
+<!-- ━━ HEADER ━━ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <img src="../assets/logo.png" alt="أكاديمية الفلاح" onerror="this.style.display='none'">
+      <div class="brand-text">
+        <h1>أكاديمية الفلاح</h1>
+        <p>منصة تطوير المكتبات ومراكز مصادر التعلم — 2026 &nbsp;<span class="status-dot"></span></p>
       </div>
     </div>
-    <div id="directorInboxBadge" class="inbox-badge zero">0</div>
+    <nav class="header-nav">
+      <a href="../evaluation/index.html">📋 التقييم</a>
+      <a href="../schedule/index.html">🕘 الدوام</a>
+      <a href="../reports/index.html">📊 التقارير</a>
+      <a href="../management/index.html">📤 الإدارة</a>
+      <a href="../schools/index.html">🏫 المدارس</a>
+    </nav>
   </div>
-  <div class="inbox-actions">
-    <button class="btn teal" type="button" onclick="toggleDirectorInbox()">فتح الردود</button>
-    <button class="btn outline" type="button" onclick="refreshDirectorInbox()">تحديث</button>
-    <button class="btn gold" type="button" onclick="markDirectorFeedbackRead()">تعليم كمقروء</button>
-    <a class="btn outline" href="management/index.html">الملخص التنفيذي للإدارة التعليمية</a>
+</header>
+
+<!-- ━━ MAIN ━━ -->
+<main class="wrap">
+
+  <!-- ── KPI CARDS ── -->
+  <div class="kpi-row" id="kpiRow">
+    <div class="kpi k1"><span class="kpi-label">المدارس المُقيَّمة</span><span class="kpi-val" id="kpiEval">—</span><span class="kpi-sub">من أصل 6 فروع</span></div>
+    <div class="kpi k2"><span class="kpi-label">متوسط التقييم العام</span><span class="kpi-val" id="kpiAvg">—</span><span class="kpi-sub">من أصل 6 نقاط</span></div>
+    <div class="kpi k3"><span class="kpi-label">متوسط مجموعات الإمارات</span><span class="kpi-val" id="kpiUAE">—</span><span class="kpi-sub">محتوى وطني</span></div>
+    <div class="kpi k4"><span class="kpi-label">مكتبات متميزة</span><span class="kpi-val" id="kpiTop">—</span><span class="kpi-sub">تقييم 5 فأعلى</span></div>
+    <div class="kpi k5"><span class="kpi-label">تحتاج تدخل عاجل</span><span class="kpi-val" id="kpiUrgent">—</span><span class="kpi-sub">أولوية قصوى</span></div>
   </div>
-  <div id="directorInboxStatus" class="inbox-empty" style="display:none;margin-top:12px"></div>
-  <div id="directorInboxList" class="inbox-list">
-    <div class="inbox-empty">جاري فحص ردود الإدارة...</div>
+
+  <!-- ── QUICK ACTIONS ── -->
+  <div class="actions">
+    <a href="../evaluation/index.html" class="action-btn ab-blue"><span class="ab-icon">📋</span>تقييم ميداني جديد</a>
+    <a href="../schedule/index.html" class="action-btn ab-teal"><span class="ab-icon">🕘</span>تسجيل الدوام</a>
+    <a href="../reports/index.html" class="action-btn ab-gold"><span class="ab-icon">📊</span>التقرير التحليلي</a>
+    <a href="../management/index.html" class="action-btn ab-green"><span class="ab-icon">📤</span>تقرير الإدارة</a>
+    <button class="action-btn ab-purple" onclick="exportReport()"><span class="ab-icon">📥</span>تصدير تقرير Word</button>
   </div>
-</section><h2 class="channels-title">القنوات الرئيسية للنظام</h2><section class="channels-grid">
-  <article class="channel-card" data-num="1">
-    <div><div class="ico">📋</div><h2>نظام تقييم المكتبات</h2><p class="muted">تقييم ميداني لكل مكتبة، حفظ في قاعدة البيانات، تقرير تلقائي، وتصدير النتائج.</p></div>
-    <a class="btn teal" href="evaluation/index.html">فتح الصفحة</a>
-  </article>
-  <article class="channel-card" data-num="2">
-    <div><div class="ico">🕘</div><h2>جدول الدوام والمهام اليومية والمتابعة</h2><p class="muted">تسجيل الدخول والخروج، المهام، الزيارات، وساعات العمل الأسبوعية والشهرية.</p></div>
-    <a class="btn teal" href="schedule/index.html">فتح الصفحة</a>
-  </article>
-  <article class="channel-card" data-num="3">
-    <div><div class="ico">📤</div><h2>الملخص التنفيذي للإدارة التعليمية</h2><p class="muted">نسخة تنفيذية مختصرة للإدارة التعليمية، تعرض أهم المؤشرات والتوصيات وردود الإدارة بصورة مناسبة للموبايل.</p></div>
-    <a class="btn teal" href="management/index.html">فتح الصفحة</a>
-  </article>
-  <article class="channel-card report" data-num="4">
-    <div><div class="ico">📊</div><h2>التقرير التحليلي النهائي</h2><p class="muted">تقرير تفصيلي شامل للتقييمات والدوام والزيارات والرسوم البيانية ونقاط القوة والتحسين.</p></div>
-    <a class="btn teal" href="reports/index.html">فتح الصفحة</a>
-  </article>
-</section><section class="card"><h2>ملفات المدارس الست</h2><p class="muted">كل مدرسة لها فولدر مستقل للتقييم والشواهد.</p><div class="grid"><div class="card"><h3>الخبيصي</h3><p class="muted">العين — 2026-04-28</p><div class="actions"><a class="btn outline" href="schools/index.html?school=khb&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=khb&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=khb&section=library-documents">النماذج</a></div></div><div class="card"><h3>الجيمي</h3><p class="muted">العين — 2026-04-29</p><div class="actions"><a class="btn outline" href="schools/index.html?school=jmi&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=jmi&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=jmi&section=library-documents">النماذج</a></div></div><div class="card"><h3>الشارقة</h3><p class="muted">الشارقة — 2026-05-05</p><div class="actions"><a class="btn outline" href="schools/index.html?school=shj&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=shj&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=shj&section=library-documents">النماذج</a></div></div><div class="card"><h3>بني ياس</h3><p class="muted">أبوظبي — 2026-05-07</p><div class="actions"><a class="btn outline" href="schools/index.html?school=bny&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=bny&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=bny&section=library-documents">النماذج</a></div></div><div class="card"><h3>محمد بن زايد</h3><p class="muted">أبوظبي — 2026-05-11</p><div class="actions"><a class="btn outline" href="schools/index.html?school=mzd&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=mzd&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=mzd&section=library-documents">النماذج</a></div></div><div class="card"><h3>الدانة</h3><p class="muted">أبوظبي — 2026-05-12</p><div class="actions"><a class="btn outline" href="schools/index.html?school=dan&section=profile">ملف المدرسة</a><a class="btn gold" href="schools/index.html?school=dan&section=library-images">الصور</a><a class="btn teal" href="schools/index.html?school=dan&section=library-documents">النماذج</a></div></div></div></section><section class="card"><h2>رفع JSON بوضوح</h2><ol><li>افتح صفحة التقييم أو الدوام.</li><li>اضغط زر رفع/استيراد JSON.</li><li>اختر الملف، وستظهر البيانات في مكانها الصحيح.</li><li>ملفات المدرسة تظهر داخل فولدر المدرسة، وسجلات الدوام داخل المتابعة.</li></ol></section><div class="footer">أكاديمية الفلاح — منصة تطوير المكتبات ومراكز مصادر التعلم 2026</div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2?v=20260510f"></script>
-<script src="supabase-config.js?v=20260510f"></script>
-<script src="assets/db-sync.js?v=20260510f"></script>
+
+  <!-- ── SCHOOL CARDS ── -->
+  <div class="card">
+    <div class="card-title"><span class="icon" style="background:#e8f0fa">🏫</span>حالة المكتبات الست — مرتّبة بالتقييم</div>
+    <div class="school-grid" id="schoolGrid">
+      <div class="loading"><span class="loading-spin">⏳</span><br>جارٍ تحميل البيانات من Supabase…</div>
+    </div>
+  </div>
+
+  <!-- ── CHARTS ── -->
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><span class="icon" style="background:#e8f0fa">📡</span>مقارنة المحاور — الرادار</div>
+      <div class="chart-wrap" style="height:320px"><canvas id="radarChart" role="img" aria-label="رسم راداري يقارن محاور تقييم المكتبات الست">لا توجد بيانات كافية للمقارنة حتى الآن.</canvas></div>
+      <div id="radarLegend" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:12px"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon" style="background:#e8f0fa">📊</span>الترتيب العام — مقارنة شاملة</div>
+      <div class="chart-wrap" style="height:320px"><canvas id="barChart" role="img" aria-label="مخطط أعمدة يوضح التقييم الإجمالي لكل مدرسة">لا توجد بيانات كافية للمقارنة حتى الآن.</canvas></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><span class="icon" style="background:#fef3e2">🇦🇪</span>مجموعات الإمارات — مقارنة</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="uaeChart" role="img" aria-label="مخطط دائري يوضح تقييم مجموعات الإمارات في كل مكتبة">لا توجد بيانات.</canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon" style="background:#e8f7f0">👥</span>الكادر المهني — مستوى الكفاءة</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="staffChart" role="img" aria-label="مخطط أعمدة أفقي يوضح تقييم الكادر المهني في كل مكتبة">لا توجد بيانات.</canvas></div>
+    </div>
+  </div>
+
+  <!-- ━━ MANAGEMENT REPORT ━━ -->
+  <div class="report-section">
+    <div class="report-header">
+      <h3>📋 الملخص التنفيذي للإدارة</h3>
+      <p id="reportDate">جارٍ تحميل البيانات…</p>
+    </div>
+    <div class="report-body">
+      <div class="report-kpi-row">
+        <div class="report-kpi"><span class="rk-val" id="rk1">—</span><span class="rk-lbl">إجمالي المكتبات</span></div>
+        <div class="report-kpi"><span class="rk-val" id="rk2" style="color:var(--green)">—</span><span class="rk-lbl">متميزة أو جيدة جداً</span></div>
+        <div class="report-kpi"><span class="rk-val" id="rk3" style="color:var(--orange)">—</span><span class="rk-lbl">تحتاج تحسيناً</span></div>
+        <div class="report-kpi"><span class="rk-val" id="rk4" style="color:var(--red)">—</span><span class="rk-lbl">تحتاج تدخلاً عاجلاً</span></div>
+      </div>
+
+      <table class="priority-table" id="priorityTable">
+        <thead>
+          <tr>
+            <th>الترتيب</th>
+            <th>المكتبة</th>
+            <th>المدينة</th>
+            <th>التقييم</th>
+            <th>الإمارات</th>
+            <th>الكادر</th>
+            <th>الأولوية</th>
+          </tr>
+        </thead>
+        <tbody id="priorityBody">
+          <tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted)">جارٍ تحميل البيانات…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ━━ STAFF EVALUATION SECTION ━━ -->
+  <div class="staff-section">
+    <div class="sec-header">
+      <div class="sec-title">👤 تقييم الكادر المهني — نموذج الكفاءات المطوّر<span class="sec-badge">مبني على الوصف الوظيفي الرسمي</span></div>
+    </div>
+    <div class="alert alert-info">📌 هذا النموذج مبني على الوصف الوظيفي المعتمد لأمين المكتبة — الهدف تقييم كل محور بدقة موضوعية وتوثيقه ضمن ملف التقييم السنوي.</div>
+
+    <div class="competency-grid" id="competencyGrid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
+  <!-- ━━ JOB DESCRIPTION ━━ -->
+  <div class="jd-section">
+    <div class="jd-header">
+      <h3>📄 الوصف الوظيفي المطوّر — أمين المكتبة / أخصائي مصادر التعلم</h3>
+      <span style="font-size:12px;opacity:.8">مُعتمد ومُطوَّر 2026</span>
+    </div>
+    <div class="jd-body">
+      <div class="jd-tabs">
+        <div class="jd-tab active" onclick="showTab('t1',this)">المهام الرئيسية</div>
+        <div class="jd-tab" onclick="showTab('t2',this)">المهام الإدارية</div>
+        <div class="jd-tab" onclick="showTab('t3',this)">الجودة والتأهيل</div>
+        <div class="jd-tab" onclick="showTab('t4',this)">متطلبات الوظيفة</div>
+      </div>
+
+      <div class="jd-content active" id="t1">
+        <ul class="task-list">
+          <li><strong>📚 إدارة وتنظيم المكتبة</strong>الإشراف على ترتيب وتنظيم المواد المكتبية (الكتب والوسائط الرقمية)، وتصنيف المصادر وإعداد الفهارس، وتطبيق النظام الإلكتروني للمكتبات. تحديث سجلات الإعارة والمرتجع بشكل دوري.</li>
+          <li><strong>📊 إعداد التقارير</strong>إعداد تقارير دقيقة عن استخدام المكتبة والإعارات والأنشطة الثقافية وفق النظام المعتمد في الأكاديمية. رفع التوصيات لتطوير مصادر المعلومات لتلبية احتياجات الطلبة.</li>
+          <li><strong>🎓 دعم الطلبة والمعلمين</strong>مساعدة الطلبة في اختيار الكتب المناسبة لمستوياتهم واهتماماتهم، وتقديم الدعم للمعلمين في البحث عن المصادر التعليمية والمراجع. تنظيم جلسات تعريفية باستخدام المكتبة ومصادرها.</li>
+          <li><strong>📖 تشجيع القراءة والبحث</strong>تنفيذ برامج تشجيع القراءة والمطالعة الحرة، وتنظيم فعاليات وأنشطة ثقافية (يوم القراءة، معرض الكتاب، مسابقات القصة). دعم مشاركة الطلبة في تحدي القراءة والمسابقات الوطنية.</li>
+          <li><strong>💻 الموارد الرقمية والتقنية</strong>إدارة قواعد البيانات والمكتبة الإلكترونية، ومساعدة الطلبة في استخدام الأجهزة والبرمجيات التعليمية ذات الصلة. متابعة أحدث أنظمة إدارة المكتبات.</li>
+          <li><strong>🇦🇪 المحتوى الإماراتي والهوية الوطنية</strong>تطوير وتحديث مجموعات الكتب والمصادر المتعلقة بتاريخ الإمارات وثقافتها وتراثها وشعرها. إنشاء ركن إماراتي متميز وتحديث محتواه باستمرار.</li>
+        </ul>
+      </div>
+
+      <div class="jd-content" id="t2">
+        <ul class="task-list">
+          <li><strong>📝 التقارير الدورية</strong>إعداد ورفع التقارير الدورية حول الأنشطة والمهام المكلف بها، ورفع التقارير إلى المسؤول المباشر حول الإنجاز الفعلي مقارنةً بالمخطط له.</li>
+          <li><strong>🔒 السرية والأمانة</strong>الحفاظ على سرية المعلومات التي يحصل عليها من خلال عمله والمحافظة على موجودات الأكاديمية وحمايتها مع الاستخدام الأمثل للموارد.</li>
+          <li><strong>📈 الرقابة ومعايير الجودة</strong>مراقبة تحقيق المعايير المعتمدة عن طريق المتابعة وتحليل التقارير الدورية واتخاذ القرارات المناسبة لتلافي أو تعويض الخطأ أو التقصير.</li>
+          <li><strong>🗂️ توثيق المعلومات</strong>تنظيم وحفظ المعلومات والبيانات والوثائق اللازمة لاتخاذ القرارات المتعلقة بالمكتبات بطريقة يسهل الرجوع إليها.</li>
+        </ul>
+      </div>
+
+      <div class="jd-content" id="t3">
+        <ul class="task-list">
+          <li><strong>🤝 الاجتماعات والتدريب</strong>المشاركة في الاجتماعات واللقاءات وبرامج التدريب والتطوير المهني المستمر في مجال المكتبات ومصادر التعلم.</li>
+          <li><strong>🎯 التوجيه والإرشاد</strong>الإشراف على برامج التوجيه والإرشاد في الأكاديمية والاهتمام بها والعمل على تحقيق أهدافها ودعم الطلبة في مسيرتهم التعليمية.</li>
+          <li><strong>✅ مراجعة المحتوى</strong>مراجعة وتقييم المواد والمصادر التعليمية قبل اعتمادها للاستخدام، لضمان خلوّها من أي محتوى يتعارض مع القيم الثقافية والدينية والعادات المجتمعية في الدولة.</li>
+          <li><strong>🌐 مواكبة التطورات</strong>متابعة أحدث الممارسات المطبقة محلياً وعالمياً في مجال المكتبات ومصادر التعلم، وتبني ما يتناسب مع بيئة الأكاديمية ورؤية التعليم الإماراتي.</li>
+        </ul>
+      </div>
+
+      <div class="jd-content" id="t4">
+        <div class="req-grid">
+          <div class="req-item"><strong>المؤهل العلمي</strong>بكالوريوس أو أعلى في علم المكتبات / إدارة المكتبات أو مجال ذي صلة من مؤسسة معتمدة دولياً</div>
+          <div class="req-item"><strong>الخبرة العملية</strong>لا تقل عن 3 سنوات في مجال إدارة مقتنيات المكتبة — يُفضَّل الحاصلون على الرخصة المهنية من وزارة التربية والتعليم</div>
+          <div class="req-item"><strong>اللغات</strong>إتقان اللغتين العربية والإنجليزية — تواصل احترافي مع الطلبة والمعلمين بأسلوب تربوي راقٍ</div>
+          <div class="req-item"><strong>المهارات التقنية</strong>Microsoft Office، البريد الإلكتروني، أنظمة إدارة المكتبات (ILS)، معرفة MARC21، الفهرسة الإلكترونية، قواعد البيانات</div>
+          <div class="req-item"><strong>المهارات الشخصية</strong>إدارة الوقت، اتخاذ القرار، حل المشكلات، العمل بروح الفريق، تحمّل المسؤولية، الشخصية المتزنة والمبادِرة</div>
+          <div class="req-item"><strong>معايير إضافية</strong>معرفة مجموعات الإمارات وتاريخها وثقافتها — القدرة على تنظيم الأنشطة والفعاليات الثقافية والمسابقات القرائية الوطنية</div>
+          <div class="req-item"><strong>المسؤول المباشر</strong>مدير الأكاديمية أو من ينوب عنه</div>
+          <div class="req-item"><strong>الوظائف المُشرَف عليها</strong>لا توجد (يعمل باستقلالية كاملة مع تعاون تام مع الفريق التعليمي)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ━━ FOOTER ━━ -->
+<footer class="footer">
+  <strong>أكاديمية الفلاح</strong> — منصة تطوير المكتبات ومراكز مصادر التعلم 2026
+  &nbsp;|&nbsp; تم التطوير بمنهجية متكاملة بناءً على معايير الجودة الإماراتية
+  &nbsp;|&nbsp; <span id="footerDate"></span>
+</footer>
 
 <script>
-function escapeHTML(v){return String(v??'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function localDirectorFeedback(){try{return JSON.parse(localStorage.getItem('director_feedback_local')||'[]')}catch(e){return []}}
-function feedbackLabel(x){const map={all:'شامل',weekly:'أسبوعي',monthly:'شهري',eval:'تقييم مكتبات',work:'دوام وزيارات',special:'موضوع خاص'};return map[x]||x||'تقرير'}
-function schoolLabel(x){const map={all:'كل المدارس',khb:'الخبيصي',jmi:'الجيمي',shj:'الشارقة',bny:'بني ياس',mzd:'محمد بن زايد',dan:'الدانة'};return map[x]||x||'—'}
-function setInboxStatus(msg,type){
-  const st=document.getElementById('directorInboxStatus');
-  if(!st)return;
-  st.textContent=msg||'';
-  st.className='inbox-empty '+(type||'');
-  st.style.display=msg?'block':'none';
-}
-function getSupabaseClient(){
-  if(window.supabaseClient && typeof window.supabaseClient.from==='function') return window.supabaseClient;
-  if(window.falahSupabase && typeof window.falahSupabase.from==='function') return window.falahSupabase;
-  return null;
-}
-async function loadDirectorFeedback(showStatus=false){
-  const badge=document.getElementById('directorInboxBadge');
-  const list=document.getElementById('directorInboxList');
-  if(!badge||!list)return [];
-  let rows=localDirectorFeedback();
-  let source='محلي';
-  try{
-    const client=getSupabaseClient();
-    if(client){
-      const res=await client.from('director_feedback').select('*').order('created_at',{ascending:false}).limit(20);
-      if(res.error) throw res.error;
-      if(Array.isArray(res.data)){rows=res.data; source='Supabase';}
+// ━━ CONFIG ━━
+const SUPA_URL = 'https://nmbbahzzogspuuvpsxud.supabase.co';
+const SUPA_KEY = 'sb_publishable_OHbaA9Rse47v5pw_0Juafg_RbeorWMM';
+const SCHOOLS = [
+  {id:'khb', name:'الخبيصي', short:'الخبيصي', city:'العين'},
+  {id:'jmi', name:'الجيمي', short:'الجيمي', city:'العين'},
+  {id:'shj', name:'الشارقة', short:'الشارقة', city:'الشارقة'},
+  {id:'bny', name:'بني ياس', short:'بني ياس', city:'أبوظبي'},
+  {id:'mzd', name:'محمد بن زايد', short:'محمد بن زايد', city:'أبوظبي'},
+  {id:'dan', name:'الدانة', short:'الدانة', city:'أبوظبي'},
+];
+const AXES = ['المجموعات','مجموعات الإمارات','التنظيم الفني','البيئة','الأنشطة','الشراكات','الكادر والمؤهلات','التقنية'];
+const COLORS = ['#0c447c','#0f7d6e','#c19a2a','#7c3aed','#c0392b','#166534'];
+
+// ━━ DATE ━━
+document.getElementById('footerDate').textContent = new Date().toLocaleDateString('ar-AE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+document.getElementById('reportDate').textContent = 'آخر تحديث: ' + new Date().toLocaleDateString('ar-AE');
+
+// ━━ SUPABASE LOAD ━━
+let DB_EV = {};
+async function loadData(){
+  // Try Supabase first
+  try {
+    const sb = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+    const {data, error} = await sb.from('evaluations').select('*');
+    if (!error && data && data.length > 0) {
+      data.forEach(row => { if(row.school_id && row.data) DB_EV[row.school_id] = typeof row.data === 'string' ? JSON.parse(row.data) : row.data; });
     }
-  }catch(e){
-    console.warn('director feedback load failed',e);
-    if(showStatus) setInboxStatus('تعذر جلب الردود من Supabase. سيتم عرض النسخة المحلية إن وجدت. تأكد من إنشاء جدول director_feedback وصلاحياته.','errmsg');
-  }
-  const unread=rows.filter(r=>r.is_read===false || r.is_read===0 || r.is_read==null).length;
-  badge.textContent=unread || rows.length || 0;
-  badge.classList.toggle('zero',!(unread||rows.length));
-  if(!rows.length){
-    list.innerHTML='<div class="inbox-empty">لا توجد ردود من الإدارة حتى الآن.</div>';
-    if(showStatus) setInboxStatus('تم التحديث: لا توجد ردود حتى الآن.','okmsg');
-    return rows;
-  }
-  list.innerHTML=rows.map(r=>{
-    const unreadCls=(r.is_read===false||r.is_read===0||r.is_read==null)?' unread':'';
-    const pr=escapeHTML(r.priority||'عادي');
-    return `<div class="inbox-item${unreadCls}">
-      <div class="inbox-meta">
-        <span class="inbox-pill ok">${escapeHTML(r.decision||'رد إداري')}</span>
-        <span class="inbox-pill ${pr==='عاجل'?'urgent':''}">${pr}</span>
-        <span class="inbox-pill">${feedbackLabel(r.report_type)}</span>
-        <span class="inbox-pill">${schoolLabel(r.school_id)}</span>
-        <span class="inbox-pill">${new Date(r.created_at||Date.now()).toLocaleString('ar-AE')}</span>
+  } catch(e) {}
+  // Fallback to localStorage
+  try {
+    const lsData = localStorage.getItem('alfaDB');
+    if(lsData) {
+      const parsed = JSON.parse(lsData);
+      if(parsed.ev) Object.keys(parsed.ev).forEach(k => { if(!DB_EV[k]) DB_EV[k] = parsed.ev[k]; });
+    }
+  } catch(e) {}
+  renderAll();
+}
+
+// ━━ SCORE CALC ━━
+function calcScores(d) {
+  if(!d) return {};
+  const sc = {};
+  sc['المجموعات']      = avg([d.jq||0, d.jd||0, d.jc||0]);
+  sc['مجموعات الإمارات'] = parseFloat(d.uaeRating)||0;
+  sc['التنظيم الفني']  = avg([d.org1||0, d.org2||0]);
+  sc['البيئة']         = avg([d.env1||0, d.env2||0, d.env3||0, d.env4||0]);
+  sc['الأنشطة']        = avg([d.act1||0, d.act2||0, d.act3||0, d.act4||0]);
+  sc['الشراكات']       = avg([d.par1||0, d.par2||0, d.par3||0, d.par4||0]);
+  sc['الكادر والمؤهلات'] = avg([d.sta1||0, d.sta2||0, d.sta3||0, d.sta4||0, d.sta5||0]);
+  sc['التقنية']        = avg([d.tec1||0, d.tec2||0, d.tec3||0, d.tec4||0]);
+  return sc;
+}
+function avg(arr){ const v=arr.filter(x=>x>0); return v.length?parseFloat((v.reduce((a,b)=>a+b,0)/v.length).toFixed(2)):0; }
+function tot(sc){ const v=Object.values(sc).filter(x=>x>0); return v.length?parseFloat((v.reduce((a,b)=>a+b,0)/v.length).toFixed(2)):0; }
+function pct(v){ return Math.round((v/6)*100); }
+
+function getGrade(v){
+  if(v>=5)   return {label:'متميز',  cls:'excellent', badge:'badge-excellent'};
+  if(v>=4)   return {label:'جيد جداً', cls:'good',   badge:'badge-good'};
+  if(v>=3)   return {label:'مقبول',  cls:'acceptable',badge:'badge-acceptable'};
+  return       {label:'ضعيف',        cls:'weak',       badge:'badge-weak'};
+}
+function getPriorityClass(p){
+  if(!p||p==='منخفضة') return 'p-low';
+  if(p==='متوسطة') return 'p-medium';
+  if(p==='مرتفعة') return 'p-high';
+  return 'p-urgent';
+}
+
+// ━━ RENDER ALL ━━
+function renderAll(){
+  const allData = SCHOOLS.map(s => {
+    const d = DB_EV[s.id];
+    const sc = calcScores(d);
+    const total = tot(sc);
+    return {s, d, sc, total};
+  }).filter(r => r.total > 0).sort((a,b)=>b.total-a.total);
+
+  updateKPIs(allData);
+  renderSchoolCards(allData);
+  renderCharts(allData);
+  renderManagementReport(allData);
+  renderCompetencies(allData);
+}
+
+// ── KPIs ──
+function updateKPIs(data){
+  document.getElementById('kpiEval').textContent   = data.length + '/6';
+  const avg6 = data.length ? (data.reduce((s,r)=>s+r.total,0)/data.length).toFixed(1) : '—';
+  document.getElementById('kpiAvg').textContent    = avg6;
+  const uaeAvg = data.length ? (data.reduce((s,r)=>s+(r.sc['مجموعات الإمارات']||0),0)/data.length).toFixed(1) : '—';
+  document.getElementById('kpiUAE').textContent    = uaeAvg;
+  document.getElementById('kpiTop').textContent    = data.filter(r=>r.total>=5).length;
+  document.getElementById('kpiUrgent').textContent = data.filter(r=>r.total<3).length;
+  document.getElementById('rk1').textContent = data.length;
+  document.getElementById('rk2').textContent = data.filter(r=>r.total>=4).length;
+  document.getElementById('rk3').textContent = data.filter(r=>r.total>=3&&r.total<4).length;
+  document.getElementById('rk4').textContent = data.filter(r=>r.total<3).length;
+}
+
+// ── SCHOOL CARDS ──
+function renderSchoolCards(data){
+  const el = document.getElementById('schoolGrid');
+  if(!data.length){ el.innerHTML='<div class="loading">⚠️ لا توجد بيانات محفوظة بعد — يرجى البدء بالتقييم الميداني.</div>'; return; }
+  el.innerHTML = data.map((r,i)=>{
+    const g = getGrade(r.total);
+    const axes = Object.entries(r.sc).map(([name,val])=>`<div class="axis-mini"><div class="axis-mini-val">${val.toFixed(1)}</div><div class="axis-mini-lbl">${name.replace(' والمؤهلات','').replace(' الفني','').replace('مجموعات ','').replace(' والبحث','')}</div></div>`).join('');
+    return `<div class="school-card ${g.cls}" onclick="location.href='../schools/index.html?school=${r.s.id}'">
+      <div class="school-meta">
+        <div><div class="school-name">${i+1}. ${r.s.name}</div><div class="school-city">📍 ${r.s.city}</div></div>
+        <span class="school-badge ${g.badge}">${g.label}</span>
       </div>
-      <div class="inbox-comment">${escapeHTML(r.comment||'لا توجد ملاحظة نصية، فقط اختيار من المدير.')}</div>
-    </div>`
+      ${r.d?.lib?`<div class="school-specialist">👤 ${r.d.lib}</div>`:''}
+      <div class="score-row">
+        <div class="score-bar-wrap"><div class="score-bar" style="width:${pct(r.total)}%;background:${COLORS[i%COLORS.length]}"></div></div>
+        <span class="score-val">${r.total.toFixed(1)}/6</span>
+      </div>
+      <div class="axes-mini">${axes}</div>
+      ${r.d?.priority?`<div style="margin-top:8px;font-size:11px;color:var(--muted)">🎯 أولوية: <strong>${r.d.priority}</strong></div>`:''}
+    </div>`;
   }).join('');
-  if(showStatus) setInboxStatus(`تم التحديث من ${source}: عدد الردود ${rows.length}، غير المقروء ${unread}.`,'okmsg');
-  return rows;
 }
-async function refreshDirectorInbox(){
-  const el=document.getElementById('directorInboxList');
-  if(el) el.classList.add('show');
-  setInboxStatus('جاري تحديث ردود الإدارة...','');
-  await loadDirectorFeedback(true);
-}
-function toggleDirectorInbox(){
-  const el=document.getElementById('directorInboxList');
-  if(el){
-    el.classList.toggle('show');
-    if(el.classList.contains('show')) refreshDirectorInbox();
-  }
-}
-async function markDirectorFeedbackRead(){
-  const el=document.getElementById('directorInboxList');
-  if(el) el.classList.add('show');
-  setInboxStatus('جاري تعليم الردود كمقروءة...','');
-  try{
-    const client=getSupabaseClient();
-    if(client){
-      // جميع السجلات عندك تعتبر مقروءة عند الضغط على الزر
-      const res=await client.from('director_feedback').update({is_read:true}).neq('id',0);
-      if(res.error) throw res.error;
+
+// ── CHARTS ──
+let chartInstances = {};
+function destroyChart(id){ if(chartInstances[id]){ chartInstances[id].destroy(); delete chartInstances[id]; } }
+
+function renderCharts(data){
+  if(!data.length) return;
+  const labels = data.map(r=>r.s.short);
+  const palette = ['#0c447c','#0f7d6e','#c19a2a','#7c3aed','#c0392b','#166534'];
+
+  // RADAR
+  destroyChart('radar');
+  chartInstances['radar'] = new Chart(document.getElementById('radarChart'),{
+    type:'radar',
+    data:{
+      labels:AXES,
+      datasets: data.map((r,i)=>({
+        label:r.s.short,
+        data:AXES.map(a=>r.sc[a]||0),
+        borderColor:palette[i],
+        backgroundColor:palette[i]+'22',
+        borderWidth:2,
+        pointRadius:3,
+        borderDash: i>3?[4,4]:[]
+      }))
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{r:{min:0,max:6,ticks:{stepSize:1,font:{family:'Cairo'},color:'#607d9a'},grid:{color:'#d0dff0'},pointLabels:{font:{family:'Cairo',size:10},color:'#102a43'}}},
+      plugins:{legend:{display:false}},
     }
-  }catch(e){
-    console.warn(e);
-    setInboxStatus('لم يتم تحديث Supabase. تأكد من وجود صلاحية UPDATE على جدول director_feedback.','errmsg');
-  }
-  try{
-    let arr=localDirectorFeedback().map(x=>({...x,is_read:true}));
-    localStorage.setItem('director_feedback_local',JSON.stringify(arr));
-  }catch(e){}
-  await loadDirectorFeedback(false);
-  const badge=document.getElementById('directorInboxBadge');
-  if(badge){badge.textContent='0'; badge.classList.add('zero');}
-  setInboxStatus('تم تعليم الردود كمقروءة.','okmsg');
+  });
+  document.getElementById('radarLegend').innerHTML = data.map((r,i)=>`<span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:${palette[i]}"></span>${r.s.short}</span>`).join('');
+
+  // BAR
+  destroyChart('bar');
+  chartInstances['bar'] = new Chart(document.getElementById('barChart'),{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        label:'التقييم الإجمالي',
+        data:data.map(r=>parseFloat(r.total.toFixed(1))),
+        backgroundColor:data.map((_,i)=>palette[i]),
+        borderRadius:6,
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      scales:{y:{min:0,max:6,ticks:{font:{family:'Cairo'}},grid:{color:'#e8f0fa'}},x:{ticks:{font:{family:'Cairo',size:11}}}},
+      plugins:{legend:{display:false},datalabels:{display:false}},
+    }
+  });
+
+  // UAE CHART
+  destroyChart('uae');
+  chartInstances['uae'] = new Chart(document.getElementById('uaeChart'),{
+    type:'doughnut',
+    data:{
+      labels,
+      datasets:[{data:data.map(r=>r.sc['مجموعات الإمارات']||0),backgroundColor:palette,borderWidth:2,borderColor:'#fff'}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'bottom',labels:{font:{family:'Cairo',size:11},boxWidth:12,padding:8}},
+      }
+    }
+  });
+
+  // STAFF CHART
+  destroyChart('staff');
+  chartInstances['staff'] = new Chart(document.getElementById('staffChart'),{
+    type:'bar',
+    data:{
+      labels:data.map(r=>r.s.short),
+      datasets:[{
+        label:'الكادر المهني',
+        data:data.map(r=>parseFloat((r.sc['الكادر والمؤهلات']||0).toFixed(1))),
+        backgroundColor:data.map((_,i)=>palette[i]),
+        borderRadius:4,
+        indexAxis:'y',
+      }]
+    },
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      scales:{x:{min:0,max:6,ticks:{font:{family:'Cairo'}}},y:{ticks:{font:{family:'Cairo',size:11}}}},
+      plugins:{legend:{display:false}},
+    }
+  });
 }
-document.addEventListener('DOMContentLoaded',()=>{setTimeout(loadDirectorFeedback,700);setInterval(loadDirectorFeedback,45000);});
+
+// ── MANAGEMENT REPORT TABLE ──
+function renderManagementReport(data){
+  const body = document.getElementById('priorityBody');
+  if(!data.length){ body.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted)">لا توجد بيانات بعد.</td></tr>'; return; }
+  body.innerHTML = data.map((r,i)=>{
+    const g = getGrade(r.total);
+    const pri = r.d?.priority||'—';
+    return `<tr>
+      <td style="text-align:center;font-weight:900;color:var(--navy)">${i+1}</td>
+      <td><strong>${r.s.name}</strong></td>
+      <td style="color:var(--muted)">${r.s.city}</td>
+      <td><span class="school-badge ${g.badge}">${r.total.toFixed(1)} — ${g.label}</span></td>
+      <td style="font-weight:700;color:var(--navy)">${(r.sc['مجموعات الإمارات']||0).toFixed(1)}/6</td>
+      <td style="font-weight:700;color:var(--navy)">${(r.sc['الكادر والمؤهلات']||0).toFixed(1)}/6</td>
+      <td><span class="priority-badge ${getPriorityClass(pri)}">${pri}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── COMPETENCIES ──
+const COMPETENCY_DOMAINS = [
+  {
+    title:'📚 إدارة وتنظيم المكتبة', color:'#0c447c',
+    items:['تصنيف وترتيب المصادر بنظام ديوي','الفهرسة الإلكترونية وإدارة ILS','سجلات الإعارة والجرد الدوري','مراجعة وانتقاء المحتوى التعليمي','تنظيم الجدول اليومي وسير العمل']
+  },
+  {
+    title:'👨‍🎓 دعم الطلبة والمعلمين', color:'#0f7d6e',
+    items:['إرشاد الطلبة لاختيار الكتب المناسبة','دعم المعلمين في البحث عن المصادر','تنظيم جلسات تعريفية بالمكتبة','تشجيع الطلبة على البحث والملخصات','التواصل التربوي الراقي مع الجميع']
+  },
+  {
+    title:'📖 تشجيع القراءة والأنشطة', color:'#c19a2a',
+    items:['برامج تحدي القراءة الوطني','تنظيم معارض الكتاب والفعاليات','دعم المسابقات الخارجية والوطنية','إنشاء ركن القراءة وتحديثه','إدارة نادي القراءة والأنشطة الثقافية']
+  },
+  {
+    title:'💻 التقنية والموارد الرقمية', color:'#7c3aed',
+    items:['إدارة قواعد البيانات الإلكترونية','إتقان أنظمة MARC21 وOPAC','مساعدة الطلبة في البرمجيات التعليمية','تقارير النظام والإحصاءات الدقيقة','مواكبة التحديثات والتطورات التقنية']
+  },
+  {
+    title:'🇦🇪 المحتوى الإماراتي والهوية', color:'#c0392b',
+    items:['تطوير مجموعات الإمارات والتراث','إنشاء ركن إماراتي متميز','تنظيم فعاليات الهوية الوطنية','شراكات مع الجهات المجتمعية','تعزيز قيم المواطنة بين الطلبة']
+  },
+  {
+    title:'📋 الإشراف الإداري والجودة', color:'#166534',
+    items:['إعداد التقارير الدورية الدقيقة','الحفاظ على سرية المعلومات','متابعة معايير الجودة المعتمدة','المشاركة في برامج التدريب المهني','الالتزام بالقيم الثقافية والمجتمعية']
+  },
+];
+
+function renderCompetencies(allData){
+  const grid = document.getElementById('competencyGrid');
+  // Use first school's staff score or show demo
+  const staffScores = allData.map(r=>r.sc['الكادر والمؤهلات']||0);
+  const avgStaff = staffScores.length ? staffScores.reduce((a,b)=>a+b,0)/staffScores.length : 0;
+
+  grid.innerHTML = COMPETENCY_DOMAINS.map(dom=>`
+    <div class="competency-card">
+      <div class="comp-title" style="color:${dom.color}">${dom.title}</div>
+      <div class="comp-items">
+        ${dom.items.map((item,idx)=>{
+          const filled = avgStaff > 0 ? Math.round((avgStaff/6)*5*(1-idx*0.04)) : 0;
+          return `<div class="comp-item">
+            <span class="comp-item-label">${item}</span>
+            <div class="rating-stars">${[1,2,3,4,5].map(s=>`<div class="star${s<=filled?' filled'+(filled>=4?' high':''):''}"></div>`).join('')}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── TABS ──
+function showTab(id, el){
+  document.querySelectorAll('.jd-content').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.jd-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── EXPORT REPORT ──
+function exportReport(){
+  const allData = SCHOOLS.map(s=>{
+    const d=DB_EV[s.id]; const sc=calcScores(d); const total=tot(sc);
+    return {s,d,sc,total};
+  }).filter(r=>r.total>0).sort((a,b)=>b.total-a.total);
+
+  let html=`<html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;direction:rtl;font-size:13px} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ccc;padding:6px;text-align:right}</style></head><body>`;
+  html+=`<h1>تقرير تقييم مكتبات أكاديمية الفلاح 2026</h1>`;
+  html+=`<p>التاريخ: ${new Date().toLocaleDateString('ar-AE')} | عدد المكتبات المُقيَّمة: ${allData.length}/6</p>`;
+  html+=`<table><tr><th>الترتيب</th><th>المكتبة</th><th>المدينة</th><th>الإجمالي/6</th><th>الإمارات/6</th><th>الكادر/6</th><th>الأولوية</th></tr>`;
+  allData.forEach((r,i)=>{
+    html+=`<tr><td>${i+1}</td><td>${r.s.name}</td><td>${r.s.city}</td><td>${r.total.toFixed(1)}</td><td>${(r.sc['مجموعات الإمارات']||0).toFixed(1)}</td><td>${(r.sc['الكادر والمؤهلات']||0).toFixed(1)}</td><td>${r.d?.priority||'—'}</td></tr>`;
+  });
+  html+=`</table>`;
+  if(allData.length){
+    html+=`<h2>التوصيات التفصيلية</h2>`;
+    allData.forEach(r=>{if(r.d?.rec)html+=`<p><strong>${r.s.name}:</strong> ${r.d.rec}</p>`;});
+  }
+  html+=`</body></html>`;
+  const blob=new Blob(['\ufeff'+html],{type:'application/msword;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='تقرير_مكتبات_أكاديمية_الفلاح_2026.doc';document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+
+// ── INIT ──
+loadData();
 </script>
-<script src="./assets/reset-demo-data.js?v=20260510f"></script>
-</body></html>
+</body>
+</html>
