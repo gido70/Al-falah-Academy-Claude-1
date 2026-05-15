@@ -176,11 +176,11 @@ body{font-family:'Cairo',Tahoma,Arial,sans-serif;background:var(--bg);color:var(
       </div>
     </div>
     <nav class="header-nav">
-      <a href="../evaluation/index.html">📋 التقييم</a>
-      <a href="../schedule/index.html">🕘 الدوام</a>
-      <a href="../reports/index.html">📊 التقارير</a>
-      <a href="../management/index.html">📤 الإدارة</a>
-      <a href="../schools/index.html">🏫 المدارس</a>
+      <a href="evaluation/index.html">📋 التقييم</a>
+      <a href="schedule/index.html">🕘 الدوام</a>
+      <a href="reports/index.html">📊 التقارير</a>
+      <a href="management/index.html">📤 الإدارة</a>
+      <a href="schools/index.html">🏫 المدارس</a>
     </nav>
   </div>
 </header>
@@ -199,10 +199,10 @@ body{font-family:'Cairo',Tahoma,Arial,sans-serif;background:var(--bg);color:var(
 
   <!-- ── QUICK ACTIONS ── -->
   <div class="actions">
-    <a href="../evaluation/index.html" class="action-btn ab-blue"><span class="ab-icon">📋</span>تقييم ميداني جديد</a>
-    <a href="../schedule/index.html" class="action-btn ab-teal"><span class="ab-icon">🕘</span>تسجيل الدوام</a>
-    <a href="../reports/index.html" class="action-btn ab-gold"><span class="ab-icon">📊</span>التقرير التحليلي</a>
-    <a href="../management/index.html" class="action-btn ab-green"><span class="ab-icon">📤</span>تقرير الإدارة</a>
+    <a href="evaluation/index.html" class="action-btn ab-blue"><span class="ab-icon">📋</span>تقييم ميداني جديد</a>
+    <a href="schedule/index.html" class="action-btn ab-teal"><span class="ab-icon">🕘</span>تسجيل الدوام</a>
+    <a href="reports/index.html" class="action-btn ab-gold"><span class="ab-icon">📊</span>التقرير التحليلي</a>
+    <a href="management/index.html" class="action-btn ab-green"><span class="ab-icon">📤</span>تقرير الإدارة</a>
     <button class="action-btn ab-purple" onclick="exportReport()"><span class="ab-icon">📥</span>تصدير تقرير Word</button>
   </div>
 
@@ -460,7 +460,7 @@ function renderSchoolCards(data){
   el.innerHTML = data.map((r,i)=>{
     const g = getGrade(r.total);
     const axes = Object.entries(r.sc).map(([name,val])=>`<div class="axis-mini"><div class="axis-mini-val">${val.toFixed(1)}</div><div class="axis-mini-lbl">${name.replace(' والمؤهلات','').replace(' الفني','').replace('مجموعات ','').replace(' والبحث','')}</div></div>`).join('');
-    return `<div class="school-card ${g.cls}" onclick="location.href='../schools/index.html?school=${r.s.id}'">
+    return `<div class="school-card ${g.cls}" onclick="location.href='schools/index.html?school=${r.s.id}'">
       <div class="school-meta">
         <div><div class="school-name">${i+1}. ${r.s.name}</div><div class="school-city">📍 ${r.s.city}</div></div>
         <span class="school-badge ${g.badge}">${g.label}</span>
