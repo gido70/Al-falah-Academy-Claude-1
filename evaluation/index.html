@@ -3133,5 +3133,530 @@ document.addEventListener('DOMContentLoaded',()=>{try{bindLibraryUnitsAutoSummar
 })();
 </script>
 
+<script>
+// ══════════════════════════════════════════════════════════════════
+//   أكاديمية الفلاح — تطعيم القسم 7 (الكادر المهني)
+//   Staff Evaluation Section 7 Enhancement Patch
+//   يُضاف هذا الملف في نهاية evaluation/index.html قبل </body>
+//   Version 2.0 — متوافق مع قاعدة بيانات Supabase 2026
+// ══════════════════════════════════════════════════════════════════
+
+(function () {
+  // ── CONFIG ──────────────────────────────────────────────────────
+  const SUPA_URL = 'https://nmbbahzzogspuuvpsxud.supabase.co';
+  const SUPA_KEY = 'sb_publishable_OHbaA9Rse47v5pw_0Juafg_RbeorWMM';
+
+  // ── MAP: الحقول القديمة → رموز SQL الجديدة ─────────────────────
+  // الحقول القديمة تبقى كما هي (تُحفظ في JSON الأساسي للتوافق)
+  // الحقول الجديدة تُحفظ في staff_eval_criteria_scores
+  const LEGACY_MAP = {
+    sb:   'd1c1',   // معرفة أساسيات المكتبات → تصنيف وترتيب المصادر
+    sc:   'd1c2',   // التصنيف والتنظيم → الفهرسة الإلكترونية
+    sst:  'd2c5',   // التعامل مع الطلبة → التواصل التربوي
+    si:   'd7c2',   // المبادرة والتطوير → حل المشكلات والمبادرة
+    ste:  'd4c1',   // استخدام التقنية → إدارة قواعد البيانات
+    scol: 'd7c3',   // التعاون مع المعلمين → العمل بروح الفريق
+    marc: 'd4c2',   // معرفة MARC21
+    ils:  'd4c1',   // معرفة ILS
+  };
+
+  // ── معايير القسم 7 الجديدة مُنظَّمة بالمجالات ─────────────────
+  const NEW_DOMAINS = [
+    {
+      id: 'dom1-extra',
+      color: '#0c447c',
+      bg: 'linear-gradient(135deg,#e8f0fa,#dceaf8)',
+      border: '#185fa5',
+      title: '📚 إدارة المكتبة — معايير إضافية',
+      hint: 'بناءً على الوصف الوظيفي المعتمد 2026',
+      criteria: [
+        { code: 'd1c3', label: 'سجلات الإعارة والجرد الدوري',        hint: 'دقة السجلات وتحديثها وانتظام الجرد' },
+        { code: 'd1c4', label: 'مراجعة المحتوى التعليمي',             hint: 'ملاءمة المصادر للقيم والمناهج قبل الاعتماد' },
+        { code: 'd1c5', label: 'تنظيم الجدول اليومي وسير العمل',      hint: 'انسيابية العمل ووضوح الجدول واستمراريته' },
+        { code: 'd1c6', label: 'نظافة وجاذبية بيئة المكتبة',          hint: 'المظهر العام والتنظيم والجاذبية البصرية' },
+      ]
+    },
+    {
+      id: 'dom2-extra',
+      color: '#0f7d6e',
+      bg: 'linear-gradient(135deg,#e8f4f0,#d6ede9)',
+      border: '#0f9d8a',
+      title: '🎓 دعم الطلبة والمعلمين',
+      hint: 'مبني على الوصف الوظيفي المعتمد',
+      criteria: [
+        { code: 'd2c1', label: 'إرشاد الطلبة لاختيار الكتب المناسبة', hint: 'مناسبة الكتب للعمر والمستوى والاهتمام' },
+        { code: 'd2c2', label: 'دعم المعلمين في البحث عن المصادر',    hint: 'استجابة فعّالة وسريعة لطلبات المعلمين' },
+        { code: 'd2c3', label: 'تنظيم الجلسات التعريفية بالمكتبة',    hint: 'عدد الجلسات وجودتها وتغطيتها للشرائح' },
+        { code: 'd2c4', label: 'تشجيع الطلبة على البحث والملخصات',    hint: 'مبادرات موثّقة لتنمية مهارات البحث الذاتي' },
+      ]
+    },
+    {
+      id: 'dom3-extra',
+      color: '#c19a2a',
+      bg: 'linear-gradient(135deg,#fef9eb,#fdefd0)',
+      border: '#d4ae3c',
+      title: '📖 تشجيع القراءة والأنشطة الثقافية',
+      hint: 'مسابقات وطنية وأنشطة القراءة',
+      criteria: [
+        { code: 'd3c1', label: 'برامج تحدي القراءة الوطني',             hint: 'التسجيل والمتابعة وتحقيق الأهداف القرائية' },
+        { code: 'd3c2', label: 'تنظيم معارض الكتاب والفعاليات',         hint: 'عدد الفعاليات المنجزة وجودتها ومشاركة الطلبة' },
+        { code: 'd3c3', label: 'دعم المسابقات الخارجية والوطنية',        hint: 'القارئ المبدع والكاتب الصغير وغيرها' },
+        { code: 'd3c4', label: 'ركن القراءة وتحديث المحتوى',            hint: 'انتظام تحديث الركن وجاذبيته وفاعليته' },
+        { code: 'd3c5', label: 'نادي القراءة وإدارة أنشطته',            hint: 'استمرارية النادي وفاعلية أنشطته' },
+      ]
+    },
+    {
+      id: 'dom4-extra',
+      color: '#7c3aed',
+      bg: 'linear-gradient(135deg,#f1eeff,#e6dcfb)',
+      border: '#8b5cf6',
+      title: '💻 معايير إضافية — التقنية الرقمية',
+      hint: 'MARC21 وأنظمة إدارة المكتبات',
+      criteria: [
+        { code: 'd4c3', label: 'مساعدة الطلبة في استخدام الأجهزة',     hint: 'التوجيه في البرمجيات التعليمية' },
+        { code: 'd4c4', label: 'إعداد تقارير النظام والإحصاءات',        hint: 'دقة التقارير واستخدامها لدعم القرار' },
+        { code: 'd4c5', label: 'مواكبة التحديثات التقنية للمكتبات',     hint: 'الاطلاع على أحدث أنظمة المكتبات' },
+      ]
+    },
+    {
+      id: 'dom5-extra',
+      color: '#c0392b',
+      bg: 'linear-gradient(135deg,#fdf0ee,#faded9)',
+      border: '#e74c3c',
+      title: '🇦🇪 المحتوى الإماراتي والهوية الوطنية',
+      hint: 'مجموعات الإمارات والركن الوطني',
+      criteria: [
+        { code: 'd5c1', label: 'تطوير مجموعات الإمارات والتراث',        hint: 'حجم المجموعة وتنوعها وتغطيتها' },
+        { code: 'd5c2', label: 'الركن الإماراتي — التصميم والتحديث',     hint: 'جاذبيته وتحديث محتواه المستمر' },
+        { code: 'd5c3', label: 'تنظيم فعاليات الهوية الوطنية',          hint: 'المناسبات الوطنية والفعاليات الثقافية' },
+        { code: 'd5c4', label: 'الشراكات المجتمعية الإماراتية',          hint: 'التنسيق مع جهات تعزز الهوية والثقافة' },
+        { code: 'd5c5', label: 'تعزيز المواطنة والانتماء بين الطلبة',   hint: 'المبادرات الموثّقة لتعزيز الهوية الوطنية' },
+      ]
+    },
+    {
+      id: 'dom6-extra',
+      color: '#166534',
+      bg: 'linear-gradient(135deg,#e8f5ec,#d4edda)',
+      border: '#1e7f43',
+      title: '📋 الإشراف الإداري وضمان الجودة',
+      hint: 'التقارير والتوثيق والالتزام بالمعايير',
+      criteria: [
+        { code: 'd6c1', label: 'دقة التقارير وانتظام تقديمها',          hint: 'الالتزام بالمواعيد ودقة البيانات وشموليتها' },
+        { code: 'd6c2', label: 'السرية والنزاهة المهنية',               hint: 'الحفاظ على سرية المعلومات وأمانة الموجودات' },
+        { code: 'd6c3', label: 'متابعة معايير الجودة المعتمدة',          hint: 'مراقبة مستمرة ومعالجة فورية للانحرافات' },
+        { code: 'd6c4', label: 'المشاركة في التدريب والاجتماعات',       hint: 'حضور منتظم ومبادرة في برامج التطوير' },
+        { code: 'd6c5', label: 'توثيق المعلومات والبيانات',              hint: 'نظام توثيق واضح وسهل الرجوع إليه' },
+      ]
+    },
+    {
+      id: 'dom7-extra',
+      color: '#0c447c',
+      bg: 'linear-gradient(135deg,#e8f0fa,#dceaf8)',
+      border: '#185fa5',
+      title: '🌟 الكفاءات والمهارات الشخصية',
+      hint: 'التواصل والتنظيم وروح الفريق',
+      criteria: [
+        { code: 'd7c1', label: 'إدارة الوقت وترتيب الأولويات',          hint: 'التنظيم والعمل تحت ضغط دون إخلال بالجودة' },
+        { code: 'd7c4', label: 'التواصل الفصيح باللغة العربية',         hint: 'الكتابة والتحدث والتوثيق بالعربية الفصيحة بدقة' },
+        { code: 'd7c5', label: 'التواصل المهني باللغة الإنجليزية',      hint: 'مستوى الكفاءة في التواصل الإنجليزي' },
+        { code: 'd7c6', label: 'الشخصية المتزنة والتصرف باحترام',       hint: 'التصرف باتزان وأدب في جميع المواقف' },
+        { code: 'd7c7', label: 'التطوير المهني المستمر والمبادرة الذاتية', hint: 'المبادرة للنمو المهني بلا انتظار' },
+      ]
+    },
+  ];
+
+  // ── حقل إضافي: الرخصة المهنية ──────────────────────────────────
+  const LICENSE_FIELD_HTML = `
+    <div style="background:linear-gradient(135deg,#e8f4ec,#d4edda);border:2px solid #1e7f43;border-radius:12px;padding:14px;margin:12px 0;grid-column:1/-1">
+      <div style="font-size:14px;font-weight:900;color:#166534;margin-bottom:10px;">🪪 الرخصة المهنية والتطوير المهني</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;flex-wrap:wrap">
+        <div class="fld">
+          <label>الرخصة المهنية من وزارة التربية</label>
+          <div class="qp" id="q-prof-lic">
+            <div class="pill" onclick="qp('f-prof-lic',this,'q-prof-lic')">✅ حاصل عليها</div>
+            <div class="pill" onclick="qp('f-prof-lic',this,'q-prof-lic')">🔄 قيد الاستكمال</div>
+            <div class="pill" onclick="qp('f-prof-lic',this,'q-prof-lic')">❌ لم يحصل عليها</div>
+          </div>
+          <input id="f-prof-lic" placeholder="الحالة...">
+        </div>
+        <div class="fld">
+          <label>توصية إجراء المشرف</label>
+          <div class="qp" id="q-action-rec">
+            <div class="pill" onclick="qp('f-action-rec',this,'q-action-rec')">ترقية / تقدير</div>
+            <div class="pill" onclick="qp('f-action-rec',this,'q-action-rec')">استمرار مع خطة تطوير</div>
+            <div class="pill" onclick="qp('f-action-rec',this,'q-action-rec')">تدريب مكثف إلزامي</div>
+            <div class="pill" onclick="qp('f-action-rec',this,'q-action-rec')">مراجعة وضع الكادر</div>
+          </div>
+          <input id="f-action-rec" placeholder="التوصية...">
+        </div>
+      </div>
+    </div>`;
+
+  // ── STORE: تخزين درجات المعايير الجديدة ────────────────────────
+  window._s7Scores = {};  // { 'd1c3': 4, 'd2c1': 5, ... }
+
+  // ── BUILD: بناء HTML لمجال واحد ─────────────────────────────────
+  function buildDomainHTML(dom) {
+    const rows = dom.criteria.map(c => `
+      <div class="rgrp" style="border-right:3px solid ${dom.color};padding-right:8px;margin-bottom:8px">
+        <div class="rlbl" style="font-size:12px">${c.label}
+          <span style="font-size:10px;color:#888;display:block">${c.hint}</span>
+        </div>
+        <div class="rp" id="rp-${c.code}">
+          ${[1,2,3,4,5,6].map(v => `<button type="button" class="rpill" onclick="s7Rate('${c.code}',${v},this)">${v}</button>`).join('')}
+        </div>
+      </div>`).join('');
+
+    return `
+      <div id="${dom.id}" style="background:${dom.bg};border:2px solid ${dom.border};border-radius:14px;padding:16px;margin:10px 0;grid-column:1/-1">
+        <div style="font-size:14px;font-weight:900;color:${dom.color};margin-bottom:6px">${dom.title}</div>
+        <div style="font-size:11px;color:#888;margin-bottom:12px">${dom.hint}</div>
+        <div class="g2">${rows}</div>
+      </div>`;
+  }
+
+  // ── INJECT: حقن HTML في القسم 7 ─────────────────────────────────
+  function injectSection7() {
+    // ابحث عن عنصر نقاط قوة الكادر لنضع الحقول الجديدة قبله
+    const anchorEl = document.getElementById('f-sstr');
+    if (!anchorEl) { console.warn('[S7 Patch] لم يتم إيجاد f-sstr'); return; }
+
+    const container = anchorEl.closest('.fld');
+    if (!container) return;
+
+    // أنشئ wrapper للمعايير الجديدة
+    const wrapper = document.createElement('div');
+    wrapper.id = 's7-enhanced';
+    wrapper.style.cssText = 'margin:12px 0;grid-column:1/-1';
+    wrapper.innerHTML = `
+      <div style="background:linear-gradient(90deg,#0c447c,#0f7d6e);color:#fff;border-radius:10px 10px 0 0;padding:10px 16px;font-size:14px;font-weight:900;display:flex;align-items:center;gap:8px">
+        <span>📋</span>
+        <span>معايير الكادر المهني المطوّرة — بناءً على الوصف الوظيفي 2026</span>
+        <span style="margin-right:auto;font-size:11px;opacity:.8;font-weight:400">37 معياراً موزّعاً على 7 مجالات</span>
+      </div>
+      <div style="background:#f8fbff;border:2px solid #d0dff0;border-top:0;border-radius:0 0 10px 10px;padding:14px">
+        <div style="font-size:12px;color:#607d9a;margin-bottom:14px;padding:8px 12px;background:#fff;border-radius:8px;border:1px solid #d0dff0">
+          ⚡ المعايير التالية تُكمّل القسم 7 الحالي — درجاتها تُرفع تلقائياً إلى قاعدة بيانات الكادر المهني المستقلة وتُسهم في احتساب متوسط الكادر
+        </div>
+        ${NEW_DOMAINS.map(buildDomainHTML).join('')}
+        ${LICENSE_FIELD_HTML}
+        <div class="fld" style="margin-top:12px;grid-column:1/-1">
+          <label>📝 ملاحظات شاملة على الكادر المهني — مُوجَّهة للإدارة</label>
+          <textarea id="f-s7-mgmt-note" placeholder="ملاحظات موضوعية وتفصيلية حول أداء أمين المكتبة/أخصائي مصادر التعلم، تشمل نقاط القوة الموثّقة ومجالات التطوير المقترحة..." style="min-height:100px"></textarea>
+        </div>
+      </div>`;
+
+    // أدخله قبل حقل نقاط قوة الكادر
+    container.parentNode.insertBefore(wrapper, container);
+    console.log('[S7 Patch] ✅ تم حقن معايير الكادر المطوّرة بنجاح');
+  }
+
+  // ── RATE: دالة تقييم المعيار الجديد ─────────────────────────────
+  window.s7Rate = function (code, val, btn) {
+    window._s7Scores[code] = val;
+    // تحديث الأزرار
+    const rp = document.getElementById('rp-' + code);
+    if (rp) rp.querySelectorAll('.rpill').forEach((b, i) => {
+      b.classList.toggle('active', i + 1 === val);
+    });
+    // تحديث الـ summary bar إن وُجد
+    if (typeof uHome === 'function') uHome();
+  };
+
+  // ── GET: جمع بيانات القسم 7 الجديد ─────────────────────────────
+  window.getS7Enhanced = function () {
+    const scores = { ...window._s7Scores };
+    return {
+      scores,
+      has_license:  document.getElementById('f-prof-lic')?.value || '',
+      action_rec:   document.getElementById('f-action-rec')?.value || '',
+      mgmt_note:    document.getElementById('f-s7-mgmt-note')?.value || '',
+    };
+  };
+
+  // ── SET: استعادة بيانات القسم 7 الجديد ──────────────────────────
+  window.setS7Enhanced = function (data) {
+    if (!data) return;
+    if (data.scores) {
+      Object.entries(data.scores).forEach(([code, val]) => {
+        window.s7Rate(code, val, null);
+      });
+    }
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+    set('f-prof-lic',     data.has_license);
+    set('f-action-rec',   data.action_rec);
+    set('f-s7-mgmt-note', data.mgmt_note);
+  };
+
+  // ── CALC: متوسط مجال واحد ────────────────────────────────────────
+  function avgDomain(codes) {
+    const vals = codes.map(c => window._s7Scores[c] || 0).filter(v => v > 0);
+    return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+  }
+
+  // ── GET WEIGHTED STAFF SCORE: متوسط موزّن شامل ──────────────────
+  window.getS7WeightedAvg = function () {
+    const oldCodes = ['sb','sc','sst','si','ste','scol','marc','ils'];
+    const newDomainCodes = NEW_DOMAINS.flatMap(d => d.criteria.map(c => c.code));
+    const allCodes = [...newDomainCodes]; // الأوزان الجديدة فقط للتقييم التفصيلي
+
+    const domainAvgs = NEW_DOMAINS.map(dom => avgDomain(dom.criteria.map(c => c.code)));
+    const filled = domainAvgs.filter(v => v > 0);
+    if (!filled.length) return null; // لا توجد بيانات جديدة
+    return filled.reduce((a, b) => a + b, 0) / filled.length;
+  };
+
+  // ── SUPABASE SAVE: حفظ في الجداول الجديدة ───────────────────────
+  window.saveS7ToSupabase = async function (schoolId, evalId, staffData) {
+    try {
+      if (!schoolId) return;
+      const s7 = window.getS7Enhanced();
+      const oldEval = (typeof getEv === 'function') ? getEv() : {};
+
+      // إنشاء سجل رئيسي في staff_eval_records
+      const record = {
+        school_id:       schoolId,
+        eval_date:       oldEval.date || new Date().toISOString().split('T')[0],
+        academic_year:   '2025-2026',
+        staff_name:      oldEval.lib || '',
+        staff_edu_level: oldEval.edu || '',
+        staff_speciality: oldEval.spc || '',
+        staff_exp_years: oldEval.exp || '',
+        has_license:     s7.has_license === 'حاصل عليها' ? true : false,
+        lib_system_used: oldEval['ils-name'] || '',
+        num_courses:     oldEval.crs || '',
+        strengths:       oldEval.sstr || '',
+        general_notes:   s7.mgmt_note,
+        action_rec:      s7.action_rec,
+      };
+
+      const res = await fetch(`${SUPA_URL}/rest/v1/staff_eval_records`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPA_KEY,
+          'Authorization': `Bearer ${SUPA_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=representation',
+        },
+        body: JSON.stringify(record),
+      });
+
+      if (!res.ok) { console.error('[S7 Patch] خطأ في حفظ staff_eval_records:', await res.text()); return; }
+      const saved = await res.json();
+      const newEvalId = saved[0]?.id;
+      if (!newEvalId) return;
+
+      // حفظ الدرجات التفصيلية في staff_eval_criteria_scores
+      // الدرجات القديمة (mapped)
+      const oldScoreRows = [];
+      const R = (typeof window.__R === 'function') ? window.__R : (id => parseFloat(document.getElementById('f-' + id)?.value || document.querySelector(`#rp-${id} .rpill.active`)?.innerText || '0') || 0);
+
+      Object.entries(LEGACY_MAP).forEach(([oldId, newCode]) => {
+        const score = parseInt(document.querySelector(`#rp-${oldId} .rpill.active`)?.innerText) || 0;
+        if (score > 0) oldScoreRows.push({ eval_id: newEvalId, competency_code: newCode, score });
+      });
+
+      // الدرجات الجديدة
+      const newScoreRows = Object.entries(s7.scores)
+        .filter(([, v]) => v > 0)
+        .map(([code, score]) => ({ eval_id: newEvalId, competency_code: code, score }));
+
+      // دمج وإزالة التكرار (الأوضاع المتضاربة بين القديم والجديد)
+      const allRows = [...oldScoreRows, ...newScoreRows];
+      const uniqueRows = Object.values(
+        allRows.reduce((acc, row) => {
+          acc[row.competency_code] = row; // الأخير يفوز
+          return acc;
+        }, {})
+      );
+
+      if (uniqueRows.length > 0) {
+        const res2 = await fetch(`${SUPA_URL}/rest/v1/staff_eval_criteria_scores`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPA_KEY,
+            'Authorization': `Bearer ${SUPA_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(uniqueRows),
+        });
+        if (!res2.ok) console.error('[S7 Patch] خطأ في حفظ الدرجات:', await res2.text());
+        else console.log(`[S7 Patch] ✅ تم حفظ ${uniqueRows.length} درجة في staff_eval_criteria_scores`);
+      }
+
+    } catch (err) {
+      console.error('[S7 Patch] خطأ عام في saveS7ToSupabase:', err);
+    }
+  };
+
+  // ── LOAD: تحميل من Supabase ──────────────────────────────────────
+  window.loadS7FromSupabase = async function (schoolId) {
+    try {
+      const res = await fetch(
+        `${SUPA_URL}/rest/v1/staff_eval_records?school_id=eq.${schoolId}&order=eval_date.desc&limit=1`,
+        { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+      );
+      if (!res.ok) return;
+      const records = await res.json();
+      if (!records.length) return;
+      const rec = records[0];
+
+      // تحميل الدرجات
+      const res2 = await fetch(
+        `${SUPA_URL}/rest/v1/staff_eval_criteria_scores?eval_id=eq.${rec.id}`,
+        { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` } }
+      );
+      if (res2.ok) {
+        const scores = await res2.json();
+        const scoreMap = {};
+        scores.forEach(s => { scoreMap[s.competency_code] = s.score; });
+        window.setS7Enhanced({
+          scores: scoreMap,
+          has_license: rec.has_license ? 'حاصل عليها' : rec.has_license === false ? 'لم يحصل عليها' : '',
+          action_rec: rec.action_rec || '',
+          mgmt_note: rec.general_notes || '',
+        });
+        console.log(`[S7 Patch] ✅ تم تحميل ${scores.length} درجة من Supabase`);
+      }
+    } catch (err) {
+      console.error('[S7 Patch] خطأ في loadS7FromSupabase:', err);
+    }
+  };
+
+  // ── HOOK: ربط مع دالة الحفظ الأساسية ────────────────────────────
+  function hookSaveFunction() {
+    const origSave = window.saveEv || window.sEv;
+    if (!origSave) {
+      // إذا لم نجد الدالة نحاول مرة أخرى بعد لحظة
+      setTimeout(hookSaveFunction, 500);
+      return;
+    }
+
+    // إضافة s7Enhanced إلى JSON المحفوظ
+    const wrappedSave = function (...args) {
+      // تشغيل الحفظ الأصلي
+      const result = origSave.apply(this, args);
+
+      // إضافة بيانات القسم 7 المطوّر إلى localStorage
+      try {
+        const lsRaw = localStorage.getItem('alfaDB');
+        if (lsRaw) {
+          const lsData = JSON.parse(lsRaw);
+          const sid = document.getElementById('esch')?.value;
+          if (sid && lsData.ev && lsData.ev[sid]) {
+            lsData.ev[sid].s7Enhanced = window.getS7Enhanced();
+            localStorage.setItem('alfaDB', JSON.stringify(lsData));
+          }
+        }
+      } catch (e) {}
+
+      // حفظ في Supabase
+      const sid = document.getElementById('esch')?.value;
+      if (sid) window.saveS7ToSupabase(sid, null, null);
+
+      return result;
+    };
+
+    if (window.saveEv) window.saveEv = wrappedSave;
+    if (window.sEv)    window.sEv    = wrappedSave;
+    console.log('[S7 Patch] ✅ تم ربط دالة الحفظ');
+  }
+
+  // ── HOOK: استعادة s7Enhanced عند تحميل المدرسة ──────────────────
+  function hookLoadFunction() {
+    const origLoad = window.loadEv || window.lEv;
+    if (!origLoad) {
+      setTimeout(hookLoadFunction, 500);
+      return;
+    }
+    const wrappedLoad = function (...args) {
+      const result = origLoad.apply(this, args);
+      try {
+        const sid = document.getElementById('esch')?.value;
+        const lsRaw = localStorage.getItem('alfaDB');
+        if (sid && lsRaw) {
+          const lsData = JSON.parse(lsRaw);
+          const s7Data = lsData.ev?.[sid]?.s7Enhanced;
+          if (s7Data) window.setS7Enhanced(s7Data);
+        }
+        // محاولة تحميل من Supabase أيضاً
+        if (sid) window.loadS7FromSupabase(sid);
+      } catch (e) {}
+      return result;
+    };
+    if (window.loadEv) window.loadEv = wrappedLoad;
+    if (window.lEv)    window.lEv    = wrappedLoad;
+    console.log('[S7 Patch] ✅ تم ربط دالة التحميل');
+  }
+
+  // ── STYLE: إضافة CSS للأزرار الجديدة ────────────────────────────
+  function injectStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+      #s7-enhanced .rpill.active {
+        background: var(--navy, #0c447c);
+        color: #fff;
+        border-color: var(--navy, #0c447c);
+        transform: scale(1.12);
+      }
+      #s7-enhanced .rpill:hover {
+        background: var(--teal, #0f9d8a);
+        color: #fff;
+        border-color: var(--teal, #0f9d8a);
+      }
+      #s7-enhanced .rgrp {
+        margin-bottom: 8px;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // ── SQL QUERY HELPER: استعلامات مُساعِدة للتقارير ────────────────
+  window.S7_QUERIES = {
+    // متوسط كل مجال لمدرسة محددة (أحدث تقييم)
+    domainAvgBySchool: (schoolId) => `
+      SELECT d.name_ar, ROUND(AVG(s.score)::NUMERIC,2) AS avg_score
+      FROM staff_eval_records r
+      JOIN staff_eval_criteria_scores s ON s.eval_id = r.id
+      JOIN staff_eval_competencies c    ON c.code    = s.competency_code
+      JOIN staff_eval_domains d         ON d.id      = c.domain_id
+      WHERE r.school_id = '${schoolId}'
+        AND r.eval_date = (SELECT MAX(eval_date) FROM staff_eval_records WHERE school_id='${schoolId}')
+      GROUP BY d.id, d.name_ar
+      ORDER BY d.id;`,
+
+    // مقارنة الكادر بين المدارس
+    staffCompareAllSchools: () => `
+      SELECT school_id, weighted_total, performance_level,
+             avg_library_mgmt, avg_student_support, avg_uae_content
+      FROM v_staff_eval_summary
+      WHERE academic_year = '2025-2026'
+      ORDER BY weighted_total DESC;`,
+
+    // المدارس التي تحتاج تدريباً عاجلاً
+    needsUrgentTraining: () => `
+      SELECT school_id, staff_name, weighted_total, action_rec
+      FROM v_staff_eval_summary
+      WHERE weighted_total < 3.5
+      ORDER BY weighted_total ASC;`,
+  };
+
+  // ── INIT ─────────────────────────────────────────────────────────
+  function init() {
+    injectStyles();
+    injectSection7();
+    hookSaveFunction();
+    hookLoadFunction();
+    console.log('[S7 Patch v2.0] 🚀 تم تهيئة تطعيم القسم 7 بنجاح');
+    console.log('[S7 Patch] استعلامات SQL مُتاحة عبر: window.S7_QUERIES');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    // الصفحة محمّلة مسبقاً — انتظر قليلاً ليكتمل رسم القسم 7
+    setTimeout(init, 800);
+  }
+})();
+</script>
 </body>
-</html>
