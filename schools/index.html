@@ -1,19 +1,249 @@
 <!doctype html><html lang="ar" dir="rtl"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ملفات المدارس</title><link rel="stylesheet" href="../assets/app.css"><script src="../assets/app.js"></script><style>.alfalah-fixed-home{position:fixed;top:14px;right:14px;z-index:999999;background:linear-gradient(135deg,#0c447c,#0f9d8a);color:#fff!important;text-decoration:none!important;padding:10px 16px;border-radius:22px;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.22)}@media(max-width:700px){.alfalah-fixed-home{top:auto;bottom:12px;right:12px}}.btn.danger{background:#d9534f;color:#fff}.btn.danger:hover{filter:brightness(.95)}.file-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}.clear-card{margin-top:12px;text-align:center}
-.focus-card{outline:3px solid #f0a500;box-shadow:0 0 0 6px rgba(240,165,0,.18)!important}</style></head><body><a class="alfalah-fixed-home" href="../index.html">🏠 الرئيسية</a><a class="home" href="../index.html">🏠 الرئيسية</a><div class="wrap"><section class="hero"><img class="logo" src="../assets/logo.png"><h1>ملفات المدارس والوثائق</h1><p>رفع صور المكتبات، النماذج، وشهادات الأخصائيين إلى Supabase Storage</p></section><div class="card"><h2>اختر المدرسة</h2><select id="school" onchange="loadFiles()"></select><div id="msg"></div><div class="clear-card"><button class="btn danger" type="button" onclick="deleteAllSchoolFiles()">🗑️ تصفير ملفات هذه المدرسة</button></div></div><div class="files"><div class="card"><h3>📷 صور المكتبة</h3><input type="file" id="library-images" multiple accept="image/*"><button class="btn teal" onclick="uploadFiles('library-images','library-images')">رفع الصور</button></div><div class="card"><h3>📄 النماذج وقوائم العمل</h3><input type="file" id="library-documents" multiple><button class="btn gold" onclick="uploadFiles('library-documents','library-documents')">رفع النماذج</button></div><div class="card"><h3>🎓 شهادات الأخصائي</h3><input type="file" id="specialist-certificates" multiple><button class="btn primary" onclick="uploadFiles('specialist-certificates','specialist-certificates')">رفع الشهادات</button></div></div><div class="card"><h2>الملفات المحفوظة</h2><div id="gallery" class="gallery"></div></div></div>
+<meta http-equiv="Expires" content="0">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ملفات المدارس</title>
+<link rel="stylesheet" href="../assets/app.css">
+<style>
+.alfalah-fixed-home{position:fixed;top:14px;right:14px;z-index:999999;background:linear-gradient(135deg,#0c447c,#0f9d8a);color:#fff!important;text-decoration:none!important;padding:10px 16px;border-radius:22px;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.22)}
+@media(max-width:700px){.alfalah-fixed-home{top:auto;bottom:12px;right:12px}}
+.btn.danger{background:#d9534f;color:#fff}.btn.danger:hover{filter:brightness(.95)}
+.file-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.clear-card{margin-top:12px;text-align:center}
+.focus-card{outline:3px solid #f0a500;box-shadow:0 0 0 6px rgba(240,165,0,.18)!important}
+/* ── تبويبات ── */
+.tabs-wrap{background:#fff;border-radius:16px;border:1px solid #d0dff0;box-shadow:0 4px 18px rgba(12,68,124,.09);overflow:hidden;margin-top:8px}
+.tabs-nav{display:flex;border-bottom:2px solid #e8f0fa;background:#f5f9ff}
+.tab-btn{flex:1;padding:13px 8px;font-family:Cairo,Tahoma,sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#5a7a99;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.2s;display:flex;align-items:center;justify-content:center;gap:5px}
+.tab-btn:hover{color:#0c447c;background:#eaf1fb}
+.tab-btn.active{color:#0c447c;border-bottom-color:#0c447c;background:#fff}
+.tab-badge{font-size:11px;font-weight:900;padding:1px 7px;border-radius:20px;background:#e8f0fa;color:#0c447c;min-width:18px;text-align:center}
+.tab-btn.active .tab-badge{background:#0c447c;color:#fff}
+.tab-panel{display:none;padding:18px}
+.tab-panel.active{display:block}
+/* ── شبكة الملفات ── */
+.files-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+.file-card{background:#f8fbff;border:1px solid #d0dff0;border-radius:14px;overflow:hidden;transition:.2s;display:flex;flex-direction:column}
+.file-card:hover{box-shadow:0 6px 18px rgba(12,68,124,.12);transform:translateY(-2px)}
+.fc-media{width:100%;height:130px;display:flex;align-items:center;justify-content:center;background:#e8f0fa;overflow:hidden;flex-shrink:0}
+.fc-media img{width:100%;height:100%;object-fit:cover;display:block}
+.fc-body{padding:10px;flex:1;display:flex;flex-direction:column;gap:4px}
+.fc-name{font-size:11px;font-weight:700;color:#0c447c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fc-cat{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;display:inline-block;width:fit-content}
+.cat-photos{background:#dcfce7;color:#166534}
+.cat-docs  {background:#fef3c7;color:#92400e}
+.cat-certs {background:#e8f0fa;color:#0c447c}
+.fc-actions{display:flex;gap:5px;margin-top:auto;padding-top:6px}
+.fca{flex:1;padding:5px 4px;border-radius:7px;font-family:Cairo,sans-serif;font-size:11px;font-weight:700;border:none;cursor:pointer;text-decoration:none;text-align:center;transition:.18s;display:inline-flex;align-items:center;justify-content:center}
+.fca-open{background:#e8f0fa;color:#0c447c}.fca-open:hover{background:#0c447c;color:#fff}
+.fca-del {background:#fee2e2;color:#c0392b}.fca-del:hover{background:#c0392b;color:#fff}
+.empty-st{text-align:center;padding:32px 16px;color:#5a7a99}
+.empty-st .ei{font-size:42px;display:block;margin-bottom:8px}
+.grp-title{font-size:14px;font-weight:900;padding-bottom:8px;border-bottom:2px solid #d0dff0;margin-bottom:12px}
+</style>
+</head>
+<body>
+<a class="alfalah-fixed-home" href="../index.html">🏠 الرئيسية</a>
+<a class="home" href="../index.html">🏠 الرئيسية</a>
+
+<div class="wrap">
+  <section class="hero">
+    <img class="logo" src="../assets/logo.png">
+    <h1>ملفات المدارس والوثائق</h1>
+    <p>رفع صور المكتبات، النماذج، وشهادات الأخصائيين إلى Supabase Storage</p>
+  </section>
+
+  <div class="card">
+    <h2>اختر المدرسة</h2>
+    <select id="school" onchange="loadFiles()"></select>
+    <div id="msg"></div>
+    <div class="clear-card">
+      <button class="btn danger" type="button" onclick="deleteAllSchoolFiles()">🗑️ تصفير ملفات هذه المدرسة</button>
+    </div>
+  </div>
+
+  <div class="files">
+    <div class="card">
+      <h3>📷 صور المكتبة</h3>
+      <input type="file" id="library-images" multiple accept="image/*">
+      <button class="btn teal" onclick="uploadFiles('library-images','library-images')">رفع الصور</button>
+    </div>
+    <div class="card">
+      <h3>📄 النماذج وقوائم العمل</h3>
+      <input type="file" id="library-documents" multiple>
+      <button class="btn gold" onclick="uploadFiles('library-documents','library-documents')">رفع النماذج</button>
+    </div>
+    <div class="card">
+      <h3>🎓 شهادات الأخصائي</h3>
+      <input type="file" id="specialist-certificates" multiple>
+      <button class="btn primary" onclick="uploadFiles('specialist-certificates','specialist-certificates')">رفع الشهادات</button>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:visible">
+    <div style="padding:16px 18px 0;border-bottom:1px solid #e8f0fa">
+      <h2 style="margin:0 0 14px">الملفات المحفوظة</h2>
+    </div>
+    <div class="tabs-wrap" style="border-radius:0;border:none;box-shadow:none">
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('photos',this)">
+          📷 صور المكتبة <span class="tab-badge" id="badge-photos">0</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('docs',this)">
+          📄 النماذج <span class="tab-badge" id="badge-docs">0</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('certs',this)">
+          🎓 الشهادات <span class="tab-badge" id="badge-certs">0</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('all',this)">
+          📂 الكل <span class="tab-badge" id="badge-all">0</span>
+        </button>
+      </div>
+      <div class="tab-panel active" id="panel-photos"><div class="files-grid" id="grid-photos"><div class="empty-st"><span class="ei">📷</span><p>لا توجد صور بعد</p></div></div></div>
+      <div class="tab-panel"        id="panel-docs">  <div class="files-grid" id="grid-docs">  <div class="empty-st"><span class="ei">📄</span><p>لا توجد نماذج بعد</p></div></div></div>
+      <div class="tab-panel"        id="panel-certs"> <div class="files-grid" id="grid-certs"> <div class="empty-st"><span class="ei">🎓</span><p>لا توجد شهادات بعد</p></div></div></div>
+      <div class="tab-panel"        id="panel-all">
+        <div id="grp-photos"><div class="grp-title" style="color:#0f7d6e">📷 صور المكتبة</div><div class="files-grid" id="grid-all-photos" style="margin-bottom:20px"></div></div>
+        <div id="grp-docs">  <div class="grp-title" style="color:#c19a2a">📄 النماذج وقوائم العمل</div><div class="files-grid" id="grid-all-docs"   style="margin-bottom:20px"></div></div>
+        <div id="grp-certs"> <div class="grp-title" style="color:#0c447c">🎓 شهادات الأخصائي</div><div class="files-grid" id="grid-all-certs"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Supabase أولاً -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2?v=20260502b"></script>
+<script src="../supabase-config.js?v=20260502b"></script>
+
 <script>
-function bucketLabel(b){return {'library-images':'صور المكتبة','photos':'صور المكتبة','library-documents':'النماذج','documents':'النماذج','specialist-certificates':'الشهادات','certificates':'الشهادات'}[b]||b}
+/* ══ دوال app.js مضمّنة مباشرة لتجنّب أي مشكلة تحميل ══ */
+const SCHOOLS=[
+  {id:1,code:'dan',name:'فرع الدانة',        city:'أبوظبي', branch:'الدانة'},
+  {id:2,code:'mzd',name:'فرع محمد بن زايد', city:'أبوظبي', branch:'محمد بن زايد'},
+  {id:3,code:'bny',name:'فرع بني ياس',       city:'أبوظبي', branch:'بني ياس'},
+  {id:4,code:'khb',name:'فرع الخبيصي',       city:'العين',  branch:'الخبيصي'},
+  {id:5,code:'jmi',name:'فرع الجيمي',        city:'العين',  branch:'الجيمي'},
+  {id:6,code:'shj',name:'مدرسة الفلاح الخاصة',city:'الشارقة',branch:'الشارقة'}
+];
+function q(id){return document.getElementById(id)}
+function showMsg(id,text,type='ok'){const el=q(id);if(!el)return;el.className='msg '+type;el.textContent=text;}
+function SB(){
+  if(!window.supabase||!window.ALFALAH_SUPABASE_URL||!window.ALFALAH_SUPABASE_KEY)return null;
+  return window.supabase.createClient(window.ALFALAH_SUPABASE_URL,window.ALFALAH_SUPABASE_KEY);
+}
+function fillSchools(selId){
+  const sel=q(selId);if(!sel)return;
+  sel.innerHTML='<option value="">اختر المدرسة</option>'+
+    SCHOOLS.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+}
+function schoolById(id){return SCHOOLS.find(s=>String(s.id)===String(id))}
+function schoolByCode(code){return SCHOOLS.find(s=>s.code===code)}
+
+/* ══ تصنيف البكت ══ */
+function catKey(b){
+  const v=String(b||'').toLowerCase();
+  if(v.includes('image')||v.includes('photo')) return 'photos';
+  if(v.includes('cert'))                        return 'certs';
+  return 'docs';
+}
+function catLabel(k){return{photos:'📷 صور',docs:'📄 نماذج',certs:'🎓 شهادات'}[k]||k}
+function catClass(k){return{photos:'cat-photos',docs:'cat-docs',certs:'cat-certs'}[k]||''}
+
+/* ══ بناء كارد الملف ══ */
+function escH(v){return String(v||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function escJ(v){return String(v||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' ')}
+
+function fileCard(f){
+  const ck  = catKey(f.file_category);
+  const url = f.file_url||'';
+  const isImg = (f.file_type||'').startsWith('image/')||/\.(png|jpe?g|webp|gif)$/i.test(f.file_name||'');
+  const media = (isImg && url)
+    ? `<div class="fc-media"><img src="${escH(url)}" alt="${escH(f.file_name)}" loading="lazy"></div>`
+    : `<div class="fc-media"><span style="font-size:44px">${(f.file_type||'').includes('pdf')?'📑':/\.(doc|docx)$/i.test(f.file_name||'')?'📝':/\.(xls|xlsx)$/i.test(f.file_name||'')?'📊':'📄'}</span></div>`;
+  const openBtn = url
+    ? `<a class="fca fca-open" href="${escH(url)}" target="_blank">فتح</a>`
+    : `<span class="fca" style="opacity:.4">فتح</span>`;
+  return `<div class="file-card">
+    ${media}
+    <div class="fc-body">
+      <div class="fc-name" title="${escH(f.file_name)}">${escH(f.file_name)}</div>
+      <span class="fc-cat ${catClass(ck)}">${catLabel(ck)}</span>
+      <div class="fc-actions">
+        ${openBtn}
+        <button type="button" class="fca fca-del"
+          onclick="deleteFile('${escJ(f.id)}','${escJ(f.file_path)}','${escJ(f.file_category)}')">حذف</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ══ تحميل الملفات وعرضها بالتبويبات ══ */
+async function loadFiles(){
+  const sid = q('school').value;
+  const s   = schoolById(sid);
+  if(!s){
+    ['photos','docs','certs'].forEach(k=>{
+      q('grid-'+k).innerHTML='<div class="empty-st"><span class="ei">'+{photos:'📷',docs:'📄',certs:'🎓'}[k]+'</span><p>اختر مدرسة أولاً</p></div>';
+      q('badge-'+k).textContent='0';
+    });
+    q('badge-all').textContent='0';
+    return;
+  }
+  const sb=SB();
+  if(!sb){showMsg('msg','لم يتم الاتصال بـ Supabase.','err');return;}
+
+  ['photos','docs','certs'].forEach(k=>
+    q('grid-'+k).innerHTML='<div class="empty-st"><span class="ei">⏳</span><p>جارٍ التحميل…</p></div>'
+  );
+
+  const {data,error}=await sb.from('school_files').select('*')
+    .or(`school_id.eq.${s.id},school_code.eq.${s.code}`)
+    .order('created_at',{ascending:false});
+
+  if(error){showMsg('msg',error.message,'err');return;}
+
+  const all=data||[];
+  const groups={photos:[],docs:[],certs:[]};
+  all.forEach(f=>groups[catKey(f.file_category)].push(f));
+
+  const emptyHTML=(icon,lbl)=>`<div class="empty-st"><span class="ei">${icon}</span><p>لا توجد ${lbl} لهذه المدرسة بعد</p></div>`;
+
+  /* كل تبويب على حدة */
+  const renderGrid=(cat,icon,lbl)=>{
+    const files=groups[cat];
+    q('badge-'+cat).textContent=files.length;
+    q('grid-'+cat).innerHTML=files.length?files.map(fileCard).join(''):emptyHTML(icon,lbl);
+    const ag=q('grid-all-'+cat); const grp=q('grp-'+cat);
+    if(files.length){ag.innerHTML=files.map(fileCard).join('');grp.style.display='';}
+    else{ag.innerHTML='';grp.style.display='none';}
+  };
+  renderGrid('photos','📷','صور');
+  renderGrid('docs',  '📄','نماذج');
+  renderGrid('certs', '🎓','شهادات');
+  q('badge-all').textContent=all.length;
+}
+
+/* ══ تبديل التبويب ══ */
+function switchTab(key,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  q('panel-'+key).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ══ رفع الملفات ══ */
 function safeStorageName(name){
   const ext=(name.match(/\.[A-Za-z0-9]{1,8}$/)||[''])[0].toLowerCase();
-  const base=name.replace(/\.[^.]+$/,'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'').slice(0,80) || 'file';
+  const base=name.replace(/\.[^.]+$/,'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'').slice(0,80)||'file';
   return base+ext;
 }
 async function uploadFiles(inputId,bucket){
-  const sid=q('school').value;const s=schoolById(sid);if(!s){showMsg('msg','اختر المدرسة أولاً.','err');return}
-  const files=[...(q(inputId).files||[])];if(!files.length){showMsg('msg','اختر ملفاً واحداً على الأقل.','warn');return}
-  const sb=SB(); if(!sb){showMsg('msg','لم يتم الاتصال بـ Supabase.','err');return}
+  const sid=q('school').value;const s=schoolById(sid);
+  if(!s){showMsg('msg','اختر المدرسة أولاً.','err');return}
+  const files=[...(q(inputId).files||[])];
+  if(!files.length){showMsg('msg','اختر ملفاً واحداً على الأقل.','warn');return}
+  const sb=SB();if(!sb){showMsg('msg','لم يتم الاتصال بـ Supabase.','err');return}
   let ok=0;
   for(const file of files){
     const safe=safeStorageName(file.name);
@@ -26,79 +256,62 @@ async function uploadFiles(inputId,bucket){
     if(ins.error){showMsg('msg','تم رفع الملف لكن فشل حفظ السجل: '+ins.error.message,'err');continue}
     ok++;
   }
-  showMsg('msg','تم رفع وحفظ '+ok+' ملف/ملفات في Supabase.','ok');q(inputId).value='';loadFiles()
-}
-function filePreview(f){
-  const url=f.file_url || '';
-  const isImg=(f.file_type||'').startsWith('image/') || /\.(png|jpe?g|webp|gif)$/i.test(f.file_name||f.file_path||'');
-  if(isImg && url) return `<img src="${url}" alt="${(f.file_name||'صورة').replace(/"/g,'')}">`;
-  return '<div style="font-size:46px">📄</div>';
+  showMsg('msg','تم رفع وحفظ '+ok+' ملف في Supabase.','ok');
+  q(inputId).value='';
+  loadFiles();
 }
 
-function escJs(v){return String(v||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' ')}
+/* ══ حذف ملف ══ */
 async function deleteFile(id,path,bucket){
   if(!id){showMsg('msg','لا يمكن حذف الملف: رقم السجل غير موجود.','err');return}
-  if(!confirm('هل تريد حذف هذا الملف نهائياً من القاعدة والصفحة؟')) return;
-  const sb=SB(); if(!sb){showMsg('msg','لم يتم الاتصال بـ Supabase.','err');return}
+  if(!confirm('هل تريد حذف هذا الملف نهائياً؟')) return;
+  const sb=SB();if(!sb){showMsg('msg','لم يتم الاتصال بـ Supabase.','err');return}
   try{
-    if(bucket && path){
-      const st=await sb.storage.from(bucket).remove([path]);
-      if(st.error){console.warn('Storage delete warning:',st.error.message)}
-    }
+    if(bucket&&path) await sb.storage.from(bucket).remove([path]);
     const del=await sb.from('school_files').delete().eq('id',id);
     if(del.error){showMsg('msg','فشل حذف سجل الملف: '+del.error.message,'err');return}
-    showMsg('msg','تم حذف الملف من Supabase ومن الصفحة.','ok');
+    showMsg('msg','تم الحذف من Supabase.','ok');
     await loadFiles();
-  }catch(e){console.error(e);showMsg('msg','حدث خطأ أثناء الحذف: '+(e.message||e),'err')}
-}
-async function deleteAllSchoolFiles(){
-  const sid=q('school').value; const s=schoolById(sid);
-  if(!s){showMsg('msg','اختر المدرسة أولاً.','err');return}
-  if(!confirm('سيتم حذف جميع ملفات هذه المدرسة من Supabase ومن الصفحة. هل أنت متأكد؟')) return;
-  const sb=SB(); if(!sb){showMsg('msg','لم يتم الاتصال بـ Supabase.','err');return}
-  try{
-    const {data,error}=await sb.from('school_files').select('*').or(`school_id.eq.${s.id},school_code.eq.${s.code}`);
-    if(error){showMsg('msg','فشل جلب الملفات للحذف: '+error.message,'err');return}
-    const rows=data||[];
-    if(!rows.length){showMsg('msg','لا توجد ملفات محفوظة لهذه المدرسة.','warn');return}
-    const byBucket={};
-    rows.forEach(f=>{ if(f.file_category && f.file_path){ (byBucket[f.file_category] ||= []).push(f.file_path); } });
-    for(const bucket of Object.keys(byBucket)){
-      const st=await sb.storage.from(bucket).remove(byBucket[bucket]);
-      if(st.error){console.warn('Storage delete warning for '+bucket+':',st.error.message)}
-    }
-    const del=await sb.from('school_files').delete().or(`school_id.eq.${s.id},school_code.eq.${s.code}`);
-    if(del.error){showMsg('msg','فشل حذف سجلات الملفات: '+del.error.message,'err');return}
-    showMsg('msg','تم تصفير ملفات هذه المدرسة من Supabase ومن الصفحة.','ok');
-    await loadFiles();
-  }catch(e){console.error(e);showMsg('msg','حدث خطأ أثناء تصفير الملفات: '+(e.message||e),'err')}
+  }catch(e){showMsg('msg','خطأ أثناء الحذف: '+(e.message||e),'err')}
 }
 
-async function loadFiles(){
-  const sid=q('school').value;const s=schoolById(sid);const gal=q('gallery');if(!s){gal.innerHTML='';return}
-  const sb=SB(); if(!sb){gal.innerHTML='<div class="msg err">لم يتم الاتصال بـ Supabase.</div>';return}
-  const {data,error}=await sb.from('school_files').select('*').or(`school_id.eq.${s.id},school_code.eq.${s.code}`).order('created_at',{ascending:false});
-  if(error){gal.innerHTML='<div class="msg err">'+error.message+'</div>';return}
-  gal.innerHTML=(data||[]).map(f=>`<div class="thumb">${filePreview(f)}<b>${bucketLabel(f.file_category)}</b><div class="muted" style="font-size:12px">${f.file_name||''}</div><div class="file-actions"><a class="btn outline" href="${f.file_url||'#'}" target="_blank">فتح</a><button type="button" class="btn danger" onclick="deleteFile('${escJs(f.id)}','${escJs(f.file_path)}','${escJs(f.file_category)}')">حذف</button></div></div>`).join('')||'<div class="msg warn">لا توجد ملفات محفوظة في Supabase لهذه المدرسة بعد.</div>'
+/* ══ تصفير ملفات مدرسة ══ */
+async function deleteAllSchoolFiles(){
+  const sid=q('school').value;const s=schoolById(sid);
+  if(!s){showMsg('msg','اختر المدرسة أولاً.','err');return}
+  if(!confirm('سيتم حذف جميع ملفات هذه المدرسة من Supabase. هل أنت متأكد؟')) return;
+  const sb=SB();if(!sb){showMsg('msg','لم يتم الاتصال بـ Supabase.','err');return}
+  try{
+    const {data,error}=await sb.from('school_files').select('*').or(`school_id.eq.${s.id},school_code.eq.${s.code}`);
+    if(error){showMsg('msg','فشل جلب الملفات: '+error.message,'err');return}
+    const rows=data||[];
+    if(!rows.length){showMsg('msg','لا توجد ملفات لهذه المدرسة.','warn');return}
+    const byB={};
+    rows.forEach(f=>{if(f.file_category&&f.file_path)(byB[f.file_category]||=[]).push(f.file_path);});
+    for(const b of Object.keys(byB)) await sb.storage.from(b).remove(byB[b]);
+    await sb.from('school_files').delete().or(`school_id.eq.${s.id},school_code.eq.${s.code}`);
+    showMsg('msg','تم تصفير ملفات المدرسة.','ok');
+    await loadFiles();
+  }catch(e){showMsg('msg','خطأ أثناء التصفير: '+(e.message||e),'err')}
 }
+
+/* ══ تحديد المدرسة من الرابط ══ */
 function initSchoolFromUrl(){
-  const params=new URLSearchParams(location.search);
-  const code=params.get('school');
-  const section=params.get('section');
-  if(code){
-    const s=schoolByCode(code);
-    if(s && q('school')) q('school').value=s.id;
-  }
-  if(section){
-    const el=q(section);
-    if(el){
-      setTimeout(()=>{el.closest('.card')?.scrollIntoView({behavior:'smooth',block:'center'}); el.closest('.card')?.classList.add('focus-card');},400);
-    }
-  }
+  const p=new URLSearchParams(location.search);
+  const code=p.get('school');
+  if(code){const s=schoolByCode(code);if(s&&q('school'))q('school').value=s.id;}
+  const sec=p.get('section');
+  if(sec){const el=q(sec);if(el)setTimeout(()=>{el.closest('.card')?.scrollIntoView({behavior:'smooth',block:'center'});el.closest('.card')?.classList.add('focus-card');},400);}
 }
-document.addEventListener('DOMContentLoaded',()=>{fillSchools('school');initSchoolFromUrl();loadFiles()})
-</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2?v=20260502b"></script>
-<script src="../supabase-config.js?v=20260502b"></script>
+
+/* ══ التهيئة — بعد تحميل Supabase مباشرة ══ */
+window.addEventListener('load',()=>{
+  fillSchools('school');
+  initSchoolFromUrl();
+  loadFiles();
+});
+</script>
+
 <script src="../assets/db-sync.js?v=20260502b"></script>
 <script src="../assets/reset-demo-data.js?v=20260510f"></script>
 </body></html>
