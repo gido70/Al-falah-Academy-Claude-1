@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تقييم الكادر المهني — أمين المكتبة | أكاديمية الفلاح</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0c447c;--navy2:#0a3868;--teal:#0f7d6e;--gold:#c19a2a;--green:#1a7f4b;--red:#c0392b;--bg:#f0f4f8;--card:#fff;--text:#102a43;--muted:#5a7a99;--border:#d0dff0;--radius:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);direction:rtl}
+.header{background:linear-gradient(135deg,#0c447c,#0f7d6e 60%,#c19a2a);color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header h1{font-size:17px;font-weight:900;margin:0}
+.header p{font-size:12px;opacity:.85;margin:0}
+.home-btn{background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.4);padding:7px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;white-space:nowrap;font-family:'Cairo',sans-serif}
+.wrap{max-width:980px;margin:auto;padding:20px 16px 50px}
+
+/* ── SECTION CARD ── */
+.section-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);box-shadow:0 3px 14px rgba(12,68,124,.09);margin-bottom:18px;overflow:hidden}
+.sec-head{padding:14px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.sec-head.navy{background:linear-gradient(90deg,#0c447c,#185fa5)}
+.sec-head.teal{background:linear-gradient(90deg,#0f7d6e,#1a9a87)}
+.sec-head.gold{background:linear-gradient(90deg,#c19a2a,#d4ae3c)}
+.sec-head.green{background:linear-gradient(90deg,#166534,#1e7f43)}
+.sec-head.purple{background:linear-gradient(90deg,#7c3aed,#8b5cf6)}
+.sec-head.red{background:linear-gradient(90deg,#c0392b,#e74c3c)}
+.sec-head h2{font-size:15px;font-weight:900;color:#fff;margin:0;flex:1}
+.sec-head .sec-num{background:rgba(255,255,255,.25);color:#fff;font-size:12px;font-weight:900;padding:3px 10px;border-radius:20px}
+.sec-body{padding:18px 20px}
+
+/* ── CRITERIA TABLE ── */
+.crit-table{width:100%;border-collapse:collapse}
+.crit-table thead th{background:#f0f4f8;color:var(--muted);font-size:11px;font-weight:700;padding:8px 10px;border-bottom:2px solid var(--border);text-align:right}
+.crit-table thead th:last-child{text-align:center}
+.crit-table tbody tr{border-bottom:1px solid #f0f4f8;transition:.15s}
+.crit-table tbody tr:hover{background:#f8fbff}
+.crit-label{padding:10px;font-size:13px;color:var(--text)}
+.crit-label strong{display:block;font-size:12px;color:var(--navy);margin-bottom:2px}
+.crit-label span{font-size:11px;color:var(--muted)}
+.crit-score{padding:8px;text-align:center}
+/* rating pills */
+.rating-wrap{display:flex;gap:4px;justify-content:center}
+.rpill{width:30px;height:30px;border-radius:6px;border:2px solid var(--border);background:#f8fbff;font-size:12px;font-weight:900;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.rpill:hover,.rpill.active{border-color:var(--navy);background:var(--navy);color:#fff;transform:scale(1.12)}
+.rpill.active[data-v="1"],.rpill:hover[data-v="1"]{background:#e74c3c;border-color:#e74c3c}
+.rpill.active[data-v="2"],.rpill:hover[data-v="2"]{background:#e67e22;border-color:#e67e22}
+.rpill.active[data-v="3"],.rpill:hover[data-v="3"]{background:#f39c12;border-color:#f39c12}
+.rpill.active[data-v="4"],.rpill:hover[data-v="4"]{background:#27ae60;border-color:#27ae60}
+.rpill.active[data-v="5"],.rpill:hover[data-v="5"]{background:#0f7d6e;border-color:#0f7d6e}
+.rpill.active[data-v="6"],.rpill:hover[data-v="6"]{background:var(--navy);border-color:var(--navy)}
+
+/* ── GENERAL INFO ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row{display:flex;flex-direction:column;gap:4px}
+.form-row label{font-size:12px;font-weight:700;color:var(--muted)}
+.form-row input,.form-row select,.form-row textarea{border:2px solid var(--border);border-radius:8px;padding:9px 12px;font-size:13px;font-family:'Cairo',sans-serif;color:var(--text);background:#f9fbff;transition:.2s}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--navy);background:#fff}
+.form-row textarea{min-height:72px;resize:vertical}
+
+/* ── SCORE SUMMARY ── */
+.score-summary{position:sticky;bottom:0;background:#fff;border-top:2px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:0 -4px 16px rgba(12,68,124,.12)}
+.domain-scores{display:flex;gap:8px;flex-wrap:wrap}
+.dscore{text-align:center;background:#f0f4f8;border-radius:8px;padding:6px 10px;min-width:72px}
+.dscore-val{font-size:16px;font-weight:900;color:var(--navy)}
+.dscore-lbl{font-size:10px;color:var(--muted)}
+.total-score-box{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;border-radius:10px;padding:10px 20px;text-align:center}
+.total-score-box .tv{font-size:28px;font-weight:900}
+.total-score-box .tl{font-size:11px;opacity:.85}
+.action-btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'Cairo',sans-serif;transition:.2s}
+.btn:hover{filter:brightness(1.08)}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-outline{background:#fff;border:2px solid var(--border);color:var(--navy)}
+
+/* ── SCALE LEGEND ── */
+.scale-legend{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.scale-item{display:flex;align-items:center;gap:4px;font-size:11px}
+.scale-dot{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff}
+
+/* ── NOTES ── */
+.dev-plan{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+@media(max-width:700px){
+  .form-grid{grid-template-columns:1fr}
+  .dev-plan{grid-template-columns:1fr}
+  .domain-scores{gap:4px}
+  .score-summary{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div>
+    <h1>👤 نموذج تقييم الكادر المهني — أمين المكتبة / أخصائي مصادر التعلم</h1>
+    <p>أكاديمية الفلاح | 2026 — مبني على الوصف الوظيفي المعتمد</p>
+  </div>
+  <a href="../../index.html" class="home-btn">🏠 الرئيسية</a>
+</header>
+
+<div class="wrap">
+
+  <!-- ── SCALE LEGEND ── -->
+  <div class="section-card">
+    <div class="sec-head navy"><h2>📏 مقياس التقييم المعتمد</h2></div>
+    <div class="sec-body">
+      <div class="scale-legend">
+        <div class="scale-item"><div class="scale-dot" style="background:#e74c3c">1</div><span><strong>غير موجود</strong> — لا توجد أدلة على الكفاءة</span></div>
+        <div class="scale-item"><div class="scale-dot" style="background:#e67e22">2</div><span><strong>ضعيف</strong> — يحتاج تدخلاً عاجلاً</span></div>
+        <div class="scale-item"><div class="scale-dot" style="background:#f39c12">3</div><span><strong>مقبول</strong> — دون المستوى المطلوب</span></div>
+        <div class="scale-item"><div class="scale-dot" style="background:#27ae60">4</div><span><strong>جيد</strong> — يلبي الحد الأدنى المطلوب</span></div>
+        <div class="scale-item"><div class="scale-dot" style="background:#0f7d6e">5</div><span><strong>جيد جداً</strong> — يتجاوز المستوى المطلوب</span></div>
+        <div class="scale-item"><div class="scale-dot" style="background:#0c447c">6</div><span><strong>متميز</strong> — نموذج يُحتذى به</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GENERAL INFO ── -->
+  <div class="section-card">
+    <div class="sec-head navy"><h2>📝 البيانات العامة</h2><span class="sec-num">قسم 1</span></div>
+    <div class="sec-body">
+      <div class="form-grid">
+        <div class="form-row"><label>اسم المكتبة / المدرسة</label><select id="schoolSel" onchange="setSchool(this.value)"><option value="">— اختر المدرسة —</option><option value="khb">الخبيصي — العين</option><option value="jmi">الجيمي — العين</option><option value="shj">الشارقة</option><option value="bny">بني ياس — أبوظبي</option><option value="mzd">محمد بن زايد — أبوظبي</option><option value="dan">الدانة — أبوظبي</option></select></div>
+        <div class="form-row"><label>اسم أمين المكتبة / الأخصائي</label><input type="text" id="libName" placeholder="أدخل الاسم الكامل"></div>
+        <div class="form-row"><label>تاريخ التقييم</label><input type="date" id="evalDate"></div>
+        <div class="form-row"><label>اسم المقيِّم</label><input type="text" id="evaluatorName" placeholder="مشرف المكتبات — الاسم"></div>
+        <div class="form-row"><label>المؤهل العلمي</label><select id="eduLevel"><option value="">—</option><option>بكالوريوس علم المكتبات</option><option>بكالوريوس تربية وتعليم</option><option>بكالوريوس تقنية معلومات</option><option>بكالوريوس تخصص آخر</option><option>ماجستير</option><option>دكتوراه</option><option>دبلوم</option></select></div>
+        <div class="form-row"><label>سنوات الخبرة</label><select id="expYears"><option value="">—</option><option>أقل من سنة</option><option>1-3 سنوات</option><option>3-7 سنوات</option><option>7-15 سنة</option><option>أكثر من 15 سنة</option></select></div>
+        <div class="form-row"><label>هل يحمل الرخصة المهنية؟</label><select id="hasLicense"><option value="">—</option><option value="yes">نعم ✅</option><option value="no">لا ❌</option><option value="in-progress">قيد الاستكمال 🔄</option></select></div>
+        <div class="form-row"><label>نظام المكتبة المستخدم</label><select id="libSystem"><option value="">—</option><option>Destiny</option><option>Koha</option><option>Alexandria</option><option>Follett</option><option>Excel / يدوي</option><option>لا يوجد نظام</option></select></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DOMAIN 1: LIBRARY MANAGEMENT ── -->
+  <div class="section-card">
+    <div class="sec-head navy"><h2>📚 إدارة وتنظيم المكتبة</h2><span class="sec-num">قسم 2</span></div>
+    <div class="sec-body">
+      <table class="crit-table">
+        <thead><tr><th style="width:55%">معيار الكفاءة</th><th colspan="6" style="text-align:center">التقييم (1→6)</th></tr></thead>
+        <tbody id="dom1Body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── DOMAIN 2: STUDENT & TEACHER SUPPORT ── -->
+  <div class="section-card">
+    <div class="sec-head teal"><h2>🎓 دعم الطلبة والمعلمين</h2><span class="sec-num">قسم 3</span></div>
+    <div class="sec-body">
+      <table class="crit-table">
+        <thead><tr><th style="width:55%">معيار الكفاءة</th><th colspan="6" style="text-align:center">التقييم (1→6)</th></tr></thead>
+        <tbody id="dom2Body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── DOMAIN 3: READING PROGRAMS ── -->
+  <div class="section-card">
+    <div class="sec-head gold"><h2>📖 تشجيع القراءة والأنشطة الثقافية</h2><span class="sec-num">قسم 4</span></div>
+    <div class="sec-body">
+      <table class="crit-table">
+        <thead><tr><th style="width:55%">معيار الكفاءة</th><th colspan="6" style="text-align:center">التقييم (1→6)</th></tr></thead>
+        <tbody id="dom3Body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── DOMAIN 4: DIGITAL & TECH ── -->
+  <div class="section-card">
+    <div class="sec-head purple"><h2>💻 الموارد الرقمية والتقنية</h2><span class="sec-num">قسم 5</span></div>
+    <div class="sec-body">
+      <table class="crit-table">
+        <thead><tr><th style="width:55%">معيار الكفاءة</th><th colspan="6" style="text-align:center">التقييم (1→6)</th></tr></thead>
+        <tbody id="dom4Body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── DOMAIN 5: UAE CONTENT ── -->
+  <div class="section-card">
+    <div class="sec-head red"><h2>🇦🇪 المحتوى الإماراتي والهوية الوطنية</h2><span class="sec-num">قسم 6</span></div>
+    <div class="sec-body">
+      <table class="crit-table">
+        <thead><tr><th style="width:55%">معيار الكفاءة</th><th colspan="6" style="text-align:center">التقييم (1→6)</th></tr></thead>
+        <tbody id="dom5Body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── DOMAIN 6: ADMIN & QUALITY ── -->
+  <div class="section-card">
+    <div class="sec-head green"><h2>📋 الإشراف الإداري وضمان الجودة</h2><span class="sec-num">قسم 7</span></div>
+    <div class="sec-body">
+      <table class="crit-table">
+        <thead><tr><th style="width:55%">معيار الكفاءة</th><th colspan="6" style="text-align:center">التقييم (1→6)</th></tr></thead>
+        <tbody id="dom6Body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── PROFESSIONAL SKILLS ── -->
+  <div class="section-card">
+    <div class="sec-head navy"><h2>🌟 الكفاءات والمهارات الشخصية والمهنية</h2><span class="sec-num">قسم 8</span></div>
+    <div class="sec-body">
+      <table class="crit-table">
+        <thead><tr><th style="width:55%">معيار الكفاءة</th><th colspan="6" style="text-align:center">التقييم (1→6)</th></tr></thead>
+        <tbody id="dom7Body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── DEVELOPMENT PLAN ── -->
+  <div class="section-card">
+    <div class="sec-head teal"><h2>🎯 خطة التطوير المهني وملاحظات المقيِّم</h2><span class="sec-num">قسم 9</span></div>
+    <div class="sec-body">
+      <div class="dev-plan">
+        <div class="form-row"><label>✅ أبرز نقاط القوة</label><textarea id="strengths" placeholder="ذكر على الأقل 3 نقاط قوة واضحة وموثّقة…"></textarea></div>
+        <div class="form-row"><label>⚠️ نقاط تحتاج تطويراً</label><textarea id="weaknesses" placeholder="نقاط ضعف واضحة مع أمثلة ملموسة…"></textarea></div>
+        <div class="form-row"><label>📅 خطة التطوير — قصيرة المدى (1-3 أشهر)</label><textarea id="shortPlan" placeholder="إجراءات فورية وقابلة للقياس…"></textarea></div>
+        <div class="form-row"><label>📅 خطة التطوير — طويلة المدى (العام الدراسي)</label><textarea id="longPlan" placeholder="أهداف استراتيجية وبرامج تدريبية مقترحة…"></textarea></div>
+        <div class="form-row"><label>📚 الدورات التدريبية المُوصى بها</label><textarea id="trainingRec" placeholder="مثال: دورة MARC21، دورة تشجيع القراءة، دورة قاعدة بيانات Koha…"></textarea></div>
+        <div class="form-row"><label>📝 ملاحظات عامة إضافية</label><textarea id="generalNotes" placeholder="أي ملاحظات لا تندرج تحت القسم أعلاه…"></textarea></div>
+      </div>
+      <div class="form-grid" style="margin-top:14px">
+        <div class="form-row"><label>التقييم العام للأداء الوظيفي</label><select id="overallPerf"><option value="">—</option><option value="6">متميز — يُنصح بالاستثمار في مواهبه وترقيته</option><option value="5">جيد جداً — أداء يفوق التوقعات</option><option value="4">جيد — يلبي المتطلبات بشكل مُرضٍ</option><option value="3">مقبول — يحتاج دعماً وتوجيهاً</option><option value="2">ضعيف — يستلزم برنامج تحسين رسمي</option><option value="1">دون المستوى — يستوجب مراجعة فورية</option></select></div>
+        <div class="form-row"><label>توصية إجراء المسؤول</label><select id="actionRec"><option value="">—</option><option>ترقية / تقدير رسمي</option><option>الاستمرار مع خطة تطوير</option><option>إحالة لبرنامج تحسين الأداء</option><option>تدريب مكثف إلزامي</option><option>مراجعة الاستمرار الوظيفي</option></select></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end wrap -->
+
+<!-- STICKY SCORE BAR -->
+<div class="score-summary">
+  <div class="domain-scores" id="domainScores"><!-- filled by JS --></div>
+  <div class="total-score-box"><div class="tv" id="totalScore">—</div><div class="tl">المتوسط الكلي / 6</div></div>
+  <div class="action-btns">
+    <button class="btn btn-outline" onclick="clearAll()">🔄 مسح</button>
+    <button class="btn btn-teal" onclick="saveEval()">💾 حفظ</button>
+    <button class="btn btn-gold" onclick="printReport()">🖨️ طباعة</button>
+    <button class="btn btn-primary" onclick="exportWord()">📄 تصدير Word</button>
+  </div>
+</div>
+
+<script>
+const DOMAINS = [
+  {
+    id:'dom1', title:'إدارة وتنظيم المكتبة', icon:'📚',
+    criteria:[
+      {id:'d1c1', label:'تصنيف وترتيب المصادر',     hint:'تطبيق نظام ديوي العشري أو المعيار المعتمد بدقة واتساق'},
+      {id:'d1c2', label:'الفهرسة الإلكترونية',       hint:'استخدام نظام ILS والفهرسة وفق معيار MARC21'},
+      {id:'d1c3', label:'سجلات الإعارة والجرد',       hint:'دقة السجلات وتحديثها الدوري وانتظام الجرد'},
+      {id:'d1c4', label:'مراجعة المحتوى التعليمي',    hint:'التحقق من ملاءمة المصادر للقيم والمناهج قبل الاعتماد'},
+      {id:'d1c5', label:'تنظيم الجدول اليومي',        hint:'انسيابية العمل ووضوح الجدول واستمراريته'},
+      {id:'d1c6', label:'نظافة وترتيب بيئة المكتبة', hint:'المظهر العام والتنظيم والجاذبية البصرية للبيئة المكتبية'},
+    ]
+  },
+  {
+    id:'dom2', title:'دعم الطلبة والمعلمين', icon:'🎓',
+    criteria:[
+      {id:'d2c1', label:'إرشاد الطلبة لاختيار الكتب', hint:'مناسبة الكتب المُوصى بها للعمر والمستوى والاهتمام'},
+      {id:'d2c2', label:'دعم المعلمين في المصادر',     hint:'استجابة فعّالة وسريعة لطلبات المعلمين البحثية'},
+      {id:'d2c3', label:'الجلسات التعريفية بالمكتبة',  hint:'عدد الجلسات وجودتها وتغطيتها للشرائح المختلفة'},
+      {id:'d2c4', label:'تشجيع البحث والملخصات',       hint:'مبادرات موثّقة لتنمية مهارات البحث الذاتي'},
+      {id:'d2c5', label:'التواصل التربوي مع الجميع',   hint:'أسلوب التواصل وملاءمته للبيئة التعليمية'},
+    ]
+  },
+  {
+    id:'dom3', title:'تشجيع القراءة والأنشطة', icon:'📖',
+    criteria:[
+      {id:'d3c1', label:'برامج تحدي القراءة الوطني',    hint:'التسجيل والمتابعة وتحقيق الأهداف القرائية'},
+      {id:'d3c2', label:'تنظيم معارض الكتاب والفعاليات', hint:'عدد الفعاليات المُنجزة وجودتها ومشاركة الطلبة'},
+      {id:'d3c3', label:'المسابقات الخارجية والوطنية',   hint:'دعم الطلبة في القارئ المبدع والكاتب الصغير وغيرها'},
+      {id:'d3c4', label:'ركن القراءة وتحديث المحتوى',   hint:'انتظام تحديث الركن وجاذبيته وفاعليته'},
+      {id:'d3c5', label:'نادي القراءة وإدارته',         hint:'استمرارية النادي وانتظامه وفاعلية أنشطته'},
+    ]
+  },
+  {
+    id:'dom4', title:'الموارد الرقمية والتقنية', icon:'💻',
+    criteria:[
+      {id:'d4c1', label:'إدارة قواعد البيانات الإلكترونية', hint:'الكفاءة في تشغيل وصيانة نظام المكتبة الإلكتروني'},
+      {id:'d4c2', label:'إتقان MARC21 وOPAC',               hint:'دقة التسجيلات ومعرفة قواعد الفهرسة الدولية'},
+      {id:'d4c3', label:'مساعدة الطلبة على التقنية',        hint:'التوجيه في استخدام الأجهزة والبرمجيات التعليمية'},
+      {id:'d4c4', label:'إعداد تقارير النظام والإحصاءات',   hint:'دقة التقارير واستخدامها لدعم القرار الإداري'},
+      {id:'d4c5', label:'مواكبة التحديثات التقنية',          hint:'الاطلاع على أحدث أنظمة المكتبات والمستجدات'},
+    ]
+  },
+  {
+    id:'dom5', title:'المحتوى الإماراتي والهوية', icon:'🇦🇪',
+    criteria:[
+      {id:'d5c1', label:'تطوير مجموعات الإمارات',    hint:'حجم المجموعة وتنوعها وتغطيتها لمجالات التراث والثقافة'},
+      {id:'d5c2', label:'الركن الإماراتي المتميز',    hint:'تصميم الركن وجاذبيته وتحديث محتواه'},
+      {id:'d5c3', label:'فعاليات الهوية الوطنية',     hint:'المناسبات الوطنية والفعاليات الثقافية المُنجزة'},
+      {id:'d5c4', label:'الشراكات المجتمعية الإماراتية', hint:'التنسيق مع جهات تعزز الهوية والثقافة الإماراتية'},
+      {id:'d5c5', label:'تعزيز المواطنة بين الطلبة',  hint:'المبادرات الموثّقة لتعزيز الانتماء والهوية الوطنية'},
+    ]
+  },
+  {
+    id:'dom6', title:'الإشراف الإداري والجودة', icon:'📋',
+    criteria:[
+      {id:'d6c1', label:'دقة التقارير وانتظامها',    hint:'التزام بالمواعيد ودقة البيانات وشمولية التقارير'},
+      {id:'d6c2', label:'السرية والنزاهة المهنية',   hint:'الحفاظ على سرية المعلومات وأمانة الموجودات'},
+      {id:'d6c3', label:'متابعة معايير الجودة',      hint:'مراقبة مستمرة ومعالجة فورية للانحرافات'},
+      {id:'d6c4', label:'المشاركة في التدريب',       hint:'حضور اجتماعات وبرامج التدريب بانتظام ومبادرة'},
+      {id:'d6c5', label:'توثيق المعلومات والبيانات', hint:'نظام توثيق واضح وسهل الرجوع إليه'},
+    ]
+  },
+  {
+    id:'dom7', title:'الكفاءات والمهارات الشخصية', icon:'🌟',
+    criteria:[
+      {id:'d7c1', label:'إدارة الوقت والأولويات',    hint:'القدرة على التنظيم والعمل تحت ضغط دون إخلال بالجودة'},
+      {id:'d7c2', label:'حل المشكلات والمبادرة',     hint:'ملاحظة المشكلات ومعالجتها باستقلالية ووعي'},
+      {id:'d7c3', label:'العمل بروح الفريق',         hint:'التعاون الفعّال مع المعلمين والزملاء والإدارة'},
+      {id:'d7c4', label:'التواصل باللغة العربية',    hint:'الكتابة والتحدث والتوثيق بالعربية الفصيحة بدقة'},
+      {id:'d7c5', label:'التواصل باللغة الإنجليزية',hint:'مستوى الكفاءة في التواصل الإنجليزي المهني'},
+      {id:'d7c6', label:'الشخصية المتزنة والاحترام', hint:'التصرف باتزان وأدب واحترام في جميع المواقف'},
+      {id:'d7c7', label:'التطوير المهني المستمر',    hint:'المبادرة الذاتية للتحديث والنمو المهني بلا انتظار'},
+    ]
+  },
+];
+const DOMAIN_LABELS=['إدارة المكتبة','دعم الطلبة','القراءة','التقنية','الإمارات','الجودة','الكفاءات'];
+
+let SCORES = {};
+
+// BUILD TABLES
+function buildRow(c){
+  return `<tr>
+    <td class="crit-label"><strong>${c.label}</strong><span>${c.hint}</span></td>
+    <td class="crit-score">
+      <div class="rating-wrap">
+        ${[1,2,3,4,5,6].map(v=>`<div class="rpill" data-id="${c.id}" data-v="${v}" onclick="setScore('${c.id}',${v},this)">${v}</div>`).join('')}
+      </div>
+    </td>
+  </tr>`;
+}
+DOMAINS.forEach((dom,i)=>{
+  const tbody = document.getElementById('dom'+(i+1)+'Body');
+  if(tbody) tbody.innerHTML = dom.criteria.map(buildRow).join('');
+});
+
+function setScore(id, val, el){
+  SCORES[id]=val;
+  document.querySelectorAll(`.rpill[data-id="${id}"]`).forEach(p=>{p.classList.remove('active');if(parseInt(p.dataset.v)===val)p.classList.add('active');});
+  updateTotals();
+}
+
+function updateTotals(){
+  const dScores = [];
+  DOMAINS.forEach((dom,i)=>{
+    const vals=dom.criteria.map(c=>SCORES[c.id]||0).filter(v=>v>0);
+    const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+    dScores.push(avg);
+  });
+  document.getElementById('domainScores').innerHTML=dScores.map((v,i)=>`<div class="dscore"><div class="dscore-val">${v>0?v.toFixed(1):'—'}</div><div class="dscore-lbl">${DOMAIN_LABELS[i]}</div></div>`).join('');
+  const filled=dScores.filter(v=>v>0);
+  const total=filled.length?filled.reduce((a,b)=>a+b,0)/filled.length:0;
+  document.getElementById('totalScore').textContent=total>0?total.toFixed(2):'—';
+}
+
+function setSchool(v){ document.getElementById('schoolSel').value=v; }
+
+function getData(){
+  return {
+    school: document.getElementById('schoolSel').value,
+    libName: document.getElementById('libName').value,
+    evalDate: document.getElementById('evalDate').value,
+    evaluatorName: document.getElementById('evaluatorName').value,
+    eduLevel: document.getElementById('eduLevel').value,
+    expYears: document.getElementById('expYears').value,
+    hasLicense: document.getElementById('hasLicense').value,
+    libSystem: document.getElementById('libSystem').value,
+    scores: {...SCORES},
+    strengths: document.getElementById('strengths').value,
+    weaknesses: document.getElementById('weaknesses').value,
+    shortPlan: document.getElementById('shortPlan').value,
+    longPlan: document.getElementById('longPlan').value,
+    trainingRec: document.getElementById('trainingRec').value,
+    generalNotes: document.getElementById('generalNotes').value,
+    overallPerf: document.getElementById('overallPerf').value,
+    actionRec: document.getElementById('actionRec').value,
+    savedAt: new Date().toISOString(),
+  };
+}
+
+function saveEval(){
+  const d=getData();
+  if(!d.school){alert('⚠️ يرجى اختيار المدرسة أولاً');return;}
+  const key='alfaStaffEval_'+d.school;
+  localStorage.setItem(key,JSON.stringify(d));
+  alert('✅ تم الحفظ بنجاح في قاعدة البيانات المحلية!');
+}
+
+function clearAll(){
+  if(!confirm('هل تريد مسح جميع البيانات؟')) return;
+  SCORES={};
+  document.querySelectorAll('.rpill').forEach(p=>p.classList.remove('active'));
+  ['libName','evalDate','evaluatorName','strengths','weaknesses','shortPlan','longPlan','trainingRec','generalNotes'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['schoolSel','eduLevel','expYears','hasLicense','libSystem','overallPerf','actionRec'].forEach(id=>{const el=document.getElementById(id);if(el)el.selectedIndex=0;});
+  updateTotals();
+}
+
+function printReport(){window.print();}
+
+function exportWord(){
+  const d=getData();
+  const dScores=DOMAINS.map(dom=>{
+    const vals=dom.criteria.map(c=>d.scores[c.id]||0).filter(v=>v>0);
+    return vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+  });
+  const total=dScores.filter(v=>v>0);
+  const avg=total.length?total.reduce((a,b)=>a+b,0)/total.length:0;
+
+  let html=`<html><head><meta charset="UTF-8"><style>body{font-family:'Arial',sans-serif;direction:rtl;font-size:12px;margin:20px}h1{color:#0c447c;font-size:16px}h2{color:#0c447c;font-size:13px;border-bottom:2px solid #0c447c;padding-bottom:4px}table{border-collapse:collapse;width:100%;margin-bottom:12px}th,td{border:1px solid #d0dff0;padding:6px 8px;text-align:right}th{background:#0c447c;color:#fff;font-size:11px}.score-chip{background:#f0f4f8;border-radius:4px;padding:2px 8px;font-weight:700}.good{color:#166534}.weak{color:#c0392b}</style></head><body>`;
+  html+=`<h1>📋 تقرير تقييم الكادر المهني — أمين المكتبة</h1>`;
+  html+=`<table><tr><th colspan="2">البيانات العامة</th></tr>`;
+  html+=`<tr><td>المدرسة</td><td><strong>${d.school}</strong></td></tr>`;
+  html+=`<tr><td>أمين المكتبة</td><td><strong>${d.libName||'—'}</strong></td></tr>`;
+  html+=`<tr><td>تاريخ التقييم</td><td>${d.evalDate||'—'}</td></tr>`;
+  html+=`<tr><td>المقيِّم</td><td>${d.evaluatorName||'—'}</td></tr>`;
+  html+=`<tr><td>المؤهل</td><td>${d.eduLevel||'—'}</td></tr>`;
+  html+=`<tr><td>الخبرة</td><td>${d.expYears||'—'}</td></tr>`;
+  html+=`<tr><td>الرخصة المهنية</td><td>${d.hasLicense==='yes'?'✅ نعم':d.hasLicense==='in-progress'?'🔄 قيد الاستكمال':'❌ لا'}</td></tr>`;
+  html+=`</table>`;
+  html+=`<h2>نتائج التقييم بالمجالات</h2>`;
+  html+=`<table><tr><th>#</th><th>المجال</th><th>المعايير المُقيَّمة</th><th>المتوسط / 6</th><th>المستوى</th></tr>`;
+  DOMAINS.forEach((dom,i)=>{
+    const s=dScores[i];
+    const lv=s>=5?'متميز':s>=4?'جيد جداً':s>=3?'مقبول':s>0?'ضعيف':'—';
+    html+=`<tr><td>${i+1}</td><td>${dom.title}</td><td>${dom.criteria.length} معيار</td><td class="score-chip ${s>=4?'good':'weak'}">${s>0?s.toFixed(2):'—'}</td><td>${lv}</td></tr>`;
+  });
+  html+=`<tr><td colspan="3"><strong>المتوسط الكلي</strong></td><td class="score-chip ${avg>=4?'good':'weak'}">${avg>0?avg.toFixed(2):'—'}</td><td>${avg>=5?'متميز':avg>=4?'جيد جداً':avg>=3?'مقبول':avg>0?'ضعيف':'—'}</td></tr>`;
+  html+=`</table>`;
+  html+=`<h2>التفاصيل الكاملة للتقييم</h2>`;
+  DOMAINS.forEach(dom=>{
+    html+=`<p><strong>${dom.title}</strong></p>`;
+    html+=`<table><tr><th>المعيار</th><th>التقييم / 6</th></tr>`;
+    dom.criteria.forEach(c=>{const s=d.scores[c.id]||0;html+=`<tr><td>${c.label}</td><td>${s||'—'}</td></tr>`;});
+    html+=`</table>`;
+  });
+  html+=`<h2>خطة التطوير المهني</h2>`;
+  if(d.strengths)html+=`<p><strong>✅ نقاط القوة:</strong> ${d.strengths}</p>`;
+  if(d.weaknesses)html+=`<p><strong>⚠️ نقاط التطوير:</strong> ${d.weaknesses}</p>`;
+  if(d.shortPlan)html+=`<p><strong>📅 خطة قصيرة المدى:</strong> ${d.shortPlan}</p>`;
+  if(d.longPlan)html+=`<p><strong>📅 خطة طويلة المدى:</strong> ${d.longPlan}</p>`;
+  if(d.trainingRec)html+=`<p><strong>📚 الدورات الموصى بها:</strong> ${d.trainingRec}</p>`;
+  if(d.actionRec)html+=`<p><strong>📋 توصية الإجراء:</strong> ${d.actionRec}</p>`;
+  html+=`<br><p>توقيع المقيِّم: _________________________ التاريخ: _________________________</p>`;
+  html+=`</body></html>`;
+
+  const blob=new Blob(['\ufeff'+html],{type:'application/msword;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`تقييم_كادر_${d.libName||d.school||'أمين_المكتبة'}_${d.evalDate||new Date().toISOString().split('T')[0]}.doc`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+}
+
+// INIT
+document.getElementById('evalDate').value=new Date().toISOString().split('T')[0];
+updateTotals();
+</script>
+</body>
+</html>
