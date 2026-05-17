@@ -393,6 +393,8 @@ body{font-family:"Cairo",sans-serif;background:var(--bg);color:var(--text);direc
     <button class="navbtn" id="nav-rep" onclick="pg('page-rep','التقرير النهائي','nav-rep')"><span class="ico">📄</span> التقرير النهائي</button>
   
     <div class="nav-sep"></div>
+    <a class="navbtn" href="../staff-eval/index.html" target="_blank"><span class="ico">👤</span> تقييم الكادر</a>
+    <div class="nav-sep"></div>
     <button class="navbtn" id="nav-email" onclick="pg('page-email','إرسال بالبريد','nav-email')"><span class="ico">📧</span> إرسال بالبريد</button>
   </nav>
   <!-- ACTION STRIP -->
@@ -3137,7 +3139,8 @@ document.addEventListener('DOMContentLoaded',()=>{try{bindLibraryUnitsAutoSummar
 // ══════════════════════════════════════════════════════════════════
 //   أكاديمية الفلاح — تطعيم القسم 7 (الكادر المهني)
 //   Staff Evaluation Section 7 Enhancement Patch
-//   يُضاف هذا الملف في نهاية evaluation/index.html قبل </body>
+//   يُضاف هذا الملف في نهاية evaluation/index.html قبل <script src="staff-eval-save.js"></script>
+</body>
 //   Version 2.0 — متوافق مع قاعدة بيانات Supabase 2026
 // ══════════════════════════════════════════════════════════════════
 
@@ -3659,4 +3662,5 @@ document.addEventListener('DOMContentLoaded',()=>{try{bindLibraryUnitsAutoSummar
   }
 })();
 </script>
+<script src="staff-eval-save.js"></script>
 </body>
