@@ -126,6 +126,7 @@ const SCHOOLS=[
   {id:5,code:'jmi',name:'فرع الجيمي',        city:'العين',  branch:'الجيمي'},
   {id:6,code:'shj',name:'مدرسة الفلاح الخاصة',city:'الشارقة',branch:'الشارقة'}
 ];
+let _FILES = [];  // مصفوفة الملفات — تُحدَّث عند كل تحميل
 function q(id){return document.getElementById(id)}
 function showMsg(id,text,type='ok'){const el=q(id);if(!el)return;el.className='msg '+type;el.textContent=text;}
 function SB(){
@@ -154,25 +155,24 @@ function catClass(k){return{photos:'cat-photos',docs:'cat-docs',certs:'cat-certs
 function escH(v){return String(v||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function escJ(v){return String(v||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' ')}
 
-function fileCard(f){
+function fileCard(f, idx){
   const ck  = catKey(f.file_category);
   const url = f.file_url||'';
   const isImg = (f.file_type||'').startsWith('image/')||/\.(png|jpe?g|webp|gif)$/i.test(f.file_name||'');
   const media = (isImg && url)
-    ? `<div class="fc-media"><img src="${escH(url)}" alt="${escH(f.file_name)}" loading="lazy"></div>`
+    ? `<div class="fc-media"><img src="${escH(url)}" alt="${escH(f.file_name)}" loading="lazy" onerror="this.parentElement.innerHTML=\'<span style=\\"font-size:44px\\">🖼️</span>\'"></div>`
     : `<div class="fc-media"><span style="font-size:44px">${(f.file_type||'').includes('pdf')?'📑':/\.(doc|docx)$/i.test(f.file_name||'')?'📝':/\.(xls|xlsx)$/i.test(f.file_name||'')?'📊':'📄'}</span></div>`;
   const openBtn = url
     ? `<a class="fca fca-open" href="${escH(url)}" target="_blank">فتح</a>`
     : `<span class="fca" style="opacity:.4">فتح</span>`;
-  return `<div class="file-card">
+  return `<div class="file-card" id="fc-${idx}">
     ${media}
     <div class="fc-body">
       <div class="fc-name" title="${escH(f.file_name)}">${escH(f.file_name)}</div>
       <span class="fc-cat ${catClass(ck)}">${catLabel(ck)}</span>
       <div class="fc-actions">
         ${openBtn}
-        <button type="button" class="fca fca-del"
-          onclick="deleteFile('${escJ(f.id)}','${escJ(f.file_path)}','${escJ(f.file_category)}')">حذف</button>
+        <button type="button" class="fca fca-del" onclick="deleteFile(${idx})">حذف</button>
       </div>
     </div>
   </div>`;
@@ -210,12 +210,18 @@ async function loadFiles(){
   const emptyHTML=(icon,lbl)=>`<div class="empty-st"><span class="ei">${icon}</span><p>لا توجد ${lbl} لهذه المدرسة بعد</p></div>`;
 
   /* كل تبويب على حدة */
+  // أعد بناء المصفوفة الشاملة
+  _FILES = [];
+  all.forEach(f => _FILES.push(f));
+
   const renderGrid=(cat,icon,lbl)=>{
     const files=groups[cat];
     q('badge-'+cat).textContent=files.length;
-    q('grid-'+cat).innerHTML=files.length?files.map(fileCard).join(''):emptyHTML(icon,lbl);
+    q('grid-'+cat).innerHTML=files.length
+      ? files.map(f=>fileCard(f,_FILES.indexOf(f))).join('')
+      : emptyHTML(icon,lbl);
     const ag=q('grid-all-'+cat); const grp=q('grp-'+cat);
-    if(files.length){ag.innerHTML=files.map(fileCard).join('');grp.style.display='';}
+    if(files.length){ag.innerHTML=files.map(f=>fileCard(f,_FILES.indexOf(f))).join('');grp.style.display='';}
     else{ag.innerHTML='';grp.style.display='none';}
   };
   renderGrid('photos','📷','صور');
@@ -261,18 +267,51 @@ async function uploadFiles(inputId,bucket){
   loadFiles();
 }
 
-/* ══ حذف ملف ══ */
-async function deleteFile(id,path,bucket){
-  if(!id){showMsg('msg','لا يمكن حذف الملف: رقم السجل غير موجود.','err');return}
-  if(!confirm('هل تريد حذف هذا الملف نهائياً؟')) return;
-  const sb=SB();if(!sb){showMsg('msg','لم يتم الاتصال بـ Supabase.','err');return}
-  try{
-    if(bucket&&path) await sb.storage.from(bucket).remove([path]);
-    const del=await sb.from('school_files').delete().eq('id',id);
-    if(del.error){showMsg('msg','فشل حذف سجل الملف: '+del.error.message,'err');return}
-    showMsg('msg','تم الحذف من Supabase.','ok');
-    await loadFiles();
-  }catch(e){showMsg('msg','خطأ أثناء الحذف: '+(e.message||e),'err')}
+/* ══ حذف ملف — نسخة محسّنة ══ */
+async function deleteFile(idx){
+  const f = _FILES[idx];
+  if(!f){showMsg('msg','خطأ: الملف غير موجود في القائمة.','err');return;}
+  if(!confirm('هل تريد حذف هذا الملف نهائياً من القاعدة والصفحة؟')) return;
+  const sb=SB();
+  if(!sb){showMsg('msg','لم يتم الاتصال بـ Supabase.','err');return;}
+
+  // أخفِ الكارد فوراً (تجربة أفضل)
+  const card = document.getElementById('fc-'+idx);
+  if(card) card.style.opacity='0.3';
+
+  let storageOk = true;
+  let dbOk      = true;
+
+  // 1. احذف من Storage
+  if(f.file_path && f.file_category){
+    try{
+      const {error:stErr} = await sb.storage.from(f.file_category).remove([f.file_path]);
+      if(stErr) console.warn('Storage delete warning:', stErr.message);
+    }catch(e){ console.warn('Storage error:', e); }
+  }
+
+  // 2. احذف السجل من قاعدة البيانات
+  if(f.id){
+    try{
+      const {error:dbErr} = await sb.from('school_files').delete().eq('id', f.id);
+      if(dbErr){
+        dbOk = false;
+        console.error('DB delete error:', dbErr);
+        showMsg('msg','⚠️ فشل حذف السجل: '+dbErr.message+' — تحقق من RLS في Supabase.','err');
+        if(card) card.style.opacity='1';
+        return;
+      }
+    }catch(e){
+      dbOk = false;
+      showMsg('msg','خطأ في الحذف: '+(e.message||e),'err');
+      if(card) card.style.opacity='1';
+      return;
+    }
+  }
+
+  showMsg('msg','✅ تم حذف الملف بنجاح من Supabase.','ok');
+  _FILES.splice(idx,1);  // أزله من المصفوفة
+  await loadFiles();     // أعد التحميل
 }
 
 /* ══ تصفير ملفات مدرسة ══ */
